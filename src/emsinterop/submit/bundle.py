@@ -14,7 +14,7 @@ from __future__ import annotations
 
 from datetime import datetime, timezone
 
-RESOURCE_ID_SYSTEM = "urn:nemsis2fhir:resource-id"
+RESOURCE_ID_SYSTEM = "urn:emsinterop:resource-id"
 
 
 def _stamp_provenance_recorded(resources: list[dict], recorded: str | None) -> None:

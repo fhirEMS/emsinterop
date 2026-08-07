@@ -3,8 +3,8 @@ mapper or lands in the conversion issue log — no third option."""
 
 from pathlib import Path
 
-from nemsis2fhir.convert import convert
-from nemsis2fhir.issues import Disposition
+from emsinterop.convert import convert
+from emsinterop.issues import Disposition
 
 from .conftest import CHEST_PAIN
 

@@ -7,8 +7,8 @@ import pytest
 
 deltalake = pytest.importorskip("deltalake")
 
-from nemsis2fhir.convert import convert  # noqa: E402
-from nemsis2fhir.ingest.bronze import land, replay  # noqa: E402
+from emsinterop.convert import convert  # noqa: E402
+from emsinterop.ingest.bronze import land, replay  # noqa: E402
 
 from .conftest import CHEST_PAIN, FIXTURES  # noqa: E402
 

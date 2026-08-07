@@ -1,6 +1,6 @@
 """Patient (ADR-006/007) and the Encounter spine (ADR-004)."""
 
-from nemsis2fhir.terminology import systems
+from emsinterop.terminology import systems
 
 from .conftest import by_type
 

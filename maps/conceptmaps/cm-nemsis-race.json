@@ -1,7 +1,7 @@
 {
   "resourceType": "ConceptMap",
   "id": "cm-nemsis-race",
-  "url": "urn:nemsis2fhir:conceptmap:cm-nemsis-race",
+  "url": "urn:emsinterop:conceptmap:cm-nemsis-race",
   "version": "0.1.0",
   "name": "NemsisRaceToCDCRaceEthnicity",
   "status": "draft",

@@ -5,13 +5,13 @@
 #
 #   ./scripts/fml-oracle.sh
 #
-# Requires: java 17+, validator_cli.jar (NEMSIS2FHIR_VALIDATOR_JAR, default
+# Requires: java 17+, validator_cli.jar (EMSINTEROP_VALIDATOR_JAR, default
 # ~/Downloads/validator_cli.jar), and a terminology server — the validator's
 # transform mode refuses to run without one. A local fhirEngine
-# (NEMSIS2FHIR_ORACLE_TX or NEMSIS2FHIR_TIER1_URL, e.g. from tier1-up.sh)
+# (EMSINTEROP_ORACLE_TX or EMSINTEROP_TIER1_URL, e.g. from tier1-up.sh)
 # makes the oracle fully NETWORK-FREE; otherwise falls back to tx.fhir.org.
 # Our ConceptMaps resolve locally via -ig either way.
 set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 cd "$REPO_ROOT"
-NEMSIS2FHIR_FML_ORACLE=1 .venv/bin/python -m pytest tests/test_fml_oracle.py -v
+EMSINTEROP_FML_ORACLE=1 .venv/bin/python -m pytest tests/test_fml_oracle.py -v

@@ -1,6 +1,6 @@
 """VitalGroup -> N Observations sharing eVitals.01; NV/PN on measurements."""
 
-from nemsis2fhir.terminology import systems
+from emsinterop.terminology import systems
 
 from .conftest import by_type
 

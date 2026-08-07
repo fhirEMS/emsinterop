@@ -6,7 +6,7 @@
 #
 #   ./scripts/tier2-validate.sh [output-dir]
 #
-# Requires: java 17+, validator_cli.jar (NEMSIS2FHIR_VALIDATOR_JAR, default
+# Requires: java 17+, validator_cli.jar (EMSINTEROP_VALIDATOR_JAR, default
 # ~/Downloads/validator_cli.jar), hl7.fhir.us.core#6.1.0 in ~/.fhir/packages.
 # Runs with -tx n/a (no terminology server) so it is hermetic; expect
 # NEMSIS-CodeSystem "cannot validate" warnings — those codes are ours.
@@ -15,13 +15,13 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
-JAR="${NEMSIS2FHIR_VALIDATOR_JAR:-$HOME/Downloads/validator_cli.jar}"
+JAR="${EMSINTEROP_VALIDATOR_JAR:-$HOME/Downloads/validator_cli.jar}"
 OUT="${1:-$REPO_ROOT/.tier2-out}"
 mkdir -p "$OUT"
 
 PYTHONPATH="$REPO_ROOT/src" "$REPO_ROOT/.venv/bin/python" - "$OUT" <<'EOF'
 import json, glob, sys
-from nemsis2fhir.convert import convert
+from emsinterop.convert import convert
 out = sys.argv[1]
 for path in sorted(glob.glob("tests/fixtures/*.xml")):
     name = path.split("/")[-1].replace(".xml", "")

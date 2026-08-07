@@ -2,8 +2,8 @@
 
 import pytest
 
-from nemsis2fhir.assemble.adt import build_adt_a03
-from nemsis2fhir.convert import convert
+from emsinterop.assemble.adt import build_adt_a03
+from emsinterop.convert import convert
 
 from .conftest import CHEST_PAIN, FIXTURES
 
@@ -20,7 +20,7 @@ def test_message_envelope():
     segments, raw = _message(receiving_application="ENS", receiving_facility="STATE-HIE")
     msh = segments["MSH"]
     assert msh[1] == "^~\\&"
-    assert msh[2] == "nemsis2fhir"
+    assert msh[2] == "emsinterop"
     assert msh[3] == "Wasatch Valley EMS (synthetic)"
     assert msh[4] == "ENS" and msh[5] == "STATE-HIE"
     assert msh[8] == "ADT^A03^ADT_A03"
@@ -82,7 +82,7 @@ def test_corpus_renders(path):
 
 
 def test_a04_prearrival():
-    from nemsis2fhir.assemble.adt import build_adt_a04
+    from emsinterop.assemble.adt import build_adt_a04
     result = convert(CHEST_PAIN, agency_names={"4901": "Wasatch Valley EMS (synthetic)"})[0]
     raw = build_adt_a04(result.context)
     segments = {seg.split("|", 1)[0]: seg.split("|") for seg in raw.strip("\r").split("\r")}
@@ -101,7 +101,7 @@ def test_mllp_transport_round_trip():
     import socket
     import threading
 
-    from nemsis2fhir.transport import MllpTransport
+    from emsinterop.transport import MllpTransport
 
     received = {}
     server = socket.socket()
@@ -123,7 +123,7 @@ def test_mllp_transport_round_trip():
     thread.start()
 
     result = convert(CHEST_PAIN)[0]
-    from nemsis2fhir.assemble.adt import build_adt_a03
+    from emsinterop.assemble.adt import build_adt_a03
     receipt = MllpTransport("127.0.0.1", port, timeout=10).send(build_adt_a03(result.context))
     thread.join(timeout=10)
     server.close()
@@ -135,28 +135,28 @@ def test_mllp_transport_round_trip():
 
 
 def test_policy_default_is_completed_only():
-    from nemsis2fhir.assemble.adt import build_adt_messages
+    from emsinterop.assemble.adt import build_adt_messages
     result = convert(CHEST_PAIN)[0]
     messages = build_adt_messages(result.context)
     assert [event for event, _ in messages] == ["A03"]
 
 
 def test_policy_both_sends_prearrival_first():
-    from nemsis2fhir.assemble.adt import AdtConfig, build_adt_messages
+    from emsinterop.assemble.adt import AdtConfig, build_adt_messages
     result = convert(CHEST_PAIN)[0]
     messages = build_adt_messages(result.context, AdtConfig(send_prearrival=True))
     assert [event for event, _ in messages] == ["A04", "A03"]
 
 
 def test_prearrival_self_gates_without_destination():
-    from nemsis2fhir.assemble.adt import AdtConfig, build_adt_messages
+    from emsinterop.assemble.adt import AdtConfig, build_adt_messages
     result = convert(REFUSAL)[0]  # refusal: no destination recorded
     messages = build_adt_messages(result.context, AdtConfig(send_prearrival=True))
     assert [event for event, _ in messages] == ["A03"]
 
 
 def test_policy_prearrival_only():
-    from nemsis2fhir.assemble.adt import AdtConfig, build_adt_messages
+    from emsinterop.assemble.adt import AdtConfig, build_adt_messages
     result = convert(CHEST_PAIN)[0]
     config = AdtConfig(send_completed=False, send_prearrival=True)
     assert [e for e, _ in build_adt_messages(result.context, config)] == ["A04"]

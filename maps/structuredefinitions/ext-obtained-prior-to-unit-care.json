@@ -1,7 +1,7 @@
 {
   "resourceType": "StructureDefinition",
   "id": "obtained-prior-to-unit-care",
-  "url": "urn:nemsis2fhir:extension:obtained-prior-to-unit-care",
+  "url": "urn:emsinterop:extension:obtained-prior-to-unit-care",
   "version": "0.1.0",
   "name": "ObtainedPriorToUnitCare",
   "title": "Obtained/Administered/Performed Prior to This Unit's EMS Care",
@@ -30,7 +30,7 @@
       {
         "id": "Extension.url",
         "path": "Extension.url",
-        "fixedUri": "urn:nemsis2fhir:extension:obtained-prior-to-unit-care"
+        "fixedUri": "urn:emsinterop:extension:obtained-prior-to-unit-care"
       },
       {
         "id": "Extension.value[x]",

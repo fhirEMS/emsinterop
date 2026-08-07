@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import uuid
 
-NAMESPACE = uuid.uuid5(uuid.NAMESPACE_URL, "urn:nemsis2fhir")
+NAMESPACE = uuid.uuid5(uuid.NAMESPACE_URL, "urn:emsinterop")
 
 
 def resource_id(*parts: str | int | None) -> str:

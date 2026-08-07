@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.2.0 — 2026-08-07
+
+**Renamed: nemsis2fhir → emsInterop** (package `emsinterop`). The engine now
+speaks three standards (FHIR R4/mPSC, HL7 v2 ADT, C-CDA via nemsis2ccda) plus
+the inbound outcome loop — the old name undersold it. Breaking for consumers:
+
+- Python package/imports: `nemsis2fhir` → `emsinterop`; CLI `python -m emsinterop`
+- Env vars: `NEMSIS2FHIR_*` → `EMSINTEROP_*` (TIER1_URL, TIER2, FML_ORACLE,
+  VALIDATOR_JAR, CCDA corpus vars)
+- Identifier/URN systems: `urn:nemsis2fhir:*` → `urn:emsinterop:*` (conditional
+  PUT upserts key on the new system; wipe or migrate any dev fhirEngine store)
+- GitHub repo: FHIRmedicConsulting/emsInterop (old URLs redirect)
+
+Also new since v0.1.0: MessagingConfig deployment rails (`mode: fhir | adt |
+ccda`, lists, legacy `both`/`all`), `--config` CLI dispatch with delivery
+report, and the C-CDA rail via the optional nemsis2ccda package (now nested
+at `./nemsis2ccda` as its own repo, gitignored here).
+
 ## v0.1.0 — 2026-08-07
 
 First tagged release. The complete NEMSIS 3.5.0 → FHIR R4 translation engine:

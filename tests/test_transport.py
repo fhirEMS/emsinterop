@@ -5,12 +5,12 @@ import json
 
 import httpx
 
-from nemsis2fhir.transport import (
+from emsinterop.transport import (
     FileDropTransport,
     MhdHttpTransport,
     provide_document_bundle,
 )
-from nemsis2fhir.transport.iti65 import (
+from emsinterop.transport.iti65 import (
     MHD_DOCUMENTREFERENCE_PROFILE,
     MHD_SUBMISSIONSET_PROFILE,
 )

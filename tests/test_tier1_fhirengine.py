@@ -1,6 +1,6 @@
 """Tier-1 validation harness: the golden corpus against a LIVE fhirEngine.
 
-Skipped unless NEMSIS2FHIR_TIER1_URL points at a running fhirEngine with
+Skipped unless EMSINTEROP_TIER1_URL points at a running fhirEngine with
 US Core 6.1.0 installed and FHIRENGINE_VALIDATION_PROFILES=declared
 (see scripts/tier1-up.sh). This is the submission gate of Architecture §5.5b;
 the external HL7 validator (Tier-2) stays authoritative for mPSC/IPS.
@@ -10,16 +10,16 @@ import os
 
 import pytest
 
-from nemsis2fhir.convert import convert
-from nemsis2fhir.submit import FhirEngineClient
+from emsinterop.convert import convert
+from emsinterop.submit import FhirEngineClient
 
 from .conftest import FIXTURES
 
-TIER1_URL = os.environ.get("NEMSIS2FHIR_TIER1_URL")
+TIER1_URL = os.environ.get("EMSINTEROP_TIER1_URL")
 AGENCY_NAMES = {"4901": "Wasatch Valley EMS (synthetic)"}
 
 pytestmark = pytest.mark.skipif(
-    not TIER1_URL, reason="set NEMSIS2FHIR_TIER1_URL to run Tier-1 against fhirEngine"
+    not TIER1_URL, reason="set EMSINTEROP_TIER1_URL to run Tier-1 against fhirEngine"
 )
 
 ALL_FIXTURES = sorted(FIXTURES.glob("*.xml"))

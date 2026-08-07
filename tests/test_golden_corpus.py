@@ -3,10 +3,10 @@ cardiac-arrest and refusal/no-transport golden cases."""
 
 import pytest
 
-from nemsis2fhir.convert import convert
-from nemsis2fhir.ingest import validate
-from nemsis2fhir.issues import Disposition
-from nemsis2fhir.terminology import systems
+from emsinterop.convert import convert
+from emsinterop.ingest import validate
+from emsinterop.issues import Disposition
+from emsinterop.terminology import systems
 
 from .conftest import FIXTURES, by_type
 
@@ -212,7 +212,7 @@ def test_mci_triage_and_flags(mci):
 
 
 def test_mci_prior_unit_vitals_flagged(mci):
-    from nemsis2fhir.mapping.vitals import PRIOR_CARE_EXT
+    from emsinterop.mapping.vitals import PRIOR_CARE_EXT
     group1 = [
         o for o in by_type(mci.resources, "Observation")
         if o.get("effectiveDateTime") == "2026-08-06T16:12:00-06:00"
@@ -259,7 +259,7 @@ def test_interfacility_reasons_on_encounter(interfacility):
 
 
 def test_interfacility_prior_care_medication(interfacility):
-    from nemsis2fhir.mapping.vitals import PRIOR_CARE_EXT
+    from emsinterop.mapping.vitals import PRIOR_CARE_EXT
     heparin = by_type(interfacility.resources, "MedicationAdministration")[0]
     assert heparin["medicationCodeableConcept"]["coding"][0]["code"] == "5224"
     assert any(e.get("url") == PRIOR_CARE_EXT for e in heparin.get("extension", []))

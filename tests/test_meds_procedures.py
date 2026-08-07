@@ -1,6 +1,6 @@
 """MedicationAdministration / Procedure incl. the PN act-negation rule."""
 
-from nemsis2fhir.terminology import systems
+from emsinterop.terminology import systems
 
 from .conftest import by_type
 

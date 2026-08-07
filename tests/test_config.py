@@ -4,8 +4,8 @@ import json
 
 import pytest
 
-from nemsis2fhir.config import MessagingConfig, dispatch
-from nemsis2fhir.convert import convert
+from emsinterop.config import MessagingConfig, dispatch
+from emsinterop.convert import convert
 
 from .conftest import CHEST_PAIN
 

@@ -3,7 +3,7 @@
 import httpx
 import pytest
 
-from nemsis2fhir.submit import FhirEngineClient, SubmissionError
+from emsinterop.submit import FhirEngineClient, SubmissionError
 
 
 def _client(handler):

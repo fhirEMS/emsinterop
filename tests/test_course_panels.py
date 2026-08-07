@@ -1,7 +1,7 @@
 """New panel mappers: eArrest gate, EMS-course observations, prearrival
 Communication, vehicle Location, profile claims."""
 
-from nemsis2fhir.terminology import systems
+from emsinterop.terminology import systems
 
 from .conftest import by_type
 

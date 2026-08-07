@@ -142,7 +142,7 @@ def _build(
 
     msh = "|".join([
         "MSH", "^~\\&",
-        _esc("nemsis2fhir"), _esc(agency_name or agency),
+        _esc("emsinterop"), _esc(agency_name or agency),
         _esc(receiving_application), _esc(receiving_facility),
         when, "",
         f"ADT^{event}^{structure}", control_id, "P", HL7_VERSION,

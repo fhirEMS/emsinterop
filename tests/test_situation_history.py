@@ -1,6 +1,6 @@
 """Conditions, allergies (NKDA!), symptoms with pertinent negatives, DS4P."""
 
-from nemsis2fhir.terminology import systems
+from emsinterop.terminology import systems
 
 from .conftest import by_type
 

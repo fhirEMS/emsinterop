@@ -1,7 +1,7 @@
 {
   "resourceType": "StructureDefinition",
   "id": "NemsisEVitalsGroup",
-  "url": "urn:nemsis2fhir:StructureDefinition/NemsisEVitalsGroup",
+  "url": "urn:emsinterop:StructureDefinition/NemsisEVitalsGroup",
   "version": "0.1.0",
   "name": "NemsisEVitalsGroup",
   "title": "NEMSIS eVitals.VitalGroup (logical model, blood-pressure slice)",
@@ -10,7 +10,7 @@
   "fhirVersion": "4.0.1",
   "kind": "logical",
   "abstract": false,
-  "type": "urn:nemsis2fhir:StructureDefinition/NemsisEVitalsGroup",
+  "type": "urn:emsinterop:StructureDefinition/NemsisEVitalsGroup",
   "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
   "derivation": "specialization",
   "differential": {

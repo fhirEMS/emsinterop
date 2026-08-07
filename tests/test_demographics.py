@@ -11,8 +11,8 @@ from pathlib import Path
 
 from lxml import etree
 
-from nemsis2fhir.convert import convert
-from nemsis2fhir.ingest import (
+from emsinterop.convert import convert
+from emsinterop.ingest import (
     agency_names,
     facility_names,
     to_operation_outcome,

@@ -17,7 +17,7 @@ from . import systems
 
 @lru_cache(maxsize=1)
 def _codes() -> dict[str, dict[str, str]]:
-    ref = resources.files("nemsis2fhir.terminology").joinpath("data/nemsis_codes.json")
+    ref = resources.files("emsinterop.terminology").joinpath("data/nemsis_codes.json")
     return json.loads(ref.read_text())
 
 

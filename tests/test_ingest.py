@@ -2,7 +2,7 @@
 
 from lxml import etree
 
-from nemsis2fhir.ingest import parse, to_operation_outcome, validate
+from emsinterop.ingest import parse, to_operation_outcome, validate
 
 
 def test_fixture_is_xsd_valid(fixture_path):

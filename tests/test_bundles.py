@@ -2,11 +2,11 @@
 
 import copy
 
-from nemsis2fhir.convert import convert
-from nemsis2fhir.ingest import parse
-from nemsis2fhir.mapping import map_pcr
-from nemsis2fhir.assemble import build_composition
-from nemsis2fhir.submit import transaction_bundle
+from emsinterop.convert import convert
+from emsinterop.ingest import parse
+from emsinterop.mapping import map_pcr
+from emsinterop.assemble import build_composition
+from emsinterop.submit import transaction_bundle
 
 from .conftest import CHEST_PAIN, by_type
 
@@ -30,10 +30,10 @@ def test_transaction_shape(result):
         else:
             assert url == (
                 f"{resource['resourceType']}?identifier="
-                f"urn:nemsis2fhir:resource-id|{resource['id']}"
+                f"urn:emsinterop:resource-id|{resource['id']}"
             )
             assert any(
-                i.get("system") == "urn:nemsis2fhir:resource-id"
+                i.get("system") == "urn:emsinterop:resource-id"
                 and i.get("value") == resource["id"]
                 for i in resource["identifier"]
             )
@@ -63,7 +63,7 @@ def test_provenance_targets_everything(result):
 def test_mapping_version_tag(result):
     for resource in result.resources:
         tags = resource["meta"]["tag"]
-        assert any(t["system"] == "urn:nemsis2fhir:mapping-ruleset" for t in tags)
+        assert any(t["system"] == "urn:emsinterop:mapping-ruleset" for t in tags)
 
 
 def test_document_bundle_composition_first(result):

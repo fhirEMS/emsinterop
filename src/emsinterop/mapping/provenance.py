@@ -32,7 +32,7 @@ def map_provenance(ctx: MappingContext) -> dict:
                         }
                     ]
                 },
-                "who": {"display": f"nemsis2fhir mapper (ruleset {MAPPING_RULESET_VERSION})"},
+                "who": {"display": f"emsinterop mapper (ruleset {MAPPING_RULESET_VERSION})"},
             }
         ],
         "entity": [

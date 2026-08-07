@@ -1,7 +1,7 @@
 {
   "resourceType": "ConceptMap",
   "id": "cm-nemsis-sex",
-  "url": "urn:nemsis2fhir:conceptmap:cm-nemsis-sex",
+  "url": "urn:emsinterop:conceptmap:cm-nemsis-sex",
   "version": "0.1.0",
   "name": "NemsisSexToAdministrativeGender",
   "status": "draft",

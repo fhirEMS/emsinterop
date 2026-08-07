@@ -1,10 +1,10 @@
 """CLI: convert a NEMSIS EMSDataSet file and print or submit the result.
 
-  python -m nemsis2fhir convert path/to/pcr.xml            # transaction bundle to stdout
-  python -m nemsis2fhir convert path/to/pcr.xml --document # mPSC document bundle
-  python -m nemsis2fhir convert path/to/pcr.xml --submit http://localhost:8080
-  python -m nemsis2fhir convert path/to/pcr.xml --dem dem.xml  # agency names from DEMDataSet
-  python -m nemsis2fhir validate path/to/pcr.xml           # XSD check only
+  python -m emsinterop convert path/to/pcr.xml            # transaction bundle to stdout
+  python -m emsinterop convert path/to/pcr.xml --document # mPSC document bundle
+  python -m emsinterop convert path/to/pcr.xml --submit http://localhost:8080
+  python -m emsinterop convert path/to/pcr.xml --dem dem.xml  # agency names from DEMDataSet
+  python -m emsinterop validate path/to/pcr.xml           # XSD check only
 """
 
 from __future__ import annotations
@@ -19,7 +19,7 @@ from .submit import FhirEngineClient
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="nemsis2fhir")
+    parser = argparse.ArgumentParser(prog="emsinterop")
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_convert = sub.add_parser("convert", help="convert NEMSIS XML to FHIR")

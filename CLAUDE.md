@@ -1,4 +1,4 @@
-# CLAUDE.md — nemsis2fhir
+# CLAUDE.md — emsInterop
 
 Guidance for Claude Code working in this repo. Read `docs/01_Architecture_Design.md` and
 `docs/03_ADRs.md` before writing code; this file is the fast orientation.

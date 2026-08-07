@@ -45,6 +45,6 @@ jobs:
       - run: pip install -e '.[dev]'
       - name: Run Tier-2 (documents + ITI-65 vs US Core 6.1.0 + MHD 4.2.2)
         env:
-          NEMSIS2FHIR_TIER2: "1"
-          NEMSIS2FHIR_VALIDATOR_JAR: /home/runner/validator_cli.jar
+          EMSINTEROP_TIER2: "1"
+          EMSINTEROP_VALIDATOR_JAR: /home/runner/validator_cli.jar
         run: python -m pytest tests/test_tier2_validator.py -v

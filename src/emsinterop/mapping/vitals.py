@@ -15,7 +15,7 @@ from ..terminology import conceptmaps, registry, systems
 from . import common
 from .context import MappingContext
 
-PRIOR_CARE_EXT = "urn:nemsis2fhir:extension:obtained-prior-to-unit-care"
+PRIOR_CARE_EXT = "urn:emsinterop:extension:obtained-prior-to-unit-care"
 
 # element id -> (LOINC code, display, unit display, UCUM code, US Core profile)
 _QUANTITY_VITALS = {

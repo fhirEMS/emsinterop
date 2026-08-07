@@ -9,7 +9,7 @@ from ..issues import Disposition, IssueLog
 from ..model import DemographicHeader, PatientCareReport
 from ..submit import ids
 
-RESOURCE_ID_SYSTEM = "urn:nemsis2fhir:resource-id"
+RESOURCE_ID_SYSTEM = "urn:emsinterop:resource-id"
 
 
 @dataclass
@@ -61,7 +61,7 @@ class MappingContext:
         meta = resource.setdefault("meta", {})
         meta.setdefault("tag", []).append(
             {
-                "system": "urn:nemsis2fhir:mapping-ruleset",
+                "system": "urn:emsinterop:mapping-ruleset",
                 "code": MAPPING_RULESET_VERSION,
             }
         )

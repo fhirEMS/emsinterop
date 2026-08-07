@@ -1,7 +1,7 @@
 {
   "resourceType": "ConceptMap",
   "id": "cm-nemsis-medroute",
-  "url": "urn:nemsis2fhir:conceptmap:cm-nemsis-medroute",
+  "url": "urn:emsinterop:conceptmap:cm-nemsis-medroute",
   "version": "0.1.0",
   "name": "NemsisMedicationRouteToSnomed",
   "status": "draft",

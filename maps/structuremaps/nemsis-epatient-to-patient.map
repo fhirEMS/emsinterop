@@ -1,13 +1,13 @@
 // NEMSIS ePatient -> FHIR R4 Patient (canonical Layer A)
 // The authored, upstream-contributable spec for the patient panel (ADR-002).
-// Production execution is native Python (src/nemsis2fhir/mapping/patient.py);
+// Production execution is native Python (src/emsinterop/mapping/patient.py);
 // this map is executed by the reference Java engine in CI as a fidelity
 // oracle. Sex translates through the authored cm-nemsis-sex ConceptMap
 // (ADR-007: ePatient.25 is the source of truth).
 
-map "urn:nemsis2fhir:StructureMap/NemsisEPatientToPatient" = "NemsisEPatientToPatient"
+map "urn:emsinterop:StructureMap/NemsisEPatientToPatient" = "NemsisEPatientToPatient"
 
-uses "urn:nemsis2fhir:StructureDefinition/NemsisEPatient" alias EPatient as source
+uses "urn:emsinterop:StructureDefinition/NemsisEPatient" alias EPatient as source
 uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as target
 
 group ePatientToPatient(source src : EPatient, target tgt : Patient) {
@@ -44,7 +44,7 @@ group ePatientToPatient(source src : EPatient, target tgt : Patient) {
 
   // ADR-007: ePatient.25 Sex is the source of truth, translated through the
   // authored ConceptMap (dual-coded fidelity is a Python-side addition).
-  src.ePatient_25 as sex -> tgt.gender = translate(sex, 'urn:nemsis2fhir:conceptmap:cm-nemsis-sex', 'code') "gender";
+  src.ePatient_25 as sex -> tgt.gender = translate(sex, 'urn:emsinterop:conceptmap:cm-nemsis-sex', 'code') "gender";
 
   src.ePatient_17 as dob -> tgt.birthDate = dob "birthDate";
 }

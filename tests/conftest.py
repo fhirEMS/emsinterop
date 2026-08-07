@@ -2,8 +2,8 @@ from pathlib import Path
 
 import pytest
 
-from nemsis2fhir.convert import convert
-from nemsis2fhir.ingest import parse
+from emsinterop.convert import convert
+from emsinterop.ingest import parse
 
 FIXTURES = Path(__file__).parent / "fixtures"
 CHEST_PAIN = FIXTURES / "pcr_chest_pain.xml"
@@ -33,9 +33,9 @@ def fixture_path():
     return CHEST_PAIN
 
 
-# Optional sibling: the ccda rail's renderer (mirrors nemsis2ccda's conftest
-# resolving us). Harmless when absent — the rail reports its unavailability.
+# Optional sibling: the ccda rail's renderer (the nemsis2ccda checkout
+# nests inside this repo; its conftest resolves us the same way). Harmless when absent — the rail reports its unavailability.
 import sys as _sys
-_ccda_src = Path(__file__).resolve().parents[2] / "nemsis2ccda" / "src"
+_ccda_src = Path(__file__).resolve().parents[1] / "nemsis2ccda" / "src"
 if _ccda_src.exists() and str(_ccda_src) not in _sys.path:
     _sys.path.insert(0, str(_ccda_src))

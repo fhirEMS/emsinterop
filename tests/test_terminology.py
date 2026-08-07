@@ -1,6 +1,6 @@
 """NV/PN engine + ConceptMap execution + dual-coding."""
 
-from nemsis2fhir.terminology import conceptmaps, nv_pn, registry, systems
+from emsinterop.terminology import conceptmaps, nv_pn, registry, systems
 
 
 def test_nv_to_data_absent_reason():

@@ -1,4 +1,4 @@
-"""nemsis2fhir — NEMSIS v3.5 ePCR XML -> IHE-conformant FHIR R4 translation engine.
+"""emsinterop — NEMSIS v3.5 ePCR XML -> IHE-conformant FHIR R4 translation engine.
 
 Layered target (ADR-001): canonical US-Core-aligned resource graph (Layer A),
 then the mPSC IPS document as a thin projection (Layer B). Output is submitted

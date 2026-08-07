@@ -3,7 +3,7 @@
 # validation of the golden corpus, then run the Tier-1 harness:
 #
 #   ./scripts/tier1-up.sh                 # boot sidecar + server, install US Core
-#   NEMSIS2FHIR_TIER1_URL=http://127.0.0.1:8095 .venv/bin/python -m pytest tests/test_tier1_fhirengine.py -v
+#   EMSINTEROP_TIER1_URL=http://127.0.0.1:8095 .venv/bin/python -m pytest tests/test_tier1_fhirengine.py -v
 #
 # Requires: the fhirEngine sibling repo (../fhirEngine), node >= 20, and the
 # hl7.fhir.us.core#6.1.0 package in ~/.fhir/packages (fetched once via any
@@ -49,5 +49,5 @@ echo "  server   pid $SERVER_PID   http://127.0.0.1:$SERVER_PORT"
 echo "  delta    $DELTA_BASE"
 echo ""
 echo "Run the harness:"
-echo "  NEMSIS2FHIR_TIER1_URL=http://127.0.0.1:$SERVER_PORT .venv/bin/python -m pytest tests/test_tier1_fhirengine.py -v"
+echo "  EMSINTEROP_TIER1_URL=http://127.0.0.1:$SERVER_PORT .venv/bin/python -m pytest tests/test_tier1_fhirengine.py -v"
 wait

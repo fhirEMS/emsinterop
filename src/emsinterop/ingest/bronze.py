@@ -30,7 +30,7 @@ def land(xml_path: str | Path, table_path: str | Path) -> int:
         from deltalake import DeltaTable, write_deltalake
     except ImportError as error:  # pragma: no cover
         raise RuntimeError(
-            "raw-NEMSIS bronze requires the 'bronze' extra: pip install nemsis2fhir[bronze]"
+            "raw-NEMSIS bronze requires the 'bronze' extra: pip install emsinterop[bronze]"
         ) from error
 
     raw = Path(xml_path).read_bytes()
@@ -98,7 +98,7 @@ def replay(table_path: str | Path, pcr_number: str | None = None) -> list[bytes]
         from deltalake import DeltaTable
     except ImportError as error:  # pragma: no cover
         raise RuntimeError(
-            "raw-NEMSIS bronze requires the 'bronze' extra: pip install nemsis2fhir[bronze]"
+            "raw-NEMSIS bronze requires the 'bronze' extra: pip install emsinterop[bronze]"
         ) from error
 
     table = DeltaTable(str(table_path)).to_pyarrow_table(

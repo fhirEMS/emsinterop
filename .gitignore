@@ -11,3 +11,6 @@ __pycache__/
 
 # OS
 .DS_Store
+
+# nested downstream checkout (its own repo)
+/nemsis2ccda/

@@ -1,8 +1,8 @@
 """The inbound outcome loop: hospital A03 -> match -> eOutcome write-back."""
 
-from nemsis2fhir.convert import convert
-from nemsis2fhir.ingest import parse, validate
-from nemsis2fhir.outcome import (
+from emsinterop.convert import convert
+from emsinterop.ingest import parse, validate
+from emsinterop.outcome import (
     MatchVerdict,
     apply_outcome,
     outcome_record,

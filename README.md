@@ -1,4 +1,4 @@
-# nemsis2fhir
+# emsInterop
 
 A translation engine converting **NEMSIS v3.5 EMS Patient Care Report (ePCR) XML** into
 **IHE-conformant FHIR R4** (IHE PCC mPSC / US Core), loaded into
@@ -14,7 +14,7 @@ Bundle to fhirEngine's REST API**. fhirEngine validates, indexes, persists to De
 DuckDB reads Gold tables for analytics.
 
 ```
-NEMSIS 3.5 XML ─▶ nemsis2fhir (Python: parse → map → ConceptMaps → assemble mPSC)
+NEMSIS 3.5 XML ─▶ emsinterop (Python: parse → map → ConceptMaps → assemble mPSC)
                         │  FHIR transaction Bundle (POST /)
                         ▼
                   fhirEngine (../fhirEngine) ── Delta OSS ── DuckDB (analytics)
@@ -27,12 +27,12 @@ NEMSIS 3.5 XML ─▶ nemsis2fhir (Python: parse → map → ConceptMaps → ass
 ```bash
 python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'
 .venv/bin/python -m pytest                       # golden-corpus + unit tests
-.venv/bin/python -m nemsis2fhir validate tests/fixtures/pcr_chest_pain.xml
-.venv/bin/python -m nemsis2fhir convert tests/fixtures/pcr_chest_pain.xml --issues
-.venv/bin/python -m nemsis2fhir convert tests/fixtures/pcr_chest_pain.xml --submit http://localhost:8080
+.venv/bin/python -m emsinterop validate tests/fixtures/pcr_chest_pain.xml
+.venv/bin/python -m emsinterop convert tests/fixtures/pcr_chest_pain.xml --issues
+.venv/bin/python -m emsinterop convert tests/fixtures/pcr_chest_pain.xml --submit http://localhost:8080
 ```
 
-Layout: `src/nemsis2fhir/` (ingest → model → mapping → terminology → assemble →
+Layout: `src/emsinterop/` (ingest → model → mapping → terminology → assemble →
 submit), `maps/conceptmaps/` (authored FHIR ConceptMaps — the upstream-contributable
 spec), `schemas/nemsis/3.5.0/` (pinned NEMSIS XSDs), `tests/fixtures/` (XSD-valid
 golden corpus).
@@ -46,10 +46,10 @@ resubmission:
 
 ```bash
 ./scripts/tier1-up.sh &   # sidecar + server + US Core install
-NEMSIS2FHIR_TIER1_URL=http://127.0.0.1:8095 .venv/bin/python -m pytest tests/test_tier1_fhirengine.py -v
+EMSINTEROP_TIER1_URL=http://127.0.0.1:8095 .venv/bin/python -m pytest tests/test_tier1_fhirengine.py -v
 ```
 
-Submission uses **conditional PUT upserts** (`PUT Type?identifier=urn:nemsis2fhir:resource-id|…`)
+Submission uses **conditional PUT upserts** (`PUT Type?identifier=urn:emsinterop:resource-id|…`)
 because fhirEngine deliberately has no update-as-create; its conditional update
 creates on 0 matches (preserving our deterministic client ids, so literal
 references hold) and updates in place on 1 match. Agency display names (absent
@@ -65,7 +65,7 @@ StructureDefinitions:
 
 ```bash
 ./scripts/tier2-validate.sh          # java 17+ and ~/Downloads/validator_cli.jar
-NEMSIS2FHIR_TIER2=1 .venv/bin/python -m pytest tests/test_tier2_validator.py
+EMSINTEROP_TIER2=1 .venv/bin/python -m pytest tests/test_tier2_validator.py
 ```
 
 The document bundle is a **projection**: the reference closure from the
@@ -77,7 +77,7 @@ pinnable (non-draft) mPSC package exists.
 
 ### Raw-NEMSIS bronze (audit/replay — the mapper's ONE Delta table, ADR-009)
 
-`python -m nemsis2fhir land <xml> <table>` shreds an EMSDataSet into the raw
+`python -m emsinterop land <xml> <table>` shreds an EMSDataSet into the raw
 bronze Delta table (`deltalake`, one row per PCR stored as a self-contained
 single-PCR document with its header). Landing is **idempotent by file sha256**;
 `ingest.bronze.replay()` returns payloads that XSD-validate and convert to
@@ -95,7 +95,7 @@ projections. `python -m nemsis2ccda convert <xml> --dem dem.xml`.
 
 ### ADT^A03 projection (the EMS encounter as the ADT visit)
 
-`python -m nemsis2fhir convert <xml> --adt --dem dem.xml` renders the EMS
+`python -m emsinterop convert <xml> --adt --dem dem.xml` renders the EMS
 call's end-of-visit as an **HL7 v2.5.1 ADT^A03** — the third projection over
 Layer A — so EMS encounters reach hospital ADT rails and encounter-notification
 networks. PV1-36 uses NUBC discharge-status codes (the vocabulary NEMSIS
@@ -112,7 +112,7 @@ on the call having a destination, so refusals/no-transports never emit one. Deli
 
 ### Inbound outcome loop (Phase 6): hospital A03 → eOutcome write-back
 
-`python -m nemsis2fhir outcome <discharge.hl7> <pcr.xml...> [--apply out.xml]`
+`python -m emsinterop outcome <discharge.hl7> <pcr.xml...> [--apply out.xml]`
 parses a hospital ADT^A03, scores each candidate PCR on three signal groups —
 identity (name+DOB or shared identifier), timing (hospital admit within a
 window after transfer of care), facility (sender vs EMS destination) — and
@@ -127,7 +127,7 @@ are deliberately conservative defaults, revisable by policy.
 
 ### ITI-65 handoff packaging (Phase 5, ADR-008)
 
-`nemsis2fhir.transport.provide_document_bundle(result)` wraps the mPSC document
+`emsinterop.transport.provide_document_bundle(result)` wraps the mPSC document
 in an **MHD Provide Document Bundle**: SubmissionSet (`List`) + MHD Minimal
 DocumentReference (EntryUUID identifier, type mirrors the Composition,
 confidentiality carried as `securityLabel`) + `Binary` (the document,
@@ -135,7 +135,7 @@ application/fhir+json) + the Patient. **Validates 0-errors against
 `ihe.iti.mhd#4.2.2`** — enforced in the Tier-2 suite. Delivery is pluggable
 (`MhdHttpTransport` push, `FileDropTransport` for portable-media/batch; XDR/XDM
 can join behind the same `Transport` protocol). CLI:
-`python -m nemsis2fhir convert <xml> --iti65`.
+`python -m emsinterop convert <xml> --iti65`.
 
 ### FML fidelity oracle (CI-only Java — ADR-002)
 
@@ -152,7 +152,7 @@ declarative maps intentionally do not cover):
 ```bash
 # fully network-free when the Tier-1 fhirEngine is up (it serves as the
 # validator's terminology server); falls back to tx.fhir.org otherwise
-NEMSIS2FHIR_TIER1_URL=http://127.0.0.1:8095 ./scripts/fml-oracle.sh
+EMSINTEROP_TIER1_URL=http://127.0.0.1:8095 ./scripts/fml-oracle.sh
 ```
 
 There is no mature Python/TypeScript FML engine, and a home-grown one would
@@ -188,7 +188,7 @@ exporter/projection pair.
 
 ## Deployment messaging configuration
 
-One JSON config picks the rails (`python -m nemsis2fhir convert <xml> --config messaging.json`):
+One JSON config picks the rails (`python -m emsinterop convert <xml> --config messaging.json`):
 `mode` is a rail or list of rails from `fhir | adt | ccda` (legacy shorthands
 `both` = fhir+adt, `all`) — FHIR (transaction to fhirEngine + optional ITI-65)
 is the default; ADT rides the `AdtConfig` policy (completed-call A03 by
@@ -197,7 +197,7 @@ default, prearrival opt-in); `ccda` renders a C-CDA R2.1 CCD via the optional
 (install it to enable the rail; `ccda.out_dir` writes the documents).
 Endpoints are optional per rail (fhirEngine URL, MHD recipient, MLLP
 host:port) — configured, artifacts are delivered; unconfigured, they're
-produced and reported. See `nemsis2fhir/config.py`.
+produced and reported. See `emsinterop/config.py`.
 
 ## Documentation
 | File | What it is |

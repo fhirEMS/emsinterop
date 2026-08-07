@@ -1,7 +1,7 @@
 {
   "resourceType": "ConceptMap",
   "id": "cm-nemsis-priority",
-  "url": "urn:nemsis2fhir:conceptmap:cm-nemsis-priority",
+  "url": "urn:emsinterop:conceptmap:cm-nemsis-priority",
   "version": "0.1.0",
   "name": "NemsisResponseModeToActPriority",
   "status": "draft",

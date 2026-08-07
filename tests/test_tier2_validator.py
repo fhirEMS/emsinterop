@@ -1,7 +1,7 @@
 """Tier-2: the official HL7 validator — the AUTHORITATIVE conformance verdict
 (Architecture §5.5b; fhirEngine Tier-1 is the submission gate, not full L5).
 
-Skipped unless java + validator_cli.jar are available and NEMSIS2FHIR_TIER2=1
+Skipped unless java + validator_cli.jar are available and EMSINTEROP_TIER2=1
 (each document takes ~10-15s to validate). mPSC/IPS profile checks are
 deferred until a pinnable (non-draft) mPSC package exists.
 """
@@ -14,17 +14,17 @@ from pathlib import Path
 
 import pytest
 
-from nemsis2fhir.convert import convert
+from emsinterop.convert import convert
 
 from .conftest import FIXTURES
 
-JAR = Path(os.environ.get("NEMSIS2FHIR_VALIDATOR_JAR", Path.home() / "Downloads" / "validator_cli.jar"))
-ENABLED = os.environ.get("NEMSIS2FHIR_TIER2") == "1" and shutil.which("java") and JAR.exists()
+JAR = Path(os.environ.get("EMSINTEROP_VALIDATOR_JAR", Path.home() / "Downloads" / "validator_cli.jar"))
+ENABLED = os.environ.get("EMSINTEROP_TIER2") == "1" and shutil.which("java") and JAR.exists()
 SD_DIR = Path(__file__).resolve().parents[1] / "maps" / "structuredefinitions"
 
 pytestmark = pytest.mark.skipif(
     not ENABLED,
-    reason="set NEMSIS2FHIR_TIER2=1 (java + validator_cli.jar required) to run Tier-2",
+    reason="set EMSINTEROP_TIER2=1 (java + validator_cli.jar required) to run Tier-2",
 )
 
 ALL_FIXTURES = sorted(FIXTURES.glob("*.xml"))
@@ -60,7 +60,7 @@ def test_document_passes_hl7_validator(path, tmp_path):
 def test_iti65_passes_mhd_validation(path, tmp_path):
     """The ITI-65 Provide Document Bundle conforms to MHD 4.2.2 Minimal
     Metadata (closed ProvideBundle slicing, EntryUUID identifiers)."""
-    from nemsis2fhir.transport import provide_document_bundle
+    from emsinterop.transport import provide_document_bundle
 
     result = convert(path, agency_names={"4901": "Wasatch Valley EMS (synthetic)"})[0]
     _validate(

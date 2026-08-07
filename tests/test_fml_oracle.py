@@ -3,9 +3,9 @@ authored StructureMaps and its output must match the native Python mapper on
 the map-covered surface.
 
 Java lives ONLY here (CI), never in the runtime. Skipped unless
-NEMSIS2FHIR_FML_ORACLE=1 with java + validator_cli.jar available. The
+EMSINTEROP_FML_ORACLE=1 with java + validator_cli.jar available. The
 validator's transform mode requires a terminology server; a local fhirEngine
-(NEMSIS2FHIR_TIER1_URL or NEMSIS2FHIR_ORACLE_TX) makes the oracle fully
+(EMSINTEROP_TIER1_URL or EMSINTEROP_ORACLE_TX) makes the oracle fully
 network-free — verified to produce output identical to tx.fhir.org. Falls back
 to tx.fhir.org when no local server is configured.
 """
@@ -18,9 +18,9 @@ from pathlib import Path
 
 import pytest
 
-from nemsis2fhir.ingest import parse
-from nemsis2fhir.mapping import map_pcr
-from nemsis2fhir.oracle import (
+from emsinterop.ingest import parse
+from emsinterop.mapping import map_pcr
+from emsinterop.oracle import (
     bp_oracle_projection,
     condition_oracle_projection,
     emedication_group_instances,
@@ -36,20 +36,20 @@ from nemsis2fhir.oracle import (
 from .conftest import FIXTURES
 
 REPO = Path(__file__).resolve().parents[1]
-JAR = Path(os.environ.get("NEMSIS2FHIR_VALIDATOR_JAR", Path.home() / "Downloads" / "validator_cli.jar"))
+JAR = Path(os.environ.get("EMSINTEROP_VALIDATOR_JAR", Path.home() / "Downloads" / "validator_cli.jar"))
 # Prefer a local fhirEngine as the tx server (network-free oracle); fall back
 # to tx.fhir.org. fhirEngine doesn't pass the validator's tx approval battery
 # yet, so the authorise flag is always passed (harmless for tx.fhir.org).
 TX = (
-    os.environ.get("NEMSIS2FHIR_ORACLE_TX")
-    or os.environ.get("NEMSIS2FHIR_TIER1_URL")
+    os.environ.get("EMSINTEROP_ORACLE_TX")
+    or os.environ.get("EMSINTEROP_TIER1_URL")
     or "http://tx.fhir.org"
 )
-ENABLED = os.environ.get("NEMSIS2FHIR_FML_ORACLE") == "1" and shutil.which("java") and JAR.exists()
+ENABLED = os.environ.get("EMSINTEROP_FML_ORACLE") == "1" and shutil.which("java") and JAR.exists()
 
 pytestmark = pytest.mark.skipif(
     not ENABLED,
-    reason="set NEMSIS2FHIR_FML_ORACLE=1 (java + validator_cli.jar + network tx) to run the FML oracle",
+    reason="set EMSINTEROP_FML_ORACLE=1 (java + validator_cli.jar + network tx) to run the FML oracle",
 )
 
 ALL_FIXTURES = sorted(FIXTURES.glob("*.xml"))
@@ -85,7 +85,7 @@ def test_patient_map_matches_native_mapper(path, tmp_path):
     pcr = dataset.reports[0]
 
     reference = _reference_transform(
-        "urn:nemsis2fhir:StructureMap/NemsisEPatientToPatient",
+        "urn:emsinterop:StructureMap/NemsisEPatientToPatient",
         epatient_instance(pcr),
         tmp_path,
     )
@@ -111,7 +111,7 @@ def test_medication_map_matches_native_mapper(path, tmp_path):
 
     for index, (instance, native) in enumerate(zip(instances, natives)):
         reference = _reference_transform(
-            "urn:nemsis2fhir:StructureMap/NemsisEMedicationsToMedicationAdministration",
+            "urn:emsinterop:StructureMap/NemsisEMedicationsToMedicationAdministration",
             instance,
             tmp_path / str(index),
         )
@@ -142,7 +142,7 @@ def test_bp_map_matches_native_mapper(path, tmp_path):
 
     for index, (instance, native) in enumerate(zip(comparable, natives)):
         reference = _reference_transform(
-            "urn:nemsis2fhir:StructureMap/NemsisEVitalsToBPObservation",
+            "urn:emsinterop:StructureMap/NemsisEVitalsToBPObservation",
             instance,
             tmp_path / str(index),
         )
@@ -164,7 +164,7 @@ def test_procedure_map_matches_native_mapper(path, tmp_path):
 
     for index, (instance, native) in enumerate(zip(instances, natives)):
         reference = _reference_transform(
-            "urn:nemsis2fhir:StructureMap/NemsisEProceduresToProcedure",
+            "urn:emsinterop:StructureMap/NemsisEProceduresToProcedure",
             instance,
             tmp_path / str(index),
         )
@@ -190,7 +190,7 @@ def test_situation_map_matches_native_mapper(path, tmp_path):
     )
 
     reference = _reference_transform(
-        "urn:nemsis2fhir:StructureMap/NemsisESituationToCondition",
+        "urn:emsinterop:StructureMap/NemsisESituationToCondition",
         instance,
         tmp_path,
     )

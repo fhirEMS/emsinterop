@@ -1,6 +1,6 @@
 [project]
-name = "nemsis2fhir"
-version = "0.1.0"
+name = "emsinterop"
+version = "0.2.0"
 description = "NEMSIS v3.5 ePCR XML -> IHE-conformant FHIR R4 (mPSC / US Core) translation engine, loading into fhirEngine"
 readme = "README.md"
 requires-python = ">=3.11"
@@ -25,7 +25,7 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [tool.setuptools.package-data]
-"nemsis2fhir.terminology" = ["data/*.json"]
+"emsinterop.terminology" = ["data/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

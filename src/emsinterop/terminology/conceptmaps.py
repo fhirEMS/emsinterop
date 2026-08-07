@@ -16,14 +16,14 @@ from pathlib import Path
 
 from . import registry
 
-_MAPS_ENV = "NEMSIS2FHIR_MAPS_DIR"
+_MAPS_ENV = "EMSINTEROP_MAPS_DIR"
 
 
 def maps_dir() -> Path:
     """maps/conceptmaps directory: env override, else resolved from the repo layout."""
     if os.environ.get(_MAPS_ENV):
         return Path(os.environ[_MAPS_ENV])
-    # src/nemsis2fhir/terminology/conceptmaps.py -> repo root is parents[3]
+    # src/emsinterop/terminology/conceptmaps.py -> repo root is parents[3]
     return Path(__file__).resolve().parents[3] / "maps" / "conceptmaps"
 
 

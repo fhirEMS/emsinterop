@@ -75,6 +75,17 @@ def main(argv: list[str] | None = None) -> int:
     p_deid.add_argument("--salt", help="stable pseudonym salt for cross-run linkage "
                                        "(default: random per run)")
 
+    p_serve = sub.add_parser(
+        "serve",
+        help="run the at-the-door push endpoint (POST /push: NEMSIS XML in, "
+             "converted + dispatched per --config in real time)")
+    p_serve.add_argument("--config", metavar="CONFIG_JSON",
+                         help="messaging config; defaults to mode=fhir with no endpoints")
+    p_serve.add_argument("--bronze", metavar="TABLE",
+                         help="land pushed XML in this raw-NEMSIS bronze Delta table first")
+    p_serve.add_argument("--host", default="127.0.0.1")
+    p_serve.add_argument("--port", type=int, default=8096)
+
     p_outcome = sub.add_parser(
         "outcome",
         help="match a hospital discharge event (ADT^A03 or FHIR Discharge "
@@ -119,6 +130,14 @@ def main(argv: list[str] | None = None) -> int:
             Path(args.out).write_text(rendered + "\n")
         else:
             print(rendered)
+        return 0
+
+    if args.command == "serve":
+        from .config import MessagingConfig
+        from .serve import create_app, run
+        config = MessagingConfig.from_file(args.config) if args.config else None
+        run(create_app(config, bronze_table=args.bronze),
+            host=args.host, port=args.port)
         return 0
 
     if args.command == "outcome":

@@ -22,8 +22,9 @@ from .parser import NEMSIS_NS, parse
 logger = get_logger("bronze")
 
 
-def land(xml_path: str | Path, table_path: str | Path) -> int:
-    """Shred an EMSDataSet file into the bronze table; returns rows written.
+def land(xml_path: str | Path | bytes, table_path: str | Path) -> int:
+    """Shred an EMSDataSet file (path, or raw bytes for in-flight documents
+    like the push endpoint's) into the bronze table; returns rows written.
 
     Idempotent by file content: a file whose sha256 has already been landed is
     skipped (returns 0) — re-running an ingest sweep never duplicates audit
@@ -36,7 +37,7 @@ def land(xml_path: str | Path, table_path: str | Path) -> int:
             "raw-NEMSIS bronze requires the 'bronze' extra: pip install emsinterop[bronze]"
         ) from error
 
-    raw = Path(xml_path).read_bytes()
+    raw = xml_path if isinstance(xml_path, bytes) else Path(xml_path).read_bytes()
     dataset = parse(raw)
     file_hash = hashlib.sha256(raw).hexdigest()
     try:

@@ -1,0 +1,20 @@
+# eHistory → Condition / AllergyIntolerance / MedicationStatement / Consent
+
+Panel tab `eHistory` of the NEMSIS 3.5.0 → FHIR R4 source-to-target workbook (emsInterop). Status column: Mapped = full target defined · Seeded = target assigned · Deferred = intentionally postponed (ledgered, never dropped).
+
+| NEMSIS ID | NEMSIS Element Name | Usage/Card | Repeats | Target FHIR Resource | Target Profile | FHIR Path | Datatype Transform | Terminology / ConceptMap | NV handling | PN handling | mPSC Section | Status | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| eHistory.01 | Barriers to Patient Care | R [1..*] | Yes | Observation | — | Observation (barrier) | code | ConceptMap (language/cultural/etc.) | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Social History* | Mapped |  |
+| eHistory.02-.04 | Patient's Practitioner Name | O | No | Practitioner/RelatedPerson | — | Patient.generalPractitioner→Practitioner | name | — | NV(7701xxx)→data-absent-reason | n/a | (subject) | Seeded |  |
+| eHistory.05 | Advance Directives | RE [0..*] | Yes | Consent / DocumentReference | — | Consent (advance directive) | code | ConceptMap (DNR/POLST) | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Advance Directives* | Mapped | DNR/POLST clinically critical |
+| eHistory.06 | Medication Allergies | RE [0..*] | Yes | AllergyIntolerance | US Core AllergyIntolerance | AllergyIntolerance.code (category=medication) | code | RxNorm/SNOMED | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Allergies | Mapped | PN=No Known Drug Allergy (8801013) |
+| eHistory.07 | Environmental/Food Allergies | O [0..*] | Yes | AllergyIntolerance | US Core AllergyIntolerance | AllergyIntolerance.code (category=environment/food) | code | SNOMED | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Allergies | Mapped |  |
+| eHistory.08 | Medical/Surgical History | RE [0..*] | Yes | Condition | US Core Condition (Problem) | Condition.code (category=problem-list) | code | ICD-10-CM (source-coded, pass-through) [corrected 2026-08-06: 3.5.0 XSD pattern-verified; was SNOMED] | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Problems | Mapped | Feeds Problems section |
+| eHistory.09 | Medical History Obtained From | O [0..*] | Yes | Provenance | — | Provenance.agent / Condition.asserter | code | source ConceptMap | NV(7701xxx)→data-absent-reason | n/a | Problems | Seeded |  |
+| eHistory.10-.11 | Immunization Type + Year | O | No | Immunization | US Core Immunization | Immunization.vaccineCode; occurrence | code/date | CVX ConceptMap | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Immunizations* | Seeded | Sparse in field data |
+| eHistory.12 | Current Medications | RE [0..1] | Yes | MedicationStatement | US Core Medication | MedicationStatement.medication (home meds) | code | RxNorm | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Medication Summary | Mapped | Home meds → Med Summary section |
+| eHistory.13-.15,.20 | Current Med Dose/Unit/Route/Frequency | O | Yes | MedicationStatement | US Core Medication | MedicationStatement.dosage | dosage | UCUM/SNOMED route | NV(7701xxx)→data-absent-reason | n/a | Medication Summary | Seeded |  |
+| eHistory.16 | Presence of Emergency Information Form | O | No | DocumentReference | — | DocumentReference (EIF) | code | — | NV(7701xxx)→data-absent-reason | n/a | (header) | Seeded |  |
+| eHistory.17 | Alcohol/Drug Use Indicators | R [1..*] | Yes | Observation | US Core Smoking/Social | Observation (substance use) | code | SNOMED | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Social History* | Mapped |  |
+| eHistory.18 | Pregnancy | O | No | Observation | US Core Pregnancy Status | Observation (pregnancy status) | code | LOINC 82810-3 | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Problems | Mapped |  |
+| eHistory.19 | Last Oral Intake | O | No | Observation | — | Observation valueDateTime | dateTime | — | NV(7701xxx)→data-absent-reason | n/a | Problems | Mapped | Anesthesia-relevant |

@@ -1,0 +1,16 @@
+# eExam · eProtocols · eLabs · eDevice → Observation / DiagnosticReport / Media
+
+Panel tab `eExam_eLabs_eDevice` of the NEMSIS 3.5.0 → FHIR R4 source-to-target workbook (emsInterop). Status column: Mapped = full target defined · Seeded = target assigned · Deferred = intentionally postponed (ledgered, never dropped).
+
+| NEMSIS ID | NEMSIS Element Name | Usage/Card | Repeats | Target FHIR Resource | Target Profile | FHIR Path | Datatype Transform | Terminology / ConceptMap | NV handling | PN handling | mPSC Section | Status | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| eExam.01 | Estimated Body Weight (kg) | RE [0..1] | No | Observation | US Core Body Weight | Observation LOINC 29463-7, kg | decimal→Quantity | LOINC/UCUM | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Vital Signs* | Mapped |  |
+| eExam.02 | Length Based Tape Measure | RE [0..1] | No | Observation | — | Observation (Broselow) valueCodeableConcept | code | color ConceptMap; helper for peds weight | NV(7701xxx)→data-absent-reason | n/a | Vital Signs* | Mapped | Pediatric length-based dosing |
+| eExam.03 | Date/Time of Assessment | O | Yes(group) | Observation | — | Observation.effectiveDateTime (exam group) | dateTime | n/a | NV(7701xxx)→data-absent-reason | n/a | (exam) | Mapped | Exam group timestamp |
+| eExam.04-.25 | Physical exam findings by body region (skin/head/face/neck/heart/abdomen/pelvis/back/extremity/eye/lung/chest/mental/neuro) | O [0..*] | Yes | Observation | — | Observation.bodySite + valueCodeableConcept; finding-location components | code | SNOMED body-structure + finding ConceptMaps | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | (exam) | Seeded | PN-heavy (pertinent negatives are the clinical point); each region a coded finding element |
+| eExam.21 | Stroke/CVA Symptoms Resolved | RE [0..1] | No | Observation | — | Observation valueBoolean | boolean | — | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Problems | Mapped | Stroke pathway |
+| eProtocols.01 | Protocols Used | R [1..1] | Yes | Observation/CarePlan | — | CarePlan.instantiatesUri / Observation | code | local protocol ConceptMap | NV(7701xxx)→data-absent-reason | n/a | EMS Course* | Seeded |  |
+| eProtocols.02 | Protocol Age Category | RE [0..1] | Yes | Observation | — | Observation component | code | ConceptMap | NV(7701xxx)→data-absent-reason | n/a | EMS Course* | Seeded |  |
+| eLabs.01-.04 | Lab result (time/prior/type/result) | O | Yes | Observation / DiagnosticReport | US Core Lab Result | Observation (laboratory) + DiagnosticReport | mixed | LOINC | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Results* | Seeded | Rare in field; point-of-care labs |
+| eLabs.05-.08 | Imaging study (type/result/waveform/file) | O | Yes | DiagnosticReport / Media | — | DiagnosticReport + Media/DocumentReference | mixed | LOINC/DICOM | NV(7701xxx)→data-absent-reason | n/a | Results* | Deferred | Waveforms/images as attachments |
+| eDevice.01-.12 | Medical device data (serial/event/mode/ECG lead/interp/shock/pacing/waveform) | O | Yes | Observation / Device / Media | — | Device + Observation cluster; Media for waveform | mixed | — | NV(7701xxx)→data-absent-reason | n/a | Results* | Deferred | Monitor/defib telemetry; CR/attachment |

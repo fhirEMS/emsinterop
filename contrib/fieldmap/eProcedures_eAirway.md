@@ -1,0 +1,22 @@
+# eProcedures · eAirway → Procedure (SNOMED)
+
+Panel tab `eProcedures_eAirway` of the NEMSIS 3.5.0 → FHIR R4 source-to-target workbook (emsInterop). Status column: Mapped = full target defined · Seeded = target assigned · Deferred = intentionally postponed (ledgered, never dropped).
+
+| NEMSIS ID | NEMSIS Element Name | Usage/Card | Repeats | Target FHIR Resource | Target Profile | FHIR Path | Datatype Transform | Terminology / ConceptMap | NV handling | PN handling | mPSC Section | Status | Notes |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| eProcedures.01 | Date/Time Procedure Performed | R [1..1] | Yes(group) | Procedure | US Core Procedure | Procedure.performedDateTime | dateTime | n/a | NV(7701xxx)→data-absent-reason | n/a | Procedures* | Mapped | GROUP timestamp |
+| eProcedures.02 | Performed Prior to this Unit's EMS Care | R [1..1] | Yes | Procedure | US Core Procedure | Procedure.performer / Provenance | boolean | — | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Procedures* | Mapped | Prior-unit provenance kept distinct |
+| eProcedures.03 | Procedure | R [1..1] | Yes | Procedure | US Core Procedure | Procedure.code | code | SNOMED (source-coded, pass-through) | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Procedures* | Mapped | PN=not performed→status=not-done + statusReason |
+| eProcedures.04 | Size of Procedure Equipment | O | Yes | Procedure/Device | — | Procedure.usedCode / focalDevice | code/Quantity | — | NV(7701xxx)→data-absent-reason | n/a | Procedures* | Seeded |  |
+| eProcedures.05 | Number of Procedure Attempts | R [1..1] | Yes | Procedure/Observation | — | Observation (attempts) / Procedure.note | integer | — | NV(7701xxx)→data-absent-reason | n/a | Procedures* | Mapped |  |
+| eProcedures.06 | Procedure Successful | R [1..1] | Yes | Procedure | US Core Procedure | Procedure.outcome | code | success ConceptMap | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Procedures* | Mapped |  |
+| eProcedures.07 | Procedure Complication | R [1..*] | Yes | Procedure | US Core Procedure | Procedure.complication | code | NEMSIS 3907xxx ConceptMap + dual-code [corrected 2026-08-06: 3.5.0 XSD enumeration; was SNOMED] | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Procedures* | Mapped | PN=none |
+| eProcedures.08 | Response to Procedure | R [1..1] | Yes | Observation | — | Observation (response) derivedFrom Procedure | code | ConceptMap | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Procedures* | Mapped |  |
+| eProcedures.09 | Procedure Crew Members ID | RE [0..1] | Yes | Procedure | US Core Procedure | Procedure.performer.actor→Practitioner | ref | →dPersonnel/eCrew | NV(7701xxx)→data-absent-reason | n/a | Procedures* | Mapped |  |
+| eProcedures.10 | Role/Type of Person Performing | R [1..1] | Yes | Procedure | — | Procedure.performer.function | code | ConceptMap | NV(7701xxx)→data-absent-reason | n/a | Procedures* | Mapped |  |
+| eProcedures.11-.12 | Procedure Authorization / Authorizing Physician | O | Yes | Procedure | — | Procedure.basedOn / performer | code/ref | medical control | NV(7701xxx)→data-absent-reason | n/a | Procedures* | Seeded |  |
+| eProcedures.13 | Vascular Access Location | RE [0..1] | Yes | Procedure | US Core Procedure | Procedure.bodySite | code | SNOMED body structure | NV(7701xxx)→data-absent-reason | n/a | Procedures* | Mapped |  |
+| eAirway.01 | Indications for Invasive Airway | RE [0..*] | Yes | Procedure/Observation | — | Procedure.reasonCode | code | SNOMED | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Procedures* | Mapped |  |
+| eAirway.02-.04 | Airway Device Confirmation (time/device/method) | RE | Yes | Procedure/Observation | — | Procedure + Observation (confirmation) | mixed | SNOMED | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Procedures* | Mapped | Links to eProcedures airway entry |
+| eAirway.05 | Tube Depth | O | Yes | Observation | — | Observation valueQuantity (cm) | decimal→Quantity | UCUM cm | NV(7701xxx)→data-absent-reason | n/a | Procedures* | Seeded |  |
+| eAirway.06-.11 | Confirming person / complications / failed-airway reasons / decision & abandon times | O/RE | Yes | Procedure/Observation | — | Procedure.performer / complication / statusReason; timing | mixed | ConceptMaps | NV(7701xxx)→data-absent-reason | PN(8801xxx)→statusReason/negation | Procedures* | Seeded |  |

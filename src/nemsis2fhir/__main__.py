@@ -36,6 +36,9 @@ def main(argv: list[str] | None = None) -> int:
         metavar="DEM_XML",
         help="NEMSIS DEMDataSet file supplying agency names (dAgency.03) for the Organization",
     )
+    p_convert.add_argument("--config", metavar="CONFIG_JSON",
+                           help="messaging config (mode fhir|adt|both + per-rail policy); "
+                                "dispatches per config and prints the delivery report")
     p_convert.add_argument("--submit", metavar="BASE_URL", help="POST the transaction to fhirEngine")
     p_convert.add_argument("--token", help="bearer token for --submit")
     p_convert.add_argument("--issues", action="store_true", help="print the conversion issue log to stderr")
@@ -103,6 +106,16 @@ def main(argv: list[str] | None = None) -> int:
         names = agency_names(args.dem)
 
     results = convert(args.xml, document_variant=args.variant, agency_names=names)
+    if args.config:
+        from .config import MessagingConfig, dispatch
+        config = MessagingConfig.from_file(args.config)
+        for result in results:
+            report = dispatch(result, config)
+            for entry in report:
+                summary = {k: v for k, v in entry.items() if k != "artifact"}
+                summary["artifact_kind"] = entry["kind"]
+                print(json.dumps(summary))
+        return 0
     for result in results:
         if args.issues:
             for issue in result.issues.issues:

@@ -186,6 +186,15 @@ exporter/projection pair.
 > `docs/01` §3 and the S2T workbook have been corrected to match (cells carry
 > a `[corrected 2026-08-06]` audit note).
 
+## Deployment messaging configuration
+
+One JSON config picks the rails (`python -m nemsis2fhir convert <xml> --config messaging.json`):
+`mode: fhir | adt | both` — FHIR (transaction to fhirEngine + optional ITI-65)
+is the default; ADT rides the `AdtConfig` policy (completed-call A03 by
+default, prearrival opt-in). Endpoints are optional per rail (fhirEngine URL,
+MHD recipient, MLLP host:port) — configured, artifacts are delivered;
+unconfigured, they're produced and reported. See `nemsis2fhir/config.py`.
+
 ## Documentation
 | File | What it is |
 |---|---|

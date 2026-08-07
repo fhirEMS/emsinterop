@@ -76,8 +76,13 @@ def main(argv: list[str] | None = None) -> int:
                                        "(default: random per run)")
 
     p_outcome = sub.add_parser(
-        "outcome", help="match a hospital ADT^A03 to a PCR and write back eOutcome")
-    p_outcome.add_argument("adt", help="hospital discharge message (ER7 file)")
+        "outcome",
+        help="match a hospital discharge event (ADT^A03 or FHIR Discharge "
+             "Summary document) to a PCR and write back eOutcome")
+    p_outcome.add_argument(
+        "adt", metavar="discharge",
+        help="hospital discharge event: ADT^A03 ER7 file, or a FHIR Discharge "
+             "Summary document Bundle (JSON — detected by content)")
     p_outcome.add_argument("pcr", nargs="+", help="candidate PCR XML file(s)")
     p_outcome.add_argument("--apply", metavar="OUT_XML",
                            help="write the corrected PCR here when exactly one candidate LINKS")
@@ -119,8 +124,13 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "outcome":
         from pathlib import Path
         from .ingest import parse
-        from .outcome import apply_outcome, outcome_record, parse_adt, score_match
-        record = outcome_record(parse_adt(Path(args.adt).read_text()))
+        from .outcome import (apply_outcome, outcome_record,
+                              outcome_record_from_fhir, parse_adt, score_match)
+        raw = Path(args.adt).read_text()
+        if raw.lstrip().startswith("{"):
+            record = outcome_record_from_fhir(json.loads(raw))
+        else:
+            record = outcome_record(parse_adt(raw))
         linked = []
         for pcr_path in args.pcr:
             pcr = parse(pcr_path).reports[0]

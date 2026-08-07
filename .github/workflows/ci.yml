@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    name: local suite (XSD · mappers · corpus · bronze)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e '.[dev,bronze]'
+      - run: python -m pytest
+
+  tier2:
+    name: Tier-2 (official HL7 validator — authoritative)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - name: Cache validator + FHIR packages
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/validator_cli.jar
+            ~/.fhir/packages
+          key: tier2-validator-6.9.5-uscore-6.1.0-mhd-4.2.2
+      - name: Fetch validator_cli (pinned 6.9.5)
+        run: |
+          [ -f ~/validator_cli.jar ] || curl -sL -o ~/validator_cli.jar \
+            https://github.com/hapifhir/org.hl7.fhir.core/releases/download/6.9.5/validator_cli.jar
+      - run: pip install -e '.[dev]'
+      - name: Run Tier-2 (documents + ITI-65 vs US Core 6.1.0 + MHD 4.2.2)
+        env:
+          NEMSIS2FHIR_TIER2: "1"
+          NEMSIS2FHIR_VALIDATOR_JAR: /home/runner/validator_cli.jar
+        run: python -m pytest tests/test_tier2_validator.py -v

@@ -1,0 +1,50 @@
+// NEMSIS ePatient -> FHIR R4 Patient (canonical Layer A)
+// The authored, upstream-contributable spec for the patient panel (ADR-002).
+// Production execution is native Python (src/nemsis2fhir/mapping/patient.py);
+// this map is executed by the reference Java engine in CI as a fidelity
+// oracle. Sex translates through the authored cm-nemsis-sex ConceptMap
+// (ADR-007: ePatient.25 is the source of truth).
+
+map "urn:nemsis2fhir:StructureMap/NemsisEPatientToPatient" = "NemsisEPatientToPatient"
+
+uses "urn:nemsis2fhir:StructureDefinition/NemsisEPatient" alias EPatient as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as target
+
+group ePatientToPatient(source src : EPatient, target tgt : Patient) {
+  src.ePatient_01 as pid -> tgt.identifier as ident then {
+    pid -> ident.system = 'urn:nemsis:identifier:patient' "identSystem";
+    pid -> ident.value = pid "identValue";
+    pid -> ident.use = 'usual' "identUse";
+  } "agencyPatientId";
+
+  src -> tgt.name as name, name.use = 'official' then {
+    src.ePatient_02 as family -> name.family = family "family";
+    src.ePatient_03 as given -> name.given = given "givenFirst";
+    src.ePatient_04 as middle -> name.given = middle "givenMiddle";
+  } "officialName";
+
+  src -> tgt.address as addr, addr.use = 'home' then {
+    src.ePatient_05 as line -> addr.line = line "line";
+    src.ePatient_06 as city -> addr.city = city "city";
+    src.ePatient_07 as county -> addr.district = county "district";
+    src.ePatient_08 as state -> addr.state = state "state";
+    src.ePatient_09 as zip -> addr.postalCode = zip "postalCode";
+    src.ePatient_10 as country -> addr.country = country "country";
+  } "homeAddress";
+
+  src.ePatient_18 as phone -> tgt.telecom as t then {
+    phone -> t.system = 'phone' "phoneSystem";
+    phone -> t.value = phone "phoneValue";
+  } "telecomPhone";
+
+  src.ePatient_19 as email -> tgt.telecom as t then {
+    email -> t.system = 'email' "emailSystem";
+    email -> t.value = email "emailValue";
+  } "telecomEmail";
+
+  // ADR-007: ePatient.25 Sex is the source of truth, translated through the
+  // authored ConceptMap (dual-coded fidelity is a Python-side addition).
+  src.ePatient_25 as sex -> tgt.gender = translate(sex, 'urn:nemsis2fhir:conceptmap:cm-nemsis-sex', 'code') "gender";
+
+  src.ePatient_17 as dob -> tgt.birthDate = dob "birthDate";
+}

@@ -1,0 +1,56 @@
+// NEMSIS eVitals.VitalGroup -> FHIR R4 Observation (blood pressure panel)
+// Encodes two hard rules declaratively:
+//  - the GROUP timestamp: every Observation from a VitalGroup shares eVitals.01
+//  - NV routing (hard rule #4): a 7701xxx Not-Value on SBP/DBP becomes a
+//    component dataAbsentReason via cm-nemsis-nv — never fabricated, never
+//    skipped. Dispatch is presence-driven (exporter emits value XOR _nv).
+// Production execution is native Python (mapping/vitals.py); the reference
+// Java engine runs this map in CI as the fidelity oracle.
+
+map "urn:nemsis2fhir:StructureMap/NemsisEVitalsToBPObservation" = "NemsisEVitalsToBPObservation"
+
+uses "urn:nemsis2fhir:StructureDefinition/NemsisEVitalsGroup" alias EVitalsGroup as source
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as target
+
+group VitalGroupToBloodPressure(source grp : EVitalsGroup, target tgt : Observation) {
+  grp -> tgt.status = 'final' "status";
+  grp -> tgt.code = create('CodeableConcept') as cc, cc.coding as c,
+    c.system = 'http://loinc.org', c.code = '85354-9' "panelCode";
+  grp.eVitals_01 as t -> tgt.effective = cast(t, "dateTime") "groupTimestamp";
+
+  grp.eVitals_06 as v -> tgt.component as comp then {
+    v -> comp.code = create('CodeableConcept') as cc, cc.coding as c,
+      c.system = 'http://loinc.org', c.code = '8480-6' "sbpCode";
+    v -> comp.value = create('Quantity') as q, q.value = cast(v, "decimal"),
+      q.unit = 'mmHg', q.system = 'http://unitsofmeasure.org', q.code = 'mm[Hg]' "sbpValue";
+  } "sbp";
+
+  grp.eVitals_06_nv as nv -> tgt.component as comp then {
+    nv -> comp.code = create('CodeableConcept') as cc, cc.coding as c,
+      c.system = 'http://loinc.org', c.code = '8480-6' "sbpNvCode";
+    nv -> comp.dataAbsentReason = create('CodeableConcept') as cc then {
+      nv -> cc.coding as c, c.system = 'http://terminology.hl7.org/CodeSystem/data-absent-reason',
+        c.code = translate(nv, 'urn:nemsis2fhir:conceptmap:cm-nemsis-nv', 'code') "sbpDarStd";
+      nv -> cc.coding as c2, c2.system = 'https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS',
+        c2.code = nv "sbpDarNemsis";
+    } "sbpDar";
+  } "sbpAbsent";
+
+  grp.eVitals_07 as v -> tgt.component as comp then {
+    v -> comp.code = create('CodeableConcept') as cc, cc.coding as c,
+      c.system = 'http://loinc.org', c.code = '8462-4' "dbpCode";
+    v -> comp.value = create('Quantity') as q, q.value = cast(v, "decimal"),
+      q.unit = 'mmHg', q.system = 'http://unitsofmeasure.org', q.code = 'mm[Hg]' "dbpValue";
+  } "dbp";
+
+  grp.eVitals_07_nv as nv -> tgt.component as comp then {
+    nv -> comp.code = create('CodeableConcept') as cc, cc.coding as c,
+      c.system = 'http://loinc.org', c.code = '8462-4' "dbpNvCode";
+    nv -> comp.dataAbsentReason = create('CodeableConcept') as cc then {
+      nv -> cc.coding as c, c.system = 'http://terminology.hl7.org/CodeSystem/data-absent-reason',
+        c.code = translate(nv, 'urn:nemsis2fhir:conceptmap:cm-nemsis-nv', 'code') "dbpDarStd";
+      nv -> cc.coding as c2, c2.system = 'https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS',
+        c2.code = nv "dbpDarNemsis";
+    } "dbpDar";
+  } "dbpAbsent";
+}

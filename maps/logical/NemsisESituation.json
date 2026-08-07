@@ -1,0 +1,23 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "NemsisESituation",
+  "url": "urn:nemsis2fhir:StructureDefinition/NemsisESituation",
+  "version": "0.1.0",
+  "name": "NemsisESituation",
+  "title": "NEMSIS eSituation panel (logical model, impression slice)",
+  "status": "draft",
+  "description": "The eSituation elements the primary-impression StructureMap consumes. Terminology per the 3.5.0 XSD (pattern-verified): eSituation.11 is ICD-10-CM — NOT SNOMED as earlier drafts of the IG mapping table suggested.",
+  "fhirVersion": "4.0.1",
+  "kind": "logical",
+  "abstract": false,
+  "type": "urn:nemsis2fhir:StructureDefinition/NemsisESituation",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
+  "derivation": "specialization",
+  "differential": {
+    "element": [
+      {"id": "NemsisESituation", "path": "NemsisESituation", "short": "eSituation (impression slice)"},
+      {"id": "NemsisESituation.eSituation_01", "path": "NemsisESituation.eSituation_01", "short": "Date/Time of Symptom Onset", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisESituation.eSituation_11", "path": "NemsisESituation.eSituation_11", "short": "Provider's Primary Impression (ICD-10-CM)", "min": 0, "max": "1", "type": [{"code": "string"}]}
+    ]
+  }
+}

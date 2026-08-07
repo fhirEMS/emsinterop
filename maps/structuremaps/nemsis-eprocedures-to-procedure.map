@@ -1,0 +1,29 @@
+// NEMSIS eProcedures.ProcedureGroup -> FHIR R4 Procedure
+// PN rule (hard rule #4): a pertinent negative on eProcedures.03 (refused /
+// contraindicated / order criteria not met) means the procedure was NOT
+// performed — status=not-done + statusReason — never a dropped element.
+// SNOMED pass-through for performed procedures (XSD-verified terminology).
+// Production execution is native Python (mapping/procedures.py); the
+// reference Java engine runs this map in CI as the fidelity oracle.
+
+map "urn:nemsis2fhir:StructureMap/NemsisEProceduresToProcedure" = "NemsisEProceduresToProcedure"
+
+uses "urn:nemsis2fhir:StructureDefinition/NemsisEProcedureGroup" alias EProcGroup as source
+uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as target
+
+group ProcedureGroupToProcedure(source grp : EProcGroup, target tgt : Procedure) {
+  grp.eProcedures_01 as t -> tgt.performed = cast(t, "dateTime") "performed";
+
+  grp.eProcedures_03 as code -> tgt.status = 'completed', tgt.code = create('CodeableConcept') as cc then {
+    code -> cc.coding as c, c.system = 'http://snomed.info/sct', c.code = code "snomed";
+  } "performedProcedure";
+
+  grp.eProcedures_03_pn as pn -> tgt.status = 'not-done', tgt.statusReason = create('CodeableConcept') as cc then {
+    pn -> cc.coding as c, c.system = 'https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS', c.code = pn "pnCoding";
+  } "notPerformed";
+
+  grp.eProcedures_03 as code -> tgt.outcome = create('CodeableConcept') as cc then {
+    grp.eProcedures_06 as success -> cc.coding as c,
+      c.system = 'https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS', c.code = success "successCoding";
+  } "outcome";
+}

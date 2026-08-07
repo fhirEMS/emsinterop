@@ -1,0 +1,24 @@
+{
+  "resourceType": "ConceptMap",
+  "id": "cm-nemsis-race",
+  "url": "urn:nemsis2fhir:conceptmap:cm-nemsis-race",
+  "version": "0.1.0",
+  "name": "NemsisRaceToCDCRaceEthnicity",
+  "status": "draft",
+  "description": "ePatient.14 Race (OMB categories, 2514xxx) -> CDC Race & Ethnicity code system for US Core us-core-race / us-core-ethnicity extensions. NOTE: NEMSIS lists 'Hispanic or Latino' as a race value; it maps to the ETHNICITY extension. 'Middle Eastern or North African' has no CDC target yet (OMB 2024 category) - retained as NEMSIS coding only, tracked in Gap_Register.",
+  "group": [
+    {
+      "source": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+      "target": "urn:oid:2.16.840.1.113883.6.238",
+      "element": [
+        {"code": "2514001", "display": "American Indian or Alaska Native", "target": [{"code": "1002-5", "display": "American Indian or Alaska Native", "equivalence": "equivalent"}]},
+        {"code": "2514003", "display": "Asian", "target": [{"code": "2028-9", "display": "Asian", "equivalence": "equivalent"}]},
+        {"code": "2514005", "display": "Black or African American", "target": [{"code": "2054-5", "display": "Black or African American", "equivalence": "equivalent"}]},
+        {"code": "2514007", "display": "Hispanic or Latino", "target": [{"code": "2135-2", "display": "Hispanic or Latino", "equivalence": "equivalent", "comment": "ETHNICITY, not race - route to us-core-ethnicity"}]},
+        {"code": "2514009", "display": "Native Hawaiian or Other Pacific Islander", "target": [{"code": "2076-8", "display": "Native Hawaiian or Other Pacific Islander", "equivalence": "equivalent"}]},
+        {"code": "2514011", "display": "White", "target": [{"code": "2106-3", "display": "White", "equivalence": "equivalent"}]},
+        {"code": "2514013", "display": "Middle Eastern or North African", "target": [{"equivalence": "unmatched", "comment": "No CDC Race&Ethnicity concept as of pinned build; carry NEMSIS coding + OMB text, propose upstream"}]}
+      ]
+    }
+  ]
+}

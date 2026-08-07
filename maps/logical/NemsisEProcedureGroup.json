@@ -1,0 +1,26 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "NemsisEProcedureGroup",
+  "url": "urn:nemsis2fhir:StructureDefinition/NemsisEProcedureGroup",
+  "version": "0.1.0",
+  "name": "NemsisEProcedureGroup",
+  "title": "NEMSIS eProcedures.ProcedureGroup (logical model)",
+  "status": "draft",
+  "description": "One eProcedures.ProcedureGroup instance (Architecture §4.3: one Procedure per group, performed = eProcedures.01). The pertinent negative on eProcedures.03 rides as eProcedures_03_pn — procedure NOT performed (refused / contraindicated / order criteria not met).",
+  "fhirVersion": "4.0.1",
+  "kind": "logical",
+  "abstract": false,
+  "type": "urn:nemsis2fhir:StructureDefinition/NemsisEProcedureGroup",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
+  "derivation": "specialization",
+  "differential": {
+    "element": [
+      {"id": "NemsisEProcedureGroup", "path": "NemsisEProcedureGroup", "short": "One ProcedureGroup"},
+      {"id": "NemsisEProcedureGroup.eProcedures_01", "path": "NemsisEProcedureGroup.eProcedures_01", "short": "Date/Time Performed (group timestamp)", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEProcedureGroup.eProcedures_02", "path": "NemsisEProcedureGroup.eProcedures_02", "short": "Performed Prior to This Unit's Care (9923xxx)", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEProcedureGroup.eProcedures_03", "path": "NemsisEProcedureGroup.eProcedures_03", "short": "Procedure (SNOMED)", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEProcedureGroup.eProcedures_03_pn", "path": "NemsisEProcedureGroup.eProcedures_03_pn", "short": "Pertinent negative on .03 (8801xxx) — NOT performed", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEProcedureGroup.eProcedures_06", "path": "NemsisEProcedureGroup.eProcedures_06", "short": "Procedure Successful (9923xxx)", "min": 0, "max": "1", "type": [{"code": "string"}]}
+    ]
+  }
+}

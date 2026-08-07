@@ -1,0 +1,20 @@
+{
+  "resourceType": "ConceptMap",
+  "id": "cm-nemsis-sex",
+  "url": "urn:nemsis2fhir:conceptmap:cm-nemsis-sex",
+  "version": "0.1.0",
+  "name": "NemsisSexToAdministrativeGender",
+  "status": "draft",
+  "description": "ePatient.25 Sex (source of truth per ADR-007; ePatient.13 Gender legacy fallback uses the same 9919xxx codes) -> FHIR administrative-gender. Single-target so FML translate() is deterministic; the US Core birthsex mapping lives in cm-nemsis-birthsex.",
+  "group": [
+    {
+      "source": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+      "target": "http://hl7.org/fhir/administrative-gender",
+      "element": [
+        {"code": "9919001", "display": "Female", "target": [{"code": "female", "display": "Female", "equivalence": "equivalent"}]},
+        {"code": "9919003", "display": "Male", "target": [{"code": "male", "display": "Male", "equivalence": "equivalent"}]},
+        {"code": "9919005", "display": "Unknown", "target": [{"code": "unknown", "display": "Unknown", "equivalence": "equivalent"}]}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "NemsisEMedicationGroup",
+  "url": "urn:nemsis2fhir:StructureDefinition/NemsisEMedicationGroup",
+  "version": "0.1.0",
+  "name": "NemsisEMedicationGroup",
+  "title": "NEMSIS eMedications.MedicationGroup (logical model)",
+  "status": "draft",
+  "description": "One eMedications.MedicationGroup instance (Architecture §4.3: one MedicationAdministration per group). Element names use '_' for '.'; the pertinent-negative on eMedications.03 rides as eMedications_03_pn (8801xxx) — the exporter emits either the valued element or its _pn, never both, so the maps dispatch on presence.",
+  "fhirVersion": "4.0.1",
+  "kind": "logical",
+  "abstract": false,
+  "type": "urn:nemsis2fhir:StructureDefinition/NemsisEMedicationGroup",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
+  "derivation": "specialization",
+  "differential": {
+    "element": [
+      {"id": "NemsisEMedicationGroup", "path": "NemsisEMedicationGroup", "short": "One MedicationGroup"},
+      {"id": "NemsisEMedicationGroup.eMedications_01", "path": "NemsisEMedicationGroup.eMedications_01", "short": "Date/Time Administered (group timestamp)", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEMedicationGroup.eMedications_02", "path": "NemsisEMedicationGroup.eMedications_02", "short": "Administered Prior to This Unit's Care (9923xxx)", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEMedicationGroup.eMedications_03", "path": "NemsisEMedicationGroup.eMedications_03", "short": "Medication (RxNorm)", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEMedicationGroup.eMedications_03_pn", "path": "NemsisEMedicationGroup.eMedications_03_pn", "short": "Pertinent negative on .03 (8801xxx) — medication NOT given", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEMedicationGroup.eMedications_04", "path": "NemsisEMedicationGroup.eMedications_04", "short": "Route (9927xxx)", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEMedicationGroup.eMedications_05", "path": "NemsisEMedicationGroup.eMedications_05", "short": "Dosage", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEMedicationGroup.eMedications_06", "path": "NemsisEMedicationGroup.eMedications_06", "short": "Dosage Units (3706xxx)", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEMedicationGroup.eMedications_10", "path": "NemsisEMedicationGroup.eMedications_10", "short": "Role of Person Administering (9905xxx)", "min": 0, "max": "1", "type": [{"code": "string"}]}
+    ]
+  }
+}

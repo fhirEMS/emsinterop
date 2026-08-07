@@ -1,0 +1,26 @@
+// NEMSIS eSituation -> FHIR R4 Condition (Provider's Primary Impression)
+// The principal encounter-diagnosis Condition (Architecture §4.2). ICD-10-CM
+// pass-through — the 3.5.0 XSD pattern-checks these fields (the corrected
+// terminology reality; earlier IG drafts said SNOMED). Symptom onset
+// (eSituation.01) becomes Condition.onsetDateTime.
+// Production execution is native Python (mapping/situation.py); the reference
+// Java engine runs this map in CI as the fidelity oracle.
+
+map "urn:nemsis2fhir:StructureMap/NemsisESituationToCondition" = "NemsisESituationToCondition"
+
+uses "urn:nemsis2fhir:StructureDefinition/NemsisESituation" alias ESituation as source
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as target
+
+group SituationToPrimaryImpression(source src : ESituation, target tgt : Condition) {
+  src.eSituation_11 as icd -> tgt.code = create('CodeableConcept') as cc then {
+    icd -> cc.coding as c, c.system = 'http://hl7.org/fhir/sid/icd-10-cm', c.code = icd "icdCoding";
+  } "primaryImpression";
+
+  src.eSituation_11 as icd -> tgt.clinicalStatus = create('CodeableConcept') as cc, cc.coding as c,
+    c.system = 'http://terminology.hl7.org/CodeSystem/condition-clinical', c.code = 'active' "clinicalStatus";
+
+  src.eSituation_11 as icd -> tgt.category = create('CodeableConcept') as cc, cc.coding as c,
+    c.system = 'http://terminology.hl7.org/CodeSystem/condition-category', c.code = 'encounter-diagnosis' "category";
+
+  src.eSituation_01 as onset -> tgt.onset = cast(onset, "dateTime") "onset";
+}

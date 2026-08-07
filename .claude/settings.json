@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(.venv/bin/python -)",
+      "Bash(.venv/bin/python)",
+      "Bash(../../../.venv/bin/python -)",
+      "Bash(awk '/name=\"EMSDataSet\"/,/name=\"PatientCareReport\"/' EMSDataSet_v3.xsd)",
+      "Bash(.venv/bin/pip -q install -e .)",
+      "Bash(.venv/bin/python -c \"from nemsis2fhir.convert import convert; from nemsis2fhir.terminology import conceptmaps; print\\(conceptmaps.translate\\('cm-nemsis-sex','9919001'\\)\\); print\\('import ok'\\)\")"
+    ]
+  }
+}

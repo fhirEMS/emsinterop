@@ -1,0 +1,35 @@
+// NEMSIS eMedications.MedicationGroup -> FHIR R4 MedicationAdministration
+// The flagship PN rule (hard rule #4): a pertinent negative on eMedications.03
+// (contraindicated / refused / denied by order...) means the medication was
+// NOT given — status=not-done + statusReason — never a dropped element.
+// Dispatch is presence-driven: the oracle exporter emits either the valued
+// eMedications_03 (given) or eMedications_03_pn (withheld), never both.
+// Production execution is native Python (mapping/medications.py); the
+// reference Java engine runs this map in CI as the fidelity oracle.
+
+map "urn:nemsis2fhir:StructureMap/NemsisEMedicationsToMedicationAdministration" = "NemsisEMedicationsToMedicationAdministration"
+
+uses "urn:nemsis2fhir:StructureDefinition/NemsisEMedicationGroup" alias EMedGroup as source
+uses "http://hl7.org/fhir/StructureDefinition/MedicationAdministration" alias MedicationAdministration as target
+
+group MedicationGroupToAdministration(source grp : EMedGroup, target tgt : MedicationAdministration) {
+  grp.eMedications_01 as t -> tgt.effective = cast(t, "dateTime") "effective";
+
+  // Given: RxNorm pass-through, status completed.
+  grp.eMedications_03 as med -> tgt.status = 'completed', tgt.medication = create('CodeableConcept') as cc then {
+    med -> cc.coding as c, c.system = 'http://www.nlm.nih.gov/research/umls/rxnorm', c.code = med "medCoding";
+  } "given";
+
+  // Withheld (pertinent negative): status not-done + NEMSIS-coded statusReason.
+  grp.eMedications_03_pn as pn -> tgt.status = 'not-done', tgt.statusReason = create('CodeableConcept') as cc then {
+    pn -> cc.coding as c, c.system = 'https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS', c.code = pn "pnCoding";
+  } "withheld";
+
+  // Dosage only when the medication was given (route via cm-nemsis-medroute).
+  grp.eMedications_03 as med -> tgt.dosage as d then {
+    grp.eMedications_04 as rt -> d.route = create('CodeableConcept') as cc, cc.coding as c,
+      c.system = 'http://snomed.info/sct',
+      c.code = translate(rt, 'urn:nemsis2fhir:conceptmap:cm-nemsis-medroute', 'code') "route";
+    grp.eMedications_05 as dv -> d.dose as q, q.value = cast(dv, "decimal") "doseValue";
+  } "dosage";
+}

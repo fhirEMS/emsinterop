@@ -72,22 +72,51 @@ def build_adt_a03(
     message_time: str | None = None,
 ) -> str:
     """The EMS encounter's end-of-visit as an ADT^A03 (ER7, \\r segments)."""
+    return _build(ctx, "A03", receiving_application, receiving_facility, message_time)
+
+
+def build_adt_a04(
+    ctx: MappingContext,
+    receiving_application: str = "",
+    receiving_facility: str = "",
+    message_time: str | None = None,
+) -> str:
+    """Prearrival notification: the EMS visit REGISTERED as an ADT^A04 (which
+    uses the ADT_A01 structure) — sent when the destination team is alerted
+    (eDisposition.25) or at scene departure, with DG1 impressions so the ED
+    knows what is coming. No discharge fields: the visit has not ended."""
+    return _build(ctx, "A04", receiving_application, receiving_facility, message_time)
+
+
+def _build(
+    ctx: MappingContext,
+    event: str,
+    receiving_application: str,
+    receiving_facility: str,
+    message_time: str | None,
+) -> str:
     pcr = ctx.pcr
     agency = ctx.header.value("dAgency.02") or "UNKNOWN"
     agency_name = ctx.agency_names.get(agency, "")
     end_of_visit = pcr.value("eTimes.12") or pcr.value("eTimes.11") or pcr.value("eTimes.09")
-    when = _ts(message_time or end_of_visit)
-    control_id = ctx.rid("adt-a03")
+    if event == "A04":
+        occurred = pcr.value("eDisposition.25") or pcr.value("eTimes.09") or pcr.value("eTimes.07")
+        structure = "ADT_A01"  # A04 reuses the A01 message structure
+    else:
+        occurred = end_of_visit
+        structure = "ADT_A03"
+    when = _ts(message_time or occurred)
+    control_id = ctx.rid(f"adt-{event.lower()}")
 
     msh = "|".join([
         "MSH", "^~\\&",
         _esc("nemsis2fhir"), _esc(agency_name or agency),
         _esc(receiving_application), _esc(receiving_facility),
         when, "",
-        "ADT^A03^ADT_A03", control_id, "P", HL7_VERSION,
+        f"ADT^{event}^{structure}", control_id, "P", HL7_VERSION,
     ])
 
-    evn = "|".join(["EVN", "A03", when, "", "", "", _ts(end_of_visit)])
+    evn = "|".join(["EVN", event, when, "", "", "", _ts(occurred)])
 
     identifiers = []
     patient_id = pcr.value("ePatient.01")
@@ -119,10 +148,10 @@ def build_adt_a03(
         "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
         f"{_esc(visit_number)}^^^{_esc(agency)}^VN",
         "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
-        _discharge_status(ctx),
+        _discharge_status(ctx) if event == "A03" else "",
         "", "", "", "", "", "", "",
         _ts(pcr.value("eTimes.07") or pcr.value("eTimes.06")),  # PV1-44 admit = patient contact
-        _ts(end_of_visit),  # PV1-45 discharge = transfer of care / end of visit
+        _ts(end_of_visit) if event == "A03" else "",  # PV1-45 only once the visit ended
     ])
 
     segments = [msh, evn, pid, pv1]

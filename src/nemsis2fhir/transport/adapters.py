@@ -62,3 +62,36 @@ class FileDropTransport:
         path = self._directory / f"iti65-{safe}.json"
         path.write_text(json.dumps(iti65_bundle, indent=1))
         return {"status": "written", "path": str(path)}
+
+
+class MllpTransport:
+    """Deliver HL7 v2 messages (e.g. ADT^A03/A04) over MLLP.
+
+    Minimal Lower Layer Protocol: <VT>message<FS><CR>, one ACK read back.
+    The receipt reports the MSA acknowledgment code (AA/AE/AR)."""
+
+    VT, FS, CR = b"\x0b", b"\x1c", b"\x0d"
+
+    def __init__(self, host: str, port: int, timeout: float = 30.0):
+        self._host = host
+        self._port = port
+        self._timeout = timeout
+
+    def send(self, message: str) -> dict:
+        import socket
+
+        with socket.create_connection((self._host, self._port), timeout=self._timeout) as sock:
+            sock.sendall(self.VT + message.encode("utf-8") + self.FS + self.CR)
+            buffer = b""
+            while self.FS not in buffer:
+                chunk = sock.recv(4096)
+                if not chunk:
+                    break
+                buffer += chunk
+        ack = buffer.strip(self.VT + self.FS + self.CR).decode("utf-8", "replace")
+        code = next(
+            (seg.split("|")[1] for seg in ack.split("\r") if seg.startswith("MSA")),
+            None,
+        )
+        return {"status": "delivered" if code == "AA" else "ack-error",
+                "ack_code": code, "ack": ack}

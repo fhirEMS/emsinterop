@@ -27,6 +27,7 @@ def main(argv: list[str] | None = None) -> int:
     p_convert.add_argument("--document", action="store_true", help="print the mPSC document bundle")
     p_convert.add_argument("--iti65", action="store_true", help="print the ITI-65 Provide Document Bundle")
     p_convert.add_argument("--adt", action="store_true", help="print the ADT^A03 (HL7 v2) end-of-visit message")
+    p_convert.add_argument("--adt-a04", action="store_true", help="print the ADT^A04 (HL7 v2) prearrival notification")
     p_convert.add_argument("--variant", choices=["CR", "CS"], default="CR")
     p_convert.add_argument(
         "--dem",
@@ -80,9 +81,10 @@ def main(argv: list[str] | None = None) -> int:
             client = FhirEngineClient(args.submit, token=args.token)
             response = client.submit(result.transaction)
             print(json.dumps(response, indent=2))
-        elif args.adt:
-            from .assemble.adt import build_adt_a03
-            sys.stdout.write(build_adt_a03(result.context).replace("\r", "\n"))
+        elif args.adt or args.adt_a04:
+            from .assemble.adt import build_adt_a03, build_adt_a04
+            builder = build_adt_a04 if args.adt_a04 else build_adt_a03
+            sys.stdout.write(builder(result.context).replace("\r", "\n"))
         else:
             if args.iti65:
                 from .transport import provide_document_bundle

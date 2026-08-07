@@ -79,3 +79,56 @@ def test_corpus_renders(path):
     segments, raw = _message(path)
     assert set(segments) >= {"MSH", "EVN", "PID", "PV1"}
     assert segments["PV1"][36] in {"01", "02", "07", "20"}
+
+
+def test_a04_prearrival():
+    from nemsis2fhir.assemble.adt import build_adt_a04
+    result = convert(CHEST_PAIN, agency_names={"4901": "Wasatch Valley EMS (synthetic)"})[0]
+    raw = build_adt_a04(result.context)
+    segments = {seg.split("|", 1)[0]: seg.split("|") for seg in raw.strip("\r").split("\r")}
+    assert segments["MSH"][8] == "ADT^A04^ADT_A01"  # A04 uses the A01 structure
+    assert segments["EVN"][1] == "A04"
+    # chest-pain has prearrival alert "No" (4224001) with nil .25 -> falls back
+    # to left-scene time as the registration moment
+    assert segments["EVN"][2] == "20260806092200-0600"
+    pv1 = segments["PV1"]
+    assert pv1[36] == ""  # visit not ended: no discharge status
+    assert pv1[45] == ""  # and no discharge time
+    assert any(seg.startswith("DG1") for seg in raw.split("\r"))  # ED sees why
+
+
+def test_mllp_transport_round_trip():
+    import socket
+    import threading
+
+    from nemsis2fhir.transport import MllpTransport
+
+    received = {}
+    server = socket.socket()
+    server.bind(("127.0.0.1", 0))
+    server.listen(1)
+    port = server.getsockname()[1]
+
+    def serve():
+        conn, _ = server.accept()
+        data = b""
+        while b"\x1c" not in data:
+            data += conn.recv(4096)
+        received["frame"] = data
+        ack = b"\x0bMSH|^~\\&|ENS|HIE|||20260806||ACK^A03|X|P|2.5.1\rMSA|AA|X\r\x1c\x0d"
+        conn.sendall(ack)
+        conn.close()
+
+    thread = threading.Thread(target=serve, daemon=True)
+    thread.start()
+
+    result = convert(CHEST_PAIN)[0]
+    from nemsis2fhir.assemble.adt import build_adt_a03
+    receipt = MllpTransport("127.0.0.1", port, timeout=10).send(build_adt_a03(result.context))
+    thread.join(timeout=10)
+    server.close()
+
+    assert receipt["status"] == "delivered" and receipt["ack_code"] == "AA"
+    frame = received["frame"]
+    assert frame.startswith(b"\x0bMSH|") and frame.endswith(b"\x1c\x0d")
+    assert b"ADT^A03^ADT_A03" in frame

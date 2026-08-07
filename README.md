@@ -102,9 +102,12 @@ networks. PV1-36 uses NUBC discharge-status codes (the vocabulary NEMSIS
 eOutcome speaks natively) via `cm-nemsis-nubc-discharge` with clinical
 precedence (deceased → 20, refusal/AMA → 07, transported → 02, released → 01);
 PV1-44/45 = patient contact → transfer of care; DG1 carries the ICD-10-CM
-impressions pass-through; ER7 escaping and deterministic MSH-10 control ids
-(pass `message_time` in production). MLLP delivery is a follow-up behind the
-`Transport` protocol.
+impressions pass-through (primary F, secondary W); ER7 escaping and deterministic MSH-10 control
+ids (pass `message_time` in production). **ADT^A04 prearrival notification**
+(`--adt-a04`, A01 structure, EVN at the destination-team alert time or scene
+departure, no discharge fields) tells the ED what's coming before the doors
+open. Delivery: `MllpTransport` (VT/FS/CR framing, MSA ack codes) joins the
+`Transport` protocol alongside MHD HTTP and file drop.
 
 ### ITI-65 handoff packaging (Phase 5, ADR-008)
 

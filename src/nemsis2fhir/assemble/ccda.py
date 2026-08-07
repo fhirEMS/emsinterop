@@ -11,12 +11,19 @@ on once pinned (see TEMPLATES).
 NV/PN land in their native CDA idioms: NV -> nullFlavor (NA/UNK/MSK),
 PN -> negationInd="true" (medication-not-given, procedure-not-done, NKDA).
 
+Dual-coding parity (ADR-003): wherever a coded element's source FHIR concept
+carries the original NEMSIS coding, it rides along as a CDA <translation>
+(codeSystem = the placeholder NEMSIS OID root). Coded vitals (AVPU, cardiac
+rhythm, stroke scale, ...) render as CD-valued component observations — no
+element with a value is silently dropped.
+
 Scope notes (v1, tracked in README):
-- structural conformance + corpus tests; the schematron validation tier
-  (ONC C-CDA validator, Java/CI like our other oracles) is the follow-up.
-- routeCode carries SNOMED (C-CDA prefers NCI Thesaurus routes — a
-  ConceptMap-sized gap shared with the FHIR side).
-- NEMSIS original codes are not yet carried as CDA <translation> elements.
+- structural conformance + XSD-schema tier (NEMSIS2FHIR_CCDA_SCHEMA=1) +
+  corpus tests; the schematron tier (ONC C-CDA validator, Java/CI like our
+  other oracles) is the follow-up.
+- routeCode carries SNOMED primary (C-CDA prefers NCI Thesaurus routes — a
+  ConceptMap-sized gap shared with the FHIR side) with the NEMSIS original
+  as <translation>.
 """
 
 from __future__ import annotations
@@ -24,7 +31,7 @@ from __future__ import annotations
 from lxml import etree
 
 from ..mapping.context import MappingContext
-from ..terminology import nv_pn, registry
+from ..terminology import nv_pn, registry, systems
 
 NS = "urn:hl7-org:v3"
 XSI = "http://www.w3.org/2001/XMLSchema-instance"
@@ -38,6 +45,14 @@ OID_ICD10CM = "2.16.840.1.113883.6.90"
 OID_CONFIDENTIALITY = "2.16.840.1.113883.5.25"
 OID_ADMIN_GENDER = "2.16.840.1.113883.5.1"
 OID_NEMSIS_ROOT = "2.16.840.1.113883.3.10.100"  # placeholder root for NEMSIS ids (document + revisit)
+
+# FHIR system URI -> (CDA codeSystem OID, codeSystemName) for standard codings.
+SYSTEM_OIDS = {
+    systems.SNOMED: (OID_SNOMED, "SNOMED CT"),
+    systems.RXNORM: (OID_RXNORM, "RxNorm"),
+    systems.ICD10CM: (OID_ICD10CM, "ICD-10-CM"),
+    systems.LOINC: (OID_LOINC, "LOINC"),
+}
 
 # C-CDA R2.1 template ids (base). PCS supplement ids can be appended per key
 # once pinned from the IHE PCS CDA supplement.
@@ -89,6 +104,59 @@ def _template_ids(parent, key: str) -> None:
 def _code(parent, tag, code, system_oid, display=None, system_name=None) -> etree._Element:
     return _el(parent, tag, code=code, codeSystem=system_oid,
                displayName=display, codeSystemName=system_name)
+
+
+def _nemsis_coding(concept: dict | None) -> dict | None:
+    """The original NEMSIS coding carried in a FHIR CodeableConcept, if any."""
+    for coding in (concept or {}).get("coding", []):
+        if coding.get("system") == systems.NEMSIS:
+            return coding
+    return None
+
+
+def _standard_coding(concept: dict | None) -> tuple[dict, str, str] | None:
+    """First coding in a recognized standard system -> (coding, oid, name)."""
+    for coding in (concept or {}).get("coding", []):
+        mapped = SYSTEM_OIDS.get(coding.get("system", ""))
+        if mapped:
+            return coding, mapped[0], mapped[1]
+    return None
+
+
+def _nemsis_translation(code_el, concept: dict | None) -> None:
+    """Dual-coding parity (ADR-003): the original NEMSIS coding rides along
+    as a CDA <translation> on the coded element."""
+    coding = _nemsis_coding(concept)
+    if coding is not None:
+        _code(code_el, "translation", coding["code"], OID_NEMSIS_ROOT,
+              coding.get("display"), "NEMSIS")
+
+
+def _cd_value(parent, concept: dict, tag: str = "value") -> etree._Element:
+    """CD-typed value from a CodeableConcept: standard coding primary when
+    present (NEMSIS as <translation>), NEMSIS-only otherwise. originalText
+    carries the concept text. Never returns an empty CD: a concept with no
+    usable coding yields nullFlavor OTH + originalText."""
+    standard = _standard_coding(concept)
+    nemsis = _nemsis_coding(concept)
+    if standard:
+        coding, oid, name = standard
+        value = _code(parent, tag, coding["code"], oid, coding.get("display"), name)
+    elif nemsis is not None:
+        value = _code(parent, tag, nemsis["code"], OID_NEMSIS_ROOT,
+                      nemsis.get("display"), "NEMSIS")
+        nemsis = None  # already primary; no translation needed
+    else:
+        value = _el(parent, tag, nullFlavor="OTH")
+    value.set(f"{{{XSI}}}type", "CD")
+    text = concept.get("text")
+    if text:
+        # CD content order: originalText, then translation(s).
+        _el(value, "originalText").text = text
+    if standard and nemsis is not None:
+        _code(value, "translation", nemsis["code"], OID_NEMSIS_ROOT,
+              nemsis.get("display"), "NEMSIS")
+    return value
 
 
 def _nullflavor_value(parent, tag: str, nv: str | None, xsi_type: str | None = None):
@@ -271,6 +339,7 @@ class CcdaRenderer:
                 value = _el(observation, "value", code=icd["code"], codeSystem=OID_ICD10CM,
                             codeSystemName="ICD-10-CM")
                 value.set(f"{{{XSI}}}type", "CD")
+                _nemsis_translation(value, condition["code"])
             else:
                 value = _nullflavor_value(observation, "value", None, "CD")
                 text = condition["code"].get("text")
@@ -336,6 +405,23 @@ class CcdaRenderer:
                 _el(time, "low", value=_ts(when))
             else:
                 time.set("nullFlavor", "UNK")
+            # routeCode sits between effectiveTime and doseQuantity per the
+            # CDA SubstanceAdministration sequence. SNOMED primary, NEMSIS
+            # original as <translation>; NEMSIS-only when unmatched.
+            route = (admin.get("dosage") or {}).get("route")
+            if route:
+                snomed = next((c for c in route.get("coding", [])
+                               if c.get("system") == systems.SNOMED), None)
+                route_nemsis = _nemsis_coding(route)
+                if snomed:
+                    route_code = _code(substance, "routeCode", snomed["code"],
+                                       OID_SNOMED, snomed.get("display"), "SNOMED CT")
+                    if route_nemsis is not None:
+                        _code(route_code, "translation", route_nemsis["code"],
+                              OID_NEMSIS_ROOT, route_nemsis.get("display"), "NEMSIS")
+                elif route_nemsis is not None:
+                    _code(substance, "routeCode", route_nemsis["code"],
+                          OID_NEMSIS_ROOT, route_nemsis.get("display"), "NEMSIS")
             dose_value = (admin.get("dosage") or {}).get("dose", {}).get("value")
             if dose_value is not None:
                 _el(substance, "doseQuantity", value=str(dose_value))
@@ -344,13 +430,16 @@ class CcdaRenderer:
             rx = next((c for c in (admin.get("medicationCodeableConcept") or {})
                        .get("coding", []) if c.get("system", "").endswith("rxnorm")), None)
             if rx:
-                _code(material, "code", rx["code"], OID_RXNORM, None, "RxNorm")
+                code = _code(material, "code", rx["code"], OID_RXNORM, None, "RxNorm")
             else:
                 code = _el(material, "code", nullFlavor="NA" if negated else "UNK")
                 reason = (admin.get("statusReason") or [{}])
                 text = (reason[0] if isinstance(reason, list) else reason).get("text")
                 if text:
                     _el(code, "originalText").text = text
+            # PN/NV originals (e.g. 8801001 Contraindication Noted) ride as
+            # the NEMSIS <translation> — the negative stays computable.
+            _nemsis_translation(code, admin.get("medicationCodeableConcept"))
         return section
 
     def _vitals_section(self) -> etree._Element:
@@ -379,33 +468,58 @@ class CcdaRenderer:
         return section
 
     def _vital_components(self, organizer, obs: dict) -> None:
-        loinc = next((c for c in obs.get("code", {}).get("coding", [])
-                      if c.get("system") == "http://loinc.org"), None)
-        components = obs.get("component") or [obs]
-        for comp in components:
-            comp_loinc = next((c for c in comp.get("code", {}).get("coding", [])
-                               if c.get("system") == "http://loinc.org"), loinc)
-            if comp_loinc is None:
-                continue
-            observation = _el(_el(organizer, "component"), "observation",
-                              classCode="OBS", moodCode="EVN")
+        # The observation's own value (GCS total, AVPU, cardiac rhythm, any
+        # NV/PN-explained absence) renders alongside its components — nothing
+        # with a value (or a coded absence) may be silently dropped.
+        parts: list[dict] = []
+        if any(k in obs for k in ("valueQuantity", "valueCodeableConcept",
+                                  "dataAbsentReason", "interpretation")):
+            parts.append(obs)
+        parts.extend(obs.get("component") or [])
+        for comp in parts:
+            self._vital_observation(organizer, obs, comp)
+
+    def _vital_observation(self, organizer, obs: dict, comp: dict) -> None:
+        codings = comp.get("code", {}).get("coding", [])
+        loinc = next((c for c in codings if c.get("system") == systems.LOINC), None)
+        nemsis = next((c for c in codings if c.get("system") == systems.NEMSIS), None)
+        if loinc is None and nemsis is None:
+            return
+        observation = _el(_el(organizer, "component"), "observation",
+                          classCode="OBS", moodCode="EVN")
+        if loinc is not None:
+            # C-CDA Vital Sign Observation: LOINC code, PQ value.
             _template_ids(observation, "vital_observation")
             _el(observation, "id",
-                root=self.ctx.rid("ccda-vital", obs["id"], comp_loinc["code"]))
-            _code(observation, "code", comp_loinc["code"], OID_LOINC,
-                  comp_loinc.get("display"), "LOINC")
-            _el(observation, "statusCode", code="completed")
-            _el(observation, "effectiveTime", value=_ts(obs.get("effectiveDateTime")))
-            quantity = comp.get("valueQuantity")
-            if quantity:
-                value = _el(observation, "value", value=str(quantity["value"]),
-                            unit=quantity.get("code") or quantity.get("unit"))
-                value.set(f"{{{XSI}}}type", "PQ")
-            else:
-                dar = (comp.get("dataAbsentReason") or {}).get("coding", [])
-                nemsis_nv = next((c["code"] for c in dar
-                                  if c.get("system", "").endswith("/NEMSIS")), None)
-                _nullflavor_value(observation, "value", nemsis_nv, "PQ")
+                root=self.ctx.rid("ccda-vital", obs["id"], loinc["code"]))
+            _code(observation, "code", loinc["code"], OID_LOINC,
+                  loinc.get("display"), "LOINC")
+        else:
+            # NEMSIS-coded vital (AVPU eVitals.26, rhythm eVitals.03, GCS
+            # qualifier, stroke scale, ...): plain CDA observation, code =
+            # the NEMSIS element, value CD. The C-CDA vital-sign template
+            # is not claimed — it requires a LOINC code and PQ value.
+            _el(observation, "id",
+                root=self.ctx.rid("ccda-vital", obs["id"], nemsis["code"]))
+            _code(observation, "code", nemsis["code"], OID_NEMSIS_ROOT,
+                  nemsis.get("display") or comp.get("code", {}).get("text"),
+                  "NEMSIS")
+        _el(observation, "statusCode", code="completed")
+        _el(observation, "effectiveTime", value=_ts(obs.get("effectiveDateTime")))
+        quantity = comp.get("valueQuantity")
+        concept = comp.get("valueCodeableConcept")
+        if quantity:
+            value = _el(observation, "value", value=str(quantity["value"]),
+                        unit=quantity.get("code") or quantity.get("unit"))
+            value.set(f"{{{XSI}}}type", "PQ")
+        elif concept:
+            _cd_value(observation, concept)
+        else:
+            dar = (comp.get("dataAbsentReason") or {}).get("coding", [])
+            nemsis_nv = next((c["code"] for c in dar
+                              if c.get("system", "").endswith("/NEMSIS")), None)
+            _nullflavor_value(observation, "value", nemsis_nv,
+                              "PQ" if loinc is not None else "CD")
 
     def _procedures_section(self) -> etree._Element:
         section = self._section("procedures_section", "47519-4", "Procedures")
@@ -424,15 +538,29 @@ class CcdaRenderer:
             snomed = next((c for c in procedure["code"].get("coding", [])
                            if c.get("system", "").endswith("snomed.info/sct")), None)
             if snomed:
-                _code(activity, "code", snomed["code"], OID_SNOMED, None, "SNOMED CT")
+                code = _code(activity, "code", snomed["code"], OID_SNOMED, None, "SNOMED CT")
             else:
                 code = _el(activity, "code", nullFlavor="NA" if negated else "UNK")
                 text = procedure["code"].get("text")
                 if text:
                     _el(code, "originalText").text = text
+            _nemsis_translation(code, procedure["code"])
             _el(activity, "statusCode", code="completed")
             if procedure.get("performedDateTime"):
                 _el(activity, "effectiveTime", value=_ts(procedure["performedDateTime"]))
+            outcome = procedure.get("outcome")
+            if outcome:
+                # eProcedures.06 Successful — NEMSIS-coded outcome as a
+                # component observation (no base-CDA outcome slot).
+                observation = _el(
+                    _el(activity, "entryRelationship", typeCode="COMP"),
+                    "observation", classCode="OBS", moodCode="EVN")
+                _el(observation, "id",
+                    root=self.ctx.rid("ccda-procedure-outcome", procedure["id"]))
+                _code(observation, "code", "eProcedures.06", OID_NEMSIS_ROOT,
+                      "Procedure Successful", "NEMSIS")
+                _el(observation, "statusCode", code="completed")
+                _cd_value(observation, outcome)
         return section
 
 

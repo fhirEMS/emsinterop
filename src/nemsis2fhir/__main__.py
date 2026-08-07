@@ -45,6 +45,13 @@ def main(argv: list[str] | None = None) -> int:
     p_land.add_argument("xml")
     p_land.add_argument("table", help="path to the bronze Delta table")
 
+    p_outcome = sub.add_parser(
+        "outcome", help="match a hospital ADT^A03 to a PCR and write back eOutcome")
+    p_outcome.add_argument("adt", help="hospital discharge message (ER7 file)")
+    p_outcome.add_argument("pcr", nargs="+", help="candidate PCR XML file(s)")
+    p_outcome.add_argument("--apply", metavar="OUT_XML",
+                           help="write the corrected PCR here when exactly one candidate LINKS")
+
     args = parser.parse_args(argv)
 
     if args.command == "validate":
@@ -56,6 +63,30 @@ def main(argv: list[str] | None = None) -> int:
         from .ingest.bronze import land
         written = land(args.xml, args.table)
         print(json.dumps({"landed_rows": written, "table": args.table}))
+        return 0
+
+    if args.command == "outcome":
+        from pathlib import Path
+        from .ingest import parse
+        from .outcome import apply_outcome, outcome_record, parse_adt, score_match
+        record = outcome_record(parse_adt(Path(args.adt).read_text()))
+        linked = []
+        for pcr_path in args.pcr:
+            pcr = parse(pcr_path).reports[0]
+            result = score_match(pcr, record)
+            print(json.dumps({"pcr": pcr_path, "pcr_number": pcr.pcr_number,
+                              "verdict": result.verdict.value,
+                              "signals": result.signals}))
+            if result.linked:
+                linked.append(pcr_path)
+        if args.apply:
+            if len(linked) != 1:
+                print(json.dumps({"error": f"--apply requires exactly one LINKED candidate, got {len(linked)}"}),
+                      file=sys.stderr)
+                return 1
+            corrected = apply_outcome(Path(linked[0]).read_bytes(), record)
+            Path(args.apply).write_bytes(corrected)
+            print(json.dumps({"applied": linked[0], "out": args.apply}))
         return 0
 
     names = None

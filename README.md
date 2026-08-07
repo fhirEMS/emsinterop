@@ -109,6 +109,21 @@ departure, no discharge fields) tells the ED what's coming before the doors
 open. Delivery: `MllpTransport` (VT/FS/CR framing, MSA ack codes) joins the
 `Transport` protocol alongside MHD HTTP and file drop.
 
+### Inbound outcome loop (Phase 6): hospital A03 → eOutcome write-back
+
+`python -m nemsis2fhir outcome <discharge.hl7> <pcr.xml...> [--apply out.xml]`
+parses a hospital ADT^A03, scores each candidate PCR on three signal groups —
+identity (name+DOB or shared identifier), timing (hospital admit within a
+window after transfer of care), facility (sender vs EMS destination) — and
+links **only when every available signal agrees**; anything partial is
+`review` (wrong-patient write-back is the refused failure mode). A linked
+discharge writes back the FULL corrected PCR: eOutcome.01/.02 take the NUBC
+discharge status verbatim (the vocabulary match with PV1-36), diagnoses land
+in .10/.13, the hospital visit number in .03/.04 (Hospital-Receiving), and
+the output re-validates against the pinned NEMSIS XSD — the state-registry
+resubmission form. Matching thresholds and delta-vs-full submission format
+are deliberately conservative defaults, revisable by policy.
+
 ### ITI-65 handoff packaging (Phase 5, ADR-008)
 
 `nemsis2fhir.transport.provide_document_bundle(result)` wraps the mPSC document

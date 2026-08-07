@@ -1,0 +1,24 @@
+{
+  "resourceType": "ConceptMap",
+  "id": "cm-nemsis-nubc-discharge",
+  "url": "urn:nemsis2fhir:conceptmap:cm-nemsis-nubc-discharge",
+  "version": "0.1.0",
+  "name": "NemsisTransportDispositionToNUBCDischargeStatus",
+  "status": "draft",
+  "description": "eDisposition.30 Transport Disposition (4230xxx) -> NUBC/UB-04 Patient Discharge Status, for PV1-36 when the EMS encounter itself is the ADT visit (ADT^A03 on transfer of care or release). The same vocabulary NEMSIS eOutcome.01/.02 uses natively. Refusal and deceased cases are refined by eDisposition.28/.19 in the builder (precedence documented there).",
+  "group": [
+    {
+      "source": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+      "target": "https://www.nubc.org/CodeSystem/PatDischargeStatus",
+      "element": [
+        {"code": "4230001", "display": "Transport by This EMS Unit (This Crew Only)", "target": [{"code": "02", "display": "Discharged/transferred to another short term general hospital", "equivalence": "wider"}]},
+        {"code": "4230003", "display": "Transport by This EMS Unit, with a Member of Another Crew", "target": [{"code": "02", "equivalence": "wider"}]},
+        {"code": "4230005", "display": "Transport by Another EMS Unit/Agency", "target": [{"code": "02", "equivalence": "wider"}]},
+        {"code": "4230007", "display": "Transport by Another EMS Unit/Agency, with a Member of This Crew", "target": [{"code": "02", "equivalence": "wider"}]},
+        {"code": "4230009", "display": "Patient Refused Transport", "target": [{"code": "07", "display": "Left against medical advice or discontinued care", "equivalence": "equivalent"}]},
+        {"code": "4230011", "display": "Non-Patient Transport (Not Otherwise Listed)", "target": [{"code": "01", "display": "Discharged to home or self care", "equivalence": "wider"}]},
+        {"code": "4230013", "display": "No Transport", "target": [{"code": "01", "display": "Discharged to home or self care", "equivalence": "wider"}]}
+      ]
+    }
+  ]
+}

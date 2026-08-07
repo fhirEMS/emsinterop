@@ -93,6 +93,19 @@ The C-CDA R2.1 projection now lives in its own repo —
 this repo's canonical graph as a dependency: one Layer A, two document
 projections. `python -m nemsis2ccda convert <xml> --dem dem.xml`.
 
+### ADT^A03 projection (the EMS encounter as the ADT visit)
+
+`python -m nemsis2fhir convert <xml> --adt --dem dem.xml` renders the EMS
+call's end-of-visit as an **HL7 v2.5.1 ADT^A03** — the third projection over
+Layer A — so EMS encounters reach hospital ADT rails and encounter-notification
+networks. PV1-36 uses NUBC discharge-status codes (the vocabulary NEMSIS
+eOutcome speaks natively) via `cm-nemsis-nubc-discharge` with clinical
+precedence (deceased → 20, refusal/AMA → 07, transported → 02, released → 01);
+PV1-44/45 = patient contact → transfer of care; DG1 carries the ICD-10-CM
+impressions pass-through; ER7 escaping and deterministic MSH-10 control ids
+(pass `message_time` in production). MLLP delivery is a follow-up behind the
+`Transport` protocol.
+
 ### ITI-65 handoff packaging (Phase 5, ADR-008)
 
 `nemsis2fhir.transport.provide_document_bundle(result)` wraps the mPSC document

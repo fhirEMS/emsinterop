@@ -42,6 +42,8 @@ def main(argv: list[str] | None = None) -> int:
     p_convert.add_argument("--submit", metavar="BASE_URL", help="POST the transaction to fhirEngine")
     p_convert.add_argument("--token", help="bearer token for --submit")
     p_convert.add_argument("--issues", action="store_true", help="print the conversion issue log to stderr")
+    p_convert.add_argument("--issues-out", metavar="JSONL",
+                           help="append the conversion issue log to a JSONL file (gap-register feed)")
 
     p_validate = sub.add_parser("validate", help="XSD-validate NEMSIS XML")
     p_validate.add_argument("xml")
@@ -49,6 +51,14 @@ def main(argv: list[str] | None = None) -> int:
     p_land = sub.add_parser("land", help="land NEMSIS XML in the raw bronze Delta table")
     p_land.add_argument("xml")
     p_land.add_argument("table", help="path to the bronze Delta table")
+
+    p_reconcile = sub.add_parser(
+        "reconcile",
+        help="reconcile the conversion issue log against fhirEngine's dead-letter "
+             "tables: replay raw-NEMSIS bronze and join by resource id / PCR identifier")
+    p_reconcile.add_argument("bronze", help="path to the raw-NEMSIS bronze Delta table")
+    p_reconcile.add_argument("delta_base", help="fhirEngine FHIRENGINE_DELTA_BASE directory")
+    p_reconcile.add_argument("--out", metavar="JSON", help="write the gap register here instead of stdout")
 
     p_outcome = sub.add_parser(
         "outcome", help="match a hospital ADT^A03 to a PCR and write back eOutcome")
@@ -68,6 +78,17 @@ def main(argv: list[str] | None = None) -> int:
         from .ingest.bronze import land
         written = land(args.xml, args.table)
         print(json.dumps({"landed_rows": written, "table": args.table}))
+        return 0
+
+    if args.command == "reconcile":
+        from pathlib import Path
+        from .reconcile import reconcile_bronze
+        register = reconcile_bronze(args.bronze, args.delta_base)
+        rendered = json.dumps(register, indent=2)
+        if args.out:
+            Path(args.out).write_text(rendered + "\n")
+        else:
+            print(rendered)
         return 0
 
     if args.command == "outcome":
@@ -106,26 +127,47 @@ def main(argv: list[str] | None = None) -> int:
         names = agency_names(args.dem)
 
     results = convert(args.xml, document_variant=args.variant, agency_names=names)
+
+    def flush_issues(exit_code: int = 0) -> int:
+        for result in results:
+            if args.issues:
+                for issue in result.issues.issues:
+                    print(
+                        f"[{issue.severity}] {issue.element_id} ({issue.disposition.value}): {issue.reason}",
+                        file=sys.stderr,
+                    )
+            if args.issues_out:
+                result.issues.write_jsonl(args.issues_out)
+        return exit_code
+
     if args.config:
         from .config import MessagingConfig, dispatch
         config = MessagingConfig.from_file(args.config)
+        failed = False
         for result in results:
             report = dispatch(result, config)
             for entry in report:
                 summary = {k: v for k, v in entry.items() if k != "artifact"}
                 summary["artifact_kind"] = entry["kind"]
                 print(json.dumps(summary))
-        return 0
+                failed = failed or "error" in entry
+        return flush_issues(1 if failed else 0)
     for result in results:
-        if args.issues:
-            for issue in result.issues.issues:
-                print(
-                    f"[{issue.severity}] {issue.element_id} ({issue.disposition.value}): {issue.reason}",
-                    file=sys.stderr,
-                )
         if args.submit:
+            from .issues import issues_from_operation_outcome
+            from .submit import SubmissionError
             client = FhirEngineClient(args.submit, token=args.token)
-            response = client.submit(result.transaction)
+            try:
+                response = client.submit(result.transaction)
+            except SubmissionError as error:
+                # Atomic rejection — nothing dead-lettered server-side, so the
+                # OperationOutcome is captured into the issue log here.
+                result.issues.extend(issues_from_operation_outcome(
+                    error.operation_outcome, result.context.pcr_number,
+                    error.status_code))
+                if error.operation_outcome is not None:
+                    print(json.dumps(error.operation_outcome, indent=2), file=sys.stderr)
+                return flush_issues(1)
             print(json.dumps(response, indent=2))
         elif args.adt:
             from .assemble.adt import AdtConfig, build_adt_messages
@@ -144,7 +186,7 @@ def main(argv: list[str] | None = None) -> int:
             else:
                 payload = result.transaction
             print(json.dumps(payload, indent=2))
-    return 0
+    return flush_issues(0)
 
 
 if __name__ == "__main__":

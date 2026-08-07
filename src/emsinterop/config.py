@@ -104,10 +104,24 @@ def dispatch(result, config: MessagingConfig | None = None) -> list[dict]:
         entry: dict = {"kind": "fhir-transaction", "sent": False,
                        "artifact": result.transaction}
         if config.fhir.fhirengine_url:
-            from .submit import FhirEngineClient
-            client = FhirEngineClient(config.fhir.fhirengine_url, token=config.fhir.token)
-            entry["detail"] = client.submit(result.transaction)
-            entry["sent"] = True
+            from . import submit as _submit
+            client = _submit.FhirEngineClient(
+                config.fhir.fhirengine_url, token=config.fhir.token)
+            try:
+                entry["detail"] = client.submit(result.transaction)
+                entry["sent"] = True
+            except _submit.SubmissionError as error:
+                # Rejected transactions never reach fhirEngine's dead-letter
+                # (atomic pre-validation) — fold the OperationOutcome into the
+                # issue log so the gap register sees the failure.
+                from .issues import issues_from_operation_outcome
+                rejected = issues_from_operation_outcome(
+                    error.operation_outcome, result.context.pcr_number,
+                    error.status_code)
+                result.issues.extend(rejected)
+                entry["error"] = f"HTTP {error.status_code}"
+                if error.operation_outcome is not None:
+                    entry["outcome"] = error.operation_outcome
         report.append(entry)
         if config.fhir.iti65:
             from .transport import MhdHttpTransport, provide_document_bundle

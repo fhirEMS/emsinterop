@@ -85,6 +85,23 @@ single-PCR document with its header). Landing is **idempotent by file sha256**;
 audit/replay guarantee, test-enforced. This table never holds FHIR resources:
 fhirEngine is the sole writer of FHIR storage.
 
+### C-CDA projection (second document projection over Layer A)
+
+`assemble/ccda.py` renders the same in-memory graph as a **C-CDA R2.1 CCD**
+(`python -m nemsis2fhir convert <xml> --ccda`): US Realm header (patient,
+authoring device + agency, custodian, encompassingEncounter; document code
+34133-9 with 67796-3 EMS-PCR translation; confidentiality R when DS4P-tagged
+content is present) and five entry-bearing sections with narrative. NV/PN land
+in their **native CDA idioms**: NV → `nullFlavor` (NA/UNK/MSK), PN →
+`negationInd="true"` (medication-not-given with originalText reason,
+procedure-not-done, NKDA as a negated drug-allergy assertion). The template
+table is parameterized so IHE PCS CDA-supplement templateIds can layer on once
+pinned. Structural conformance is corpus-tested; **known v1 gaps**: no
+schematron tier yet (ONC C-CDA validator — same Java/CI pattern as the other
+oracles), NEMSIS originals not yet carried as `<translation>`, SNOMED (not
+NCI) routes, LOINC-coded vitals only (AVPU/rhythm skipped), and a placeholder
+OID root for NEMSIS identifiers pending a real assignment.
+
 ### ITI-65 handoff packaging (Phase 5, ADR-008)
 
 `nemsis2fhir.transport.provide_document_bundle(result)` wraps the mPSC document

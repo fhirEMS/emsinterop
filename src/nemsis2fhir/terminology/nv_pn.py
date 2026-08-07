@@ -33,6 +33,18 @@ NV_TO_DATA_ABSENT_REASON = {
     NV_NOT_REPORTING: "masked",
 }
 
+# NV code -> CDA nullFlavor (HL7 v3 NullFlavor). CDA had first-class
+# no-value semantics before FHIR: NA / UNK / MSK are exact fits.
+NV_TO_NULLFLAVOR = {
+    NV_NOT_APPLICABLE: "NA",
+    NV_NOT_RECORDED: "UNK",
+    NV_NOT_REPORTING: "MSK",
+}
+
+
+def nullflavor(nv_code: str | None) -> str:
+    return NV_TO_NULLFLAVOR.get(nv_code or "", "UNK")
+
 # --- PN: Pertinent Negatives ------------------------------------------------
 
 PN_CONTRAINDICATION_NOTED = "8801001"

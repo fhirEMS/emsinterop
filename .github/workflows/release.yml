@@ -1,0 +1,47 @@
+name: Release
+
+# Tag vX.Y.Z → build the emsinterop.nemsis FHIR package (NEMSIS CodeSystem,
+# per-element ValueSets, ConceptMaps, extension SD, logical models) and attach
+# it to the GitHub release as an npm-style tarball. This is the versioned
+# mapping-ruleset release of Roadmap P5: consumers install it into fhirEngine
+# with `fhirengine-terminology install-ig <unpacked-dir> emsinterop.nemsis`.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  package:
+    name: emsinterop.nemsis FHIR package
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+      - name: Build the unpacked package
+        run: |
+          python -m emsinterop package-ig staging/package | tee summary.json
+          { echo '```json'; cat summary.json; echo '```'; } > release-notes.md
+      - name: Version must match the tag
+        run: |
+          PKG_VERSION=$(python -c "import json; print(json.load(open('staging/package/package.json'))['version'])")
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
+            echo "package version $PKG_VERSION != tag $TAG_VERSION" >&2
+            exit 1
+          fi
+      - name: Tarball (npm package layout)
+        run: |
+          tar -czf "emsinterop.nemsis-${GITHUB_REF_NAME#v}.tgz" -C staging package
+      - name: Attach to the release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: emsinterop.nemsis-*.tgz
+          body_path: release-notes.md
+          append_body: true

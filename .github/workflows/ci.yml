@@ -15,7 +15,7 @@ jobs:
         with:
           python-version: "3.12"
           cache: pip
-      - run: pip install -e '.[dev,bronze]'
+      - run: pip install -e '.[dev,bronze,analytics]'
       - run: python -m pytest
 
   tier2:

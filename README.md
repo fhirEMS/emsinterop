@@ -206,6 +206,7 @@ produced and reported. See `emsinterop/config.py`.
 | `docs/02_NEMSIS35_to_FHIR_S2T_Mapping.xlsx` | The superset source-to-target mapping — 18 tabs, 212 rows, coverage matrix, terminology/ConceptMap strategy, gap register. The running spec for the mapper. |
 | `docs/03_ADRs.md` | 10 architecture decision records (layered output, native-Python-mapper→fhirEngine runtime, terminology, identity/MPI, conformance, validation contract, versioning, transport, fhirEngine-as-SoR, no-Spark). |
 | `docs/04_Phased_Roadmap.md` | Phased build plan (P0–P7) with effort/risk and critical path. |
+| `docs/05_Operations.md` | Deployment runbook: prod gates, terminology provisioning, land→convert→dispatch→reconcile pipeline, promotion, de-id analytics, releases. |
 | `CLAUDE.md` | Fast orientation + hard rules for Claude Code sessions. |
 
 ## Key design commitments

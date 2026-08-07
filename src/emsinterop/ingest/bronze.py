@@ -16,7 +16,10 @@ from pathlib import Path
 
 from lxml import etree
 
+from ..log import event, get_logger
 from .parser import NEMSIS_NS, parse
+
+logger = get_logger("bronze")
 
 
 def land(xml_path: str | Path, table_path: str | Path) -> int:
@@ -40,6 +43,7 @@ def land(xml_path: str | Path, table_path: str | Path) -> int:
         table = DeltaTable(str(table_path))
         already = table.to_pyarrow_table(columns=["file_sha256"]).column("file_sha256")
         if file_hash in {str(v) for v in already}:
+            event(logger, "bronze.deduped", table=table_path)
             return 0
     except Exception:
         pass  # table doesn't exist yet — first landing
@@ -86,6 +90,8 @@ def land(xml_path: str | Path, table_path: str | Path) -> int:
         rows["raw_xml"].append(single_pcr_document(node))
 
     write_deltalake(str(table_path), pa.table(rows), mode="append")
+    event(logger, "bronze.landed", rows=len(dataset.reports),
+          agency_number=agency, table=table_path)
     return len(dataset.reports)
 
 

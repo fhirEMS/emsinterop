@@ -6,7 +6,13 @@ owns validation-prior-to-Bronze, indexing, persistence, MPI, and security.
 
 from __future__ import annotations
 
+import logging
+
 import httpx
+
+from ..log import event, get_logger
+
+logger = get_logger("submit")
 
 
 class SubmissionError(RuntimeError):
@@ -40,6 +46,7 @@ class FhirEngineClient:
 
     def submit(self, bundle: dict) -> dict:
         """POST a transaction Bundle to the server root."""
+        entries = len(bundle.get("entry", []))
         response = self._client.post("/", json=bundle)
         if response.status_code >= 300:
             outcome = None
@@ -49,7 +56,11 @@ class FhirEngineClient:
                     outcome = body
             except ValueError:
                 pass
+            event(logger, "transaction.rejected", level=logging.WARNING,
+                  status_code=response.status_code, entries=entries)
             raise SubmissionError(response.status_code, outcome)
+        event(logger, "transaction.submitted",
+              status_code=response.status_code, entries=entries)
         return response.json()
 
     def capability(self) -> dict:

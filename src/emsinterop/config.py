@@ -24,6 +24,9 @@ from dataclasses import dataclass, field
 from pathlib import Path
 
 from .assemble.adt import AdtConfig, build_adt_messages
+from .log import event as log_event, get_logger
+
+logger = get_logger("dispatch")
 
 RAILS = ("fhir", "adt", "ccda")
 _LEGACY_MODES = {"both": ("fhir", "adt"), "all": RAILS}
@@ -164,4 +167,8 @@ def dispatch(result, config: MessagingConfig | None = None) -> list[dict]:
                 entry["sent"] = entry["detail"].get("status") == "delivered"
             report.append(entry)
 
+    for entry in report:
+        log_event(logger, "rail.dispatched",
+                  pcr_number=result.context.pcr_number, kind=entry["kind"],
+                  sent=entry["sent"])
     return report

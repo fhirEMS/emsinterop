@@ -54,6 +54,43 @@ def _index(conceptmap_id: str) -> dict[tuple[str, str], list[dict]]:
     return idx
 
 
+@lru_cache(maxsize=None)
+def _reverse_index(conceptmap_id: str) -> dict[tuple[str, str], list[str]]:
+    """(target_system, target_code) -> NEMSIS source codes.
+
+    Only reversible rows participate: equivalence `equivalent`/`equal`. A
+    `wider` target (NEMSIS is more specific than the standard code) must NOT
+    reverse — running it backwards would fabricate precision the source
+    never asserted. `unmatched` carries no target code at all.
+    """
+    cm = load(conceptmap_id)
+    idx: dict[tuple[str, str], list[str]] = {}
+    for group in cm.get("group", []):
+        target_system = group.get("target")
+        for element in group.get("element", []):
+            for t in element.get("target", []):
+                if t.get("equivalence") not in ("equivalent", "equal"):
+                    continue
+                if "code" not in t:
+                    continue
+                idx.setdefault((target_system, t["code"]), []).append(element["code"])
+    return idx
+
+
+def reverse_translate(
+    conceptmap_id: str,
+    system: str,
+    code: str,
+    element_id: str | None = None,
+) -> list[dict]:
+    """NEMSIS codings for a standard coding — the authored ConceptMap run in
+    reverse (Roadmap P6). Ambiguous reversals (several NEMSIS sources map to
+    the same standard code) return every candidate in map order; the caller
+    owns disambiguation. Pass element_id to attach registry display text."""
+    codes = _reverse_index(conceptmap_id).get((system, code), [])
+    return [registry.nemsis_coding(element_id, c) for c in codes]
+
+
 def translate(conceptmap_id: str, code: str, target_system: str | None = None) -> list[dict]:
     """Standard-system codings for a NEMSIS code. Empty list if unmatched."""
     idx = _index(conceptmap_id)

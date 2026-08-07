@@ -1,0 +1,102 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eDevice-07",
+  "url": "urn:emsinterop:valueset:nemsis:eDevice.07",
+  "version": "0.2.0",
+  "name": "NemsiseDevice07",
+  "title": "NEMSIS eDevice.07 Medical Device ECG Lead",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4107001",
+            "display": "I"
+          },
+          {
+            "code": "4107003",
+            "display": "II"
+          },
+          {
+            "code": "4107005",
+            "display": "III"
+          },
+          {
+            "code": "4107007",
+            "display": "AVR"
+          },
+          {
+            "code": "4107009",
+            "display": "AVL"
+          },
+          {
+            "code": "4107011",
+            "display": "AVF"
+          },
+          {
+            "code": "4107013",
+            "display": "Paddle"
+          },
+          {
+            "code": "4107015",
+            "display": "Pads"
+          },
+          {
+            "code": "4107017",
+            "display": "V1"
+          },
+          {
+            "code": "4107019",
+            "display": "V2"
+          },
+          {
+            "code": "4107021",
+            "display": "V3"
+          },
+          {
+            "code": "4107023",
+            "display": "V3r"
+          },
+          {
+            "code": "4107025",
+            "display": "V4"
+          },
+          {
+            "code": "4107027",
+            "display": "V4r"
+          },
+          {
+            "code": "4107029",
+            "display": "V5"
+          },
+          {
+            "code": "4107031",
+            "display": "V5r"
+          },
+          {
+            "code": "4107033",
+            "display": "V6"
+          },
+          {
+            "code": "4107035",
+            "display": "V6r"
+          },
+          {
+            "code": "4107037",
+            "display": "V7"
+          },
+          {
+            "code": "4107039",
+            "display": "V8"
+          },
+          {
+            "code": "4107041",
+            "display": "V9"
+          }
+        ]
+      }
+    ]
+  }
+}

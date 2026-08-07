@@ -1,0 +1,42 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eCustomConfiguration-03",
+  "url": "urn:emsinterop:valueset:nemsis:eCustomConfiguration.03",
+  "version": "0.2.0",
+  "name": "NemsiseCustomConfiguration03",
+  "title": "NEMSIS eCustomConfiguration.03 Custom Data Type",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9902001",
+            "display": "Binary"
+          },
+          {
+            "code": "9902003",
+            "display": "Date/Time"
+          },
+          {
+            "code": "9902005",
+            "display": "Integer/Number"
+          },
+          {
+            "code": "9902007",
+            "display": "Other"
+          },
+          {
+            "code": "9902009",
+            "display": "Text/String"
+          },
+          {
+            "code": "9902011",
+            "display": "Boolean"
+          }
+        ]
+      }
+    ]
+  }
+}

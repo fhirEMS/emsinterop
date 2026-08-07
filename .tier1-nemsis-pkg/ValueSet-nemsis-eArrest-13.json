@@ -1,0 +1,34 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eArrest-13",
+  "url": "urn:emsinterop:valueset:nemsis:eArrest.13",
+  "version": "0.2.0",
+  "name": "NemsiseArrest13",
+  "title": "NEMSIS eArrest.13 Neurological Outcome at Hospital Discharge",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3013001",
+            "display": "CPC 1 Good Cerebral Performance"
+          },
+          {
+            "code": "3013003",
+            "display": "CPC 2 Moderate Cerebral Disability"
+          },
+          {
+            "code": "3013005",
+            "display": "CPC 3 Severe Cerebral Disability"
+          },
+          {
+            "code": "3013007",
+            "display": "CPC 4 Coma or Vegetative State"
+          }
+        ]
+      }
+    ]
+  }
+}

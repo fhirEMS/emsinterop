@@ -1,0 +1,26 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eArrest-10",
+  "url": "urn:emsinterop:valueset:nemsis:eArrest.10",
+  "version": "0.2.0",
+  "name": "NemsiseArrest10",
+  "title": "NEMSIS eArrest.10 Therapeutic Hypothermia by EMS",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9923001",
+            "display": "No"
+          },
+          {
+            "code": "9923003",
+            "display": "Yes"
+          }
+        ]
+      }
+    ]
+  }
+}

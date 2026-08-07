@@ -1,0 +1,58 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eDisposition-18",
+  "url": "urn:emsinterop:valueset:nemsis:eDisposition.18",
+  "version": "0.2.0",
+  "name": "NemsiseDisposition18",
+  "title": "NEMSIS eDisposition.18 Additional Transport Mode Descriptors",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4218001",
+            "display": "Intersection Navigation-Against Normal Light Patterns"
+          },
+          {
+            "code": "4218003",
+            "display": "Intersection Navigation-With Automated Light Changing Technology"
+          },
+          {
+            "code": "4218005",
+            "display": "Intersection Navigation-With Normal Light Patterns"
+          },
+          {
+            "code": "4218007",
+            "display": "Speed-Enhanced per Local Policy"
+          },
+          {
+            "code": "4218009",
+            "display": "Speed-Normal Traffic"
+          },
+          {
+            "code": "4218011",
+            "display": "Lights and Sirens"
+          },
+          {
+            "code": "4218013",
+            "display": "Lights and No Sirens"
+          },
+          {
+            "code": "4218015",
+            "display": "No Lights or Sirens"
+          },
+          {
+            "code": "4218017",
+            "display": "Initial No Lights or Sirens, Upgraded to Lights and Sirens"
+          },
+          {
+            "code": "4218019",
+            "display": "Initial Lights and Sirens, Downgraded to No Lights or Sirens"
+          }
+        ]
+      }
+    ]
+  }
+}

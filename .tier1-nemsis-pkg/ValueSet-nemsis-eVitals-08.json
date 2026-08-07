@@ -1,0 +1,42 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eVitals-08",
+  "url": "urn:emsinterop:valueset:nemsis:eVitals.08",
+  "version": "0.2.0",
+  "name": "NemsiseVitals08",
+  "title": "NEMSIS eVitals.08 Method of Blood Pressure Measurement",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3308001",
+            "display": "Arterial Line"
+          },
+          {
+            "code": "3308003",
+            "display": "Doppler"
+          },
+          {
+            "code": "3308005",
+            "display": "Cuff-Automated"
+          },
+          {
+            "code": "3308007",
+            "display": "Cuff-Manual Auscultated"
+          },
+          {
+            "code": "3308009",
+            "display": "Cuff-Manual Palpated Only"
+          },
+          {
+            "code": "3308011",
+            "display": "Venous Line"
+          }
+        ]
+      }
+    ]
+  }
+}

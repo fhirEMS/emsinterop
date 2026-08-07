@@ -1,0 +1,54 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-02",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.02",
+  "version": "0.2.0",
+  "name": "NemsiseExam02",
+  "title": "NEMSIS eExam.02 Length Based Tape Measure",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3502001",
+            "display": "Blue"
+          },
+          {
+            "code": "3502003",
+            "display": "Green"
+          },
+          {
+            "code": "3502005",
+            "display": "Grey"
+          },
+          {
+            "code": "3502007",
+            "display": "Orange"
+          },
+          {
+            "code": "3502009",
+            "display": "Pink"
+          },
+          {
+            "code": "3502011",
+            "display": "Purple"
+          },
+          {
+            "code": "3502013",
+            "display": "Red"
+          },
+          {
+            "code": "3502015",
+            "display": "White"
+          },
+          {
+            "code": "3502017",
+            "display": "Yellow"
+          }
+        ]
+      }
+    ]
+  }
+}

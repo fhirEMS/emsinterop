@@ -1,0 +1,38 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eDisposition-28",
+  "url": "urn:emsinterop:valueset:nemsis:eDisposition.28",
+  "version": "0.2.0",
+  "name": "NemsiseDisposition28",
+  "title": "NEMSIS eDisposition.28 Patient Evaluation/Care",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4228001",
+            "display": "Patient Evaluated and Care Provided"
+          },
+          {
+            "code": "4228003",
+            "display": "Patient Evaluated and Refused Care"
+          },
+          {
+            "code": "4228005",
+            "display": "Patient Evaluated, No Care Required"
+          },
+          {
+            "code": "4228007",
+            "display": "Patient Refused Evaluation/Care"
+          },
+          {
+            "code": "4228009",
+            "display": "Patient Support Services Provided"
+          }
+        ]
+      }
+    ]
+  }
+}

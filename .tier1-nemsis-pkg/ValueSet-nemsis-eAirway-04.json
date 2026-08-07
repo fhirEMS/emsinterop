@@ -1,0 +1,62 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eAirway-04",
+  "url": "urn:emsinterop:valueset:nemsis:eAirway.04",
+  "version": "0.2.0",
+  "name": "NemsiseAirway04",
+  "title": "NEMSIS eAirway.04 Airway Device Placement Confirmed Method",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4004001",
+            "display": "Auscultation"
+          },
+          {
+            "code": "4004003",
+            "display": "Bulb/Syringe Aspiration"
+          },
+          {
+            "code": "4004005",
+            "display": "Colorimetric ETCO2"
+          },
+          {
+            "code": "4004007",
+            "display": "Condensation in Tube"
+          },
+          {
+            "code": "4004009",
+            "display": "Digital (Numeric) ETCO2"
+          },
+          {
+            "code": "4004011",
+            "display": "Direct Re-Visualization of Tube in Place"
+          },
+          {
+            "code": "4004013",
+            "display": "Endotracheal Tube Whistle (BAAM, etc.)"
+          },
+          {
+            "code": "4004015",
+            "display": "Other"
+          },
+          {
+            "code": "4004017",
+            "display": "Visualization of Vocal Cords"
+          },
+          {
+            "code": "4004019",
+            "display": "Waveform ETCO2"
+          },
+          {
+            "code": "4004021",
+            "display": "Chest Rise"
+          }
+        ]
+      }
+    ]
+  }
+}

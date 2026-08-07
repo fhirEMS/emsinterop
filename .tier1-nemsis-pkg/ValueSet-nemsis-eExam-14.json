@@ -1,0 +1,114 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-14",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.14",
+  "version": "0.2.0",
+  "name": "NemsiseExam14",
+  "title": "NEMSIS eExam.14 Back and Spine Assessment",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3514001",
+            "display": "Abrasion"
+          },
+          {
+            "code": "3514003",
+            "display": "Avulsion"
+          },
+          {
+            "code": "3514005",
+            "display": "Bleeding Controlled"
+          },
+          {
+            "code": "3514007",
+            "display": "Bleeding Uncontrolled"
+          },
+          {
+            "code": "3514009",
+            "display": "Burn-Blistering"
+          },
+          {
+            "code": "3514011",
+            "display": "Burn-Charring"
+          },
+          {
+            "code": "3514013",
+            "display": "Burn-Redness"
+          },
+          {
+            "code": "3514015",
+            "display": "Burn-White/Waxy"
+          },
+          {
+            "code": "3514017",
+            "display": "Deformity"
+          },
+          {
+            "code": "3514019",
+            "display": "Foreign Body"
+          },
+          {
+            "code": "3514025",
+            "display": "Laceration"
+          },
+          {
+            "code": "3514027",
+            "display": "Normal"
+          },
+          {
+            "code": "3514029",
+            "display": "Not Done"
+          },
+          {
+            "code": "3514031",
+            "display": "Pain"
+          },
+          {
+            "code": "3514033",
+            "display": "Pain with Range of Motion"
+          },
+          {
+            "code": "3514035",
+            "display": "Puncture/Stab Wound"
+          },
+          {
+            "code": "3514041",
+            "display": "Tenderness Costovertebral Angle"
+          },
+          {
+            "code": "3514043",
+            "display": "Tenderness Midline Spinous Process"
+          },
+          {
+            "code": "3514045",
+            "display": "Tenderness Paraspinous"
+          },
+          {
+            "code": "3514047",
+            "display": "Gunshot Wound"
+          },
+          {
+            "code": "3514049",
+            "display": "Crush Injury"
+          },
+          {
+            "code": "3514051",
+            "display": "Swelling"
+          },
+          {
+            "code": "3514053",
+            "display": "Contusion"
+          },
+          {
+            "code": "3514055",
+            "display": "Tenderness"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,9298 @@
+{
+  "resourceType": "CodeSystem",
+  "id": "nemsis",
+  "url": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+  "version": "0.2.0",
+  "name": "NEMSIS",
+  "title": "NEMSIS v3.5.0 (emsInterop local clean registry)",
+  "status": "active",
+  "experimental": false,
+  "content": "fragment",
+  "count": 2321,
+  "concept": [
+    {
+      "code": "01",
+      "display": "Discharged to home or self care (routine discharge)"
+    },
+    {
+      "code": "02",
+      "display": "Discharged/transferred to another short term general hospital for inpatient care"
+    },
+    {
+      "code": "03",
+      "display": "Discharged/transferred to a skilled nursing facility (SNF)"
+    },
+    {
+      "code": "04",
+      "display": "Discharged/transferred to an intermediate care facility (ICF)"
+    },
+    {
+      "code": "05",
+      "display": "Discharged/transferred to another type of institution not defined elsewhere in this code list"
+    },
+    {
+      "code": "06",
+      "display": "Discharged/transferred to home under care of organized home health service organization in anticipation of covered skills care"
+    },
+    {
+      "code": "07",
+      "display": "Left against medical advice or discontinued care"
+    },
+    {
+      "code": "08",
+      "display": "Patient had visible hemorrhaging"
+    },
+    {
+      "code": "09",
+      "display": "Admitted as an inpatient to this hospital."
+    },
+    {
+      "code": "1",
+      "display": "No eye movement when assessed (All Age Groups)"
+    },
+    {
+      "code": "11",
+      "display": "Other Non-Federal Programs"
+    },
+    {
+      "code": "12",
+      "display": "Patient is confined to a bed or chair (Use code 12 to indicate patient was bedridden during transport.)"
+    },
+    {
+      "code": "13",
+      "display": "Point of Service (POS)"
+    },
+    {
+      "code": "14",
+      "display": "Exclusive Provider Organization (EPO)"
+    },
+    {
+      "code": "15",
+      "display": "Indemnity Insurance"
+    },
+    {
+      "code": "16",
+      "display": "Health Maintenance Organization (HMO) Medicare Risk"
+    },
+    {
+      "code": "17",
+      "display": "Dental Maintenance Organization"
+    },
+    {
+      "code": "2",
+      "display": "Opens Eyes to painful stimulation (All Age Groups)"
+    },
+    {
+      "code": "20",
+      "display": "Deceased/Expired (or did not recover - Religious Non Medical Health Care Patient)"
+    },
+    {
+      "code": "21",
+      "display": "Discharged/transferred to court/law enforcement"
+    },
+    {
+      "code": "2205001",
+      "display": "Emergency Response (Primary Response Area)"
+    },
+    {
+      "code": "2205003",
+      "display": "Emergency Response (Intercept)"
+    },
+    {
+      "code": "2205005",
+      "display": "Hospital-to-Hospital Transfer"
+    },
+    {
+      "code": "2205007",
+      "display": "Other Routine Medical Transport"
+    },
+    {
+      "code": "2205009",
+      "display": "Emergency Response (Mutual Aid)"
+    },
+    {
+      "code": "2205011",
+      "display": "Public Assistance"
+    },
+    {
+      "code": "2205013",
+      "display": "Standby"
+    },
+    {
+      "code": "2205015",
+      "display": "Hospital to Non-Hospital Facility Transfer"
+    },
+    {
+      "code": "2205017",
+      "display": "Non-Hospital Facility to Non-Hospital Facility Transfer"
+    },
+    {
+      "code": "2205019",
+      "display": "Non-Hospital Facility to Hospital Transfer"
+    },
+    {
+      "code": "2205021",
+      "display": "Support Services"
+    },
+    {
+      "code": "2205023",
+      "display": "Non-Patient Care Rescue/Extrication"
+    },
+    {
+      "code": "2205025",
+      "display": "Crew Transport Only"
+    },
+    {
+      "code": "2205027",
+      "display": "Transport of Organs or Body Parts"
+    },
+    {
+      "code": "2205029",
+      "display": "Mortuary Services"
+    },
+    {
+      "code": "2205031",
+      "display": "Mobile Integrated Health Care Encounter"
+    },
+    {
+      "code": "2205033",
+      "display": "Evaluation for Special Referral/Intake Programs"
+    },
+    {
+      "code": "2205035",
+      "display": "Administrative Operations"
+    },
+    {
+      "code": "2206001",
+      "display": "Disaster Event-Drill/Exercise"
+    },
+    {
+      "code": "2206003",
+      "display": "Disaster Event-Live Staging"
+    },
+    {
+      "code": "2206005",
+      "display": "Education"
+    },
+    {
+      "code": "2206007",
+      "display": "EMS Staging-Improve Coverage"
+    },
+    {
+      "code": "2206009",
+      "display": "Fire Support-Rehab"
+    },
+    {
+      "code": "2206011",
+      "display": "Fire Support-Standby"
+    },
+    {
+      "code": "2206013",
+      "display": "Mass Gathering-Concert/Entertainment Event"
+    },
+    {
+      "code": "2206015",
+      "display": "Mass Gathering-Fair/Community Event"
+    },
+    {
+      "code": "2206017",
+      "display": "Mass Gathering-Sporting Event"
+    },
+    {
+      "code": "2206019",
+      "display": "Other"
+    },
+    {
+      "code": "2206021",
+      "display": "Public Safety Support"
+    },
+    {
+      "code": "2207011",
+      "display": "Air Transport-Helicopter"
+    },
+    {
+      "code": "2207013",
+      "display": "Air Transport-Fixed Wing"
+    },
+    {
+      "code": "2207015",
+      "display": "Ground Transport (ALS Equipped)"
+    },
+    {
+      "code": "2207017",
+      "display": "Ground Transport (BLS Equipped)"
+    },
+    {
+      "code": "2207019",
+      "display": "Ground Transport (Critical Care Equipped)"
+    },
+    {
+      "code": "2207021",
+      "display": "Non-Transport-Medical Treatment (ALS Equipped)"
+    },
+    {
+      "code": "2207023",
+      "display": "Non-Transport-Medical Treatment (BLS Equipped)"
+    },
+    {
+      "code": "2207025",
+      "display": "Wheel Chair Van/Ambulette"
+    },
+    {
+      "code": "2207027",
+      "display": "Non-Transport-No Medical Equipment"
+    },
+    {
+      "code": "2208001",
+      "display": "Caller (Uncooperative)"
+    },
+    {
+      "code": "2208003",
+      "display": "Diversion/Failure (of previous unit)"
+    },
+    {
+      "code": "2208005",
+      "display": "High Call Volume"
+    },
+    {
+      "code": "2208007",
+      "display": "Language Barrier"
+    },
+    {
+      "code": "2208009",
+      "display": "Incomplete Address Information Provided"
+    },
+    {
+      "code": "2208011",
+      "display": "No EMS Vehicles (Units) Available"
+    },
+    {
+      "code": "2208013",
+      "display": "None/No Delay"
+    },
+    {
+      "code": "2208015",
+      "display": "Other"
+    },
+    {
+      "code": "2208017",
+      "display": "Technical Failure (Computer, Phone etc.)"
+    },
+    {
+      "code": "2208019",
+      "display": "Communication Specialist-Assignment Error"
+    },
+    {
+      "code": "2208021",
+      "display": "No Receiving MD, Bed, Hospital"
+    },
+    {
+      "code": "2208023",
+      "display": "Specialty Team Delay"
+    },
+    {
+      "code": "2209001",
+      "display": "Crowd"
+    },
+    {
+      "code": "2209003",
+      "display": "Directions/Unable to Locate"
+    },
+    {
+      "code": "2209005",
+      "display": "Distance"
+    },
+    {
+      "code": "2209007",
+      "display": "Diversion (Different Incident)"
+    },
+    {
+      "code": "2209009",
+      "display": "HazMat"
+    },
+    {
+      "code": "2209011",
+      "display": "None/No Delay"
+    },
+    {
+      "code": "2209013",
+      "display": "Other"
+    },
+    {
+      "code": "2209015",
+      "display": "Rendezvous Transport Unavailable"
+    },
+    {
+      "code": "2209017",
+      "display": "Route Obstruction (e.g., Train)"
+    },
+    {
+      "code": "2209019",
+      "display": "Scene Safety (Not Secure for EMS)"
+    },
+    {
+      "code": "2209021",
+      "display": "Staff Delay"
+    },
+    {
+      "code": "2209023",
+      "display": "Traffic"
+    },
+    {
+      "code": "2209025",
+      "display": "Vehicle Crash Involving this Unit"
+    },
+    {
+      "code": "2209027",
+      "display": "Vehicle Failure of this Unit"
+    },
+    {
+      "code": "2209029",
+      "display": "Weather"
+    },
+    {
+      "code": "2209031",
+      "display": "Mechanical Issue-Unit, Equipment, etc."
+    },
+    {
+      "code": "2209033",
+      "display": "Flight Planning"
+    },
+    {
+      "code": "2209035",
+      "display": "Out of Service Area Response"
+    },
+    {
+      "code": "2210001",
+      "display": "Awaiting Air Unit"
+    },
+    {
+      "code": "2210003",
+      "display": "Awaiting Ground Unit"
+    },
+    {
+      "code": "2210005",
+      "display": "Crowd"
+    },
+    {
+      "code": "2210007",
+      "display": "Directions/Unable to Locate"
+    },
+    {
+      "code": "2210009",
+      "display": "Distance"
+    },
+    {
+      "code": "2210011",
+      "display": "Extrication"
+    },
+    {
+      "code": "2210013",
+      "display": "HazMat"
+    },
+    {
+      "code": "2210015",
+      "display": "Language Barrier"
+    },
+    {
+      "code": "2210017",
+      "display": "None/No Delay"
+    },
+    {
+      "code": "2210019",
+      "display": "Other"
+    },
+    {
+      "code": "2210021",
+      "display": "Patient Access"
+    },
+    {
+      "code": "2210023",
+      "display": "Safety-Crew/Staging"
+    },
+    {
+      "code": "2210025",
+      "display": "Safety-Patient"
+    },
+    {
+      "code": "2210027",
+      "display": "Staff Delay"
+    },
+    {
+      "code": "2210029",
+      "display": "Traffic"
+    },
+    {
+      "code": "2210031",
+      "display": "Triage/Multiple Patients"
+    },
+    {
+      "code": "2210033",
+      "display": "Vehicle Crash Involving this Unit"
+    },
+    {
+      "code": "2210035",
+      "display": "Vehicle Failure of this Unit"
+    },
+    {
+      "code": "2210037",
+      "display": "Weather"
+    },
+    {
+      "code": "2210039",
+      "display": "Mechanical Issue-Unit, Equipment, etc."
+    },
+    {
+      "code": "2211001",
+      "display": "Crowd"
+    },
+    {
+      "code": "2211003",
+      "display": "Directions/Unable to Locate"
+    },
+    {
+      "code": "2211005",
+      "display": "Distance"
+    },
+    {
+      "code": "2211007",
+      "display": "Diversion"
+    },
+    {
+      "code": "2211009",
+      "display": "HazMat"
+    },
+    {
+      "code": "2211011",
+      "display": "None/No Delay"
+    },
+    {
+      "code": "2211013",
+      "display": "Other"
+    },
+    {
+      "code": "2211015",
+      "display": "Rendezvous Transport Unavailable"
+    },
+    {
+      "code": "2211017",
+      "display": "Route Obstruction (e.g., Train)"
+    },
+    {
+      "code": "2211019",
+      "display": "Safety"
+    },
+    {
+      "code": "2211021",
+      "display": "Staff Delay"
+    },
+    {
+      "code": "2211023",
+      "display": "Traffic"
+    },
+    {
+      "code": "2211025",
+      "display": "Vehicle Crash Involving this Unit"
+    },
+    {
+      "code": "2211027",
+      "display": "Vehicle Failure of this Unit"
+    },
+    {
+      "code": "2211029",
+      "display": "Weather"
+    },
+    {
+      "code": "2211031",
+      "display": "Patient Condition Change (e.g., Unit Stopped)"
+    },
+    {
+      "code": "2212001",
+      "display": "Clean-up"
+    },
+    {
+      "code": "2212003",
+      "display": "Decontamination"
+    },
+    {
+      "code": "2212005",
+      "display": "Distance"
+    },
+    {
+      "code": "2212007",
+      "display": "Documentation"
+    },
+    {
+      "code": "2212009",
+      "display": "ED Overcrowding / Transfer of Care"
+    },
+    {
+      "code": "2212011",
+      "display": "Equipment Failure"
+    },
+    {
+      "code": "2212013",
+      "display": "Equipment/Supply Replenishment"
+    },
+    {
+      "code": "2212015",
+      "display": "None/No Delay"
+    },
+    {
+      "code": "2212017",
+      "display": "Other"
+    },
+    {
+      "code": "2212019",
+      "display": "Rendezvous Transport Unavailable"
+    },
+    {
+      "code": "2212021",
+      "display": "Route Obstruction (e.g., Train)"
+    },
+    {
+      "code": "2212023",
+      "display": "Staff Delay"
+    },
+    {
+      "code": "2212025",
+      "display": "Traffic"
+    },
+    {
+      "code": "2212027",
+      "display": "Vehicle Crash of this Unit"
+    },
+    {
+      "code": "2212029",
+      "display": "Vehicle Failure of this Unit"
+    },
+    {
+      "code": "2212031",
+      "display": "Weather"
+    },
+    {
+      "code": "2212033",
+      "display": "EMS Crew Accompanies Patient for Facility Procedure"
+    },
+    {
+      "code": "2223001",
+      "display": "Emergent (Immediate Response)"
+    },
+    {
+      "code": "2223003",
+      "display": "Emergent Downgraded to Non-Emergent"
+    },
+    {
+      "code": "2223005",
+      "display": "Non-Emergent"
+    },
+    {
+      "code": "2223007",
+      "display": "Non-Emergent Upgraded to Emergent"
+    },
+    {
+      "code": "2224001",
+      "display": "Intersection Navigation-Against Normal Light  Patterns"
+    },
+    {
+      "code": "2224003",
+      "display": "Intersection Navigation-With Automated Light Changing Technology"
+    },
+    {
+      "code": "2224005",
+      "display": "Intersection Navigation-With Normal Light Patterns"
+    },
+    {
+      "code": "2224007",
+      "display": "Scheduled"
+    },
+    {
+      "code": "2224009",
+      "display": "Speed-Enhanced per Local Policy"
+    },
+    {
+      "code": "2224011",
+      "display": "Speed-Normal Traffic"
+    },
+    {
+      "code": "2224013",
+      "display": "Unscheduled"
+    },
+    {
+      "code": "2224015",
+      "display": "Lights and Sirens"
+    },
+    {
+      "code": "2224017",
+      "display": "Lights and No Sirens"
+    },
+    {
+      "code": "2224019",
+      "display": "No Lights or Sirens"
+    },
+    {
+      "code": "2224021",
+      "display": "Initial No Lights or Sirens, Upgraded to Lights and Sirens"
+    },
+    {
+      "code": "2224023",
+      "display": "Initial Lights and Sirens, Downgraded to No Lights or Sirens"
+    },
+    {
+      "code": "2301001",
+      "display": "Abdominal Pain/Problems"
+    },
+    {
+      "code": "2301003",
+      "display": "Allergic Reaction/Stings"
+    },
+    {
+      "code": "2301005",
+      "display": "Animal Bite"
+    },
+    {
+      "code": "2301007",
+      "display": "Assault"
+    },
+    {
+      "code": "2301009",
+      "display": "Automated Crash Notification"
+    },
+    {
+      "code": "2301011",
+      "display": "Back Pain (Non-Traumatic)"
+    },
+    {
+      "code": "2301013",
+      "display": "Breathing Problem"
+    },
+    {
+      "code": "2301015",
+      "display": "Burns/Explosion"
+    },
+    {
+      "code": "2301017",
+      "display": "Carbon Monoxide/Hazmat/Inhalation/CBRN"
+    },
+    {
+      "code": "2301019",
+      "display": "Cardiac Arrest/Death"
+    },
+    {
+      "code": "2301021",
+      "display": "Chest Pain (Non-Traumatic)"
+    },
+    {
+      "code": "2301023",
+      "display": "Choking"
+    },
+    {
+      "code": "2301025",
+      "display": "Convulsions/Seizure"
+    },
+    {
+      "code": "2301027",
+      "display": "Diabetic Problem"
+    },
+    {
+      "code": "2301029",
+      "display": "Electrocution/Lightning"
+    },
+    {
+      "code": "2301031",
+      "display": "Eye Problem/Injury"
+    },
+    {
+      "code": "2301033",
+      "display": "Falls"
+    },
+    {
+      "code": "2301035",
+      "display": "Fire"
+    },
+    {
+      "code": "2301037",
+      "display": "Headache"
+    },
+    {
+      "code": "2301039",
+      "display": "Healthcare Professional/Admission"
+    },
+    {
+      "code": "2301041",
+      "display": "Heart Problems/AICD"
+    },
+    {
+      "code": "2301043",
+      "display": "Heat/Cold Exposure"
+    },
+    {
+      "code": "2301045",
+      "display": "Hemorrhage/Laceration"
+    },
+    {
+      "code": "2301047",
+      "display": "Industrial Accident/Inaccessible Incident/Other Entrapments (Non-Vehicle)"
+    },
+    {
+      "code": "2301049",
+      "display": "Medical Alarm"
+    },
+    {
+      "code": "2301051",
+      "display": "No Other Appropriate Choice"
+    },
+    {
+      "code": "2301053",
+      "display": "Overdose/Poisoning/Ingestion"
+    },
+    {
+      "code": "2301055",
+      "display": "Pandemic/Epidemic/Outbreak"
+    },
+    {
+      "code": "2301057",
+      "display": "Pregnancy/Childbirth/Miscarriage"
+    },
+    {
+      "code": "2301059",
+      "display": "Psychiatric Problem/Abnormal Behavior/Suicide Attempt"
+    },
+    {
+      "code": "2301061",
+      "display": "Sick Person"
+    },
+    {
+      "code": "2301063",
+      "display": "Stab/Gunshot Wound/Penetrating Trauma"
+    },
+    {
+      "code": "2301065",
+      "display": "Standby"
+    },
+    {
+      "code": "2301067",
+      "display": "Stroke/CVA"
+    },
+    {
+      "code": "2301069",
+      "display": "Traffic/Transportation Incident"
+    },
+    {
+      "code": "2301071",
+      "display": "Transfer/Interfacility/Palliative Care"
+    },
+    {
+      "code": "2301073",
+      "display": "Traumatic Injury"
+    },
+    {
+      "code": "2301075",
+      "display": "Well Person Check"
+    },
+    {
+      "code": "2301077",
+      "display": "Unconscious/Fainting/Near-Fainting"
+    },
+    {
+      "code": "2301079",
+      "display": "Unknown Problem/Person Down"
+    },
+    {
+      "code": "2301081",
+      "display": "Drowning/Diving/SCUBA Accident"
+    },
+    {
+      "code": "2301083",
+      "display": "Airmedical Transport"
+    },
+    {
+      "code": "2301085",
+      "display": "Altered Mental Status"
+    },
+    {
+      "code": "2301087",
+      "display": "Intercept"
+    },
+    {
+      "code": "2301089",
+      "display": "Nausea"
+    },
+    {
+      "code": "2301091",
+      "display": "Vomiting"
+    },
+    {
+      "code": "2301093",
+      "display": "Hanging/Strangulation/Asphyxiation"
+    },
+    {
+      "code": "2301095",
+      "display": "Intoxicated Subject"
+    },
+    {
+      "code": "2301097",
+      "display": "EMS Requested by Law Enforcement"
+    },
+    {
+      "code": "2301099",
+      "display": "Active Shooter"
+    },
+    {
+      "code": "2302001",
+      "display": "No"
+    },
+    {
+      "code": "2302003",
+      "display": "Yes, With Pre-Arrival Instructions"
+    },
+    {
+      "code": "2302005",
+      "display": "Yes, Without Pre-Arrival Instructions"
+    },
+    {
+      "code": "2302007",
+      "display": "Yes, Unknown if Pre-Arrival Instructions Given"
+    },
+    {
+      "code": "2305001",
+      "display": "Critical"
+    },
+    {
+      "code": "2305003",
+      "display": "Emergent"
+    },
+    {
+      "code": "2305005",
+      "display": "Lower Acuity"
+    },
+    {
+      "code": "2305007",
+      "display": "Non-Acute [e.g., Scheduled Transfer  or Standby]"
+    },
+    {
+      "code": "2403001",
+      "display": "Driver/Pilot-Response"
+    },
+    {
+      "code": "2403003",
+      "display": "Driver/Pilot-Transport"
+    },
+    {
+      "code": "2403005",
+      "display": "Other"
+    },
+    {
+      "code": "2403007",
+      "display": "Other Patient Caregiver-At Scene"
+    },
+    {
+      "code": "2403009",
+      "display": "Other Patient Caregiver-Transport"
+    },
+    {
+      "code": "2403011",
+      "display": "Primary Patient Caregiver-At Scene"
+    },
+    {
+      "code": "2403013",
+      "display": "Primary Patient Caregiver-Transport"
+    },
+    {
+      "code": "2514001",
+      "display": "American Indian or Alaska Native"
+    },
+    {
+      "code": "2514003",
+      "display": "Asian"
+    },
+    {
+      "code": "2514005",
+      "display": "Black or African American"
+    },
+    {
+      "code": "2514007",
+      "display": "Hispanic or Latino"
+    },
+    {
+      "code": "2514009",
+      "display": "Native Hawaiian or Other Pacific Islander"
+    },
+    {
+      "code": "2514011",
+      "display": "White"
+    },
+    {
+      "code": "2514013",
+      "display": "Middle Eastern or North African"
+    },
+    {
+      "code": "2516001",
+      "display": "Days"
+    },
+    {
+      "code": "2516003",
+      "display": "Hours"
+    },
+    {
+      "code": "2516005",
+      "display": "Minutes"
+    },
+    {
+      "code": "2516007",
+      "display": "Months"
+    },
+    {
+      "code": "2516009",
+      "display": "Years"
+    },
+    {
+      "code": "2522001",
+      "display": "Homeless"
+    },
+    {
+      "code": "2522003",
+      "display": "Migrant Worker"
+    },
+    {
+      "code": "2522005",
+      "display": "Foreign Visitor"
+    },
+    {
+      "code": "2601001",
+      "display": "Insurance"
+    },
+    {
+      "code": "2601003",
+      "display": "Medicaid"
+    },
+    {
+      "code": "2601005",
+      "display": "Medicare"
+    },
+    {
+      "code": "2601007",
+      "display": "Not Billed (for any reason)"
+    },
+    {
+      "code": "2601009",
+      "display": "Other Government"
+    },
+    {
+      "code": "2601011",
+      "display": "Self Pay"
+    },
+    {
+      "code": "2601013",
+      "display": "Workers Compensation"
+    },
+    {
+      "code": "2601015",
+      "display": "Payment by Facility"
+    },
+    {
+      "code": "2601017",
+      "display": "Contracted Payment"
+    },
+    {
+      "code": "2601019",
+      "display": "Community Network"
+    },
+    {
+      "code": "2601021",
+      "display": "No Insurance Identified"
+    },
+    {
+      "code": "2601023",
+      "display": "Other Payment Option"
+    },
+    {
+      "code": "2604001",
+      "display": "Bed Confined"
+    },
+    {
+      "code": "2604003",
+      "display": "Cardiac/Hemodynamic monitoring required during transport"
+    },
+    {
+      "code": "2604005",
+      "display": "Confused, combative, lethargic, comatose"
+    },
+    {
+      "code": "2604007",
+      "display": "Contractures"
+    },
+    {
+      "code": "2604009",
+      "display": "Danger to self or others-monitoring"
+    },
+    {
+      "code": "2604011",
+      "display": "Danger to self or others-seclusion (flight risk)"
+    },
+    {
+      "code": "2604013",
+      "display": "DVT requires elevation of lower extremity"
+    },
+    {
+      "code": "2604015",
+      "display": "IV medications/fluids required during transport"
+    },
+    {
+      "code": "2604017",
+      "display": "Moderate to severe pain on movement"
+    },
+    {
+      "code": "2604019",
+      "display": "Morbid Obesity requires additional personnel/equipment to handle"
+    },
+    {
+      "code": "2604021",
+      "display": "Non-healing fractures"
+    },
+    {
+      "code": "2604023",
+      "display": "Orthopedic device (backboard, halo, use of pins in traction, etc.) requiring special handling in transit"
+    },
+    {
+      "code": "2604025",
+      "display": "Restraints (Physical or Chemical) anticipated or used during transport"
+    },
+    {
+      "code": "2604027",
+      "display": "Risk of falling off wheelchair or stretcher while in motion (not related to obesity)"
+    },
+    {
+      "code": "2604029",
+      "display": "Severe Muscular weakness and de-conditioned state precludes any significant physical activity"
+    },
+    {
+      "code": "2604031",
+      "display": "Special handling en route-Isolation"
+    },
+    {
+      "code": "2604033",
+      "display": "Third Party assistance/attendant required to apply, administer, or regulate or adjust oxygen en route"
+    },
+    {
+      "code": "2604035",
+      "display": "Unable to maintain erect sitting position in a chair for time needed to transport, due to moderate muscular weakness and de-conditioning."
+    },
+    {
+      "code": "2604037",
+      "display": "Unable to sit in chair or wheelchair due to Grade II or greater decubitus ulcers on buttocks."
+    },
+    {
+      "code": "2605001",
+      "display": "Clinical Nurse Specialist"
+    },
+    {
+      "code": "2605003",
+      "display": "Discharge Planner"
+    },
+    {
+      "code": "2605005",
+      "display": "Physician (MD or DO)"
+    },
+    {
+      "code": "2605007",
+      "display": "Physician Assistant"
+    },
+    {
+      "code": "2605009",
+      "display": "Registered Nurse"
+    },
+    {
+      "code": "2605011",
+      "display": "Registered Nurse Practitioner"
+    },
+    {
+      "code": "2605013",
+      "display": "Licensed Practical Nurse (LPN)"
+    },
+    {
+      "code": "2605015",
+      "display": "Case Manager"
+    },
+    {
+      "code": "2605017",
+      "display": "Social Worker"
+    },
+    {
+      "code": "2608001",
+      "display": "Resident Within EMS Service Area"
+    },
+    {
+      "code": "2608003",
+      "display": "Not a Resident Within EMS Service Area"
+    },
+    {
+      "code": "2611001",
+      "display": "Other"
+    },
+    {
+      "code": "2611003",
+      "display": "Primary"
+    },
+    {
+      "code": "2611005",
+      "display": "Secondary"
+    },
+    {
+      "code": "2611007",
+      "display": "Tertiary"
+    },
+    {
+      "code": "2611009",
+      "display": "Payer Responsibility Four"
+    },
+    {
+      "code": "2611011",
+      "display": "Payer Responsibility Five"
+    },
+    {
+      "code": "2611013",
+      "display": "Payer Responsibility Six"
+    },
+    {
+      "code": "2611015",
+      "display": "Payer Responsibility Seven"
+    },
+    {
+      "code": "2611017",
+      "display": "Payer Responsibility Eight"
+    },
+    {
+      "code": "2611019",
+      "display": "Payer Responsibility Nine"
+    },
+    {
+      "code": "2611021",
+      "display": "Payer Responsibility Ten"
+    },
+    {
+      "code": "2611023",
+      "display": "Payer Responsibility Eleven"
+    },
+    {
+      "code": "2611025",
+      "display": "Unknown"
+    },
+    {
+      "code": "2622001",
+      "display": "Self"
+    },
+    {
+      "code": "2622003",
+      "display": "Spouse"
+    },
+    {
+      "code": "2622005",
+      "display": "Child/Dependent"
+    },
+    {
+      "code": "2622009",
+      "display": "Cadaver Donor"
+    },
+    {
+      "code": "2622011",
+      "display": "Employee"
+    },
+    {
+      "code": "2622013",
+      "display": "Life/Domestic Partner"
+    },
+    {
+      "code": "2622015",
+      "display": "Organ Donor"
+    },
+    {
+      "code": "2622017",
+      "display": "Unknown"
+    },
+    {
+      "code": "2622019",
+      "display": "Other Relationship"
+    },
+    {
+      "code": "2632001",
+      "display": "Appointed Guardian"
+    },
+    {
+      "code": "2632003",
+      "display": "Child/Dependent"
+    },
+    {
+      "code": "2632005",
+      "display": "Father"
+    },
+    {
+      "code": "2632007",
+      "display": "Mother"
+    },
+    {
+      "code": "2632009",
+      "display": "Other (Non-Relative)"
+    },
+    {
+      "code": "2632011",
+      "display": "Other (Relative)"
+    },
+    {
+      "code": "2632013",
+      "display": "Sibling"
+    },
+    {
+      "code": "2632015",
+      "display": "Spouse"
+    },
+    {
+      "code": "2632017",
+      "display": "Employee"
+    },
+    {
+      "code": "2632019",
+      "display": "Life/Domestic Partner"
+    },
+    {
+      "code": "2632021",
+      "display": "Unknown"
+    },
+    {
+      "code": "2640001",
+      "display": "Immediate"
+    },
+    {
+      "code": "2640003",
+      "display": "Non-Immediate"
+    },
+    {
+      "code": "2641001",
+      "display": "Unable to sit without assistance"
+    },
+    {
+      "code": "2641003",
+      "display": "Unable to stand without assistance"
+    },
+    {
+      "code": "2641005",
+      "display": "Unable to walk without assistance"
+    },
+    {
+      "code": "2642001",
+      "display": "Advanced EMT-Paramedic"
+    },
+    {
+      "code": "2642003",
+      "display": "Nurse"
+    },
+    {
+      "code": "2642005",
+      "display": "Nurse Practitioner"
+    },
+    {
+      "code": "2642007",
+      "display": "Physician (MD, DO)"
+    },
+    {
+      "code": "2642009",
+      "display": "Physician Assistant"
+    },
+    {
+      "code": "2642011",
+      "display": "Emergency Medical Responder (EMR)"
+    },
+    {
+      "code": "2642013",
+      "display": "Emergency Medical Technician (EMT)"
+    },
+    {
+      "code": "2642015",
+      "display": "Advanced Emergency Medical Technician (AEMT)"
+    },
+    {
+      "code": "2642017",
+      "display": "Paramedic"
+    },
+    {
+      "code": "2642027",
+      "display": "Other Healthcare Professional"
+    },
+    {
+      "code": "2642029",
+      "display": "Other Non-Healthcare Professional"
+    },
+    {
+      "code": "2642031",
+      "display": "Respiratory Therapist"
+    },
+    {
+      "code": "2642033",
+      "display": "Student"
+    },
+    {
+      "code": "2642035",
+      "display": "Critical Care Paramedic"
+    },
+    {
+      "code": "2642037",
+      "display": "Community Paramedicine"
+    },
+    {
+      "code": "2642039",
+      "display": "Registered Nurse"
+    },
+    {
+      "code": "2643014",
+      "display": "Emergency Medical Technician - Intermediate"
+    },
+    {
+      "code": "2650001",
+      "display": "ALS, Level 1"
+    },
+    {
+      "code": "2650003",
+      "display": "ALS, Level 1 Emergency"
+    },
+    {
+      "code": "2650005",
+      "display": "ALS, Level 2"
+    },
+    {
+      "code": "2650007",
+      "display": "BLS"
+    },
+    {
+      "code": "2650009",
+      "display": "BLS, Emergency"
+    },
+    {
+      "code": "2650011",
+      "display": "Fixed Wing (Airplane)"
+    },
+    {
+      "code": "2650013",
+      "display": "Paramedic Intercept"
+    },
+    {
+      "code": "2650015",
+      "display": "Specialty Care Transport"
+    },
+    {
+      "code": "2650017",
+      "display": "Rotary Wing (Helicopter)"
+    },
+    {
+      "code": "2704001",
+      "display": "EMS Mutual Aid"
+    },
+    {
+      "code": "2704003",
+      "display": "Fire"
+    },
+    {
+      "code": "2704005",
+      "display": "First Responder"
+    },
+    {
+      "code": "2704007",
+      "display": "Hazmat"
+    },
+    {
+      "code": "2704009",
+      "display": "Law Enforcement"
+    },
+    {
+      "code": "2704011",
+      "display": "Other"
+    },
+    {
+      "code": "2704013",
+      "display": "Other EMS Agency"
+    },
+    {
+      "code": "2704015",
+      "display": "Other Health Care Provider"
+    },
+    {
+      "code": "2704017",
+      "display": "Rescue"
+    },
+    {
+      "code": "2704019",
+      "display": "Utilities"
+    },
+    {
+      "code": "2707001",
+      "display": "Multiple"
+    },
+    {
+      "code": "2707003",
+      "display": "None"
+    },
+    {
+      "code": "2707005",
+      "display": "Single"
+    },
+    {
+      "code": "2708001",
+      "display": "Red - Immediate"
+    },
+    {
+      "code": "2708003",
+      "display": "Yellow - Delayed"
+    },
+    {
+      "code": "2708005",
+      "display": "Green - Minimal (Minor)"
+    },
+    {
+      "code": "2708007",
+      "display": "Gray - Expectant"
+    },
+    {
+      "code": "2708009",
+      "display": "Black - Deceased"
+    },
+    {
+      "code": "2725001",
+      "display": "Transferred Patient to Agency"
+    },
+    {
+      "code": "2725003",
+      "display": "Received Patient from Agency"
+    },
+    {
+      "code": "2725005",
+      "display": "No Transfer of Patient/Care To/From Agency"
+    },
+    {
+      "code": "2803001",
+      "display": "Chief (Primary)"
+    },
+    {
+      "code": "2803003",
+      "display": "Other"
+    },
+    {
+      "code": "2803005",
+      "display": "Secondary"
+    },
+    {
+      "code": "2806001",
+      "display": "Seconds"
+    },
+    {
+      "code": "2806003",
+      "display": "Minutes"
+    },
+    {
+      "code": "2806005",
+      "display": "Hours"
+    },
+    {
+      "code": "2806007",
+      "display": "Days"
+    },
+    {
+      "code": "2806009",
+      "display": "Weeks"
+    },
+    {
+      "code": "2806011",
+      "display": "Months"
+    },
+    {
+      "code": "2806013",
+      "display": "Years"
+    },
+    {
+      "code": "2807001",
+      "display": "Abdomen"
+    },
+    {
+      "code": "2807003",
+      "display": "Back"
+    },
+    {
+      "code": "2807005",
+      "display": "Chest"
+    },
+    {
+      "code": "2807007",
+      "display": "Extremity-Lower"
+    },
+    {
+      "code": "2807009",
+      "display": "Extremity-Upper"
+    },
+    {
+      "code": "2807011",
+      "display": "General/Global"
+    },
+    {
+      "code": "2807013",
+      "display": "Genitalia"
+    },
+    {
+      "code": "2807015",
+      "display": "Head"
+    },
+    {
+      "code": "2807017",
+      "display": "Neck"
+    },
+    {
+      "code": "2808001",
+      "display": "Behavioral/Psychiatric"
+    },
+    {
+      "code": "2808003",
+      "display": "Cardiovascular"
+    },
+    {
+      "code": "2808005",
+      "display": "CNS/Neuro"
+    },
+    {
+      "code": "2808007",
+      "display": "Endocrine/Metabolic"
+    },
+    {
+      "code": "2808009",
+      "display": "GI"
+    },
+    {
+      "code": "2808011",
+      "display": "Global/General"
+    },
+    {
+      "code": "2808013",
+      "display": "Lymphatic/Immune"
+    },
+    {
+      "code": "2808015",
+      "display": "Musculoskeletal/Skin"
+    },
+    {
+      "code": "2808017",
+      "display": "Reproductive"
+    },
+    {
+      "code": "2808019",
+      "display": "Pulmonary"
+    },
+    {
+      "code": "2808021",
+      "display": "Renal"
+    },
+    {
+      "code": "2813001",
+      "display": "Critical (Red)"
+    },
+    {
+      "code": "2813003",
+      "display": "Emergent (Yellow)"
+    },
+    {
+      "code": "2813005",
+      "display": "Lower Acuity (Green)"
+    },
+    {
+      "code": "2813007",
+      "display": "Dead without Resuscitation Efforts (Black)"
+    },
+    {
+      "code": "2813009",
+      "display": "Non-Acute/Routine"
+    },
+    {
+      "code": "2815001",
+      "display": "Accommodation and Food Services"
+    },
+    {
+      "code": "2815003",
+      "display": "Administrative and Support and Waste Management and Remediation Services"
+    },
+    {
+      "code": "2815005",
+      "display": "Agriculture, Forestry, Fishing and Hunting"
+    },
+    {
+      "code": "2815007",
+      "display": "Arts, Entertainment, and Recreation"
+    },
+    {
+      "code": "2815009",
+      "display": "Construction"
+    },
+    {
+      "code": "2815011",
+      "display": "Educational Services"
+    },
+    {
+      "code": "2815013",
+      "display": "Finance and Insurance"
+    },
+    {
+      "code": "2815015",
+      "display": "Health Care and Social Assistance"
+    },
+    {
+      "code": "2815017",
+      "display": "Information"
+    },
+    {
+      "code": "2815019",
+      "display": "Management of Companies and Enterprises"
+    },
+    {
+      "code": "2815021",
+      "display": "Manufacturing"
+    },
+    {
+      "code": "2815023",
+      "display": "Mining, Quarrying, and Oil and Gas Extraction"
+    },
+    {
+      "code": "2815025",
+      "display": "Other Services (except Public Administration)"
+    },
+    {
+      "code": "2815027",
+      "display": "Professional, Scientific, and Technical Services"
+    },
+    {
+      "code": "2815029",
+      "display": "Public Administration"
+    },
+    {
+      "code": "2815031",
+      "display": "Real Estate and Rental and Leasing"
+    },
+    {
+      "code": "2815033",
+      "display": "Retail Trade"
+    },
+    {
+      "code": "2815035",
+      "display": "Transportation and Warehousing"
+    },
+    {
+      "code": "2815037",
+      "display": "Utilities"
+    },
+    {
+      "code": "2815039",
+      "display": "Wholesale Trade"
+    },
+    {
+      "code": "2816001",
+      "display": "Architecture and Engineering Occupations"
+    },
+    {
+      "code": "2816003",
+      "display": "Arts, Design, Entertainment, Sports, and Media Occupations"
+    },
+    {
+      "code": "2816005",
+      "display": "Building and Grounds Cleaning and Maintenance Occupations"
+    },
+    {
+      "code": "2816007",
+      "display": "Business and Financial Operations Occupations"
+    },
+    {
+      "code": "2816009",
+      "display": "Community and Social Services Occupations"
+    },
+    {
+      "code": "2816011",
+      "display": "Computer and Mathematical Occupations"
+    },
+    {
+      "code": "2816013",
+      "display": "Construction and Extraction Occupations"
+    },
+    {
+      "code": "2816015",
+      "display": "Educational Instruction and Library Occupations"
+    },
+    {
+      "code": "2816017",
+      "display": "Farming, Fishing and Forestry Occupations"
+    },
+    {
+      "code": "2816019",
+      "display": "Food Preparation and Serving Related Occupations"
+    },
+    {
+      "code": "2816021",
+      "display": "Healthcare Practitioners and Technical Occupations"
+    },
+    {
+      "code": "2816023",
+      "display": "Healthcare Support Occupations"
+    },
+    {
+      "code": "2816025",
+      "display": "Installation, Maintenance, and Repair Occupations"
+    },
+    {
+      "code": "2816027",
+      "display": "Legal Occupations"
+    },
+    {
+      "code": "2816029",
+      "display": "Life, Physical, and Social Science Occupations"
+    },
+    {
+      "code": "2816031",
+      "display": "Management Occupations"
+    },
+    {
+      "code": "2816033",
+      "display": "Military Specific Occupations"
+    },
+    {
+      "code": "2816035",
+      "display": "Office and Administrative Support Occupations"
+    },
+    {
+      "code": "2816037",
+      "display": "Personal Care and Service Occupations"
+    },
+    {
+      "code": "2816039",
+      "display": "Production Occupations"
+    },
+    {
+      "code": "2816041",
+      "display": "Protective Service Occupations"
+    },
+    {
+      "code": "2816043",
+      "display": "Sales and Related Occupations"
+    },
+    {
+      "code": "2816045",
+      "display": "Transportation and Material Moving Occupations"
+    },
+    {
+      "code": "2820001",
+      "display": "Cardiac Specialty"
+    },
+    {
+      "code": "2820003",
+      "display": "Convenience Transfer (Patient Request)"
+    },
+    {
+      "code": "2820005",
+      "display": "Diagnostic Testing"
+    },
+    {
+      "code": "2820007",
+      "display": "Dialysis"
+    },
+    {
+      "code": "2820009",
+      "display": "Drug and/or Alcohol Rehabilitation Care"
+    },
+    {
+      "code": "2820011",
+      "display": "Extended Care"
+    },
+    {
+      "code": "2820013",
+      "display": "Maternal/Neonatal"
+    },
+    {
+      "code": "2820015",
+      "display": "Medical Specialty Care (Other, Not Listed)"
+    },
+    {
+      "code": "2820017",
+      "display": "Neurological Specialty Care"
+    },
+    {
+      "code": "2820019",
+      "display": "Palliative/Hospice Care (Home or Facility)"
+    },
+    {
+      "code": "2820021",
+      "display": "Pediatric Specialty Care"
+    },
+    {
+      "code": "2820023",
+      "display": "Psychiatric/Behavioral Care"
+    },
+    {
+      "code": "2820025",
+      "display": "Physical Rehabilitation Care"
+    },
+    {
+      "code": "2820027",
+      "display": "Return to Home/Residence"
+    },
+    {
+      "code": "2820029",
+      "display": "Surgical Specialty Care (Other, Not Listed)"
+    },
+    {
+      "code": "2820031",
+      "display": "Trauma/Orthopedic Specialty Care"
+    },
+    {
+      "code": "2902001",
+      "display": "Blunt"
+    },
+    {
+      "code": "2902003",
+      "display": "Burn"
+    },
+    {
+      "code": "2902005",
+      "display": "Other"
+    },
+    {
+      "code": "2902007",
+      "display": "Penetrating"
+    },
+    {
+      "code": "2903001",
+      "display": "Amputation proximal to wrist or ankle"
+    },
+    {
+      "code": "2903003",
+      "display": "Crushed, degloved, mangled, or pulseless extremity"
+    },
+    {
+      "code": "2903005",
+      "display": "Chest wall instability, deformity, or suspected flail chest"
+    },
+    {
+      "code": "2903007",
+      "display": "Glasgow Coma Score <= 13 (DEPRECATED)"
+    },
+    {
+      "code": "2903009",
+      "display": "Skull deformity, suspected skull fracture"
+    },
+    {
+      "code": "2903011",
+      "display": "Paralysis (DEPRECATED)"
+    },
+    {
+      "code": "2903013",
+      "display": "Suspected pelvic fracture"
+    },
+    {
+      "code": "2903015",
+      "display": "Penetrating injuries to head, neck, torso, and proximal extremities"
+    },
+    {
+      "code": "2903017",
+      "display": "Respiratory Rate  <10 or >29 breaths per minute (<20 in infants aged <1 year) or need for ventilatory support (DEPRECATED)"
+    },
+    {
+      "code": "2903019",
+      "display": "Systolic Blood Pressure <90 mmHg (DEPRECATED)"
+    },
+    {
+      "code": "2903021",
+      "display": "Suspected fracture of two or more proximal long bones"
+    },
+    {
+      "code": "2903023",
+      "display": "Active bleeding requiring a tourniquet or wound packing with continuous pressure"
+    },
+    {
+      "code": "2903025",
+      "display": "Age >= 10 years: HR > SBP"
+    },
+    {
+      "code": "2903027",
+      "display": "Age >= 65 years: SBP < 110 mmHg"
+    },
+    {
+      "code": "2903029",
+      "display": "Age 0-9 years: SBP < 70mm Hg + (2 x age in years)"
+    },
+    {
+      "code": "2903031",
+      "display": "Age 10-64 years: SBP < 90 mmHg"
+    },
+    {
+      "code": "2903033",
+      "display": "Respiratory distress or need for respiratory support"
+    },
+    {
+      "code": "2903035",
+      "display": "Room-air pulse oximetry < 90%"
+    },
+    {
+      "code": "2903037",
+      "display": "RR < 10 or > 29 breaths/min"
+    },
+    {
+      "code": "2903039",
+      "display": "Suspected spinal injury with new motor or sensory loss"
+    },
+    {
+      "code": "2903041",
+      "display": "Unable to follow commands (motor GCS < 6)"
+    },
+    {
+      "code": "2904001",
+      "display": "Pedestrian/bicycle rider thrown, run over, or with significant impact"
+    },
+    {
+      "code": "2904003",
+      "display": "Fall Adults: > 20 ft. (one story is equal to 10 ft.) (DEPRECATED)"
+    },
+    {
+      "code": "2904005",
+      "display": "Fall Children: > 10 ft. or 2-3 times the height of the child (DEPRECATED)"
+    },
+    {
+      "code": "2904007",
+      "display": "Auto Crash: Death in passenger compartment"
+    },
+    {
+      "code": "2904009",
+      "display": "Auto Crash: Partial or complete ejection"
+    },
+    {
+      "code": "2904011",
+      "display": "Auto Crash: Significant intrusion (including roof): >12 inches occupant site; >18 inches any site; need for extrication"
+    },
+    {
+      "code": "2904013",
+      "display": "Auto Crash: Vehicle telemetry data consistent with severe injury"
+    },
+    {
+      "code": "2904015",
+      "display": "Motorcycle Crash > 20 MPH (DEPRECATED)"
+    },
+    {
+      "code": "2904017",
+      "display": "SBP < 110 for age > 65 (DEPRECATED)"
+    },
+    {
+      "code": "2904019",
+      "display": "Anticoagulant use"
+    },
+    {
+      "code": "2904021",
+      "display": "Pregnancy > 20 weeks"
+    },
+    {
+      "code": "2904023",
+      "display": "Other EMS judgment"
+    },
+    {
+      "code": "2904025",
+      "display": "Burn, without other trauma (DEPRECATED)"
+    },
+    {
+      "code": "2904027",
+      "display": "Burns in conjunction with trauma"
+    },
+    {
+      "code": "2904029",
+      "display": "Auto Crash: Child (age 0-9 years) unrestrained or in unsecured child safety seat"
+    },
+    {
+      "code": "2904031",
+      "display": "Fall from height > 10 feet (all ages)"
+    },
+    {
+      "code": "2904033",
+      "display": "Low-level falls in young children (age <= 5 years) or older adults (age >= 65 years) with significant head impact"
+    },
+    {
+      "code": "2904035",
+      "display": "Rider separated from transport vehicle with significant impact (eg, motorcycle, ATV, horse, etc.)"
+    },
+    {
+      "code": "2904037",
+      "display": "Special, high-resource healthcare needs"
+    },
+    {
+      "code": "2904039",
+      "display": "Suspicion of child abuse"
+    },
+    {
+      "code": "2906001",
+      "display": "Front Seat-Left Side (or motorcycle driver)"
+    },
+    {
+      "code": "2906003",
+      "display": "Front Seat-Middle"
+    },
+    {
+      "code": "2906005",
+      "display": "Front Seat-Right Side"
+    },
+    {
+      "code": "2906007",
+      "display": "Passenger in other enclosed passenger or cargo area (non-trailing unit such as a bus, etc.)"
+    },
+    {
+      "code": "2906009",
+      "display": "Passenger in unenclosed passenger or cargo area (non-trailing unit such as a pickup, etc.)"
+    },
+    {
+      "code": "2906011",
+      "display": "Riding on Vehicle Exterior (non-trailing unit)"
+    },
+    {
+      "code": "2906013",
+      "display": "Second Seat-Left Side (or motorcycle passenger)"
+    },
+    {
+      "code": "2906015",
+      "display": "Second Seat-Middle"
+    },
+    {
+      "code": "2906017",
+      "display": "Second Seat-Right Side"
+    },
+    {
+      "code": "2906019",
+      "display": "Sleeper Section of Cab (truck)"
+    },
+    {
+      "code": "2906021",
+      "display": "Third Row-Left Side (or motorcycle passenger)"
+    },
+    {
+      "code": "2906023",
+      "display": "Third Row-Middle"
+    },
+    {
+      "code": "2906025",
+      "display": "Third Row-Right Side"
+    },
+    {
+      "code": "2906027",
+      "display": "Trailing Unit"
+    },
+    {
+      "code": "2906029",
+      "display": "Unknown"
+    },
+    {
+      "code": "2907001",
+      "display": "Child Booster Seat"
+    },
+    {
+      "code": "2907003",
+      "display": "Eye Protection"
+    },
+    {
+      "code": "2907005",
+      "display": "Helmet Worn"
+    },
+    {
+      "code": "2907007",
+      "display": "Infant Car Seat Forward Facing"
+    },
+    {
+      "code": "2907009",
+      "display": "Infant Car Seat Rear Facing"
+    },
+    {
+      "code": "2907015",
+      "display": "None"
+    },
+    {
+      "code": "2907017",
+      "display": "Other"
+    },
+    {
+      "code": "2907019",
+      "display": "Personal Floatation Device"
+    },
+    {
+      "code": "2907021",
+      "display": "Protective Clothing"
+    },
+    {
+      "code": "2907023",
+      "display": "Protective Non-Clothing Gear"
+    },
+    {
+      "code": "2907027",
+      "display": "Shoulder and Lap Belt Used"
+    },
+    {
+      "code": "2907029",
+      "display": "Lap Belt Only Used"
+    },
+    {
+      "code": "2907031",
+      "display": "Shoulder Belt Only Used"
+    },
+    {
+      "code": "2907033",
+      "display": "Unable to Determine"
+    },
+    {
+      "code": "2908001",
+      "display": "Airbag Deployed Front"
+    },
+    {
+      "code": "2908003",
+      "display": "Airbag Deployed Side"
+    },
+    {
+      "code": "2908005",
+      "display": "Airbag Deployed Other (knee, air belt, etc.)"
+    },
+    {
+      "code": "2908007",
+      "display": "No Airbag Deployed"
+    },
+    {
+      "code": "2908009",
+      "display": "No Airbag Present"
+    },
+    {
+      "code": "2910001",
+      "display": "Eye and Face Protection"
+    },
+    {
+      "code": "2910003",
+      "display": "Foot Protection"
+    },
+    {
+      "code": "2910005",
+      "display": "Head Protection"
+    },
+    {
+      "code": "2910007",
+      "display": "Hearing Protection"
+    },
+    {
+      "code": "2910009",
+      "display": "Respiratory Protection"
+    },
+    {
+      "code": "2910011",
+      "display": "Safety Belts, lifelines, and lanyards"
+    },
+    {
+      "code": "2910013",
+      "display": "Safety Nets"
+    },
+    {
+      "code": "2926001",
+      "display": "Driver Front Seat"
+    },
+    {
+      "code": "2926003",
+      "display": "Front Row Middle Seat"
+    },
+    {
+      "code": "2926005",
+      "display": "Passenger Front Seat"
+    },
+    {
+      "code": "2926007",
+      "display": "Second Row Left Seat"
+    },
+    {
+      "code": "2926009",
+      "display": "Second Row Middle Seat"
+    },
+    {
+      "code": "2926011",
+      "display": "Second Row Right Seat"
+    },
+    {
+      "code": "2926013",
+      "display": "Third Row Left Seat"
+    },
+    {
+      "code": "2926015",
+      "display": "Third Row Middle Seat"
+    },
+    {
+      "code": "2926017",
+      "display": "Third Row Right Seat"
+    },
+    {
+      "code": "3",
+      "display": "Opens Eyes to verbal stimulation (All Age Groups)"
+    },
+    {
+      "code": "30",
+      "display": "Still a patient or expected to return for outpatient services."
+    },
+    {
+      "code": "3001001",
+      "display": "No"
+    },
+    {
+      "code": "3001003",
+      "display": "Yes, Prior to Any EMS Arrival (includes Transport EMS & Medical First Responders)"
+    },
+    {
+      "code": "3001005",
+      "display": "Yes, After Any EMS Arrival (includes Transport EMS & Medical First Responders)"
+    },
+    {
+      "code": "3002001",
+      "display": "Cardiac (Presumed)"
+    },
+    {
+      "code": "3002003",
+      "display": "Drowning/Submersion"
+    },
+    {
+      "code": "3002005",
+      "display": "Drug Overdose"
+    },
+    {
+      "code": "3002007",
+      "display": "Electrocution"
+    },
+    {
+      "code": "3002009",
+      "display": "Exsanguination-Medical (Non-Traumatic)"
+    },
+    {
+      "code": "3002011",
+      "display": "Other"
+    },
+    {
+      "code": "3002013",
+      "display": "Respiratory/Asphyxia"
+    },
+    {
+      "code": "3002015",
+      "display": "Traumatic Cause"
+    },
+    {
+      "code": "3003001",
+      "display": "Attempted Defibrillation"
+    },
+    {
+      "code": "3003003",
+      "display": "Attempted Ventilation"
+    },
+    {
+      "code": "3003005",
+      "display": "Initiated Chest Compressions"
+    },
+    {
+      "code": "3003007",
+      "display": "Not Attempted-Considered Futile"
+    },
+    {
+      "code": "3003009",
+      "display": "Not Attempted-DNR Orders"
+    },
+    {
+      "code": "3003011",
+      "display": "Not Attempted-Signs of Circulation"
+    },
+    {
+      "code": "3004001",
+      "display": "Not Witnessed"
+    },
+    {
+      "code": "3004003",
+      "display": "Witnessed by Family Member"
+    },
+    {
+      "code": "3004005",
+      "display": "Witnessed by Healthcare Provider"
+    },
+    {
+      "code": "3004007",
+      "display": "Witnessed by Bystander"
+    },
+    {
+      "code": "3007001",
+      "display": "No"
+    },
+    {
+      "code": "3007003",
+      "display": "Yes, Applied without Defibrillation"
+    },
+    {
+      "code": "3007005",
+      "display": "Yes, With Defibrillation"
+    },
+    {
+      "code": "3009001",
+      "display": "Compressions-Manual"
+    },
+    {
+      "code": "3009003",
+      "display": "Compressions-External Band Type Device"
+    },
+    {
+      "code": "3009005",
+      "display": "Compressions-External Plunger Type Device"
+    },
+    {
+      "code": "3009007",
+      "display": "Compressions-External Thumper Type Device"
+    },
+    {
+      "code": "3009009",
+      "display": "Compressions-Intermittent with Ventilation"
+    },
+    {
+      "code": "3009011",
+      "display": "Compressions-Other Device"
+    },
+    {
+      "code": "3009013",
+      "display": "Ventilation-Bag Valve Mask"
+    },
+    {
+      "code": "3009015",
+      "display": "Ventilation-Impedance Threshold Device"
+    },
+    {
+      "code": "3009017",
+      "display": "Ventilation-Mouth to Mouth"
+    },
+    {
+      "code": "3009019",
+      "display": "Ventilation-Pocket Mask"
+    },
+    {
+      "code": "3009021",
+      "display": "Compressions-Hands Only CPR (DEPRECATED)"
+    },
+    {
+      "code": "3009023",
+      "display": "Ventilation-with OPA/NPA"
+    },
+    {
+      "code": "3009025",
+      "display": "Ventilation-Advanced Airway Device"
+    },
+    {
+      "code": "3009027",
+      "display": "Ventilation-Passive Ventilation with Oxygen"
+    },
+    {
+      "code": "3011001",
+      "display": "Asystole"
+    },
+    {
+      "code": "3011005",
+      "display": "PEA"
+    },
+    {
+      "code": "3011007",
+      "display": "Unknown AED Non-Shockable Rhythm"
+    },
+    {
+      "code": "3011009",
+      "display": "Unknown AED Shockable Rhythm"
+    },
+    {
+      "code": "3011011",
+      "display": "Ventricular Fibrillation"
+    },
+    {
+      "code": "3011013",
+      "display": "Ventricular Tachycardia-Pulseless"
+    },
+    {
+      "code": "3012001",
+      "display": "No"
+    },
+    {
+      "code": "3012003",
+      "display": "Yes, At Arrival at the ED"
+    },
+    {
+      "code": "3012005",
+      "display": "Yes, Prior to Arrival at the ED"
+    },
+    {
+      "code": "3012007",
+      "display": "Yes, Sustained for 20 consecutive minutes"
+    },
+    {
+      "code": "3013001",
+      "display": "CPC 1 Good Cerebral Performance"
+    },
+    {
+      "code": "3013003",
+      "display": "CPC 2 Moderate Cerebral Disability"
+    },
+    {
+      "code": "3013005",
+      "display": "CPC 3 Severe Cerebral Disability"
+    },
+    {
+      "code": "3013007",
+      "display": "CPC 4 Coma or Vegetative State"
+    },
+    {
+      "code": "3016001",
+      "display": "DNR"
+    },
+    {
+      "code": "3016003",
+      "display": "Medical Control Order"
+    },
+    {
+      "code": "3016005",
+      "display": "Obvious Signs of Death"
+    },
+    {
+      "code": "3016007",
+      "display": "Physically Unable to Perform"
+    },
+    {
+      "code": "3016009",
+      "display": "Protocol/Policy Requirements Completed"
+    },
+    {
+      "code": "3016011",
+      "display": "Return of Spontaneous Circulation (pulse or BP noted)"
+    },
+    {
+      "code": "3018001",
+      "display": "Expired in ED"
+    },
+    {
+      "code": "3018003",
+      "display": "Expired in the Field"
+    },
+    {
+      "code": "3018005",
+      "display": "Ongoing Resuscitation in ED"
+    },
+    {
+      "code": "3018007",
+      "display": "ROSC in the Field"
+    },
+    {
+      "code": "3018009",
+      "display": "ROSC in the ED"
+    },
+    {
+      "code": "3018011",
+      "display": "Ongoing Resuscitation by Other EMS"
+    },
+    {
+      "code": "3020001",
+      "display": "Bystander"
+    },
+    {
+      "code": "3020003",
+      "display": "Family Member"
+    },
+    {
+      "code": "3020005",
+      "display": "Healthcare Provider (non-911 Responder)"
+    },
+    {
+      "code": "3020007",
+      "display": "First Responder (EMS)"
+    },
+    {
+      "code": "3020009",
+      "display": "First Responder (Law Enforcement)"
+    },
+    {
+      "code": "3020011",
+      "display": "First Responder (non-EMS Fire)"
+    },
+    {
+      "code": "3020013",
+      "display": "EMS Responder (transport EMS)"
+    },
+    {
+      "code": "3021001",
+      "display": "Bystander"
+    },
+    {
+      "code": "3021003",
+      "display": "Family Member"
+    },
+    {
+      "code": "3021005",
+      "display": "Healthcare Provider (non-911 Responder)"
+    },
+    {
+      "code": "3021007",
+      "display": "First Responder (EMS)"
+    },
+    {
+      "code": "3021009",
+      "display": "First Responder (Law Enforcement)"
+    },
+    {
+      "code": "3021011",
+      "display": "First Responder (non-EMS Fire)"
+    },
+    {
+      "code": "3021013",
+      "display": "EMS Responder (transport EMS)"
+    },
+    {
+      "code": "3022001",
+      "display": "Bystander"
+    },
+    {
+      "code": "3022003",
+      "display": "Family Member"
+    },
+    {
+      "code": "3022005",
+      "display": "Healthcare Provider (non-911 Responder)"
+    },
+    {
+      "code": "3022007",
+      "display": "First Responder (EMS)"
+    },
+    {
+      "code": "3022009",
+      "display": "First Responder (Law Enforcement)"
+    },
+    {
+      "code": "3022011",
+      "display": "First Responder (non-EMS Fire)"
+    },
+    {
+      "code": "3022013",
+      "display": "EMS Responder (transport EMS)"
+    },
+    {
+      "code": "3101001",
+      "display": "Cultural, Custom, Religious"
+    },
+    {
+      "code": "3101003",
+      "display": "Developmentally Impaired"
+    },
+    {
+      "code": "3101005",
+      "display": "Hearing Impaired"
+    },
+    {
+      "code": "3101007",
+      "display": "Language"
+    },
+    {
+      "code": "3101009",
+      "display": "None Noted"
+    },
+    {
+      "code": "3101011",
+      "display": "Obesity"
+    },
+    {
+      "code": "3101013",
+      "display": "Physical Barrier (Unable to Access Patient)"
+    },
+    {
+      "code": "3101015",
+      "display": "Physically Impaired"
+    },
+    {
+      "code": "3101017",
+      "display": "Physically Restrained"
+    },
+    {
+      "code": "3101019",
+      "display": "Psychologically Impaired"
+    },
+    {
+      "code": "3101021",
+      "display": "Sight Impaired"
+    },
+    {
+      "code": "3101023",
+      "display": "Speech Impaired"
+    },
+    {
+      "code": "3101025",
+      "display": "Unattended or Unsupervised (including minors)"
+    },
+    {
+      "code": "3101027",
+      "display": "Unconscious"
+    },
+    {
+      "code": "3101029",
+      "display": "Uncooperative"
+    },
+    {
+      "code": "3101031",
+      "display": "State of Emotional Distress"
+    },
+    {
+      "code": "3101033",
+      "display": "Alcohol Use, Suspected"
+    },
+    {
+      "code": "3101035",
+      "display": "Drug Use, Suspected"
+    },
+    {
+      "code": "3105001",
+      "display": "Family/Guardian request DNR (but no documentation)"
+    },
+    {
+      "code": "3105003",
+      "display": "Living Will"
+    },
+    {
+      "code": "3105005",
+      "display": "None"
+    },
+    {
+      "code": "3105007",
+      "display": "Other"
+    },
+    {
+      "code": "3105009",
+      "display": "Other Healthcare Advanced Directive Form"
+    },
+    {
+      "code": "3105011",
+      "display": "State EMS DNR or Medical Order Form"
+    },
+    {
+      "code": "3109001",
+      "display": "Bystander/Other"
+    },
+    {
+      "code": "3109003",
+      "display": "Family"
+    },
+    {
+      "code": "3109005",
+      "display": "Health Care Personnel"
+    },
+    {
+      "code": "3109007",
+      "display": "Patient"
+    },
+    {
+      "code": "3114001",
+      "display": "Centimeters (cm)"
+    },
+    {
+      "code": "3114003",
+      "display": "Grams (gms)"
+    },
+    {
+      "code": "3114005",
+      "display": "Drops (gtts)"
+    },
+    {
+      "code": "3114007",
+      "display": "Inches (in)"
+    },
+    {
+      "code": "3114009",
+      "display": "International Units (IU)"
+    },
+    {
+      "code": "3114011",
+      "display": "Keep Vein Open (kvo)"
+    },
+    {
+      "code": "3114013",
+      "display": "Liters Per Minute (l/min [fluid])"
+    },
+    {
+      "code": "3114015",
+      "display": "Liters (l)"
+    },
+    {
+      "code": "3114017",
+      "display": "Liters Per Minute (LPM [gas])"
+    },
+    {
+      "code": "3114019",
+      "display": "Micrograms (mcg)"
+    },
+    {
+      "code": "3114021",
+      "display": "Micrograms per Kilogram per Minute (mcg/kg/min)"
+    },
+    {
+      "code": "3114023",
+      "display": "Micrograms per Minute (mcg/min)"
+    },
+    {
+      "code": "3114025",
+      "display": "Milliequivalents (mEq)"
+    },
+    {
+      "code": "3114027",
+      "display": "Metered Dose (MDI)"
+    },
+    {
+      "code": "3114029",
+      "display": "Milligrams (mg)"
+    },
+    {
+      "code": "3114031",
+      "display": "Milligrams per Kilogram (mg/kg)"
+    },
+    {
+      "code": "3114033",
+      "display": "Milligrams per Kilogram Per Minute (mg/kg/min)"
+    },
+    {
+      "code": "3114035",
+      "display": "Milligrams per Minute (mg/min)"
+    },
+    {
+      "code": "3114037",
+      "display": "Milliliters (ml)"
+    },
+    {
+      "code": "3114039",
+      "display": "Milliliters per Hour (ml/hr)"
+    },
+    {
+      "code": "3114041",
+      "display": "Other"
+    },
+    {
+      "code": "3114043",
+      "display": "Puffs"
+    },
+    {
+      "code": "3114045",
+      "display": "Units per Hour (units/hr)"
+    },
+    {
+      "code": "3114047",
+      "display": "Micrograms per Kilogram (mcg/kg)"
+    },
+    {
+      "code": "3114049",
+      "display": "Units"
+    },
+    {
+      "code": "3114051",
+      "display": "Units per Kilogram per Hour (units/kg/hr)"
+    },
+    {
+      "code": "3114053",
+      "display": "Units per Kilogram (units/kg)"
+    },
+    {
+      "code": "3117001",
+      "display": "Alcohol Containers/Paraphernalia at Scene"
+    },
+    {
+      "code": "3117003",
+      "display": "Drug Paraphernalia at Scene"
+    },
+    {
+      "code": "3117005",
+      "display": "Patient Admits to Alcohol Use"
+    },
+    {
+      "code": "3117007",
+      "display": "Patient Admits to Drug Use"
+    },
+    {
+      "code": "3117009",
+      "display": "Positive Level known from Law Enforcement or Hospital Record"
+    },
+    {
+      "code": "3117013",
+      "display": "Physical Exam Indicates Suspected Alcohol or Drug Use"
+    },
+    {
+      "code": "3117015",
+      "display": "Bystander/Family Reports Drug Use"
+    },
+    {
+      "code": "3117017",
+      "display": "Bystander/Family Reports Alcohol Use"
+    },
+    {
+      "code": "3118001",
+      "display": "No"
+    },
+    {
+      "code": "3118003",
+      "display": "Possible, Unconfirmed"
+    },
+    {
+      "code": "3118005",
+      "display": "Yes, Confirmed 12 to 20 Weeks"
+    },
+    {
+      "code": "3118007",
+      "display": "Yes, Confirmed Greater Than 20 Weeks"
+    },
+    {
+      "code": "3118009",
+      "display": "Yes, Confirmed Less Than 12 Weeks"
+    },
+    {
+      "code": "3118011",
+      "display": "Yes, Weeks Unknown"
+    },
+    {
+      "code": "3120001",
+      "display": "q1h (every hour)"
+    },
+    {
+      "code": "3120003",
+      "display": "q2h (every 2 hours)"
+    },
+    {
+      "code": "3120005",
+      "display": "q3h (every 3 hours)"
+    },
+    {
+      "code": "3120007",
+      "display": "q4h (every 4 hours)"
+    },
+    {
+      "code": "3120009",
+      "display": "qid (four times a day)"
+    },
+    {
+      "code": "3120011",
+      "display": "tid (three times a day)"
+    },
+    {
+      "code": "3120013",
+      "display": "ac (before meals)"
+    },
+    {
+      "code": "3120015",
+      "display": "pc (after meals)"
+    },
+    {
+      "code": "3120017",
+      "display": "bid (twice a day)"
+    },
+    {
+      "code": "3120019",
+      "display": "qd (every day)"
+    },
+    {
+      "code": "3120021",
+      "display": "qd-am (every day in the morning)"
+    },
+    {
+      "code": "3120023",
+      "display": "qd-pm (every day in the evening)"
+    },
+    {
+      "code": "3120025",
+      "display": "hs (at bedtime)"
+    },
+    {
+      "code": "3120027",
+      "display": "qod (every other day)"
+    },
+    {
+      "code": "3120029",
+      "display": "prn (as needed)"
+    },
+    {
+      "code": "3304000",
+      "display": "2 Lead ECG (pads or paddles)"
+    },
+    {
+      "code": "3304001",
+      "display": "3 Lead"
+    },
+    {
+      "code": "3304003",
+      "display": "4 Lead"
+    },
+    {
+      "code": "3304005",
+      "display": "5 Lead"
+    },
+    {
+      "code": "3304007",
+      "display": "12 Lead-Left Sided (Normal)"
+    },
+    {
+      "code": "3304009",
+      "display": "12 Lead-Right Sided"
+    },
+    {
+      "code": "3304011",
+      "display": "15 Lead"
+    },
+    {
+      "code": "3304013",
+      "display": "18 Lead"
+    },
+    {
+      "code": "3304015",
+      "display": "Other"
+    },
+    {
+      "code": "3305001",
+      "display": "Computer Interpretation"
+    },
+    {
+      "code": "3305003",
+      "display": "Manual Interpretation"
+    },
+    {
+      "code": "3305005",
+      "display": "Transmission with No Interpretation"
+    },
+    {
+      "code": "3305007",
+      "display": "Transmission with Remote Interpretation"
+    },
+    {
+      "code": "3308001",
+      "display": "Arterial Line"
+    },
+    {
+      "code": "3308003",
+      "display": "Doppler"
+    },
+    {
+      "code": "3308005",
+      "display": "Cuff-Automated"
+    },
+    {
+      "code": "3308007",
+      "display": "Cuff-Manual Auscultated"
+    },
+    {
+      "code": "3308009",
+      "display": "Cuff-Manual Palpated Only"
+    },
+    {
+      "code": "3308011",
+      "display": "Venous Line"
+    },
+    {
+      "code": "3311001",
+      "display": "Auscultated"
+    },
+    {
+      "code": "3311003",
+      "display": "Doppler"
+    },
+    {
+      "code": "3311005",
+      "display": "Electronic Monitor - Cardiac"
+    },
+    {
+      "code": "3311007",
+      "display": "Electronic Monitor - Pulse Oximeter"
+    },
+    {
+      "code": "3311009",
+      "display": "Electronic Monitor (Other)"
+    },
+    {
+      "code": "3311011",
+      "display": "Palpated"
+    },
+    {
+      "code": "3313001",
+      "display": "Irregularly Irregular"
+    },
+    {
+      "code": "3313003",
+      "display": "Regular"
+    },
+    {
+      "code": "3313005",
+      "display": "Regularly Irregular"
+    },
+    {
+      "code": "3315001",
+      "display": "Apneic"
+    },
+    {
+      "code": "3315003",
+      "display": "Labored"
+    },
+    {
+      "code": "3315005",
+      "display": "Mechanically Assisted (BVM, CPAP, etc.)"
+    },
+    {
+      "code": "3315007",
+      "display": "Normal"
+    },
+    {
+      "code": "3315009",
+      "display": "Rapid"
+    },
+    {
+      "code": "3315011",
+      "display": "Shallow"
+    },
+    {
+      "code": "3315013",
+      "display": "Weak/Agonal"
+    },
+    {
+      "code": "3322001",
+      "display": "Eye Obstruction Prevents Eye Assessment"
+    },
+    {
+      "code": "3322003",
+      "display": "Initial GCS has legitimate values without interventions such as intubation and sedation"
+    },
+    {
+      "code": "3322005",
+      "display": "Patient Chemically Paralyzed"
+    },
+    {
+      "code": "3322007",
+      "display": "Patient Chemically Sedated"
+    },
+    {
+      "code": "3322009",
+      "display": "Patient Intubated"
+    },
+    {
+      "code": "3325001",
+      "display": "Axillary"
+    },
+    {
+      "code": "3325003",
+      "display": "Central (Venous or Arterial)"
+    },
+    {
+      "code": "3325005",
+      "display": "Esophageal"
+    },
+    {
+      "code": "3325007",
+      "display": "Oral"
+    },
+    {
+      "code": "3325009",
+      "display": "Rectal"
+    },
+    {
+      "code": "3325011",
+      "display": "Temporal Artery"
+    },
+    {
+      "code": "3325013",
+      "display": "Tympanic"
+    },
+    {
+      "code": "3325015",
+      "display": "Urinary Catheter"
+    },
+    {
+      "code": "3325017",
+      "display": "Skin Probe"
+    },
+    {
+      "code": "3326001",
+      "display": "Alert"
+    },
+    {
+      "code": "3326003",
+      "display": "Verbal"
+    },
+    {
+      "code": "3326005",
+      "display": "Painful"
+    },
+    {
+      "code": "3326007",
+      "display": "Unresponsive"
+    },
+    {
+      "code": "3328001",
+      "display": "FLACC (Face, Legs, Activity, Cry, Consolability)"
+    },
+    {
+      "code": "3328003",
+      "display": "Numeric (0-10)"
+    },
+    {
+      "code": "3328005",
+      "display": "Other"
+    },
+    {
+      "code": "3328007",
+      "display": "Wong-Baker (FACES)"
+    },
+    {
+      "code": "3329001",
+      "display": "Negative"
+    },
+    {
+      "code": "3329003",
+      "display": "Non-Conclusive"
+    },
+    {
+      "code": "3329005",
+      "display": "Positive"
+    },
+    {
+      "code": "3330001",
+      "display": "Cincinnati Prehospital Stroke Scale (CPSS)"
+    },
+    {
+      "code": "3330004",
+      "display": "Los Angeles Prehospital Stroke Screen (LAPSS)"
+    },
+    {
+      "code": "3330005",
+      "display": "Massachusetts Stroke Scale (MSS)"
+    },
+    {
+      "code": "3330007",
+      "display": "Miami Emergency Neurologic Deficit Exam (MEND)"
+    },
+    {
+      "code": "3330009",
+      "display": "NIH Stroke Scale (NIHSS)"
+    },
+    {
+      "code": "3330011",
+      "display": "Other Stroke Scale Type"
+    },
+    {
+      "code": "3330013",
+      "display": "FAST"
+    },
+    {
+      "code": "3330015",
+      "display": "Boston Stroke Scale (BOSS)"
+    },
+    {
+      "code": "3330017",
+      "display": "Ontario Prehospital Stroke Scale (OPSS)"
+    },
+    {
+      "code": "3330019",
+      "display": "Melbourne Ambulance Stroke Screen (MASS)"
+    },
+    {
+      "code": "3330021",
+      "display": "Rapid Arterial oCclusion Evaluation (RACE)"
+    },
+    {
+      "code": "3330023",
+      "display": "Los Angeles Motor Score (LAMS)"
+    },
+    {
+      "code": "3330025",
+      "display": "Vision, Aphasia, Neglect (VAN)"
+    },
+    {
+      "code": "3330027",
+      "display": "FAST-ED"
+    },
+    {
+      "code": "3330029",
+      "display": "BEFAST"
+    },
+    {
+      "code": "3331001",
+      "display": "Definite Contraindications to Thrombolytic Use"
+    },
+    {
+      "code": "3331003",
+      "display": "No Contraindications to Thrombolytic Use"
+    },
+    {
+      "code": "3331005",
+      "display": "Possible Contraindications to Thrombolytic Use"
+    },
+    {
+      "code": "3403001",
+      "display": "Alanine Transaminase"
+    },
+    {
+      "code": "3403003",
+      "display": "Alcohol-Blood"
+    },
+    {
+      "code": "3403005",
+      "display": "Alcohol-Breath"
+    },
+    {
+      "code": "3403007",
+      "display": "Alkaline Phosphatase"
+    },
+    {
+      "code": "3403009",
+      "display": "Amylase"
+    },
+    {
+      "code": "3403013",
+      "display": "Aspartate Transaminase"
+    },
+    {
+      "code": "3403015",
+      "display": "B-Type Natriuretic Peptide (BNP)"
+    },
+    {
+      "code": "3403017",
+      "display": "Base Excess"
+    },
+    {
+      "code": "3403019",
+      "display": "Bilirubin-Direct"
+    },
+    {
+      "code": "3403021",
+      "display": "Bilirubin-Total"
+    },
+    {
+      "code": "3403023",
+      "display": "BUN"
+    },
+    {
+      "code": "3403025",
+      "display": "Calcium-Ionized"
+    },
+    {
+      "code": "3403027",
+      "display": "Calcium-Serum"
+    },
+    {
+      "code": "3403029",
+      "display": "Carbon Dioxide-Partial Pressure"
+    },
+    {
+      "code": "3403033",
+      "display": "Chloride"
+    },
+    {
+      "code": "3403035",
+      "display": "Creatine Kinase"
+    },
+    {
+      "code": "3403037",
+      "display": "Creatine Kinase-MB"
+    },
+    {
+      "code": "3403039",
+      "display": "Creatinine"
+    },
+    {
+      "code": "3403041",
+      "display": "Gamma Glutamyl Transpeptidase"
+    },
+    {
+      "code": "3403043",
+      "display": "Glucose"
+    },
+    {
+      "code": "3403045",
+      "display": "Hematocrit"
+    },
+    {
+      "code": "3403047",
+      "display": "Hemoglobin"
+    },
+    {
+      "code": "3403049",
+      "display": "Human Chorionic Gonadotropin-Serum"
+    },
+    {
+      "code": "3403051",
+      "display": "Human Chorionic Gonadotropin-Urine"
+    },
+    {
+      "code": "3403053",
+      "display": "International Normalized Ratio (INR)"
+    },
+    {
+      "code": "3403055",
+      "display": "Lactate Dehydrogenase"
+    },
+    {
+      "code": "3403057",
+      "display": "Lactate-Arterial"
+    },
+    {
+      "code": "3403059",
+      "display": "Lactate-Venous"
+    },
+    {
+      "code": "3403061",
+      "display": "Lipase"
+    },
+    {
+      "code": "3403063",
+      "display": "Magnesium"
+    },
+    {
+      "code": "3403065",
+      "display": "Oxygen-Partial Pressure"
+    },
+    {
+      "code": "3403067",
+      "display": "Partial Thromboplastin Time"
+    },
+    {
+      "code": "3403071",
+      "display": "pH-ABG"
+    },
+    {
+      "code": "3403073",
+      "display": "pH-Venous"
+    },
+    {
+      "code": "3403075",
+      "display": "Platelets"
+    },
+    {
+      "code": "3403077",
+      "display": "Potassium"
+    },
+    {
+      "code": "3403079",
+      "display": "Prothrombin Time"
+    },
+    {
+      "code": "3403081",
+      "display": "Red Blood Cells"
+    },
+    {
+      "code": "3403083",
+      "display": "Sodium"
+    },
+    {
+      "code": "3403085",
+      "display": "Troponin"
+    },
+    {
+      "code": "3403087",
+      "display": "White Blood Cells"
+    },
+    {
+      "code": "3403089",
+      "display": "Ammonia"
+    },
+    {
+      "code": "3403091",
+      "display": "Bicarbonate (HCO3)"
+    },
+    {
+      "code": "3403093",
+      "display": "Carboxyhemoglobin"
+    },
+    {
+      "code": "3403095",
+      "display": "CO2, Total (Bicarbonate)"
+    },
+    {
+      "code": "3403097",
+      "display": "CRP (C-Reactive Protein)"
+    },
+    {
+      "code": "3403099",
+      "display": "Dilantin"
+    },
+    {
+      "code": "3403101",
+      "display": "Leukocytes"
+    },
+    {
+      "code": "3403103",
+      "display": "Nitrates"
+    },
+    {
+      "code": "3403105",
+      "display": "Phenobarbital"
+    },
+    {
+      "code": "3403107",
+      "display": "Protein"
+    },
+    {
+      "code": "3403109",
+      "display": "Salicylate"
+    },
+    {
+      "code": "3403111",
+      "display": "Specific Gravity"
+    },
+    {
+      "code": "3403113",
+      "display": "Tylenol"
+    },
+    {
+      "code": "3403115",
+      "display": "ACT Celite (ACTc)"
+    },
+    {
+      "code": "3403117",
+      "display": "ACT Kaolin (ACTk)"
+    },
+    {
+      "code": "3403119",
+      "display": "Bands"
+    },
+    {
+      "code": "3403121",
+      "display": "Basophils"
+    },
+    {
+      "code": "3403123",
+      "display": "Creatine Phosphokinase (CK) (DEPRECATED)"
+    },
+    {
+      "code": "3403125",
+      "display": "Eosinophils"
+    },
+    {
+      "code": "3403127",
+      "display": "Erythrocyte Count"
+    },
+    {
+      "code": "3403129",
+      "display": "Erythrocyte Morphology"
+    },
+    {
+      "code": "3403131",
+      "display": "Erythrocyte Sedimentation Rate"
+    },
+    {
+      "code": "3403133",
+      "display": "High-Sensitivity C-reactive Protein (hs-CRP)"
+    },
+    {
+      "code": "3403135",
+      "display": "Lymphocytes"
+    },
+    {
+      "code": "3403137",
+      "display": "Mean Corpuscular Hemoglobin (MCH)"
+    },
+    {
+      "code": "3403139",
+      "display": "Mean Corpuscular Hemoglobin Concentration (MCHC)"
+    },
+    {
+      "code": "3403141",
+      "display": "Mean Corpuscular Volume (MCV)"
+    },
+    {
+      "code": "3403143",
+      "display": "Monocytes"
+    },
+    {
+      "code": "3403145",
+      "display": "Myoglobin"
+    },
+    {
+      "code": "3403147",
+      "display": "Neutrophils"
+    },
+    {
+      "code": "3403149",
+      "display": "Oxygen Saturation (SaO2)"
+    },
+    {
+      "code": "3403151",
+      "display": "Oxygen Volume/Content (SVO2)"
+    },
+    {
+      "code": "3403153",
+      "display": "Phosphorus (PO4)"
+    },
+    {
+      "code": "3403155",
+      "display": "Prothromblin test time (PT/INR)"
+    },
+    {
+      "code": "3403157",
+      "display": "Red Cell Distribution Width (RDW)"
+    },
+    {
+      "code": "3403159",
+      "display": "Reticulocyte Count"
+    },
+    {
+      "code": "3403161",
+      "display": "Troponin T (cTnT)"
+    },
+    {
+      "code": "3405001",
+      "display": "Computed Tomography (CT) Scan"
+    },
+    {
+      "code": "3405003",
+      "display": "Magnetic Resonance Imaging (MRI)"
+    },
+    {
+      "code": "3405005",
+      "display": "Other"
+    },
+    {
+      "code": "3405007",
+      "display": "Positron Emission Tomography (PET) Scan"
+    },
+    {
+      "code": "3405009",
+      "display": "Ultrasound"
+    },
+    {
+      "code": "3405011",
+      "display": "X-ray"
+    },
+    {
+      "code": "3405013",
+      "display": "Angiography"
+    },
+    {
+      "code": "3502001",
+      "display": "Blue"
+    },
+    {
+      "code": "3502003",
+      "display": "Green"
+    },
+    {
+      "code": "3502005",
+      "display": "Grey"
+    },
+    {
+      "code": "3502007",
+      "display": "Orange"
+    },
+    {
+      "code": "3502009",
+      "display": "Pink"
+    },
+    {
+      "code": "3502011",
+      "display": "Purple"
+    },
+    {
+      "code": "3502013",
+      "display": "Red"
+    },
+    {
+      "code": "3502015",
+      "display": "White"
+    },
+    {
+      "code": "3502017",
+      "display": "Yellow"
+    },
+    {
+      "code": "3504001",
+      "display": "Clammy"
+    },
+    {
+      "code": "3504003",
+      "display": "Cold"
+    },
+    {
+      "code": "3504005",
+      "display": "Cyanotic"
+    },
+    {
+      "code": "3504007",
+      "display": "Diaphoretic"
+    },
+    {
+      "code": "3504009",
+      "display": "Dry"
+    },
+    {
+      "code": "3504011",
+      "display": "Flushed"
+    },
+    {
+      "code": "3504013",
+      "display": "Hot"
+    },
+    {
+      "code": "3504015",
+      "display": "Jaundiced"
+    },
+    {
+      "code": "3504017",
+      "display": "Lividity"
+    },
+    {
+      "code": "3504019",
+      "display": "Mottled"
+    },
+    {
+      "code": "3504021",
+      "display": "Normal"
+    },
+    {
+      "code": "3504023",
+      "display": "Not Done"
+    },
+    {
+      "code": "3504025",
+      "display": "Pale"
+    },
+    {
+      "code": "3504027",
+      "display": "Poor Turgor"
+    },
+    {
+      "code": "3504029",
+      "display": "Red (Erythematous)"
+    },
+    {
+      "code": "3504031",
+      "display": "Tenting"
+    },
+    {
+      "code": "3504033",
+      "display": "Warm"
+    },
+    {
+      "code": "3504035",
+      "display": "Capillary Nail Bed Refill less than 2 seconds"
+    },
+    {
+      "code": "3504037",
+      "display": "Capillary Nail Bed Refill 2-4 seconds"
+    },
+    {
+      "code": "3504039",
+      "display": "Capillary Nail Bed Refill more than 4 seconds"
+    },
+    {
+      "code": "3505001",
+      "display": "Abrasion"
+    },
+    {
+      "code": "3505003",
+      "display": "Avulsion"
+    },
+    {
+      "code": "3505005",
+      "display": "Bleeding Controlled"
+    },
+    {
+      "code": "3505007",
+      "display": "Bleeding Uncontrolled"
+    },
+    {
+      "code": "3505009",
+      "display": "Burn-Blistering"
+    },
+    {
+      "code": "3505011",
+      "display": "Burn-Charring"
+    },
+    {
+      "code": "3505013",
+      "display": "Burn-Redness"
+    },
+    {
+      "code": "3505015",
+      "display": "Burn-White/Waxy"
+    },
+    {
+      "code": "3505017",
+      "display": "Decapitation"
+    },
+    {
+      "code": "3505019",
+      "display": "Deformity"
+    },
+    {
+      "code": "3505021",
+      "display": "Drainage"
+    },
+    {
+      "code": "3505023",
+      "display": "Foreign Body"
+    },
+    {
+      "code": "3505029",
+      "display": "Laceration"
+    },
+    {
+      "code": "3505031",
+      "display": "Mass/Lesion"
+    },
+    {
+      "code": "3505033",
+      "display": "Normal"
+    },
+    {
+      "code": "3505035",
+      "display": "Not Done"
+    },
+    {
+      "code": "3505037",
+      "display": "Pain"
+    },
+    {
+      "code": "3505039",
+      "display": "Puncture/Stab Wound"
+    },
+    {
+      "code": "3505045",
+      "display": "Gunshot Wound"
+    },
+    {
+      "code": "3505047",
+      "display": "Crush Injury"
+    },
+    {
+      "code": "3505049",
+      "display": "Swelling"
+    },
+    {
+      "code": "3505051",
+      "display": "Contusion"
+    },
+    {
+      "code": "3505053",
+      "display": "Tenderness"
+    },
+    {
+      "code": "3506001",
+      "display": "Abrasion"
+    },
+    {
+      "code": "3506003",
+      "display": "Asymmetric Smile or Droop"
+    },
+    {
+      "code": "3506005",
+      "display": "Avulsion"
+    },
+    {
+      "code": "3506007",
+      "display": "Bleeding Controlled"
+    },
+    {
+      "code": "3506009",
+      "display": "Bleeding Uncontrolled"
+    },
+    {
+      "code": "3506011",
+      "display": "Burn-Blistering"
+    },
+    {
+      "code": "3506013",
+      "display": "Burn-Charring"
+    },
+    {
+      "code": "3506015",
+      "display": "Burn-Redness"
+    },
+    {
+      "code": "3506017",
+      "display": "Burn-White/Waxy"
+    },
+    {
+      "code": "3506021",
+      "display": "Deformity"
+    },
+    {
+      "code": "3506023",
+      "display": "Drainage"
+    },
+    {
+      "code": "3506025",
+      "display": "Foreign Body"
+    },
+    {
+      "code": "3506031",
+      "display": "Laceration"
+    },
+    {
+      "code": "3506033",
+      "display": "Mass/Lesion"
+    },
+    {
+      "code": "3506035",
+      "display": "Normal"
+    },
+    {
+      "code": "3506037",
+      "display": "Not Done"
+    },
+    {
+      "code": "3506039",
+      "display": "Pain"
+    },
+    {
+      "code": "3506041",
+      "display": "Puncture/Stab Wound"
+    },
+    {
+      "code": "3506047",
+      "display": "Gunshot Wound"
+    },
+    {
+      "code": "3506049",
+      "display": "Crush Injury"
+    },
+    {
+      "code": "3506051",
+      "display": "Tenderness"
+    },
+    {
+      "code": "3506053",
+      "display": "Swelling"
+    },
+    {
+      "code": "3506055",
+      "display": "Contusion"
+    },
+    {
+      "code": "3507001",
+      "display": "Abrasion"
+    },
+    {
+      "code": "3507003",
+      "display": "Avulsion"
+    },
+    {
+      "code": "3507005",
+      "display": "Bleeding Controlled"
+    },
+    {
+      "code": "3507007",
+      "display": "Bleeding Uncontrolled"
+    },
+    {
+      "code": "3507009",
+      "display": "Burn-Blistering"
+    },
+    {
+      "code": "3507011",
+      "display": "Burn-Charring"
+    },
+    {
+      "code": "3507013",
+      "display": "Burn-Redness"
+    },
+    {
+      "code": "3507015",
+      "display": "Burn-White/Waxy"
+    },
+    {
+      "code": "3507017",
+      "display": "Decapitation"
+    },
+    {
+      "code": "3507019",
+      "display": "Foreign Body"
+    },
+    {
+      "code": "3507025",
+      "display": "JVD"
+    },
+    {
+      "code": "3507027",
+      "display": "Laceration"
+    },
+    {
+      "code": "3507029",
+      "display": "Normal"
+    },
+    {
+      "code": "3507031",
+      "display": "Not Done"
+    },
+    {
+      "code": "3507033",
+      "display": "Pain"
+    },
+    {
+      "code": "3507035",
+      "display": "Puncture/Stab Wound"
+    },
+    {
+      "code": "3507037",
+      "display": "Stridor"
+    },
+    {
+      "code": "3507039",
+      "display": "Subcutaneous Air"
+    },
+    {
+      "code": "3507045",
+      "display": "Tracheal Deviation-Left"
+    },
+    {
+      "code": "3507047",
+      "display": "Tracheal Deviation-Right"
+    },
+    {
+      "code": "3507049",
+      "display": "Gunshot Wound"
+    },
+    {
+      "code": "3507051",
+      "display": "Crush Injury"
+    },
+    {
+      "code": "3507053",
+      "display": "Swelling"
+    },
+    {
+      "code": "3507055",
+      "display": "Contusion"
+    },
+    {
+      "code": "3507057",
+      "display": "Deformity"
+    },
+    {
+      "code": "3507059",
+      "display": "Tenderness"
+    },
+    {
+      "code": "3509001",
+      "display": "Clicks"
+    },
+    {
+      "code": "3509003",
+      "display": "Heart Sounds Decreased"
+    },
+    {
+      "code": "3509005",
+      "display": "Murmur-Diastolic"
+    },
+    {
+      "code": "3509007",
+      "display": "Murmur-Systolic"
+    },
+    {
+      "code": "3509009",
+      "display": "Normal"
+    },
+    {
+      "code": "3509011",
+      "display": "Not Done"
+    },
+    {
+      "code": "3509013",
+      "display": "Rubs"
+    },
+    {
+      "code": "3509015",
+      "display": "S1"
+    },
+    {
+      "code": "3509017",
+      "display": "S2"
+    },
+    {
+      "code": "3509019",
+      "display": "S3"
+    },
+    {
+      "code": "3509021",
+      "display": "S4"
+    },
+    {
+      "code": "3510001",
+      "display": "Generalized"
+    },
+    {
+      "code": "3510003",
+      "display": "Left Lower Quadrant"
+    },
+    {
+      "code": "3510005",
+      "display": "Left Upper Quadrant"
+    },
+    {
+      "code": "3510007",
+      "display": "Periumbilical"
+    },
+    {
+      "code": "3510009",
+      "display": "Right Lower Quadrant"
+    },
+    {
+      "code": "3510011",
+      "display": "Right Upper Quadrant"
+    },
+    {
+      "code": "3510013",
+      "display": "Epigastric"
+    },
+    {
+      "code": "3511001",
+      "display": "Abrasion"
+    },
+    {
+      "code": "3511003",
+      "display": "Avulsion"
+    },
+    {
+      "code": "3511005",
+      "display": "Bleeding Controlled"
+    },
+    {
+      "code": "3511007",
+      "display": "Bleeding Uncontrolled"
+    },
+    {
+      "code": "3511009",
+      "display": "Bowel Sounds-Absent"
+    },
+    {
+      "code": "3511011",
+      "display": "Bowel Sounds-Present"
+    },
+    {
+      "code": "3511013",
+      "display": "Burn-Blistering"
+    },
+    {
+      "code": "3511015",
+      "display": "Burn-Charring"
+    },
+    {
+      "code": "3511017",
+      "display": "Burn-Redness"
+    },
+    {
+      "code": "3511019",
+      "display": "Burn-White/Waxy"
+    },
+    {
+      "code": "3511021",
+      "display": "Distention"
+    },
+    {
+      "code": "3511023",
+      "display": "Foreign Body"
+    },
+    {
+      "code": "3511025",
+      "display": "Guarding"
+    },
+    {
+      "code": "3511031",
+      "display": "Laceration"
+    },
+    {
+      "code": "3511033",
+      "display": "Mass/Lesion"
+    },
+    {
+      "code": "3511035",
+      "display": "Mass-Pulsating"
+    },
+    {
+      "code": "3511037",
+      "display": "Normal"
+    },
+    {
+      "code": "3511039",
+      "display": "Not Done"
+    },
+    {
+      "code": "3511041",
+      "display": "Pain"
+    },
+    {
+      "code": "3511043",
+      "display": "Pregnant-Palpable Uterus"
+    },
+    {
+      "code": "3511045",
+      "display": "Puncture/Stab Wound"
+    },
+    {
+      "code": "3511051",
+      "display": "Tenderness"
+    },
+    {
+      "code": "3511053",
+      "display": "Gunshot Wound"
+    },
+    {
+      "code": "3511055",
+      "display": "Crush Injury"
+    },
+    {
+      "code": "3511057",
+      "display": "Swelling"
+    },
+    {
+      "code": "3511059",
+      "display": "Contusion"
+    },
+    {
+      "code": "3511061",
+      "display": "Deformity"
+    },
+    {
+      "code": "3511063",
+      "display": "Rebound Tenderness"
+    },
+    {
+      "code": "3511065",
+      "display": "Rigidity"
+    },
+    {
+      "code": "3512001",
+      "display": "Abrasion"
+    },
+    {
+      "code": "3512003",
+      "display": "Avulsion"
+    },
+    {
+      "code": "3512005",
+      "display": "Bleeding Controlled"
+    },
+    {
+      "code": "3512007",
+      "display": "Bleeding Uncontrolled"
+    },
+    {
+      "code": "3512009",
+      "display": "Bleeding-Rectal"
+    },
+    {
+      "code": "3512011",
+      "display": "Bleeding-Urethral"
+    },
+    {
+      "code": "3512013",
+      "display": "Bleeding-Vaginal"
+    },
+    {
+      "code": "3512015",
+      "display": "Burn-Blistering"
+    },
+    {
+      "code": "3512017",
+      "display": "Burn-Charring"
+    },
+    {
+      "code": "3512019",
+      "display": "Burn-Redness"
+    },
+    {
+      "code": "3512021",
+      "display": "Burn-White/Waxy"
+    },
+    {
+      "code": "3512023",
+      "display": "Deformity"
+    },
+    {
+      "code": "3512025",
+      "display": "Foreign Body"
+    },
+    {
+      "code": "3512027",
+      "display": "Genital Injury"
+    },
+    {
+      "code": "3512033",
+      "display": "Laceration"
+    },
+    {
+      "code": "3512035",
+      "display": "Mass/Lesion"
+    },
+    {
+      "code": "3512037",
+      "display": "Normal"
+    },
+    {
+      "code": "3512039",
+      "display": "Not Done"
+    },
+    {
+      "code": "3512041",
+      "display": "Pain"
+    },
+    {
+      "code": "3512043",
+      "display": "Pelvic Fracture"
+    },
+    {
+      "code": "3512045",
+      "display": "Pelvic Instability"
+    },
+    {
+      "code": "3512047",
+      "display": "Penile Priapism/Erection"
+    },
+    {
+      "code": "3512049",
+      "display": "Pregnant-Crowning"
+    },
+    {
+      "code": "3512051",
+      "display": "Puncture/Stab Wound"
+    },
+    {
+      "code": "3512057",
+      "display": "Tenderness"
+    },
+    {
+      "code": "3512059",
+      "display": "Gunshot Wound"
+    },
+    {
+      "code": "3512061",
+      "display": "Crush Injury"
+    },
+    {
+      "code": "3512063",
+      "display": "Swelling"
+    },
+    {
+      "code": "3512065",
+      "display": "Contusion"
+    },
+    {
+      "code": "3513001",
+      "display": "Back-General"
+    },
+    {
+      "code": "3513003",
+      "display": "Cervical-Left"
+    },
+    {
+      "code": "3513005",
+      "display": "Cervical-Midline"
+    },
+    {
+      "code": "3513007",
+      "display": "Cervical-Right"
+    },
+    {
+      "code": "3513009",
+      "display": "Lumbar-Left"
+    },
+    {
+      "code": "3513011",
+      "display": "Lumbar-Midline"
+    },
+    {
+      "code": "3513013",
+      "display": "Lumbar-Right"
+    },
+    {
+      "code": "3513015",
+      "display": "Thoracic-Left"
+    },
+    {
+      "code": "3513017",
+      "display": "Thoracic-Midline"
+    },
+    {
+      "code": "3513019",
+      "display": "Thoracic-Right"
+    },
+    {
+      "code": "3513021",
+      "display": "Sacral-Left"
+    },
+    {
+      "code": "3513023",
+      "display": "Sacral-Midline"
+    },
+    {
+      "code": "3513025",
+      "display": "Sacral-Right"
+    },
+    {
+      "code": "3513029",
+      "display": "Flank-Left"
+    },
+    {
+      "code": "3513031",
+      "display": "Flank-Right"
+    },
+    {
+      "code": "3514001",
+      "display": "Abrasion"
+    },
+    {
+      "code": "3514003",
+      "display": "Avulsion"
+    },
+    {
+      "code": "3514005",
+      "display": "Bleeding Controlled"
+    },
+    {
+      "code": "3514007",
+      "display": "Bleeding Uncontrolled"
+    },
+    {
+      "code": "3514009",
+      "display": "Burn-Blistering"
+    },
+    {
+      "code": "3514011",
+      "display": "Burn-Charring"
+    },
+    {
+      "code": "3514013",
+      "display": "Burn-Redness"
+    },
+    {
+      "code": "3514015",
+      "display": "Burn-White/Waxy"
+    },
+    {
+      "code": "3514017",
+      "display": "Deformity"
+    },
+    {
+      "code": "3514019",
+      "display": "Foreign Body"
+    },
+    {
+      "code": "3514025",
+      "display": "Laceration"
+    },
+    {
+      "code": "3514027",
+      "display": "Normal"
+    },
+    {
+      "code": "3514029",
+      "display": "Not Done"
+    },
+    {
+      "code": "3514031",
+      "display": "Pain"
+    },
+    {
+      "code": "3514033",
+      "display": "Pain with Range of Motion"
+    },
+    {
+      "code": "3514035",
+      "display": "Puncture/Stab Wound"
+    },
+    {
+      "code": "3514041",
+      "display": "Tenderness Costovertebral Angle"
+    },
+    {
+      "code": "3514043",
+      "display": "Tenderness Midline Spinous Process"
+    },
+    {
+      "code": "3514045",
+      "display": "Tenderness Paraspinous"
+    },
+    {
+      "code": "3514047",
+      "display": "Gunshot Wound"
+    },
+    {
+      "code": "3514049",
+      "display": "Crush Injury"
+    },
+    {
+      "code": "3514051",
+      "display": "Swelling"
+    },
+    {
+      "code": "3514053",
+      "display": "Contusion"
+    },
+    {
+      "code": "3514055",
+      "display": "Tenderness"
+    },
+    {
+      "code": "3515001",
+      "display": "Ankle-Left"
+    },
+    {
+      "code": "3515003",
+      "display": "Ankle-Right"
+    },
+    {
+      "code": "3515005",
+      "display": "Arm-Upper-Left"
+    },
+    {
+      "code": "3515007",
+      "display": "Arm-Upper-Right"
+    },
+    {
+      "code": "3515009",
+      "display": "Elbow-Left"
+    },
+    {
+      "code": "3515011",
+      "display": "Elbow-Right"
+    },
+    {
+      "code": "3515013",
+      "display": "Finger-2nd (Index)-Left"
+    },
+    {
+      "code": "3515015",
+      "display": "Finger-2nd (Index)-Right"
+    },
+    {
+      "code": "3515017",
+      "display": "Finger-3rd (Middle)-Left"
+    },
+    {
+      "code": "3515019",
+      "display": "Finger-3rd (Middle)-Right"
+    },
+    {
+      "code": "3515021",
+      "display": "Finger-4th (Ring)-Left"
+    },
+    {
+      "code": "3515023",
+      "display": "Finger-4th (Ring)-Right"
+    },
+    {
+      "code": "3515025",
+      "display": "Finger-5th (Smallest)-Left"
+    },
+    {
+      "code": "3515027",
+      "display": "Finger-5th (Smallest)-Right"
+    },
+    {
+      "code": "3515029",
+      "display": "Foot-Dorsal-Left"
+    },
+    {
+      "code": "3515031",
+      "display": "Foot-Dorsal-Right"
+    },
+    {
+      "code": "3515033",
+      "display": "Foot-Plantar-Left"
+    },
+    {
+      "code": "3515035",
+      "display": "Foot-Plantar-Right"
+    },
+    {
+      "code": "3515037",
+      "display": "Arm-Lower-Left"
+    },
+    {
+      "code": "3515039",
+      "display": "Arm-Lower-Right"
+    },
+    {
+      "code": "3515041",
+      "display": "Hand-Dorsal-Left"
+    },
+    {
+      "code": "3515043",
+      "display": "Hand-Dorsal-Right"
+    },
+    {
+      "code": "3515045",
+      "display": "Hand-Palm-Left"
+    },
+    {
+      "code": "3515047",
+      "display": "Hand-Palm-Right"
+    },
+    {
+      "code": "3515049",
+      "display": "Hip-Left"
+    },
+    {
+      "code": "3515051",
+      "display": "Hip-Right"
+    },
+    {
+      "code": "3515053",
+      "display": "Knee-Left"
+    },
+    {
+      "code": "3515055",
+      "display": "Knee-Right"
+    },
+    {
+      "code": "3515057",
+      "display": "Leg-Lower-Left"
+    },
+    {
+      "code": "3515059",
+      "display": "Leg-Lower-Right"
+    },
+    {
+      "code": "3515061",
+      "display": "Leg-Upper-Left"
+    },
+    {
+      "code": "3515063",
+      "display": "Leg-Upper-Right"
+    },
+    {
+      "code": "3515065",
+      "display": "Shoulder-Left"
+    },
+    {
+      "code": "3515067",
+      "display": "Shoulder-Right"
+    },
+    {
+      "code": "3515069",
+      "display": "Thumb-Left"
+    },
+    {
+      "code": "3515071",
+      "display": "Thumb-Right"
+    },
+    {
+      "code": "3515073",
+      "display": "Toe-1st (Big)-Left"
+    },
+    {
+      "code": "3515075",
+      "display": "Toe-1st (Big)-Right"
+    },
+    {
+      "code": "3515077",
+      "display": "Toe-2nd-Left"
+    },
+    {
+      "code": "3515079",
+      "display": "Toe-2nd-Right"
+    },
+    {
+      "code": "3515081",
+      "display": "Toe-3rd-Left"
+    },
+    {
+      "code": "3515083",
+      "display": "Toe-3rd-Right"
+    },
+    {
+      "code": "3515085",
+      "display": "Toe-4th-Left"
+    },
+    {
+      "code": "3515087",
+      "display": "Toe-4th-Right"
+    },
+    {
+      "code": "3515089",
+      "display": "Toe-5th (Smallest)-Left"
+    },
+    {
+      "code": "3515091",
+      "display": "Toe-5th (Smallest)-Right"
+    },
+    {
+      "code": "3515093",
+      "display": "Wrist-Left"
+    },
+    {
+      "code": "3515095",
+      "display": "Wrist-Right"
+    },
+    {
+      "code": "3515097",
+      "display": "Arm-Whole Arm and Hand-Left"
+    },
+    {
+      "code": "3515099",
+      "display": "Arm-Whole Arm and Hand-Right"
+    },
+    {
+      "code": "3515101",
+      "display": "Hand-Whole Hand-Left"
+    },
+    {
+      "code": "3515103",
+      "display": "Hand-Whole Hand-Right"
+    },
+    {
+      "code": "3515105",
+      "display": "Leg-Whole Leg-Left"
+    },
+    {
+      "code": "3515107",
+      "display": "Leg-Whole Leg-Right"
+    },
+    {
+      "code": "3515109",
+      "display": "Foot-Whole Foot-Left"
+    },
+    {
+      "code": "3515111",
+      "display": "Foot-Whole Foot-Right"
+    },
+    {
+      "code": "3516001",
+      "display": "Abrasion"
+    },
+    {
+      "code": "3516003",
+      "display": "Amputation-Acute"
+    },
+    {
+      "code": "3516005",
+      "display": "Amputation-Previous"
+    },
+    {
+      "code": "3516007",
+      "display": "Avulsion"
+    },
+    {
+      "code": "3516009",
+      "display": "Bleeding Controlled"
+    },
+    {
+      "code": "3516011",
+      "display": "Bleeding Uncontrolled"
+    },
+    {
+      "code": "3516013",
+      "display": "Burn-Blistering"
+    },
+    {
+      "code": "3516015",
+      "display": "Burn-Charring"
+    },
+    {
+      "code": "3516017",
+      "display": "Burn-Redness"
+    },
+    {
+      "code": "3516019",
+      "display": "Burn-White/Waxy"
+    },
+    {
+      "code": "3516021",
+      "display": "Clubbing (of fingers)"
+    },
+    {
+      "code": "3516023",
+      "display": "Crush Injury"
+    },
+    {
+      "code": "3516025",
+      "display": "Deformity"
+    },
+    {
+      "code": "3516027",
+      "display": "Dislocation"
+    },
+    {
+      "code": "3516029",
+      "display": "Edema"
+    },
+    {
+      "code": "3516031",
+      "display": "Foreign Body"
+    },
+    {
+      "code": "3516033",
+      "display": "Fracture-Closed"
+    },
+    {
+      "code": "3516035",
+      "display": "Fracture-Open"
+    },
+    {
+      "code": "3516041",
+      "display": "Laceration"
+    },
+    {
+      "code": "3516043",
+      "display": "Motor Function-Abnormal/Weakness"
+    },
+    {
+      "code": "3516045",
+      "display": "Motor Function-Absent"
+    },
+    {
+      "code": "3516047",
+      "display": "Motor Function-Normal"
+    },
+    {
+      "code": "3516049",
+      "display": "Normal"
+    },
+    {
+      "code": "3516051",
+      "display": "Not Done"
+    },
+    {
+      "code": "3516053",
+      "display": "Pain"
+    },
+    {
+      "code": "3516055",
+      "display": "Paralysis"
+    },
+    {
+      "code": "3516057",
+      "display": "Pulse-Abnormal"
+    },
+    {
+      "code": "3516059",
+      "display": "Pulse-Absent"
+    },
+    {
+      "code": "3516061",
+      "display": "Pulse-Normal"
+    },
+    {
+      "code": "3516063",
+      "display": "Puncture/Stab Wound"
+    },
+    {
+      "code": "3516065",
+      "display": "Sensation-Abnormal"
+    },
+    {
+      "code": "3516067",
+      "display": "Sensation-Absent"
+    },
+    {
+      "code": "3516069",
+      "display": "Sensation-Normal"
+    },
+    {
+      "code": "3516075",
+      "display": "Tenderness"
+    },
+    {
+      "code": "3516077",
+      "display": "Gunshot Wound"
+    },
+    {
+      "code": "3516079",
+      "display": "Swelling"
+    },
+    {
+      "code": "3516081",
+      "display": "Contusion"
+    },
+    {
+      "code": "3516083",
+      "display": "Arm Drift"
+    },
+    {
+      "code": "3516085",
+      "display": "Cool/Cold to Touch"
+    },
+    {
+      "code": "3516087",
+      "display": "Cyanosis"
+    },
+    {
+      "code": "3516089",
+      "display": "Erythema/Flushing"
+    },
+    {
+      "code": "3516091",
+      "display": "Hot/Warm to Touch"
+    },
+    {
+      "code": "3516093",
+      "display": "Lividity"
+    },
+    {
+      "code": "3516095",
+      "display": "Mottled"
+    },
+    {
+      "code": "3516097",
+      "display": "Pale"
+    },
+    {
+      "code": "3517001",
+      "display": "Bilateral"
+    },
+    {
+      "code": "3517003",
+      "display": "Left"
+    },
+    {
+      "code": "3517005",
+      "display": "Right"
+    },
+    {
+      "code": "3518001",
+      "display": "1-mm"
+    },
+    {
+      "code": "3518003",
+      "display": "2-mm"
+    },
+    {
+      "code": "3518005",
+      "display": "3-mm"
+    },
+    {
+      "code": "3518007",
+      "display": "4-mm"
+    },
+    {
+      "code": "3518009",
+      "display": "5-mm"
+    },
+    {
+      "code": "3518011",
+      "display": "6-mm"
+    },
+    {
+      "code": "3518013",
+      "display": "7-mm"
+    },
+    {
+      "code": "3518015",
+      "display": "8-mm or >"
+    },
+    {
+      "code": "3518017",
+      "display": "Blind"
+    },
+    {
+      "code": "3518019",
+      "display": "Cataract Present"
+    },
+    {
+      "code": "3518021",
+      "display": "Clouded"
+    },
+    {
+      "code": "3518023",
+      "display": "Deformity"
+    },
+    {
+      "code": "3518025",
+      "display": "Dysconjugate Gaze"
+    },
+    {
+      "code": "3518027",
+      "display": "Foreign Body"
+    },
+    {
+      "code": "3518029",
+      "display": "Glaucoma Present"
+    },
+    {
+      "code": "3518031",
+      "display": "Hyphema"
+    },
+    {
+      "code": "3518033",
+      "display": "Jaundiced Sclera"
+    },
+    {
+      "code": "3518035",
+      "display": "Missing"
+    },
+    {
+      "code": "3518037",
+      "display": "Non-Reactive"
+    },
+    {
+      "code": "3518039",
+      "display": "Not Done"
+    },
+    {
+      "code": "3518041",
+      "display": "Non-Reactive Prosthetic"
+    },
+    {
+      "code": "3518043",
+      "display": "Nystagmus Noted"
+    },
+    {
+      "code": "3518045",
+      "display": "Open Globe"
+    },
+    {
+      "code": "3518047",
+      "display": "PERRL"
+    },
+    {
+      "code": "3518049",
+      "display": "Pupil-Irregular/Teardrop"
+    },
+    {
+      "code": "3518051",
+      "display": "Reactive"
+    },
+    {
+      "code": "3518053",
+      "display": "Sluggish"
+    },
+    {
+      "code": "3518055",
+      "display": "Swelling"
+    },
+    {
+      "code": "3518057",
+      "display": "Contusion"
+    },
+    {
+      "code": "3518059",
+      "display": "Puncture/Stab Wound"
+    },
+    {
+      "code": "3518061",
+      "display": "Dilated"
+    },
+    {
+      "code": "3518063",
+      "display": "Pin Point"
+    },
+    {
+      "code": "3519001",
+      "display": "Combative"
+    },
+    {
+      "code": "3519003",
+      "display": "Confused"
+    },
+    {
+      "code": "3519005",
+      "display": "Hallucinations"
+    },
+    {
+      "code": "3519007",
+      "display": "Normal Baseline for Patient"
+    },
+    {
+      "code": "3519009",
+      "display": "Not Done"
+    },
+    {
+      "code": "3519011",
+      "display": "Oriented-Person"
+    },
+    {
+      "code": "3519013",
+      "display": "Oriented-Place"
+    },
+    {
+      "code": "3519015",
+      "display": "Oriented-Event"
+    },
+    {
+      "code": "3519017",
+      "display": "Oriented-Time"
+    },
+    {
+      "code": "3519021",
+      "display": "Unresponsive"
+    },
+    {
+      "code": "3519023",
+      "display": "Agitation"
+    },
+    {
+      "code": "3519025",
+      "display": "Somnolent"
+    },
+    {
+      "code": "3519027",
+      "display": "Stupor"
+    },
+    {
+      "code": "3519029",
+      "display": "Altered mental status, unspecified"
+    },
+    {
+      "code": "3519031",
+      "display": "Developmentally Impaired"
+    },
+    {
+      "code": "3519033",
+      "display": "Disorientation, unspecified"
+    },
+    {
+      "code": "3519035",
+      "display": "Pharmacologically Paralyzed"
+    },
+    {
+      "code": "3519037",
+      "display": "Pharmacologically Sedated"
+    },
+    {
+      "code": "3519039",
+      "display": "Psychologically Impaired"
+    },
+    {
+      "code": "3519041",
+      "display": "Slowness and poor responsiveness"
+    },
+    {
+      "code": "3519043",
+      "display": "State of emotional shock and stress, unspecified"
+    },
+    {
+      "code": "3519045",
+      "display": "Strange and inexplicable behavior"
+    },
+    {
+      "code": "3519047",
+      "display": "Uncooperative"
+    },
+    {
+      "code": "3519049",
+      "display": "Unspecified coma"
+    },
+    {
+      "code": "3520001",
+      "display": "Aphagia"
+    },
+    {
+      "code": "3520003",
+      "display": "Aphasia"
+    },
+    {
+      "code": "3520005",
+      "display": "Cerebellar Function-Abnormal"
+    },
+    {
+      "code": "3520007",
+      "display": "Cerebellar Function-Normal"
+    },
+    {
+      "code": "3520009",
+      "display": "Decerebrate Posturing"
+    },
+    {
+      "code": "3520011",
+      "display": "Decorticate Posturing"
+    },
+    {
+      "code": "3520013",
+      "display": "Gait-Abnormal"
+    },
+    {
+      "code": "3520015",
+      "display": "Gait-Normal"
+    },
+    {
+      "code": "3520017",
+      "display": "Hemiplegia-Left"
+    },
+    {
+      "code": "3520019",
+      "display": "Hemiplegia-Right"
+    },
+    {
+      "code": "3520021",
+      "display": "Normal Baseline for Patient"
+    },
+    {
+      "code": "3520023",
+      "display": "Not Done"
+    },
+    {
+      "code": "3520026",
+      "display": "Status Seizure"
+    },
+    {
+      "code": "3520027",
+      "display": "Speech Normal"
+    },
+    {
+      "code": "3520029",
+      "display": "Speech Slurring"
+    },
+    {
+      "code": "3520031",
+      "display": "Strength-Asymmetric"
+    },
+    {
+      "code": "3520033",
+      "display": "Strength-Normal"
+    },
+    {
+      "code": "3520035",
+      "display": "Strength-Symmetric"
+    },
+    {
+      "code": "3520037",
+      "display": "Tremors"
+    },
+    {
+      "code": "3520039",
+      "display": "Weakness-Facial Droop-Left"
+    },
+    {
+      "code": "3520041",
+      "display": "Weakness-Facial Droop-Right"
+    },
+    {
+      "code": "3520043",
+      "display": "Weakness-Left Sided"
+    },
+    {
+      "code": "3520045",
+      "display": "Weakness-Right Sided"
+    },
+    {
+      "code": "3520051",
+      "display": "Arm Drift-Left"
+    },
+    {
+      "code": "3520053",
+      "display": "Arm Drift-Right"
+    },
+    {
+      "code": "3520055",
+      "display": "Other Seizures"
+    },
+    {
+      "code": "3521001",
+      "display": "No"
+    },
+    {
+      "code": "3521003",
+      "display": "Yes-Resolved Prior to EMS Arrival"
+    },
+    {
+      "code": "3521005",
+      "display": "Yes-Resolved in EMS Presence"
+    },
+    {
+      "code": "3522001",
+      "display": "Left"
+    },
+    {
+      "code": "3522003",
+      "display": "Right"
+    },
+    {
+      "code": "3522005",
+      "display": "Bilateral"
+    },
+    {
+      "code": "3523001",
+      "display": "Breath Sounds-Absent"
+    },
+    {
+      "code": "3523003",
+      "display": "Breath Sounds-Decreased"
+    },
+    {
+      "code": "3523005",
+      "display": "Breath Sounds-Equal"
+    },
+    {
+      "code": "3523007",
+      "display": "Breath Sounds-Normal"
+    },
+    {
+      "code": "3523009",
+      "display": "Foreign Body"
+    },
+    {
+      "code": "3523011",
+      "display": "Increased Respiratory Effort"
+    },
+    {
+      "code": "3523013",
+      "display": "Normal"
+    },
+    {
+      "code": "3523015",
+      "display": "Not Done"
+    },
+    {
+      "code": "3523017",
+      "display": "Pain"
+    },
+    {
+      "code": "3523019",
+      "display": "Pain with Inspiration/Expiration"
+    },
+    {
+      "code": "3523021",
+      "display": "Rales"
+    },
+    {
+      "code": "3523023",
+      "display": "Rhonchi"
+    },
+    {
+      "code": "3523025",
+      "display": "Rhonchi/Wheezing"
+    },
+    {
+      "code": "3523027",
+      "display": "Stridor"
+    },
+    {
+      "code": "3523029",
+      "display": "Wheezing-Expiratory"
+    },
+    {
+      "code": "3523031",
+      "display": "Wheezing-Inspiratory"
+    },
+    {
+      "code": "3524001",
+      "display": "Left - Anterior"
+    },
+    {
+      "code": "3524003",
+      "display": "Left - Posterior (DEPRECATED)"
+    },
+    {
+      "code": "3524005",
+      "display": "Right - Anterior"
+    },
+    {
+      "code": "3524007",
+      "display": "Right - Posterior (DEPRECATED)"
+    },
+    {
+      "code": "3524009",
+      "display": "General - Anterior"
+    },
+    {
+      "code": "3524011",
+      "display": "General - Posterior"
+    },
+    {
+      "code": "3524013",
+      "display": "Left - Side"
+    },
+    {
+      "code": "3524015",
+      "display": "Right - Side"
+    },
+    {
+      "code": "3525001",
+      "display": "Abrasion"
+    },
+    {
+      "code": "3525003",
+      "display": "Avulsion"
+    },
+    {
+      "code": "3525005",
+      "display": "Accessory Muscles Used with Breathing"
+    },
+    {
+      "code": "3525007",
+      "display": "Bleeding Controlled"
+    },
+    {
+      "code": "3525009",
+      "display": "Bleeding Uncontrolled"
+    },
+    {
+      "code": "3525011",
+      "display": "Burn-Blistering"
+    },
+    {
+      "code": "3525013",
+      "display": "Burn-Charring"
+    },
+    {
+      "code": "3525015",
+      "display": "Burn-Redness"
+    },
+    {
+      "code": "3525017",
+      "display": "Burn-White/Waxy"
+    },
+    {
+      "code": "3525019",
+      "display": "Crush Injury"
+    },
+    {
+      "code": "3525021",
+      "display": "Deformity"
+    },
+    {
+      "code": "3525023",
+      "display": "Flail Segment"
+    },
+    {
+      "code": "3525025",
+      "display": "Implanted Device"
+    },
+    {
+      "code": "3525027",
+      "display": "Laceration"
+    },
+    {
+      "code": "3525029",
+      "display": "Normal"
+    },
+    {
+      "code": "3525031",
+      "display": "Not Done"
+    },
+    {
+      "code": "3525033",
+      "display": "Pain"
+    },
+    {
+      "code": "3525035",
+      "display": "Pain with Inspiration/Expiration"
+    },
+    {
+      "code": "3525037",
+      "display": "Puncture/Stab Wound"
+    },
+    {
+      "code": "3525039",
+      "display": "Retraction"
+    },
+    {
+      "code": "3525041",
+      "display": "Tenderness"
+    },
+    {
+      "code": "3525043",
+      "display": "Gunshot Wound"
+    },
+    {
+      "code": "3525045",
+      "display": "Swelling"
+    },
+    {
+      "code": "3525047",
+      "display": "Contusion"
+    },
+    {
+      "code": "3525049",
+      "display": "Tenderness-General (DEPRECATED)"
+    },
+    {
+      "code": "3602001",
+      "display": "Adult Only"
+    },
+    {
+      "code": "3602003",
+      "display": "General"
+    },
+    {
+      "code": "3602005",
+      "display": "Pediatric Only"
+    },
+    {
+      "code": "3706001",
+      "display": "Grams (gms)"
+    },
+    {
+      "code": "3706003",
+      "display": "Inches (in)"
+    },
+    {
+      "code": "3706005",
+      "display": "International Units (IU)"
+    },
+    {
+      "code": "3706007",
+      "display": "Keep Vein Open (kvo)"
+    },
+    {
+      "code": "3706009",
+      "display": "Liters (l)"
+    },
+    {
+      "code": "3706013",
+      "display": "Metered Dose (MDI)"
+    },
+    {
+      "code": "3706015",
+      "display": "Micrograms (mcg)"
+    },
+    {
+      "code": "3706017",
+      "display": "Micrograms per Kilogram per Minute (mcg/kg/min)"
+    },
+    {
+      "code": "3706019",
+      "display": "Milliequivalents (mEq)"
+    },
+    {
+      "code": "3706021",
+      "display": "Milligrams (mg)"
+    },
+    {
+      "code": "3706023",
+      "display": "Milligrams per Kilogram Per Minute (mg/kg/min)"
+    },
+    {
+      "code": "3706025",
+      "display": "Milliliters (ml)"
+    },
+    {
+      "code": "3706027",
+      "display": "Milliliters per Hour (ml/hr)"
+    },
+    {
+      "code": "3706029",
+      "display": "Other"
+    },
+    {
+      "code": "3706031",
+      "display": "Centimeters (cm)"
+    },
+    {
+      "code": "3706033",
+      "display": "Drops (gtts)"
+    },
+    {
+      "code": "3706035",
+      "display": "Liters Per Minute (LPM [gas])"
+    },
+    {
+      "code": "3706037",
+      "display": "Micrograms per Minute (mcg/min)"
+    },
+    {
+      "code": "3706039",
+      "display": "Milligrams per Kilogram (mg/kg)"
+    },
+    {
+      "code": "3706041",
+      "display": "Milligrams per Minute (mg/min)"
+    },
+    {
+      "code": "3706043",
+      "display": "Puffs"
+    },
+    {
+      "code": "3706045",
+      "display": "Units per Hour (units/hr)"
+    },
+    {
+      "code": "3706047",
+      "display": "Micrograms per Kilogram (mcg/kg)"
+    },
+    {
+      "code": "3706049",
+      "display": "Units"
+    },
+    {
+      "code": "3706051",
+      "display": "Units per Kilogram per Hour (units/kg/hr)"
+    },
+    {
+      "code": "3706053",
+      "display": "Units per Kilogram (units/kg)"
+    },
+    {
+      "code": "3706055",
+      "display": "Milligrams per Hour (mg/hr)"
+    },
+    {
+      "code": "3708001",
+      "display": "Altered Mental Status"
+    },
+    {
+      "code": "3708003",
+      "display": "Apnea"
+    },
+    {
+      "code": "3708005",
+      "display": "Bleeding"
+    },
+    {
+      "code": "3708007",
+      "display": "Bradycardia"
+    },
+    {
+      "code": "3708009",
+      "display": "Bradypnea"
+    },
+    {
+      "code": "3708011",
+      "display": "Diarrhea"
+    },
+    {
+      "code": "3708013",
+      "display": "Extravasation"
+    },
+    {
+      "code": "3708015",
+      "display": "Hypertension"
+    },
+    {
+      "code": "3708017",
+      "display": "Hyperthermia"
+    },
+    {
+      "code": "3708019",
+      "display": "Hypotension"
+    },
+    {
+      "code": "3708021",
+      "display": "Hypothermia"
+    },
+    {
+      "code": "3708023",
+      "display": "Hypoxia"
+    },
+    {
+      "code": "3708025",
+      "display": "Injury"
+    },
+    {
+      "code": "3708029",
+      "display": "Nausea"
+    },
+    {
+      "code": "3708031",
+      "display": "None"
+    },
+    {
+      "code": "3708033",
+      "display": "Other"
+    },
+    {
+      "code": "3708035",
+      "display": "Respiratory Distress"
+    },
+    {
+      "code": "3708037",
+      "display": "Tachycardia"
+    },
+    {
+      "code": "3708039",
+      "display": "Tachypnea"
+    },
+    {
+      "code": "3708041",
+      "display": "Vomiting"
+    },
+    {
+      "code": "3708043",
+      "display": "Itching"
+    },
+    {
+      "code": "3708045",
+      "display": "Urticaria"
+    },
+    {
+      "code": "3907001",
+      "display": "Altered Mental Status"
+    },
+    {
+      "code": "3907003",
+      "display": "Apnea"
+    },
+    {
+      "code": "3907005",
+      "display": "Bleeding"
+    },
+    {
+      "code": "3907007",
+      "display": "Bradypnea"
+    },
+    {
+      "code": "3907009",
+      "display": "Diarrhea"
+    },
+    {
+      "code": "3907011",
+      "display": "Esophageal Intubation-immediately"
+    },
+    {
+      "code": "3907013",
+      "display": "Esophageal Intubation-other"
+    },
+    {
+      "code": "3907015",
+      "display": "Extravasation"
+    },
+    {
+      "code": "3907017",
+      "display": "Hypertension"
+    },
+    {
+      "code": "3907019",
+      "display": "Hyperthermia"
+    },
+    {
+      "code": "3907021",
+      "display": "Hypotension"
+    },
+    {
+      "code": "3907023",
+      "display": "Hypothermia"
+    },
+    {
+      "code": "3907025",
+      "display": "Hypoxia"
+    },
+    {
+      "code": "3907027",
+      "display": "Injury"
+    },
+    {
+      "code": "3907031",
+      "display": "Nausea"
+    },
+    {
+      "code": "3907033",
+      "display": "None"
+    },
+    {
+      "code": "3907035",
+      "display": "Other"
+    },
+    {
+      "code": "3907039",
+      "display": "Respiratory Distress"
+    },
+    {
+      "code": "3907041",
+      "display": "Tachycardia"
+    },
+    {
+      "code": "3907043",
+      "display": "Tachypnea"
+    },
+    {
+      "code": "3907045",
+      "display": "Vomiting"
+    },
+    {
+      "code": "3907047",
+      "display": "Bradycardia"
+    },
+    {
+      "code": "3907049",
+      "display": "Itching"
+    },
+    {
+      "code": "3907051",
+      "display": "Urticaria"
+    },
+    {
+      "code": "3913001",
+      "display": "Antecubital-Left"
+    },
+    {
+      "code": "3913003",
+      "display": "Antecubital-Right"
+    },
+    {
+      "code": "3913005",
+      "display": "External Jugular-Left"
+    },
+    {
+      "code": "3913007",
+      "display": "External Jugular-Right"
+    },
+    {
+      "code": "3913009",
+      "display": "Femoral-Left IV"
+    },
+    {
+      "code": "3913011",
+      "display": "Femoral-Right IV"
+    },
+    {
+      "code": "3913013",
+      "display": "Foot-Right"
+    },
+    {
+      "code": "3913015",
+      "display": "Foot-Left"
+    },
+    {
+      "code": "3913017",
+      "display": "Forearm-Left"
+    },
+    {
+      "code": "3913019",
+      "display": "Forearm-Right"
+    },
+    {
+      "code": "3913021",
+      "display": "Hand-Left"
+    },
+    {
+      "code": "3913023",
+      "display": "Hand-Right"
+    },
+    {
+      "code": "3913025",
+      "display": "Internal Jugular-Left"
+    },
+    {
+      "code": "3913027",
+      "display": "Internal Jugular-Right"
+    },
+    {
+      "code": "3913029",
+      "display": "IO-Iliac Crest-Left"
+    },
+    {
+      "code": "3913031",
+      "display": "IO-Iliac Crest-Right"
+    },
+    {
+      "code": "3913033",
+      "display": "IO-Femoral-Left Distal"
+    },
+    {
+      "code": "3913035",
+      "display": "IO-Femoral-Right Distal"
+    },
+    {
+      "code": "3913037",
+      "display": "IO-Humeral-Left"
+    },
+    {
+      "code": "3913039",
+      "display": "IO-Humeral-Right"
+    },
+    {
+      "code": "3913041",
+      "display": "IO-Tibia-Left Distal"
+    },
+    {
+      "code": "3913043",
+      "display": "IO-Sternum"
+    },
+    {
+      "code": "3913045",
+      "display": "IO-Tibia-Right Distal"
+    },
+    {
+      "code": "3913047",
+      "display": "IO-Tibia-Left Proximal"
+    },
+    {
+      "code": "3913049",
+      "display": "IO-Tibia-Right Proximal"
+    },
+    {
+      "code": "3913051",
+      "display": "Lower Extremity-Left"
+    },
+    {
+      "code": "3913053",
+      "display": "Lower Extremity-Right"
+    },
+    {
+      "code": "3913055",
+      "display": "Other Peripheral"
+    },
+    {
+      "code": "3913057",
+      "display": "Other Central (PICC, Portacath, etc.)"
+    },
+    {
+      "code": "3913059",
+      "display": "Scalp"
+    },
+    {
+      "code": "3913061",
+      "display": "Subclavian-Left"
+    },
+    {
+      "code": "3913063",
+      "display": "Subclavian-Right"
+    },
+    {
+      "code": "3913065",
+      "display": "Umbilical"
+    },
+    {
+      "code": "3913067",
+      "display": "Venous Cutdown-Left Lower Extremity"
+    },
+    {
+      "code": "3913069",
+      "display": "Venous Cutdown-Right Lower Extremity"
+    },
+    {
+      "code": "3913071",
+      "display": "Upper Arm-Left"
+    },
+    {
+      "code": "3913073",
+      "display": "Upper Arm-Right"
+    },
+    {
+      "code": "3913075",
+      "display": "Radial-Left"
+    },
+    {
+      "code": "3913077",
+      "display": "Radial-Right"
+    },
+    {
+      "code": "3913079",
+      "display": "Wrist-Left"
+    },
+    {
+      "code": "3913081",
+      "display": "Wrist-Right"
+    },
+    {
+      "code": "3914001",
+      "display": "Blind Digital Technique"
+    },
+    {
+      "code": "3914003",
+      "display": "Cross Finger Technique"
+    },
+    {
+      "code": "3914005",
+      "display": "Direct Laryngoscopy"
+    },
+    {
+      "code": "3914007",
+      "display": "Fiberoptic Laryngoscopy"
+    },
+    {
+      "code": "3914009",
+      "display": "Indirect Laryngoscopy"
+    },
+    {
+      "code": "3914011",
+      "display": "Video Laryngoscopy"
+    },
+    {
+      "code": "4",
+      "display": "Opens Eyes spontaneously (All Age Groups)"
+    },
+    {
+      "code": "4001001",
+      "display": "Adequate Airway Reflexes/Effort, Potential for Compromise"
+    },
+    {
+      "code": "4001003",
+      "display": "Airway Reflex Compromised"
+    },
+    {
+      "code": "4001005",
+      "display": "Apnea or Agonal Respirations"
+    },
+    {
+      "code": "4001007",
+      "display": "Illness Involving Airway"
+    },
+    {
+      "code": "4001009",
+      "display": "Injury Involving Airway"
+    },
+    {
+      "code": "4001011",
+      "display": "Other"
+    },
+    {
+      "code": "4001013",
+      "display": "Ventilatory Effort Compromised"
+    },
+    {
+      "code": "4003001",
+      "display": "Cricothyrotomy Tube"
+    },
+    {
+      "code": "4003003",
+      "display": "Endotracheal Tube"
+    },
+    {
+      "code": "4003005",
+      "display": "Other-Invasive Airway"
+    },
+    {
+      "code": "4003007",
+      "display": "SAD-Combitube"
+    },
+    {
+      "code": "4003009",
+      "display": "SAD-King"
+    },
+    {
+      "code": "4003011",
+      "display": "SAD-LMA"
+    },
+    {
+      "code": "4003013",
+      "display": "SAD-Other"
+    },
+    {
+      "code": "4003015",
+      "display": "Tracheostomy Tube"
+    },
+    {
+      "code": "4004001",
+      "display": "Auscultation"
+    },
+    {
+      "code": "4004003",
+      "display": "Bulb/Syringe Aspiration"
+    },
+    {
+      "code": "4004005",
+      "display": "Colorimetric ETCO2"
+    },
+    {
+      "code": "4004007",
+      "display": "Condensation in Tube"
+    },
+    {
+      "code": "4004009",
+      "display": "Digital (Numeric) ETCO2"
+    },
+    {
+      "code": "4004011",
+      "display": "Direct Re-Visualization of Tube in Place"
+    },
+    {
+      "code": "4004013",
+      "display": "Endotracheal Tube Whistle (BAAM, etc.)"
+    },
+    {
+      "code": "4004015",
+      "display": "Other"
+    },
+    {
+      "code": "4004017",
+      "display": "Visualization of Vocal Cords"
+    },
+    {
+      "code": "4004019",
+      "display": "Waveform ETCO2"
+    },
+    {
+      "code": "4004021",
+      "display": "Chest Rise"
+    },
+    {
+      "code": "4006001",
+      "display": "Another Person on the Same Crew"
+    },
+    {
+      "code": "4006003",
+      "display": "Other"
+    },
+    {
+      "code": "4006005",
+      "display": "Person Performing Intubation"
+    },
+    {
+      "code": "4006007",
+      "display": "Receiving Air Medical/EMS Crew"
+    },
+    {
+      "code": "4006009",
+      "display": "Receiving Hospital Team"
+    },
+    {
+      "code": "4008001",
+      "display": "Adverse Event from Facilitating Drugs"
+    },
+    {
+      "code": "4008003",
+      "display": "Bradycardia (<50)"
+    },
+    {
+      "code": "4008005",
+      "display": "Cardiac Arrest"
+    },
+    {
+      "code": "4008007",
+      "display": "Esophageal Intubation-Delayed Detection (After Tube Secured)"
+    },
+    {
+      "code": "4008009",
+      "display": "Esophageal Intubation-Detected in Emergency Department"
+    },
+    {
+      "code": "4008011",
+      "display": "Failed Intubation Effort"
+    },
+    {
+      "code": "4008013",
+      "display": "Injury or Trauma to Patient from Airway Management Effort"
+    },
+    {
+      "code": "4008015",
+      "display": "Other"
+    },
+    {
+      "code": "4008017",
+      "display": "Oxygen Desaturation (<90%)"
+    },
+    {
+      "code": "4008019",
+      "display": "Patient Vomiting/Aspiration"
+    },
+    {
+      "code": "4008021",
+      "display": "Tube Dislodged During Transport/Patient Care"
+    },
+    {
+      "code": "4008023",
+      "display": "Tube Was Not in Correct Position when EMS Crew/Team Assumed Care of the Patient"
+    },
+    {
+      "code": "4009001",
+      "display": "Difficult Patient Airway Anatomy"
+    },
+    {
+      "code": "4009003",
+      "display": "ETI Attempted, but Arrived At Destination Facility Before Accomplished"
+    },
+    {
+      "code": "4009005",
+      "display": "Facial or Oral Trauma"
+    },
+    {
+      "code": "4009007",
+      "display": "Inability to Expose Vocal Cords"
+    },
+    {
+      "code": "4009009",
+      "display": "Inadequate Patient Relaxation/Presence of Protective Airway Reflexes"
+    },
+    {
+      "code": "4009011",
+      "display": "Jaw Clenched (Trismus)"
+    },
+    {
+      "code": "4009013",
+      "display": "Other"
+    },
+    {
+      "code": "4009015",
+      "display": "Poor Patient Access"
+    },
+    {
+      "code": "4009017",
+      "display": "Secretions/Blood/Vomit"
+    },
+    {
+      "code": "4009019",
+      "display": "Unable to Position or Access Patient"
+    },
+    {
+      "code": "4103001",
+      "display": "12-Lead ECG"
+    },
+    {
+      "code": "4103003",
+      "display": "Analysis (Button Pressed)"
+    },
+    {
+      "code": "4103005",
+      "display": "CO2"
+    },
+    {
+      "code": "4103007",
+      "display": "Data Transmitted"
+    },
+    {
+      "code": "4103009",
+      "display": "Defibrillation"
+    },
+    {
+      "code": "4103011",
+      "display": "ECG-Monitor"
+    },
+    {
+      "code": "4103013",
+      "display": "Heart Rate"
+    },
+    {
+      "code": "4103015",
+      "display": "Invasive Pressure 1"
+    },
+    {
+      "code": "4103017",
+      "display": "Invasive Pressure 2"
+    },
+    {
+      "code": "4103019",
+      "display": "No Shock Advised"
+    },
+    {
+      "code": "4103021",
+      "display": "Non-Invasive BP"
+    },
+    {
+      "code": "4103023",
+      "display": "Other"
+    },
+    {
+      "code": "4103025",
+      "display": "Pacing Electrical Capture"
+    },
+    {
+      "code": "4103027",
+      "display": "Pacing Started"
+    },
+    {
+      "code": "4103029",
+      "display": "Pacing Stopped"
+    },
+    {
+      "code": "4103031",
+      "display": "Patient Connected"
+    },
+    {
+      "code": "4103033",
+      "display": "Power On"
+    },
+    {
+      "code": "4103035",
+      "display": "Pulse Oximetry"
+    },
+    {
+      "code": "4103037",
+      "display": "Pulse Rate"
+    },
+    {
+      "code": "4103039",
+      "display": "Respiratory Rate"
+    },
+    {
+      "code": "4103041",
+      "display": "Shock Advised"
+    },
+    {
+      "code": "4103043",
+      "display": "Sync Off"
+    },
+    {
+      "code": "4103045",
+      "display": "Sync On"
+    },
+    {
+      "code": "4103047",
+      "display": "Temperature 1"
+    },
+    {
+      "code": "4103049",
+      "display": "Temperature 2"
+    },
+    {
+      "code": "4106001",
+      "display": "Advisory"
+    },
+    {
+      "code": "4106003",
+      "display": "Automated"
+    },
+    {
+      "code": "4106005",
+      "display": "Demand"
+    },
+    {
+      "code": "4106007",
+      "display": "Manual"
+    },
+    {
+      "code": "4106009",
+      "display": "Mid-Stream"
+    },
+    {
+      "code": "4106011",
+      "display": "Sensing"
+    },
+    {
+      "code": "4106013",
+      "display": "Side-Stream"
+    },
+    {
+      "code": "4107001",
+      "display": "I"
+    },
+    {
+      "code": "4107003",
+      "display": "II"
+    },
+    {
+      "code": "4107005",
+      "display": "III"
+    },
+    {
+      "code": "4107007",
+      "display": "AVR"
+    },
+    {
+      "code": "4107009",
+      "display": "AVL"
+    },
+    {
+      "code": "4107011",
+      "display": "AVF"
+    },
+    {
+      "code": "4107013",
+      "display": "Paddle"
+    },
+    {
+      "code": "4107015",
+      "display": "Pads"
+    },
+    {
+      "code": "4107017",
+      "display": "V1"
+    },
+    {
+      "code": "4107019",
+      "display": "V2"
+    },
+    {
+      "code": "4107021",
+      "display": "V3"
+    },
+    {
+      "code": "4107023",
+      "display": "V3r"
+    },
+    {
+      "code": "4107025",
+      "display": "V4"
+    },
+    {
+      "code": "4107027",
+      "display": "V4r"
+    },
+    {
+      "code": "4107029",
+      "display": "V5"
+    },
+    {
+      "code": "4107031",
+      "display": "V5r"
+    },
+    {
+      "code": "4107033",
+      "display": "V6"
+    },
+    {
+      "code": "4107035",
+      "display": "V6r"
+    },
+    {
+      "code": "4107037",
+      "display": "V7"
+    },
+    {
+      "code": "4107039",
+      "display": "V8"
+    },
+    {
+      "code": "4107041",
+      "display": "V9"
+    },
+    {
+      "code": "4109001",
+      "display": "Biphasic"
+    },
+    {
+      "code": "4109003",
+      "display": "Monophasic"
+    },
+    {
+      "code": "4214001",
+      "display": "Car Seat"
+    },
+    {
+      "code": "4214003",
+      "display": "Fowlers (Semi-Upright Sitting)"
+    },
+    {
+      "code": "4214005",
+      "display": "Lateral Left"
+    },
+    {
+      "code": "4214007",
+      "display": "Lateral Right"
+    },
+    {
+      "code": "4214009",
+      "display": "Other"
+    },
+    {
+      "code": "4214011",
+      "display": "Prone"
+    },
+    {
+      "code": "4214013",
+      "display": "Semi-Fowlers"
+    },
+    {
+      "code": "4214015",
+      "display": "Sitting"
+    },
+    {
+      "code": "4214017",
+      "display": "Supine"
+    },
+    {
+      "code": "4214019",
+      "display": "Trendelenburg"
+    },
+    {
+      "code": "4214021",
+      "display": "Pediatric Ambulance Restraint Device"
+    },
+    {
+      "code": "4214023",
+      "display": "Neonatal Ambulance Restraint Device"
+    },
+    {
+      "code": "4214025",
+      "display": "Patient's Car Seat"
+    },
+    {
+      "code": "4214027",
+      "display": "Ambulance Integrated Car Seat"
+    },
+    {
+      "code": "4216001",
+      "display": "Air Medical-Fixed Wing"
+    },
+    {
+      "code": "4216003",
+      "display": "Air Medical-Rotor Craft"
+    },
+    {
+      "code": "4216005",
+      "display": "Ground-Ambulance"
+    },
+    {
+      "code": "4216007",
+      "display": "Ground-ATV or Rescue Vehicle"
+    },
+    {
+      "code": "4216009",
+      "display": "Ground-Bariatric"
+    },
+    {
+      "code": "4216011",
+      "display": "Ground-Other Not Listed"
+    },
+    {
+      "code": "4216013",
+      "display": "Ground-Mass Casualty Bus/Vehicle"
+    },
+    {
+      "code": "4216015",
+      "display": "Ground-Wheelchair Van"
+    },
+    {
+      "code": "4216017",
+      "display": "Water-Boat"
+    },
+    {
+      "code": "4217001",
+      "display": "Emergent (Immediate Response)"
+    },
+    {
+      "code": "4217003",
+      "display": "Emergent Downgraded to Non-Emergent"
+    },
+    {
+      "code": "4217005",
+      "display": "Non-Emergent"
+    },
+    {
+      "code": "4217007",
+      "display": "Non-Emergent Upgraded to Emergent"
+    },
+    {
+      "code": "4218001",
+      "display": "Intersection Navigation-Against Normal Light Patterns"
+    },
+    {
+      "code": "4218003",
+      "display": "Intersection Navigation-With Automated Light Changing Technology"
+    },
+    {
+      "code": "4218005",
+      "display": "Intersection Navigation-With Normal Light Patterns"
+    },
+    {
+      "code": "4218007",
+      "display": "Speed-Enhanced per Local Policy"
+    },
+    {
+      "code": "4218009",
+      "display": "Speed-Normal Traffic"
+    },
+    {
+      "code": "4218011",
+      "display": "Lights and Sirens"
+    },
+    {
+      "code": "4218013",
+      "display": "Lights and No Sirens"
+    },
+    {
+      "code": "4218015",
+      "display": "No Lights or Sirens"
+    },
+    {
+      "code": "4218017",
+      "display": "Initial No Lights or Sirens, Upgraded to Lights and Sirens"
+    },
+    {
+      "code": "4218019",
+      "display": "Initial Lights and Sirens, Downgraded to No Lights or Sirens"
+    },
+    {
+      "code": "4219001",
+      "display": "Critical (Red)"
+    },
+    {
+      "code": "4219003",
+      "display": "Emergent (Yellow)"
+    },
+    {
+      "code": "4219005",
+      "display": "Lower Acuity (Green)"
+    },
+    {
+      "code": "4219007",
+      "display": "Dead without Resuscitation Efforts (Black)"
+    },
+    {
+      "code": "4219009",
+      "display": "Dead with Resuscitation Efforts (Black)"
+    },
+    {
+      "code": "4219011",
+      "display": "Non-Acute/Routine"
+    },
+    {
+      "code": "4220001",
+      "display": "Closest Facility"
+    },
+    {
+      "code": "4220003",
+      "display": "Diversion"
+    },
+    {
+      "code": "4220005",
+      "display": "Family Choice"
+    },
+    {
+      "code": "4220007",
+      "display": "Insurance Status/Requirement"
+    },
+    {
+      "code": "4220009",
+      "display": "Law Enforcement Choice"
+    },
+    {
+      "code": "4220011",
+      "display": "On-Line/On-Scene Medical Direction"
+    },
+    {
+      "code": "4220013",
+      "display": "Other"
+    },
+    {
+      "code": "4220015",
+      "display": "Patient's Choice"
+    },
+    {
+      "code": "4220017",
+      "display": "Patient's Physician's Choice"
+    },
+    {
+      "code": "4220019",
+      "display": "Protocol"
+    },
+    {
+      "code": "4220021",
+      "display": "Regional Specialty Center"
+    },
+    {
+      "code": "4221001",
+      "display": "Home"
+    },
+    {
+      "code": "4221003",
+      "display": "Hospital-Emergency Department"
+    },
+    {
+      "code": "4221005",
+      "display": "Hospital-Non-Emergency Department Bed"
+    },
+    {
+      "code": "4221007",
+      "display": "Clinic"
+    },
+    {
+      "code": "4221009",
+      "display": "Morgue/Mortuary"
+    },
+    {
+      "code": "4221013",
+      "display": "Other"
+    },
+    {
+      "code": "4221015",
+      "display": "Other EMS Responder (air)"
+    },
+    {
+      "code": "4221017",
+      "display": "Other EMS Responder (ground)"
+    },
+    {
+      "code": "4221019",
+      "display": "Police/Jail"
+    },
+    {
+      "code": "4221021",
+      "display": "Urgent Care"
+    },
+    {
+      "code": "4221023",
+      "display": "Freestanding Emergency Department"
+    },
+    {
+      "code": "4221025",
+      "display": "Dialysis Center"
+    },
+    {
+      "code": "4221027",
+      "display": "Diagnostic Services"
+    },
+    {
+      "code": "4221029",
+      "display": "Assisted Living Facility"
+    },
+    {
+      "code": "4221031",
+      "display": "Mental Health Facility"
+    },
+    {
+      "code": "4221033",
+      "display": "Nursing Home"
+    },
+    {
+      "code": "4221035",
+      "display": "Other Recurring Care Center"
+    },
+    {
+      "code": "4221037",
+      "display": "Physical Rehabilitation Facility"
+    },
+    {
+      "code": "4221039",
+      "display": "Drug and/or Alcohol Rehabilitation Facility"
+    },
+    {
+      "code": "4221041",
+      "display": "Skilled Nursing Facility"
+    },
+    {
+      "code": "4222001",
+      "display": "Hospital-Burn"
+    },
+    {
+      "code": "4222003",
+      "display": "Hospital-Cath Lab"
+    },
+    {
+      "code": "4222005",
+      "display": "Hospital-CCU"
+    },
+    {
+      "code": "4222007",
+      "display": "Hospital-Endoscopy"
+    },
+    {
+      "code": "4222009",
+      "display": "Hospital-Hospice"
+    },
+    {
+      "code": "4222011",
+      "display": "Hospital-Hyperbaric Oxygen Treatment"
+    },
+    {
+      "code": "4222013",
+      "display": "Hospital-ICU"
+    },
+    {
+      "code": "4222015",
+      "display": "Hospital-Labor and Delivery"
+    },
+    {
+      "code": "4222017",
+      "display": "Hospital-Med/Surg"
+    },
+    {
+      "code": "4222019",
+      "display": "Hospital-Mental Health"
+    },
+    {
+      "code": "4222021",
+      "display": "Hospital-MICU"
+    },
+    {
+      "code": "4222023",
+      "display": "Hospital-NICU"
+    },
+    {
+      "code": "4222025",
+      "display": "Hospital-Nursery"
+    },
+    {
+      "code": "4222027",
+      "display": "Hospital-Peds (General)"
+    },
+    {
+      "code": "4222029",
+      "display": "Hospital-Peds ICU"
+    },
+    {
+      "code": "4222031",
+      "display": "Hospital-OR"
+    },
+    {
+      "code": "4222033",
+      "display": "Hospital-Orthopedic"
+    },
+    {
+      "code": "4222035",
+      "display": "Hospital-Other"
+    },
+    {
+      "code": "4222037",
+      "display": "Hospital-Out-Patient Bed"
+    },
+    {
+      "code": "4222039",
+      "display": "Hospital-Radiology Services - MRI"
+    },
+    {
+      "code": "4222041",
+      "display": "Hospital-Radiology Services - CT/PET"
+    },
+    {
+      "code": "4222043",
+      "display": "Hospital-Radiology Services - X-Ray"
+    },
+    {
+      "code": "4222045",
+      "display": "Hospital-Radiation"
+    },
+    {
+      "code": "4222047",
+      "display": "Hospital-Rehab"
+    },
+    {
+      "code": "4222049",
+      "display": "Hospital-SICU"
+    },
+    {
+      "code": "4222051",
+      "display": "Hospital-Oncology"
+    },
+    {
+      "code": "4222053",
+      "display": "Hospital-Outpatient Surgery"
+    },
+    {
+      "code": "4224001",
+      "display": "No"
+    },
+    {
+      "code": "4224003",
+      "display": "Yes-Adult Trauma"
+    },
+    {
+      "code": "4224005",
+      "display": "Yes-Cardiac Arrest"
+    },
+    {
+      "code": "4224007",
+      "display": "Yes-Obstetrics"
+    },
+    {
+      "code": "4224009",
+      "display": "Yes-Other"
+    },
+    {
+      "code": "4224011",
+      "display": "Yes-Pediatric Trauma"
+    },
+    {
+      "code": "4224013",
+      "display": "Yes-STEMI"
+    },
+    {
+      "code": "4224015",
+      "display": "Yes-Stroke"
+    },
+    {
+      "code": "4224017",
+      "display": "Yes-Trauma (General)"
+    },
+    {
+      "code": "4224019",
+      "display": "Yes-Sepsis"
+    },
+    {
+      "code": "4226001",
+      "display": "Contact 911 or see your Doctor if problem returns"
+    },
+    {
+      "code": "4226003",
+      "display": "Contact 911 or see your Doctor if problem worsens"
+    },
+    {
+      "code": "4226005",
+      "display": "Other Not Listed (Described in Narrative)"
+    },
+    {
+      "code": "4226007",
+      "display": "Problem Specific Instructions Provided"
+    },
+    {
+      "code": "4226009",
+      "display": "See Your Doctor or the Emergency Department immediately"
+    },
+    {
+      "code": "4226011",
+      "display": "See Your Doctor or the Emergency Department in the next 24 hours"
+    },
+    {
+      "code": "4226013",
+      "display": "See Your Doctor or the Emergency Department in the next 4 hours"
+    },
+    {
+      "code": "4226015",
+      "display": "See Your Doctor within the next one week"
+    },
+    {
+      "code": "4227001",
+      "display": "Patient Contact Made"
+    },
+    {
+      "code": "4227003",
+      "display": "Cancelled on Scene"
+    },
+    {
+      "code": "4227005",
+      "display": "Cancelled Prior to Arrival at Scene"
+    },
+    {
+      "code": "4227007",
+      "display": "No Patient Contact"
+    },
+    {
+      "code": "4227009",
+      "display": "No Patient Found"
+    },
+    {
+      "code": "4227011",
+      "display": "Non-Patient Incident (Not Otherwise Listed)"
+    },
+    {
+      "code": "4228001",
+      "display": "Patient Evaluated and Care Provided"
+    },
+    {
+      "code": "4228003",
+      "display": "Patient Evaluated and Refused Care"
+    },
+    {
+      "code": "4228005",
+      "display": "Patient Evaluated, No Care Required"
+    },
+    {
+      "code": "4228007",
+      "display": "Patient Refused Evaluation/Care"
+    },
+    {
+      "code": "4228009",
+      "display": "Patient Support Services Provided"
+    },
+    {
+      "code": "4229001",
+      "display": "Initiated and Continued Primary Care"
+    },
+    {
+      "code": "4229003",
+      "display": "Initiated Primary Care and Transferred to Another EMS Crew"
+    },
+    {
+      "code": "4229005",
+      "display": "Provided Care Supporting Primary EMS Crew"
+    },
+    {
+      "code": "4229007",
+      "display": "Assumed Primary Care from Another EMS Crew"
+    },
+    {
+      "code": "4229009",
+      "display": "Incident Support Services Provided (Including Standby)"
+    },
+    {
+      "code": "4229011",
+      "display": "Back in Service, No Care/Support Services Required"
+    },
+    {
+      "code": "4229013",
+      "display": "Back in Service, Care/Support Services Refused"
+    },
+    {
+      "code": "4230001",
+      "display": "Transport by This EMS Unit (This Crew Only)"
+    },
+    {
+      "code": "4230003",
+      "display": "Transport by This EMS Unit, with a Member of Another Crew"
+    },
+    {
+      "code": "4230005",
+      "display": "Transport by Another EMS Unit/Agency"
+    },
+    {
+      "code": "4230007",
+      "display": "Transport by Another EMS Unit/Agency, with a Member of This Crew"
+    },
+    {
+      "code": "4230009",
+      "display": "Patient Refused Transport"
+    },
+    {
+      "code": "4230011",
+      "display": "Non-Patient Transport (Not Otherwise Listed)"
+    },
+    {
+      "code": "4230013",
+      "display": "No Transport"
+    },
+    {
+      "code": "4231001",
+      "display": "Against Medical Advice"
+    },
+    {
+      "code": "4231003",
+      "display": "Patient/Guardian Indicates Ambulance Transport is Not Necessary"
+    },
+    {
+      "code": "4231005",
+      "display": "Released Following Protocol Guidelines"
+    },
+    {
+      "code": "4231007",
+      "display": "Released to Law Enforcement"
+    },
+    {
+      "code": "4231009",
+      "display": "Patient/Guardian States Intent to Transport by Other Means"
+    },
+    {
+      "code": "4231011",
+      "display": "DNR"
+    },
+    {
+      "code": "4231013",
+      "display": "Medical/Physician Orders for Life Sustaining Treatment"
+    },
+    {
+      "code": "4231015",
+      "display": "Other, Not Listed"
+    },
+    {
+      "code": "4231017",
+      "display": "Patient Elopement"
+    },
+    {
+      "code": "4232001",
+      "display": "BLS - All Levels"
+    },
+    {
+      "code": "4232003",
+      "display": "ALS - AEMT/Intermediate"
+    },
+    {
+      "code": "4232005",
+      "display": "ALS - Paramedic"
+    },
+    {
+      "code": "4232007",
+      "display": "EMS and Other Health-Care Staff"
+    },
+    {
+      "code": "4232009",
+      "display": "Critical Care"
+    },
+    {
+      "code": "4232011",
+      "display": "Integrated Health Care"
+    },
+    {
+      "code": "4232013",
+      "display": "No Care Provided"
+    },
+    {
+      "code": "43",
+      "display": "Discharged/transferred to a Federal Health Care Facility (e.g., VA or federal health care facility)"
+    },
+    {
+      "code": "4303001",
+      "display": "Disaster Tag"
+    },
+    {
+      "code": "4303003",
+      "display": "Fire Incident Report"
+    },
+    {
+      "code": "4303005",
+      "display": "Hospital-Receiving"
+    },
+    {
+      "code": "4303007",
+      "display": "Hospital-Transferring"
+    },
+    {
+      "code": "4303009",
+      "display": "Law Enforcement Report"
+    },
+    {
+      "code": "4303011",
+      "display": "Other"
+    },
+    {
+      "code": "4303013",
+      "display": "Other Registry"
+    },
+    {
+      "code": "4303015",
+      "display": "Other Report"
+    },
+    {
+      "code": "4303017",
+      "display": "Patient ID"
+    },
+    {
+      "code": "4303019",
+      "display": "Prior EMS Patient Care Report"
+    },
+    {
+      "code": "4303021",
+      "display": "STEMI Registry"
+    },
+    {
+      "code": "4303023",
+      "display": "Stroke Registry"
+    },
+    {
+      "code": "4303025",
+      "display": "Trauma Registry"
+    },
+    {
+      "code": "4502001",
+      "display": "Airway"
+    },
+    {
+      "code": "4502003",
+      "display": "Burn"
+    },
+    {
+      "code": "4502005",
+      "display": "Cardiac/MI"
+    },
+    {
+      "code": "4502007",
+      "display": "CVA/Stroke"
+    },
+    {
+      "code": "4502009",
+      "display": "Drowning"
+    },
+    {
+      "code": "4502011",
+      "display": "Other"
+    },
+    {
+      "code": "4502013",
+      "display": "Spinal Cord Injury"
+    },
+    {
+      "code": "4502015",
+      "display": "STEMI/Acute Cardiac"
+    },
+    {
+      "code": "4502017",
+      "display": "Trauma"
+    },
+    {
+      "code": "4502019",
+      "display": "Traumatic Brain Injury"
+    },
+    {
+      "code": "4503001",
+      "display": "Eye Protection"
+    },
+    {
+      "code": "4503003",
+      "display": "Gloves"
+    },
+    {
+      "code": "4503005",
+      "display": "Helmet"
+    },
+    {
+      "code": "4503007",
+      "display": "Level A Suit"
+    },
+    {
+      "code": "4503009",
+      "display": "Level B Suit"
+    },
+    {
+      "code": "4503011",
+      "display": "Level C Suit"
+    },
+    {
+      "code": "4503013",
+      "display": "Level D Suit (Turn out gear)"
+    },
+    {
+      "code": "4503015",
+      "display": "Mask-N95"
+    },
+    {
+      "code": "4503017",
+      "display": "Mask-Surgical (Non-Fitted)"
+    },
+    {
+      "code": "4503019",
+      "display": "Other"
+    },
+    {
+      "code": "4503021",
+      "display": "PAPR"
+    },
+    {
+      "code": "4503023",
+      "display": "Reflective Vest"
+    },
+    {
+      "code": "4506001",
+      "display": "Death-Cardiac Arrest"
+    },
+    {
+      "code": "4506003",
+      "display": "Death-Injury Related"
+    },
+    {
+      "code": "4506005",
+      "display": "Death-Other"
+    },
+    {
+      "code": "4506007",
+      "display": "Exposure-Airborne Respiratory/Biological/Aerosolized Secretions"
+    },
+    {
+      "code": "4506009",
+      "display": "Exposure-Body Fluid Contact to Broken Skin"
+    },
+    {
+      "code": "4506011",
+      "display": "Exposure-Body Fluid Contact with Eye"
+    },
+    {
+      "code": "4506013",
+      "display": "Exposure-Body Fluid Contact with Intact Skin"
+    },
+    {
+      "code": "4506015",
+      "display": "Exposure-Body Fluid Contact with Mucosal Surface"
+    },
+    {
+      "code": "4506017",
+      "display": "Exposure-Needle Stick with Body Fluid Injection"
+    },
+    {
+      "code": "4506019",
+      "display": "Exposure-Needle Stick without Body Fluid Injection"
+    },
+    {
+      "code": "4506021",
+      "display": "Exposure-Toxin/Chemical/Hazmat"
+    },
+    {
+      "code": "4506023",
+      "display": "Injury-Lifting/Back/Musculoskeletal"
+    },
+    {
+      "code": "4506025",
+      "display": "Injury-Other"
+    },
+    {
+      "code": "4506027",
+      "display": "None"
+    },
+    {
+      "code": "4506029",
+      "display": "Other"
+    },
+    {
+      "code": "4506031",
+      "display": "Violence-Offensive, Intimidating, or Hateful Language"
+    },
+    {
+      "code": "4506033",
+      "display": "Violence-Physical Threat, or Threatening Behavior"
+    },
+    {
+      "code": "4506035",
+      "display": "Violence-Physical Attack or Attempt to Attack"
+    },
+    {
+      "code": "4506037",
+      "display": "Violence-Unwelcome Sexual Attention, Remarks, Jokes or Gestures"
+    },
+    {
+      "code": "4506039",
+      "display": "Violence-Unwanted Touching of a Sexual Nature"
+    },
+    {
+      "code": "4506041",
+      "display": "Struck by Vehicle Along Roadway"
+    },
+    {
+      "code": "4507001",
+      "display": "Biologic Agent"
+    },
+    {
+      "code": "4507003",
+      "display": "Building Failure"
+    },
+    {
+      "code": "4507005",
+      "display": "Chemical Agent"
+    },
+    {
+      "code": "4507007",
+      "display": "Explosive Device"
+    },
+    {
+      "code": "4507009",
+      "display": "Fire"
+    },
+    {
+      "code": "4507011",
+      "display": "Hostage Event"
+    },
+    {
+      "code": "4507013",
+      "display": "Mass Gathering"
+    },
+    {
+      "code": "4507015",
+      "display": "Mass Illness"
+    },
+    {
+      "code": "4507017",
+      "display": "Nuclear Agent"
+    },
+    {
+      "code": "4507019",
+      "display": "Radioactive Device"
+    },
+    {
+      "code": "4507021",
+      "display": "Secondary Destructive Device"
+    },
+    {
+      "code": "4507023",
+      "display": "Shooting/Sniper"
+    },
+    {
+      "code": "4507025",
+      "display": "Vehicular"
+    },
+    {
+      "code": "4507027",
+      "display": "Weather (Other)"
+    },
+    {
+      "code": "4507029",
+      "display": "Earthquake"
+    },
+    {
+      "code": "4507031",
+      "display": "Flood"
+    },
+    {
+      "code": "4507033",
+      "display": "Land Slide"
+    },
+    {
+      "code": "4507035",
+      "display": "Winter Storm"
+    },
+    {
+      "code": "4507037",
+      "display": "Tornado"
+    },
+    {
+      "code": "4507039",
+      "display": "Hurricane"
+    },
+    {
+      "code": "4509001",
+      "display": "Other Audio Recording"
+    },
+    {
+      "code": "4509003",
+      "display": "Billing Information"
+    },
+    {
+      "code": "4509005",
+      "display": "Diagnostic Image (CT, X-ray, US, etc.)"
+    },
+    {
+      "code": "4509006",
+      "display": "DNR"
+    },
+    {
+      "code": "4509008",
+      "display": "Living Will"
+    },
+    {
+      "code": "4509009",
+      "display": "ECG/Lab Results"
+    },
+    {
+      "code": "4509011",
+      "display": "Guardianship/Power of Attorney"
+    },
+    {
+      "code": "4509013",
+      "display": "Other Healthcare Record"
+    },
+    {
+      "code": "4509015",
+      "display": "Other"
+    },
+    {
+      "code": "4509017",
+      "display": "Patient Identification"
+    },
+    {
+      "code": "4509019",
+      "display": "Patient Refusal Sheet"
+    },
+    {
+      "code": "4509021",
+      "display": "Other Picture/Graphic"
+    },
+    {
+      "code": "4509025",
+      "display": "Other Video/Movie"
+    },
+    {
+      "code": "4509027",
+      "display": "ePCR"
+    },
+    {
+      "code": "4512001",
+      "display": "EMS Crew Member (Other)"
+    },
+    {
+      "code": "4512003",
+      "display": "EMS Primary Care Provider (for this event)"
+    },
+    {
+      "code": "4512005",
+      "display": "Healthcare Provider"
+    },
+    {
+      "code": "4512007",
+      "display": "Medical Director"
+    },
+    {
+      "code": "4512009",
+      "display": "Non-Healthcare Provider"
+    },
+    {
+      "code": "4512011",
+      "display": "Online Medical Control Healthcare Practitioner"
+    },
+    {
+      "code": "4512013",
+      "display": "Other"
+    },
+    {
+      "code": "4512015",
+      "display": "Patient"
+    },
+    {
+      "code": "4512017",
+      "display": "Patient Representative"
+    },
+    {
+      "code": "4512019",
+      "display": "Witness"
+    },
+    {
+      "code": "4513001",
+      "display": "HIPAA acknowledgement/Release"
+    },
+    {
+      "code": "4513003",
+      "display": "Permission to Treat"
+    },
+    {
+      "code": "4513005",
+      "display": "Release for Billing"
+    },
+    {
+      "code": "4513007",
+      "display": "Transfer of Patient Care"
+    },
+    {
+      "code": "4513009",
+      "display": "Refusal of Care"
+    },
+    {
+      "code": "4513011",
+      "display": "Controlled Substance, Administration"
+    },
+    {
+      "code": "4513013",
+      "display": "Controlled Substance, Waste"
+    },
+    {
+      "code": "4513015",
+      "display": "Airway Verification"
+    },
+    {
+      "code": "4513017",
+      "display": "Patient Belongings (Receipt)"
+    },
+    {
+      "code": "4513019",
+      "display": "Permission to Transport"
+    },
+    {
+      "code": "4513021",
+      "display": "Refusal of Transport"
+    },
+    {
+      "code": "4513023",
+      "display": "Other"
+    },
+    {
+      "code": "4514001",
+      "display": "Aunt"
+    },
+    {
+      "code": "4514003",
+      "display": "Brother"
+    },
+    {
+      "code": "4514005",
+      "display": "Daughter"
+    },
+    {
+      "code": "4514007",
+      "display": "Discharge Planner"
+    },
+    {
+      "code": "4514009",
+      "display": "Domestic Partner"
+    },
+    {
+      "code": "4514011",
+      "display": "Father"
+    },
+    {
+      "code": "4514013",
+      "display": "Friend"
+    },
+    {
+      "code": "4514015",
+      "display": "Grandfather"
+    },
+    {
+      "code": "4514017",
+      "display": "Grandmother"
+    },
+    {
+      "code": "4514019",
+      "display": "Guardian"
+    },
+    {
+      "code": "4514021",
+      "display": "Husband"
+    },
+    {
+      "code": "4514023",
+      "display": "Law Enforcement"
+    },
+    {
+      "code": "4514025",
+      "display": "MD/DO"
+    },
+    {
+      "code": "4514027",
+      "display": "Mother"
+    },
+    {
+      "code": "4514029",
+      "display": "Nurse (RN)"
+    },
+    {
+      "code": "4514031",
+      "display": "Nurse Practitioner (NP)"
+    },
+    {
+      "code": "4514033",
+      "display": "Other Care Provider (Home health, hospice, etc.)"
+    },
+    {
+      "code": "4514035",
+      "display": "Other"
+    },
+    {
+      "code": "4514037",
+      "display": "Physician's Assistant (PA)"
+    },
+    {
+      "code": "4514039",
+      "display": "Power of Attorney"
+    },
+    {
+      "code": "4514041",
+      "display": "Other Relative"
+    },
+    {
+      "code": "4514043",
+      "display": "Self"
+    },
+    {
+      "code": "4514045",
+      "display": "Sister"
+    },
+    {
+      "code": "4514047",
+      "display": "Son"
+    },
+    {
+      "code": "4514049",
+      "display": "Uncle"
+    },
+    {
+      "code": "4514051",
+      "display": "Wife"
+    },
+    {
+      "code": "4515001",
+      "display": "Not Signed - Crew Called out to another call"
+    },
+    {
+      "code": "4515003",
+      "display": "Not Signed - Deceased"
+    },
+    {
+      "code": "4515005",
+      "display": "Not Signed - Due to Distress Level"
+    },
+    {
+      "code": "4515007",
+      "display": "Not Signed - Equipment Failure"
+    },
+    {
+      "code": "4515009",
+      "display": "Not Signed - In Law Enforcement Custody"
+    },
+    {
+      "code": "4515011",
+      "display": "Not Signed - Language Barrier"
+    },
+    {
+      "code": "4515013",
+      "display": "Not Signed - Mental Status/Impaired"
+    },
+    {
+      "code": "4515015",
+      "display": "Not Signed - Minor/Child"
+    },
+    {
+      "code": "4515017",
+      "display": "Not Signed - Physical Impairment of Extremities"
+    },
+    {
+      "code": "4515019",
+      "display": "Not Signed - Refused"
+    },
+    {
+      "code": "4515021",
+      "display": "Not Signed - Transferred Care/No Access to Obtain Signature"
+    },
+    {
+      "code": "4515023",
+      "display": "Not Signed - Unconscious"
+    },
+    {
+      "code": "4515025",
+      "display": "Not Signed -Visually Impaired"
+    },
+    {
+      "code": "4515027",
+      "display": "Physical Signature/Paper Copy Obtained"
+    },
+    {
+      "code": "4515031",
+      "display": "Signed"
+    },
+    {
+      "code": "4515033",
+      "display": "Signed-Not Patient"
+    },
+    {
+      "code": "4515035",
+      "display": "Not Signed-Illiterate (Unable to Read)"
+    },
+    {
+      "code": "4515037",
+      "display": "Not Signed-Restrained"
+    },
+    {
+      "code": "4515039",
+      "display": "Not Signed-Combative or Uncooperative"
+    },
+    {
+      "code": "5",
+      "display": "Oriented (>2 Years); Smiles, oriented to sounds, follows objects, interacts"
+    },
+    {
+      "code": "50",
+      "display": "Discharged/transferred to Hospice - home."
+    },
+    {
+      "code": "51",
+      "display": "Discharged/transferred to Hospice - medical facility"
+    },
+    {
+      "code": "6",
+      "display": "Obeys commands (>2Years); Appropriate response to stimulation"
+    },
+    {
+      "code": "61",
+      "display": "Discharged/transferred within this institution to a hospital based Medicare approved swing bed."
+    },
+    {
+      "code": "62",
+      "display": "Discharged/transferred to a inpatient rehabilitation facility including distinct part units of a hospital."
+    },
+    {
+      "code": "63",
+      "display": "Discharged/transferred to long term care hospitals"
+    },
+    {
+      "code": "64",
+      "display": "Discharged/transferred to a nursing facility certified under Medicaid but not certified under Medicare"
+    },
+    {
+      "code": "65",
+      "display": "Discharged/transferred to a psychiatric hospital or psychiatric distinct part unit of a hospital."
+    },
+    {
+      "code": "66",
+      "display": "Discharged/transferred to a Critical Access Hospital (CAH)."
+    },
+    {
+      "code": "70",
+      "display": "Discharged/transferred to another type of health care institution not defined elsewhere in the code list."
+    },
+    {
+      "code": "7701001",
+      "display": "Not Applicable"
+    },
+    {
+      "code": "7701003",
+      "display": "Not Recorded"
+    },
+    {
+      "code": "7701005",
+      "display": "Not Reporting"
+    },
+    {
+      "code": "8801001",
+      "display": "Contraindication Noted"
+    },
+    {
+      "code": "8801003",
+      "display": "Denied By Order"
+    },
+    {
+      "code": "8801005",
+      "display": "Exam Finding Not Present"
+    },
+    {
+      "code": "8801007",
+      "display": "Medication Allergy"
+    },
+    {
+      "code": "8801009",
+      "display": "Medication Already Taken"
+    },
+    {
+      "code": "8801013",
+      "display": "No Known Drug Allergy"
+    },
+    {
+      "code": "8801015",
+      "display": "None Reported"
+    },
+    {
+      "code": "8801017",
+      "display": "Not Performed by EMS"
+    },
+    {
+      "code": "8801019",
+      "display": "Refused"
+    },
+    {
+      "code": "8801021",
+      "display": "Unresponsive"
+    },
+    {
+      "code": "8801023",
+      "display": "Unable to Complete"
+    },
+    {
+      "code": "8801025",
+      "display": "Not Immunized"
+    },
+    {
+      "code": "8801027",
+      "display": "Order Criteria Not Met"
+    },
+    {
+      "code": "8801029",
+      "display": "Approximate"
+    },
+    {
+      "code": "8801031",
+      "display": "Symptom Not Present"
+    },
+    {
+      "code": "9901001",
+      "display": "Agonal/Idioventricular"
+    },
+    {
+      "code": "9901003",
+      "display": "Asystole"
+    },
+    {
+      "code": "9901005",
+      "display": "Artifact"
+    },
+    {
+      "code": "9901007",
+      "display": "Atrial Fibrillation"
+    },
+    {
+      "code": "9901009",
+      "display": "Atrial Flutter"
+    },
+    {
+      "code": "9901011",
+      "display": "AV Block-1st Degree"
+    },
+    {
+      "code": "9901013",
+      "display": "AV Block-2nd Degree-Type 1"
+    },
+    {
+      "code": "9901015",
+      "display": "AV Block-2nd Degree-Type 2"
+    },
+    {
+      "code": "9901017",
+      "display": "AV Block-3rd Degree"
+    },
+    {
+      "code": "9901019",
+      "display": "Junctional"
+    },
+    {
+      "code": "9901021",
+      "display": "Left Bundle Branch Block"
+    },
+    {
+      "code": "9901023",
+      "display": "Non-STEMI Anterior Ischemia"
+    },
+    {
+      "code": "9901025",
+      "display": "Non-STEMI Inferior Ischemia"
+    },
+    {
+      "code": "9901027",
+      "display": "Non-STEMI Lateral Ischemia"
+    },
+    {
+      "code": "9901029",
+      "display": "Non-STEMI Posterior Ischemia"
+    },
+    {
+      "code": "9901030",
+      "display": "Non-STEMI Septal Ischemia"
+    },
+    {
+      "code": "9901031",
+      "display": "Other"
+    },
+    {
+      "code": "9901033",
+      "display": "Paced Rhythm"
+    },
+    {
+      "code": "9901035",
+      "display": "PEA"
+    },
+    {
+      "code": "9901037",
+      "display": "Premature Atrial Contractions"
+    },
+    {
+      "code": "9901039",
+      "display": "Premature Ventricular Contractions"
+    },
+    {
+      "code": "9901041",
+      "display": "Right Bundle Branch Block"
+    },
+    {
+      "code": "9901043",
+      "display": "Sinus Arrhythmia"
+    },
+    {
+      "code": "9901045",
+      "display": "Sinus Bradycardia"
+    },
+    {
+      "code": "9901047",
+      "display": "Sinus Rhythm"
+    },
+    {
+      "code": "9901049",
+      "display": "Sinus Tachycardia"
+    },
+    {
+      "code": "9901051",
+      "display": "STEMI Anterior Ischemia"
+    },
+    {
+      "code": "9901053",
+      "display": "STEMI Inferior Ischemia"
+    },
+    {
+      "code": "9901055",
+      "display": "STEMI Lateral Ischemia"
+    },
+    {
+      "code": "9901057",
+      "display": "STEMI Posterior Ischemia"
+    },
+    {
+      "code": "9901058",
+      "display": "STEMI Septal Ischemia"
+    },
+    {
+      "code": "9901059",
+      "display": "Supraventricular Tachycardia"
+    },
+    {
+      "code": "9901061",
+      "display": "Torsades De Points"
+    },
+    {
+      "code": "9901063",
+      "display": "Unknown AED Non-Shockable Rhythm"
+    },
+    {
+      "code": "9901065",
+      "display": "Unknown AED Shockable Rhythm"
+    },
+    {
+      "code": "9901067",
+      "display": "Ventricular Fibrillation"
+    },
+    {
+      "code": "9901069",
+      "display": "Ventricular Tachycardia (With Pulse)"
+    },
+    {
+      "code": "9901071",
+      "display": "Ventricular Tachycardia (Pulseless)"
+    },
+    {
+      "code": "9902001",
+      "display": "Binary"
+    },
+    {
+      "code": "9902003",
+      "display": "Date/Time"
+    },
+    {
+      "code": "9902005",
+      "display": "Integer/Number"
+    },
+    {
+      "code": "9902007",
+      "display": "Other"
+    },
+    {
+      "code": "9902009",
+      "display": "Text/String"
+    },
+    {
+      "code": "9902011",
+      "display": "Boolean"
+    },
+    {
+      "code": "9903001",
+      "display": "Mandatory"
+    },
+    {
+      "code": "9903003",
+      "display": "Required"
+    },
+    {
+      "code": "9903005",
+      "display": "Recommended"
+    },
+    {
+      "code": "9903007",
+      "display": "Optional"
+    },
+    {
+      "code": "9905001",
+      "display": "Advanced Emergency Medical Technician (AEMT)"
+    },
+    {
+      "code": "9905002",
+      "display": "Emergency Medical Technician - Intermediate"
+    },
+    {
+      "code": "9905003",
+      "display": "Emergency Medical Responder (EMR)"
+    },
+    {
+      "code": "9905005",
+      "display": "Emergency Medical Technician (EMT)"
+    },
+    {
+      "code": "9905007",
+      "display": "Paramedic"
+    },
+    {
+      "code": "9905019",
+      "display": "Other Healthcare Professional"
+    },
+    {
+      "code": "9905021",
+      "display": "Other Non-Healthcare Professional"
+    },
+    {
+      "code": "9905025",
+      "display": "Physician"
+    },
+    {
+      "code": "9905027",
+      "display": "Respiratory Therapist"
+    },
+    {
+      "code": "9905029",
+      "display": "Student"
+    },
+    {
+      "code": "9905031",
+      "display": "Critical Care Paramedic"
+    },
+    {
+      "code": "9905033",
+      "display": "Community Paramedicine"
+    },
+    {
+      "code": "9905035",
+      "display": "Nurse Practitioner"
+    },
+    {
+      "code": "9905037",
+      "display": "Physician Assistant"
+    },
+    {
+      "code": "9905039",
+      "display": "Licensed Practical Nurse (LPN)"
+    },
+    {
+      "code": "9905041",
+      "display": "Registered Nurse"
+    },
+    {
+      "code": "9905043",
+      "display": "Patient"
+    },
+    {
+      "code": "9905045",
+      "display": "Lay Person"
+    },
+    {
+      "code": "9905047",
+      "display": "Law Enforcement"
+    },
+    {
+      "code": "9905049",
+      "display": "Family Member"
+    },
+    {
+      "code": "9905051",
+      "display": "Fire Personnel (non EMS)"
+    },
+    {
+      "code": "9906001",
+      "display": "Female (DEPRECATED)"
+    },
+    {
+      "code": "9906003",
+      "display": "Male (DEPRECATED)"
+    },
+    {
+      "code": "9906005",
+      "display": "Unknown (Unable to Determine) (DEPRECATED)"
+    },
+    {
+      "code": "9906007",
+      "display": "Female-to-Male, Transgender Male (DEPRECATED)"
+    },
+    {
+      "code": "9906009",
+      "display": "Male-to-Female, Transgender Female (DEPRECATED)"
+    },
+    {
+      "code": "9906011",
+      "display": "Other, neither exclusively male or female (DEPRECATED)"
+    },
+    {
+      "code": "9908001",
+      "display": "Behavioral Health"
+    },
+    {
+      "code": "9908003",
+      "display": "Burn Center"
+    },
+    {
+      "code": "9908005",
+      "display": "Critical Access Hospital"
+    },
+    {
+      "code": "9908007",
+      "display": "Hospital (General)"
+    },
+    {
+      "code": "9908009",
+      "display": "Neonatal Center"
+    },
+    {
+      "code": "9908011",
+      "display": "Pediatric Center"
+    },
+    {
+      "code": "9908019",
+      "display": "Rehab Center"
+    },
+    {
+      "code": "9908021",
+      "display": "Trauma Center Level 1"
+    },
+    {
+      "code": "9908023",
+      "display": "Trauma Center Level 2"
+    },
+    {
+      "code": "9908025",
+      "display": "Trauma Center Level 3"
+    },
+    {
+      "code": "9908027",
+      "display": "Trauma Center Level 4"
+    },
+    {
+      "code": "9908029",
+      "display": "Trauma Center Level 5"
+    },
+    {
+      "code": "9908031",
+      "display": "Cardiac-STEMI/PCI Capable"
+    },
+    {
+      "code": "9908033",
+      "display": "Cardiac-STEMI/PCI Capable (24/7)"
+    },
+    {
+      "code": "9908035",
+      "display": "Cardiac-STEMI/Non-PCI Capable"
+    },
+    {
+      "code": "9908037",
+      "display": "Stroke-Acute Stroke Ready Hospital (ASRH)"
+    },
+    {
+      "code": "9908039",
+      "display": "Stroke-Primary Stroke Center (PSC)"
+    },
+    {
+      "code": "9908041",
+      "display": "Stroke-Thrombectomy-Capable Stroke Center (TSC)"
+    },
+    {
+      "code": "9908043",
+      "display": "Stroke-Comprehensive Stroke Center (CSC)"
+    },
+    {
+      "code": "9908045",
+      "display": "Cancer Center"
+    },
+    {
+      "code": "9908047",
+      "display": "Labor and Delivery"
+    },
+    {
+      "code": "9909001",
+      "display": "Assisted/Walk"
+    },
+    {
+      "code": "9909003",
+      "display": "Backboard"
+    },
+    {
+      "code": "9909005",
+      "display": "Chair"
+    },
+    {
+      "code": "9909007",
+      "display": "Carried"
+    },
+    {
+      "code": "9909009",
+      "display": "Other"
+    },
+    {
+      "code": "9909011",
+      "display": "Stairchair"
+    },
+    {
+      "code": "9909013",
+      "display": "Stretcher"
+    },
+    {
+      "code": "9909015",
+      "display": "Wheelchair"
+    },
+    {
+      "code": "9910001",
+      "display": "Anthrax"
+    },
+    {
+      "code": "9910003",
+      "display": "Cholera"
+    },
+    {
+      "code": "9910005",
+      "display": "DPT / TDaP (Diphtheria, Pertussis, Tetanus)"
+    },
+    {
+      "code": "9910007",
+      "display": "Hemophilus Influenza B"
+    },
+    {
+      "code": "9910009",
+      "display": "Hepatitis A"
+    },
+    {
+      "code": "9910011",
+      "display": "Hepatitis B"
+    },
+    {
+      "code": "9910013",
+      "display": "Human Papilloma Virus (HPV)"
+    },
+    {
+      "code": "9910015",
+      "display": "Influenza-H1N1"
+    },
+    {
+      "code": "9910017",
+      "display": "Influenza-Other"
+    },
+    {
+      "code": "9910019",
+      "display": "Influenza-Seasonal (In past 12 months)"
+    },
+    {
+      "code": "9910021",
+      "display": "Lyme Disease"
+    },
+    {
+      "code": "9910023",
+      "display": "Meningococcus"
+    },
+    {
+      "code": "9910025",
+      "display": "MMR (Measles, Mumps, Rubella)"
+    },
+    {
+      "code": "9910027",
+      "display": "Other-Not Listed"
+    },
+    {
+      "code": "9910029",
+      "display": "Plague"
+    },
+    {
+      "code": "9910031",
+      "display": "Pneumococcal (Pneumonia)"
+    },
+    {
+      "code": "9910033",
+      "display": "Polio"
+    },
+    {
+      "code": "9910035",
+      "display": "Rabies"
+    },
+    {
+      "code": "9910037",
+      "display": "Rotavirus"
+    },
+    {
+      "code": "9910039",
+      "display": "Shingles"
+    },
+    {
+      "code": "9910041",
+      "display": "Small Pox"
+    },
+    {
+      "code": "9910043",
+      "display": "Tetanus"
+    },
+    {
+      "code": "9910045",
+      "display": "Tuberculosis"
+    },
+    {
+      "code": "9910047",
+      "display": "Typhoid"
+    },
+    {
+      "code": "9910049",
+      "display": "Varicella (Chickenpox)"
+    },
+    {
+      "code": "9910051",
+      "display": "Yellow Fever"
+    },
+    {
+      "code": "9910053",
+      "display": "None"
+    },
+    {
+      "code": "9914001",
+      "display": "Airway"
+    },
+    {
+      "code": "9914003",
+      "display": "Airway-Failed"
+    },
+    {
+      "code": "9914005",
+      "display": "Airway-Obstruction/Foreign Body"
+    },
+    {
+      "code": "9914007",
+      "display": "Airway-Rapid Sequence Induction (RSI-Paralytic)"
+    },
+    {
+      "code": "9914009",
+      "display": "Airway-Sedation Assisted (Non-Paralytic)"
+    },
+    {
+      "code": "9914011",
+      "display": "Cardiac Arrest-Asystole"
+    },
+    {
+      "code": "9914013",
+      "display": "Cardiac Arrest-Hypothermia-Therapeutic"
+    },
+    {
+      "code": "9914015",
+      "display": "Cardiac Arrest-Pulseless Electrical Activity"
+    },
+    {
+      "code": "9914017",
+      "display": "Cardiac Arrest-Ventricular Fibrillation/ Pulseless Ventricular Tachycardia"
+    },
+    {
+      "code": "9914019",
+      "display": "Cardiac Arrest-Post Resuscitation Care"
+    },
+    {
+      "code": "9914021",
+      "display": "Environmental-Altitude Sickness"
+    },
+    {
+      "code": "9914023",
+      "display": "Environmental-Cold Exposure"
+    },
+    {
+      "code": "9914025",
+      "display": "Environmental-Frostbite/Cold Injury"
+    },
+    {
+      "code": "9914027",
+      "display": "Environmental-Heat Exposure/Exhaustion"
+    },
+    {
+      "code": "9914029",
+      "display": "Environmental-Heat Stroke/Hyperthermia"
+    },
+    {
+      "code": "9914031",
+      "display": "Environmental-Hypothermia"
+    },
+    {
+      "code": "9914033",
+      "display": "Exposure-Airway/Inhalation Irritants"
+    },
+    {
+      "code": "9914035",
+      "display": "Exposure-Biological/Infectious"
+    },
+    {
+      "code": "9914037",
+      "display": "Exposure-Blistering Agents"
+    },
+    {
+      "code": "9914041",
+      "display": "Exposure-Chemicals to Eye"
+    },
+    {
+      "code": "9914043",
+      "display": "Exposure-Cyanide"
+    },
+    {
+      "code": "9914045",
+      "display": "Exposure-Explosive/ Blast Injury"
+    },
+    {
+      "code": "9914047",
+      "display": "Exposure-Nerve Agents"
+    },
+    {
+      "code": "9914049",
+      "display": "Exposure-Radiologic Agents"
+    },
+    {
+      "code": "9914051",
+      "display": "General-Back Pain"
+    },
+    {
+      "code": "9914053",
+      "display": "General-Behavioral/Patient Restraint"
+    },
+    {
+      "code": "9914055",
+      "display": "General-Cardiac Arrest"
+    },
+    {
+      "code": "9914057",
+      "display": "General-Dental Problems"
+    },
+    {
+      "code": "9914059",
+      "display": "General-Epistaxis"
+    },
+    {
+      "code": "9914061",
+      "display": "General-Fever"
+    },
+    {
+      "code": "9914063",
+      "display": "General-Individualized Patient Protocol"
+    },
+    {
+      "code": "9914065",
+      "display": "General-Indwelling Medical Devices/Equipment"
+    },
+    {
+      "code": "9914067",
+      "display": "General-IV Access"
+    },
+    {
+      "code": "9914069",
+      "display": "General-Medical Device Malfunction"
+    },
+    {
+      "code": "9914071",
+      "display": "General-Pain Control"
+    },
+    {
+      "code": "9914073",
+      "display": "General-Spinal Immobilization/Clearance"
+    },
+    {
+      "code": "9914075",
+      "display": "General-Universal Patient Care/ Initial Patient Contact"
+    },
+    {
+      "code": "9914077",
+      "display": "Injury-Amputation"
+    },
+    {
+      "code": "9914079",
+      "display": "Injury-Bites and Envenomations-Land"
+    },
+    {
+      "code": "9914081",
+      "display": "Injury-Bites and Envenomations-Marine"
+    },
+    {
+      "code": "9914083",
+      "display": "Injury-Bleeding/ Hemorrhage Control"
+    },
+    {
+      "code": "9914085",
+      "display": "Injury-Burns-Thermal"
+    },
+    {
+      "code": "9914087",
+      "display": "Injury-Cardiac Arrest"
+    },
+    {
+      "code": "9914089",
+      "display": "Injury-Crush Syndrome"
+    },
+    {
+      "code": "9914091",
+      "display": "Injury-Diving Emergencies"
+    },
+    {
+      "code": "9914093",
+      "display": "Injury-Drowning/Near Drowning"
+    },
+    {
+      "code": "9914095",
+      "display": "Injury-Electrical Injuries"
+    },
+    {
+      "code": "9914097",
+      "display": "Injury-Extremity"
+    },
+    {
+      "code": "9914099",
+      "display": "Injury-Eye"
+    },
+    {
+      "code": "9914101",
+      "display": "Injury-Head"
+    },
+    {
+      "code": "9914103",
+      "display": "Injury-Impaled Object"
+    },
+    {
+      "code": "9914105",
+      "display": "Injury-Multisystem"
+    },
+    {
+      "code": "9914107",
+      "display": "Injury-Spinal Cord"
+    },
+    {
+      "code": "9914109",
+      "display": "Medical-Abdominal Pain"
+    },
+    {
+      "code": "9914111",
+      "display": "Medical-Allergic Reaction/Anaphylaxis"
+    },
+    {
+      "code": "9914113",
+      "display": "Medical-Altered Mental Status"
+    },
+    {
+      "code": "9914115",
+      "display": "Medical-Bradycardia"
+    },
+    {
+      "code": "9914117",
+      "display": "Medical-Cardiac Chest Pain"
+    },
+    {
+      "code": "9914119",
+      "display": "Medical-Diarrhea"
+    },
+    {
+      "code": "9914121",
+      "display": "Medical-Hyperglycemia"
+    },
+    {
+      "code": "9914123",
+      "display": "Medical-Hypertension"
+    },
+    {
+      "code": "9914125",
+      "display": "Medical-Hypoglycemia/Diabetic Emergency"
+    },
+    {
+      "code": "9914127",
+      "display": "Medical-Hypotension/Shock (Non-Trauma)"
+    },
+    {
+      "code": "9914129",
+      "display": "Medical-Influenza-Like Illness/ Upper Respiratory Infection"
+    },
+    {
+      "code": "9914131",
+      "display": "Medical-Nausea/Vomiting"
+    },
+    {
+      "code": "9914133",
+      "display": "Medical-Newborn/ Neonatal Resuscitation"
+    },
+    {
+      "code": "9914135",
+      "display": "General-Overdose/Poisoning/Toxic Ingestion"
+    },
+    {
+      "code": "9914137",
+      "display": "Medical-Pulmonary Edema/CHF"
+    },
+    {
+      "code": "9914139",
+      "display": "Medical-Respiratory Distress/Asthma/COPD/Reactive Airway"
+    },
+    {
+      "code": "9914141",
+      "display": "Medical-Seizure"
+    },
+    {
+      "code": "9914143",
+      "display": "Medical-ST-Elevation Myocardial Infarction (STEMI)"
+    },
+    {
+      "code": "9914145",
+      "display": "Medical-Stroke/TIA"
+    },
+    {
+      "code": "9914147",
+      "display": "Medical-Supraventricular Tachycardia (Including Atrial Fibrillation)"
+    },
+    {
+      "code": "9914149",
+      "display": "Medical-Syncope"
+    },
+    {
+      "code": "9914151",
+      "display": "Medical-Ventricular Tachycardia (With Pulse)"
+    },
+    {
+      "code": "9914153",
+      "display": "Not Done"
+    },
+    {
+      "code": "9914155",
+      "display": "OB/GYN-Childbirth/Labor/Delivery"
+    },
+    {
+      "code": "9914157",
+      "display": "OB/GYN-Eclampsia"
+    },
+    {
+      "code": "9914159",
+      "display": "OB/GYN-Gynecologic Emergencies"
+    },
+    {
+      "code": "9914161",
+      "display": "OB/GYN-Pregnancy Related Emergencies"
+    },
+    {
+      "code": "9914163",
+      "display": "OB/GYN-Post-partum Hemorrhage"
+    },
+    {
+      "code": "9914165",
+      "display": "Other"
+    },
+    {
+      "code": "9914167",
+      "display": "Exposure-Carbon Monoxide"
+    },
+    {
+      "code": "9914169",
+      "display": "Cardiac Arrest-Do Not Resuscitate"
+    },
+    {
+      "code": "9914171",
+      "display": "Cardiac Arrest-Special Resuscitation Orders"
+    },
+    {
+      "code": "9914173",
+      "display": "Exposure-Smoke Inhalation"
+    },
+    {
+      "code": "9914175",
+      "display": "General-Community Paramedicine / Mobile Integrated Healthcare"
+    },
+    {
+      "code": "9914177",
+      "display": "General-Exception Protocol"
+    },
+    {
+      "code": "9914179",
+      "display": "General-Extended Care Guidelines"
+    },
+    {
+      "code": "9914181",
+      "display": "General-Interfacility Transfers"
+    },
+    {
+      "code": "9914183",
+      "display": "General-Law Enforcement - Blood for Legal Purposes"
+    },
+    {
+      "code": "9914185",
+      "display": "General-Law Enforcement - Assist with Law Enforcement Activity"
+    },
+    {
+      "code": "9914187",
+      "display": "General-Neglect or Abuse Suspected"
+    },
+    {
+      "code": "9914189",
+      "display": "General-Refusal of Care"
+    },
+    {
+      "code": "9914191",
+      "display": "Injury-Mass/Multiple Casualties"
+    },
+    {
+      "code": "9914193",
+      "display": "Injury-Thoracic"
+    },
+    {
+      "code": "9914195",
+      "display": "Medical-Adrenal Insufficiency"
+    },
+    {
+      "code": "9914197",
+      "display": "Medical-Apparent Life Threatening Event (ALTE)"
+    },
+    {
+      "code": "9914199",
+      "display": "Medical-Tachycardia"
+    },
+    {
+      "code": "9914201",
+      "display": "Cardiac Arrest-Determination of Death / Withholding Resuscitative Efforts"
+    },
+    {
+      "code": "9914203",
+      "display": "Injury-Conducted Electrical Weapon (e.g., Taser)"
+    },
+    {
+      "code": "9914205",
+      "display": "Injury-Facial Trauma"
+    },
+    {
+      "code": "9914207",
+      "display": "Injury-General Trauma Management"
+    },
+    {
+      "code": "9914209",
+      "display": "Injury-Lightning/Lightning Strike"
+    },
+    {
+      "code": "9914211",
+      "display": "Injury-SCUBA Injury/Accidents"
+    },
+    {
+      "code": "9914213",
+      "display": "Injury-Topical Chemical Burn"
+    },
+    {
+      "code": "9914215",
+      "display": "Medical-Beta Blocker Poisoning/Overdose"
+    },
+    {
+      "code": "9914217",
+      "display": "Medical-Calcium Channel Blocker Poisoning/Overdose"
+    },
+    {
+      "code": "9914219",
+      "display": "Medical-Opioid Poisoning/Overdose"
+    },
+    {
+      "code": "9914221",
+      "display": "Medical-Respiratory Distress-Bronchiolitis"
+    },
+    {
+      "code": "9914223",
+      "display": "Medical-Respiratory Distress-Croup"
+    },
+    {
+      "code": "9914225",
+      "display": "Medical-Stimulant Poisoning/Overdose"
+    },
+    {
+      "code": "9916001",
+      "display": "Improved"
+    },
+    {
+      "code": "9916003",
+      "display": "Unchanged"
+    },
+    {
+      "code": "9916005",
+      "display": "Worse"
+    },
+    {
+      "code": "9918001",
+      "display": "On-Line (Remote Verbal Order)"
+    },
+    {
+      "code": "9918003",
+      "display": "On-Scene"
+    },
+    {
+      "code": "9918005",
+      "display": "Protocol (Standing Order)"
+    },
+    {
+      "code": "9918007",
+      "display": "Written Orders (Patient Specific)"
+    },
+    {
+      "code": "9919001",
+      "display": "Female"
+    },
+    {
+      "code": "9919003",
+      "display": "Male"
+    },
+    {
+      "code": "9919005",
+      "display": "Unknown"
+    },
+    {
+      "code": "9922001",
+      "display": "No"
+    },
+    {
+      "code": "9922003",
+      "display": "Unknown"
+    },
+    {
+      "code": "9922005",
+      "display": "Yes"
+    },
+    {
+      "code": "9923001",
+      "display": "No"
+    },
+    {
+      "code": "9923003",
+      "display": "Yes"
+    },
+    {
+      "code": "9925001",
+      "display": "Advanced Emergency Medical Technician (AEMT)"
+    },
+    {
+      "code": "9925002",
+      "display": "Emergency Medical Technician - Intermediate"
+    },
+    {
+      "code": "9925003",
+      "display": "Emergency Medical Responder (EMR)"
+    },
+    {
+      "code": "9925005",
+      "display": "Emergency Medical Technician (EMT)"
+    },
+    {
+      "code": "9925007",
+      "display": "Paramedic"
+    },
+    {
+      "code": "9925023",
+      "display": "Other Healthcare Professional"
+    },
+    {
+      "code": "9925025",
+      "display": "Other Non-Healthcare Professional"
+    },
+    {
+      "code": "9925027",
+      "display": "Physician"
+    },
+    {
+      "code": "9925029",
+      "display": "Respiratory Therapist"
+    },
+    {
+      "code": "9925031",
+      "display": "Student"
+    },
+    {
+      "code": "9925033",
+      "display": "Critical Care Paramedic"
+    },
+    {
+      "code": "9925035",
+      "display": "Community Paramedicine"
+    },
+    {
+      "code": "9925037",
+      "display": "Nurse Practitioner"
+    },
+    {
+      "code": "9925039",
+      "display": "Physician Assistant"
+    },
+    {
+      "code": "9925041",
+      "display": "Licensed Practical Nurse (LPN)"
+    },
+    {
+      "code": "9925043",
+      "display": "Registered Nurse"
+    },
+    {
+      "code": "9927001",
+      "display": "Blow-By"
+    },
+    {
+      "code": "9927003",
+      "display": "Buccal"
+    },
+    {
+      "code": "9927005",
+      "display": "Endotracheal Tube (ET)"
+    },
+    {
+      "code": "9927007",
+      "display": "Gastrostomy Tube"
+    },
+    {
+      "code": "9927009",
+      "display": "Inhalation"
+    },
+    {
+      "code": "9927011",
+      "display": "Intraarterial"
+    },
+    {
+      "code": "9927013",
+      "display": "Intradermal"
+    },
+    {
+      "code": "9927015",
+      "display": "Intramuscular (IM)"
+    },
+    {
+      "code": "9927017",
+      "display": "Intranasal"
+    },
+    {
+      "code": "9927019",
+      "display": "Intraocular"
+    },
+    {
+      "code": "9927021",
+      "display": "Intraosseous (IO)"
+    },
+    {
+      "code": "9927023",
+      "display": "Intravenous (IV)"
+    },
+    {
+      "code": "9927025",
+      "display": "Nasal Cannula"
+    },
+    {
+      "code": "9927027",
+      "display": "Nasogastric"
+    },
+    {
+      "code": "9927029",
+      "display": "Nasotracheal Tube"
+    },
+    {
+      "code": "9927031",
+      "display": "Non-Rebreather Mask"
+    },
+    {
+      "code": "9927033",
+      "display": "Ophthalmic"
+    },
+    {
+      "code": "9927035",
+      "display": "Oral"
+    },
+    {
+      "code": "9927037",
+      "display": "Other/miscellaneous"
+    },
+    {
+      "code": "9927039",
+      "display": "Otic"
+    },
+    {
+      "code": "9927041",
+      "display": "Re-breather mask"
+    },
+    {
+      "code": "9927043",
+      "display": "Rectal"
+    },
+    {
+      "code": "9927045",
+      "display": "Subcutaneous"
+    },
+    {
+      "code": "9927047",
+      "display": "Sublingual"
+    },
+    {
+      "code": "9927049",
+      "display": "Topical"
+    },
+    {
+      "code": "9927051",
+      "display": "Tracheostomy"
+    },
+    {
+      "code": "9927053",
+      "display": "Transdermal"
+    },
+    {
+      "code": "9927055",
+      "display": "Urethral"
+    },
+    {
+      "code": "9927057",
+      "display": "Ventimask"
+    },
+    {
+      "code": "9927059",
+      "display": "Wound"
+    },
+    {
+      "code": "9927061",
+      "display": "Portacath"
+    },
+    {
+      "code": "9927063",
+      "display": "Auto Injector"
+    },
+    {
+      "code": "9927065",
+      "display": "BVM"
+    },
+    {
+      "code": "9927067",
+      "display": "CPAP"
+    },
+    {
+      "code": "9927069",
+      "display": "IV Pump"
+    },
+    {
+      "code": "9927071",
+      "display": "Nebulizer"
+    },
+    {
+      "code": "9927073",
+      "display": "Umbilical Artery Catheter"
+    },
+    {
+      "code": "9927075",
+      "display": "Umbilical Venous Catheter"
+    },
+    {
+      "code": "A",
+      "display": "Patient was transported to the nearest facility for care of symptoms, complaints, or both"
+    },
+    {
+      "code": "AM",
+      "display": "Automobile Medical"
+    },
+    {
+      "code": "B",
+      "display": "Patient was transported for the benefit of a preferred physician"
+    },
+    {
+      "code": "BL",
+      "display": "Blue Cross/Blue Shield"
+    },
+    {
+      "code": "C",
+      "display": "Patient was transported for the nearness of family members"
+    },
+    {
+      "code": "C1",
+      "display": "Interfacility Transport (Requires Higher level of care)"
+    },
+    {
+      "code": "C2",
+      "display": "Interfacility Transport (service not available)"
+    },
+    {
+      "code": "C3",
+      "display": "Emergency Trauma Dispatch Condition Code (Major Incident or Mechanism of Injury)"
+    },
+    {
+      "code": "C4",
+      "display": "Medically Necessary Transport (Facility on Divert or Services Unavailable)"
+    },
+    {
+      "code": "C5",
+      "display": "BLS Transport of ALS Patient (ALS not available)"
+    },
+    {
+      "code": "C6",
+      "display": "ALS Response (Based on Dispatch Info) to BLS Patient (Condition)"
+    },
+    {
+      "code": "C7",
+      "display": "IV Medications required en route (ALS)"
+    },
+    {
+      "code": "CH",
+      "display": "Champus"
+    },
+    {
+      "code": "CI",
+      "display": "Commercial Insurance Co."
+    },
+    {
+      "code": "D",
+      "display": "Patient was transported for the care of a specialist or for availability of equipment"
+    },
+    {
+      "code": "D1",
+      "display": "Long Distance-patient's condition requires rapid transportation over a long distance"
+    },
+    {
+      "code": "D2",
+      "display": "Rare Circumstances, Traffic Patterns Precludes Ground Transport"
+    },
+    {
+      "code": "D3",
+      "display": "Time to the closest appropriate hospital due to the patient's condition precludes ground transport; maximize clinical benefits"
+    },
+    {
+      "code": "D4",
+      "display": "Pick up Point not Accessible by Ground Transport"
+    },
+    {
+      "code": "DS",
+      "display": "Disability"
+    },
+    {
+      "code": "E",
+      "display": "Patient was transferred to a Rehabilitation Facility"
+    },
+    {
+      "code": "FI",
+      "display": "Federal Employees Program"
+    },
+    {
+      "code": "HM",
+      "display": "Health Maintenance Organization"
+    },
+    {
+      "code": "LM",
+      "display": "Liability Medical"
+    },
+    {
+      "code": "MA",
+      "display": "Medicare Part A"
+    },
+    {
+      "code": "MB",
+      "display": "Medicare Part B"
+    },
+    {
+      "code": "MC",
+      "display": "Medicaid"
+    },
+    {
+      "code": "N",
+      "display": "No"
+    },
+    {
+      "code": "OF",
+      "display": "Other Federal Program"
+    },
+    {
+      "code": "TV",
+      "display": "Title V"
+    },
+    {
+      "code": "VA",
+      "display": "Veteran Affairs Plan"
+    },
+    {
+      "code": "WC",
+      "display": "Workers' Compensation Health Claim"
+    },
+    {
+      "code": "Y",
+      "display": "Yes"
+    },
+    {
+      "code": "ZZ",
+      "display": "Mutually Defined"
+    },
+    {
+      "code": "amh",
+      "display": "Amharic"
+    },
+    {
+      "code": "ara",
+      "display": "Arabic"
+    },
+    {
+      "code": "arm",
+      "display": "Armenian"
+    },
+    {
+      "code": "ben",
+      "display": "Bengali"
+    },
+    {
+      "code": "chi",
+      "display": "Chinese"
+    },
+    {
+      "code": "cpf",
+      "display": "French Creole"
+    },
+    {
+      "code": "crp",
+      "display": "Cajun (Creole and Pidgins)"
+    },
+    {
+      "code": "cze",
+      "display": "Czech"
+    },
+    {
+      "code": "dan",
+      "display": "Danish"
+    },
+    {
+      "code": "dut",
+      "display": "Dutch"
+    },
+    {
+      "code": "eng",
+      "display": "English"
+    },
+    {
+      "code": "fin",
+      "display": "Finnish"
+    },
+    {
+      "code": "fre",
+      "display": "French"
+    },
+    {
+      "code": "gem",
+      "display": "Pennsylvania Dutch (Germanic Other)"
+    },
+    {
+      "code": "ger",
+      "display": "German"
+    },
+    {
+      "code": "gre",
+      "display": "Greek"
+    },
+    {
+      "code": "guj",
+      "display": "Gujarati"
+    },
+    {
+      "code": "heb",
+      "display": "Hebrew"
+    },
+    {
+      "code": "hin",
+      "display": "Hindi (Urdu)"
+    },
+    {
+      "code": "hmn",
+      "display": "Miao (Hmong)"
+    },
+    {
+      "code": "hrv",
+      "display": "Croatian"
+    },
+    {
+      "code": "hun",
+      "display": "Hungarian"
+    },
+    {
+      "code": "ilo",
+      "display": "Ilocano"
+    },
+    {
+      "code": "itl",
+      "display": "Italian"
+    },
+    {
+      "code": "jpn",
+      "display": "Japanese"
+    },
+    {
+      "code": "kor",
+      "display": "Korean"
+    },
+    {
+      "code": "kro",
+      "display": "Kru"
+    },
+    {
+      "code": "lit",
+      "display": "Lithuanian"
+    },
+    {
+      "code": "mal",
+      "display": "Malayalam"
+    },
+    {
+      "code": "mkh",
+      "display": "Mon-Khmer (Cambodian)"
+    },
+    {
+      "code": "nav",
+      "display": "Navaho"
+    },
+    {
+      "code": "nno",
+      "display": "Norwegian"
+    },
+    {
+      "code": "pan",
+      "display": "Panjabi"
+    },
+    {
+      "code": "per",
+      "display": "Persian"
+    },
+    {
+      "code": "pol",
+      "display": "Polish"
+    },
+    {
+      "code": "por",
+      "display": "Portuguese"
+    },
+    {
+      "code": "rum",
+      "display": "Romanian"
+    },
+    {
+      "code": "rus",
+      "display": "Russian"
+    },
+    {
+      "code": "sgn",
+      "display": "Sign Languages"
+    },
+    {
+      "code": "slo",
+      "display": "Slovak"
+    },
+    {
+      "code": "smo",
+      "display": "Samoan"
+    },
+    {
+      "code": "spa",
+      "display": "Spanish"
+    },
+    {
+      "code": "srp",
+      "display": "Serbo-Croatian"
+    },
+    {
+      "code": "swe",
+      "display": "Swedish"
+    },
+    {
+      "code": "syr",
+      "display": "Syriac"
+    },
+    {
+      "code": "tai",
+      "display": "Formosan"
+    },
+    {
+      "code": "tgl",
+      "display": "Tagalog"
+    },
+    {
+      "code": "tha",
+      "display": "Thai (Laotian)"
+    },
+    {
+      "code": "tur",
+      "display": "Turkish"
+    },
+    {
+      "code": "ukr",
+      "display": "Ukrainian"
+    },
+    {
+      "code": "vie",
+      "display": "Vietnamese"
+    },
+    {
+      "code": "yid",
+      "display": "Yiddish"
+    }
+  ]
+}

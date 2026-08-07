@@ -1,0 +1,110 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eSituation-16",
+  "url": "urn:emsinterop:valueset:nemsis:eSituation.16",
+  "version": "0.2.0",
+  "name": "NemsiseSituation16",
+  "title": "NEMSIS eSituation.16 Patient's Occupation",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2816001",
+            "display": "Architecture and Engineering Occupations"
+          },
+          {
+            "code": "2816003",
+            "display": "Arts, Design, Entertainment, Sports, and Media Occupations"
+          },
+          {
+            "code": "2816005",
+            "display": "Building and Grounds Cleaning and Maintenance Occupations"
+          },
+          {
+            "code": "2816007",
+            "display": "Business and Financial Operations Occupations"
+          },
+          {
+            "code": "2816009",
+            "display": "Community and Social Services Occupations"
+          },
+          {
+            "code": "2816011",
+            "display": "Computer and Mathematical Occupations"
+          },
+          {
+            "code": "2816013",
+            "display": "Construction and Extraction Occupations"
+          },
+          {
+            "code": "2816015",
+            "display": "Educational Instruction and Library Occupations"
+          },
+          {
+            "code": "2816017",
+            "display": "Farming, Fishing and Forestry Occupations"
+          },
+          {
+            "code": "2816019",
+            "display": "Food Preparation and Serving Related Occupations"
+          },
+          {
+            "code": "2816021",
+            "display": "Healthcare Practitioners and Technical Occupations"
+          },
+          {
+            "code": "2816023",
+            "display": "Healthcare Support Occupations"
+          },
+          {
+            "code": "2816025",
+            "display": "Installation, Maintenance, and Repair Occupations"
+          },
+          {
+            "code": "2816027",
+            "display": "Legal Occupations"
+          },
+          {
+            "code": "2816029",
+            "display": "Life, Physical, and Social Science Occupations"
+          },
+          {
+            "code": "2816031",
+            "display": "Management Occupations"
+          },
+          {
+            "code": "2816033",
+            "display": "Military Specific Occupations"
+          },
+          {
+            "code": "2816035",
+            "display": "Office and Administrative Support Occupations"
+          },
+          {
+            "code": "2816037",
+            "display": "Personal Care and Service Occupations"
+          },
+          {
+            "code": "2816039",
+            "display": "Production Occupations"
+          },
+          {
+            "code": "2816041",
+            "display": "Protective Service Occupations"
+          },
+          {
+            "code": "2816043",
+            "display": "Sales and Related Occupations"
+          },
+          {
+            "code": "2816045",
+            "display": "Transportation and Material Moving Occupations"
+          }
+        ]
+      }
+    ]
+  }
+}

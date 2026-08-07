@@ -1,0 +1,38 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eAirway-06",
+  "url": "urn:emsinterop:valueset:nemsis:eAirway.06",
+  "version": "0.2.0",
+  "name": "NemsiseAirway06",
+  "title": "NEMSIS eAirway.06 Type of Individual Confirming Airway Device Placement",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4006001",
+            "display": "Another Person on the Same Crew"
+          },
+          {
+            "code": "4006003",
+            "display": "Other"
+          },
+          {
+            "code": "4006005",
+            "display": "Person Performing Intubation"
+          },
+          {
+            "code": "4006007",
+            "display": "Receiving Air Medical/EMS Crew"
+          },
+          {
+            "code": "4006009",
+            "display": "Receiving Hospital Team"
+          }
+        ]
+      }
+    ]
+  }
+}

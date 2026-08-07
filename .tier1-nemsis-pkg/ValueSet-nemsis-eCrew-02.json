@@ -1,0 +1,82 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eCrew-02",
+  "url": "urn:emsinterop:valueset:nemsis:eCrew.02",
+  "version": "0.2.0",
+  "name": "NemsiseCrew02",
+  "title": "NEMSIS eCrew.02 Crew Member Level",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9925001",
+            "display": "Advanced Emergency Medical Technician (AEMT)"
+          },
+          {
+            "code": "9925002",
+            "display": "Emergency Medical Technician - Intermediate"
+          },
+          {
+            "code": "9925003",
+            "display": "Emergency Medical Responder (EMR)"
+          },
+          {
+            "code": "9925005",
+            "display": "Emergency Medical Technician (EMT)"
+          },
+          {
+            "code": "9925007",
+            "display": "Paramedic"
+          },
+          {
+            "code": "9925023",
+            "display": "Other Healthcare Professional"
+          },
+          {
+            "code": "9925025",
+            "display": "Other Non-Healthcare Professional"
+          },
+          {
+            "code": "9925027",
+            "display": "Physician"
+          },
+          {
+            "code": "9925029",
+            "display": "Respiratory Therapist"
+          },
+          {
+            "code": "9925031",
+            "display": "Student"
+          },
+          {
+            "code": "9925033",
+            "display": "Critical Care Paramedic"
+          },
+          {
+            "code": "9925035",
+            "display": "Community Paramedicine"
+          },
+          {
+            "code": "9925037",
+            "display": "Nurse Practitioner"
+          },
+          {
+            "code": "9925039",
+            "display": "Physician Assistant"
+          },
+          {
+            "code": "9925041",
+            "display": "Licensed Practical Nurse (LPN)"
+          },
+          {
+            "code": "9925043",
+            "display": "Registered Nurse"
+          }
+        ]
+      }
+    ]
+  }
+}

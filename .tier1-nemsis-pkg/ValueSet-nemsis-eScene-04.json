@@ -1,0 +1,58 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eScene-04",
+  "url": "urn:emsinterop:valueset:nemsis:eScene.04",
+  "version": "0.2.0",
+  "name": "NemsiseScene04",
+  "title": "NEMSIS eScene.04 Type of Other Service at Scene",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2704001",
+            "display": "EMS Mutual Aid"
+          },
+          {
+            "code": "2704003",
+            "display": "Fire"
+          },
+          {
+            "code": "2704005",
+            "display": "First Responder"
+          },
+          {
+            "code": "2704007",
+            "display": "Hazmat"
+          },
+          {
+            "code": "2704009",
+            "display": "Law Enforcement"
+          },
+          {
+            "code": "2704011",
+            "display": "Other"
+          },
+          {
+            "code": "2704013",
+            "display": "Other EMS Agency"
+          },
+          {
+            "code": "2704015",
+            "display": "Other Health Care Provider"
+          },
+          {
+            "code": "2704017",
+            "display": "Rescue"
+          },
+          {
+            "code": "2704019",
+            "display": "Utilities"
+          }
+        ]
+      }
+    ]
+  }
+}

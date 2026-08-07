@@ -1,0 +1,30 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-17",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.17",
+  "version": "0.2.0",
+  "name": "NemsiseExam17",
+  "title": "NEMSIS eExam.17 Eye Assessment Finding Location",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3517001",
+            "display": "Bilateral"
+          },
+          {
+            "code": "3517003",
+            "display": "Left"
+          },
+          {
+            "code": "3517005",
+            "display": "Right"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,34 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eProcedures-11",
+  "url": "urn:emsinterop:valueset:nemsis:eProcedures.11",
+  "version": "0.2.0",
+  "name": "NemsiseProcedures11",
+  "title": "NEMSIS eProcedures.11 Procedure Authorization",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9918001",
+            "display": "On-Line (Remote Verbal Order)"
+          },
+          {
+            "code": "9918003",
+            "display": "On-Scene"
+          },
+          {
+            "code": "9918005",
+            "display": "Protocol (Standing Order)"
+          },
+          {
+            "code": "9918007",
+            "display": "Written Orders (Patient Specific)"
+          }
+        ]
+      }
+    ]
+  }
+}

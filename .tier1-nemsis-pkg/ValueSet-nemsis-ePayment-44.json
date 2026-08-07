@@ -1,0 +1,38 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-ePayment-44",
+  "url": "urn:emsinterop:valueset:nemsis:ePayment.44",
+  "version": "0.2.0",
+  "name": "NemsisePayment44",
+  "title": "NEMSIS ePayment.44 Ambulance Transport Reason Code",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "A",
+            "display": "Patient was transported to the nearest facility for care of symptoms, complaints, or both"
+          },
+          {
+            "code": "B",
+            "display": "Patient was transported for the benefit of a preferred physician"
+          },
+          {
+            "code": "C",
+            "display": "Patient was transported for the nearness of family members"
+          },
+          {
+            "code": "D",
+            "display": "Patient was transported for the care of a specialist or for availability of equipment"
+          },
+          {
+            "code": "E",
+            "display": "Patient was transferred to a Rehabilitation Facility"
+          }
+        ]
+      }
+    ]
+  }
+}

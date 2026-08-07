@@ -1,0 +1,78 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eCustomConfiguration-08",
+  "url": "urn:emsinterop:valueset:nemsis:eCustomConfiguration.08",
+  "version": "0.2.0",
+  "name": "NemsiseCustomConfiguration08",
+  "title": "NEMSIS eCustomConfiguration.08 Custom Data Element Potential Pertinent Negative Values (PN)",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "8801001",
+            "display": "Contraindication Noted"
+          },
+          {
+            "code": "8801003",
+            "display": "Denied By Order"
+          },
+          {
+            "code": "8801005",
+            "display": "Exam Finding Not Present"
+          },
+          {
+            "code": "8801007",
+            "display": "Medication Allergy"
+          },
+          {
+            "code": "8801009",
+            "display": "Medication Already Taken"
+          },
+          {
+            "code": "8801013",
+            "display": "No Known Drug Allergy"
+          },
+          {
+            "code": "8801015",
+            "display": "None Reported"
+          },
+          {
+            "code": "8801017",
+            "display": "Not Performed by EMS"
+          },
+          {
+            "code": "8801019",
+            "display": "Refused"
+          },
+          {
+            "code": "8801021",
+            "display": "Unresponsive"
+          },
+          {
+            "code": "8801023",
+            "display": "Unable to Complete"
+          },
+          {
+            "code": "8801025",
+            "display": "Not Immunized"
+          },
+          {
+            "code": "8801027",
+            "display": "Order Criteria Not Met"
+          },
+          {
+            "code": "8801029",
+            "display": "Approximate"
+          },
+          {
+            "code": "8801031",
+            "display": "Symptom Not Present"
+          }
+        ]
+      }
+    ]
+  }
+}

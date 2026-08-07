@@ -1,0 +1,34 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eDisposition-17",
+  "url": "urn:emsinterop:valueset:nemsis:eDisposition.17",
+  "version": "0.2.0",
+  "name": "NemsiseDisposition17",
+  "title": "NEMSIS eDisposition.17 Transport Mode from Scene",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4217001",
+            "display": "Emergent (Immediate Response)"
+          },
+          {
+            "code": "4217003",
+            "display": "Emergent Downgraded to Non-Emergent"
+          },
+          {
+            "code": "4217005",
+            "display": "Non-Emergent"
+          },
+          {
+            "code": "4217007",
+            "display": "Non-Emergent Upgraded to Emergent"
+          }
+        ]
+      }
+    ]
+  }
+}

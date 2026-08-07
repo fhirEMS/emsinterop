@@ -1,0 +1,46 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eLabs-05",
+  "url": "urn:emsinterop:valueset:nemsis:eLabs.05",
+  "version": "0.2.0",
+  "name": "NemsiseLabs05",
+  "title": "NEMSIS eLabs.05 Imaging Study Type",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3405001",
+            "display": "Computed Tomography (CT) Scan"
+          },
+          {
+            "code": "3405003",
+            "display": "Magnetic Resonance Imaging (MRI)"
+          },
+          {
+            "code": "3405005",
+            "display": "Other"
+          },
+          {
+            "code": "3405007",
+            "display": "Positron Emission Tomography (PET) Scan"
+          },
+          {
+            "code": "3405009",
+            "display": "Ultrasound"
+          },
+          {
+            "code": "3405011",
+            "display": "X-ray"
+          },
+          {
+            "code": "3405013",
+            "display": "Angiography"
+          }
+        ]
+      }
+    ]
+  }
+}

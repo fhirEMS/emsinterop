@@ -1,0 +1,62 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-ePayment-32",
+  "url": "urn:emsinterop:valueset:nemsis:ePayment.32",
+  "version": "0.2.0",
+  "name": "NemsisePayment32",
+  "title": "NEMSIS ePayment.32 Closest Relative/ Guardian Relationship",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2632001",
+            "display": "Appointed Guardian"
+          },
+          {
+            "code": "2632003",
+            "display": "Child/Dependent"
+          },
+          {
+            "code": "2632005",
+            "display": "Father"
+          },
+          {
+            "code": "2632007",
+            "display": "Mother"
+          },
+          {
+            "code": "2632009",
+            "display": "Other (Non-Relative)"
+          },
+          {
+            "code": "2632011",
+            "display": "Other (Relative)"
+          },
+          {
+            "code": "2632013",
+            "display": "Sibling"
+          },
+          {
+            "code": "2632015",
+            "display": "Spouse"
+          },
+          {
+            "code": "2632017",
+            "display": "Employee"
+          },
+          {
+            "code": "2632019",
+            "display": "Life/Domestic Partner"
+          },
+          {
+            "code": "2632021",
+            "display": "Unknown"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-16",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.16",
+  "version": "0.2.0",
+  "name": "NemsiseExam16",
+  "title": "NEMSIS eExam.16 Extremities Assessment",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3516001",
+            "display": "Abrasion"
+          },
+          {
+            "code": "3516003",
+            "display": "Amputation-Acute"
+          },
+          {
+            "code": "3516005",
+            "display": "Amputation-Previous"
+          },
+          {
+            "code": "3516007",
+            "display": "Avulsion"
+          },
+          {
+            "code": "3516009",
+            "display": "Bleeding Controlled"
+          },
+          {
+            "code": "3516011",
+            "display": "Bleeding Uncontrolled"
+          },
+          {
+            "code": "3516013",
+            "display": "Burn-Blistering"
+          },
+          {
+            "code": "3516015",
+            "display": "Burn-Charring"
+          },
+          {
+            "code": "3516017",
+            "display": "Burn-Redness"
+          },
+          {
+            "code": "3516019",
+            "display": "Burn-White/Waxy"
+          },
+          {
+            "code": "3516021",
+            "display": "Clubbing (of fingers)"
+          },
+          {
+            "code": "3516023",
+            "display": "Crush Injury"
+          },
+          {
+            "code": "3516025",
+            "display": "Deformity"
+          },
+          {
+            "code": "3516027",
+            "display": "Dislocation"
+          },
+          {
+            "code": "3516029",
+            "display": "Edema"
+          },
+          {
+            "code": "3516031",
+            "display": "Foreign Body"
+          },
+          {
+            "code": "3516033",
+            "display": "Fracture-Closed"
+          },
+          {
+            "code": "3516035",
+            "display": "Fracture-Open"
+          },
+          {
+            "code": "3516041",
+            "display": "Laceration"
+          },
+          {
+            "code": "3516043",
+            "display": "Motor Function-Abnormal/Weakness"
+          },
+          {
+            "code": "3516045",
+            "display": "Motor Function-Absent"
+          },
+          {
+            "code": "3516047",
+            "display": "Motor Function-Normal"
+          },
+          {
+            "code": "3516049",
+            "display": "Normal"
+          },
+          {
+            "code": "3516051",
+            "display": "Not Done"
+          },
+          {
+            "code": "3516053",
+            "display": "Pain"
+          },
+          {
+            "code": "3516055",
+            "display": "Paralysis"
+          },
+          {
+            "code": "3516057",
+            "display": "Pulse-Abnormal"
+          },
+          {
+            "code": "3516059",
+            "display": "Pulse-Absent"
+          },
+          {
+            "code": "3516061",
+            "display": "Pulse-Normal"
+          },
+          {
+            "code": "3516063",
+            "display": "Puncture/Stab Wound"
+          },
+          {
+            "code": "3516065",
+            "display": "Sensation-Abnormal"
+          },
+          {
+            "code": "3516067",
+            "display": "Sensation-Absent"
+          },
+          {
+            "code": "3516069",
+            "display": "Sensation-Normal"
+          },
+          {
+            "code": "3516075",
+            "display": "Tenderness"
+          },
+          {
+            "code": "3516077",
+            "display": "Gunshot Wound"
+          },
+          {
+            "code": "3516079",
+            "display": "Swelling"
+          },
+          {
+            "code": "3516081",
+            "display": "Contusion"
+          },
+          {
+            "code": "3516083",
+            "display": "Arm Drift"
+          },
+          {
+            "code": "3516085",
+            "display": "Cool/Cold to Touch"
+          },
+          {
+            "code": "3516087",
+            "display": "Cyanosis"
+          },
+          {
+            "code": "3516089",
+            "display": "Erythema/Flushing"
+          },
+          {
+            "code": "3516091",
+            "display": "Hot/Warm to Touch"
+          },
+          {
+            "code": "3516093",
+            "display": "Lividity"
+          },
+          {
+            "code": "3516095",
+            "display": "Mottled"
+          },
+          {
+            "code": "3516097",
+            "display": "Pale"
+          }
+        ]
+      }
+    ]
+  }
+}

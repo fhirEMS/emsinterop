@@ -1,0 +1,62 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eResponse-06",
+  "url": "urn:emsinterop:valueset:nemsis:eResponse.06",
+  "version": "0.2.0",
+  "name": "NemsiseResponse06",
+  "title": "NEMSIS eResponse.06 Standby Purpose",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2206001",
+            "display": "Disaster Event-Drill/Exercise"
+          },
+          {
+            "code": "2206003",
+            "display": "Disaster Event-Live Staging"
+          },
+          {
+            "code": "2206005",
+            "display": "Education"
+          },
+          {
+            "code": "2206007",
+            "display": "EMS Staging-Improve Coverage"
+          },
+          {
+            "code": "2206009",
+            "display": "Fire Support-Rehab"
+          },
+          {
+            "code": "2206011",
+            "display": "Fire Support-Standby"
+          },
+          {
+            "code": "2206013",
+            "display": "Mass Gathering-Concert/Entertainment Event"
+          },
+          {
+            "code": "2206015",
+            "display": "Mass Gathering-Fair/Community Event"
+          },
+          {
+            "code": "2206017",
+            "display": "Mass Gathering-Sporting Event"
+          },
+          {
+            "code": "2206019",
+            "display": "Other"
+          },
+          {
+            "code": "2206021",
+            "display": "Public Safety Support"
+          }
+        ]
+      }
+    ]
+  }
+}

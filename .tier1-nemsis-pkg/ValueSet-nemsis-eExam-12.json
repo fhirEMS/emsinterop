@@ -1,0 +1,134 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-12",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.12",
+  "version": "0.2.0",
+  "name": "NemsiseExam12",
+  "title": "NEMSIS eExam.12 Pelvis/Genitourinary Assessment",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3512001",
+            "display": "Abrasion"
+          },
+          {
+            "code": "3512003",
+            "display": "Avulsion"
+          },
+          {
+            "code": "3512005",
+            "display": "Bleeding Controlled"
+          },
+          {
+            "code": "3512007",
+            "display": "Bleeding Uncontrolled"
+          },
+          {
+            "code": "3512009",
+            "display": "Bleeding-Rectal"
+          },
+          {
+            "code": "3512011",
+            "display": "Bleeding-Urethral"
+          },
+          {
+            "code": "3512013",
+            "display": "Bleeding-Vaginal"
+          },
+          {
+            "code": "3512015",
+            "display": "Burn-Blistering"
+          },
+          {
+            "code": "3512017",
+            "display": "Burn-Charring"
+          },
+          {
+            "code": "3512019",
+            "display": "Burn-Redness"
+          },
+          {
+            "code": "3512021",
+            "display": "Burn-White/Waxy"
+          },
+          {
+            "code": "3512023",
+            "display": "Deformity"
+          },
+          {
+            "code": "3512025",
+            "display": "Foreign Body"
+          },
+          {
+            "code": "3512027",
+            "display": "Genital Injury"
+          },
+          {
+            "code": "3512033",
+            "display": "Laceration"
+          },
+          {
+            "code": "3512035",
+            "display": "Mass/Lesion"
+          },
+          {
+            "code": "3512037",
+            "display": "Normal"
+          },
+          {
+            "code": "3512039",
+            "display": "Not Done"
+          },
+          {
+            "code": "3512041",
+            "display": "Pain"
+          },
+          {
+            "code": "3512043",
+            "display": "Pelvic Fracture"
+          },
+          {
+            "code": "3512045",
+            "display": "Pelvic Instability"
+          },
+          {
+            "code": "3512047",
+            "display": "Penile Priapism/Erection"
+          },
+          {
+            "code": "3512049",
+            "display": "Pregnant-Crowning"
+          },
+          {
+            "code": "3512051",
+            "display": "Puncture/Stab Wound"
+          },
+          {
+            "code": "3512057",
+            "display": "Tenderness"
+          },
+          {
+            "code": "3512059",
+            "display": "Gunshot Wound"
+          },
+          {
+            "code": "3512061",
+            "display": "Crush Injury"
+          },
+          {
+            "code": "3512063",
+            "display": "Swelling"
+          },
+          {
+            "code": "3512065",
+            "display": "Contusion"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "resourceType": "ConceptMap",
+  "id": "cm-nemsis-medroute",
+  "url": "urn:emsinterop:conceptmap:cm-nemsis-medroute",
+  "version": "0.1.0",
+  "name": "NemsisMedicationRouteToSnomed",
+  "status": "draft",
+  "description": "eMedications.04 Medication Administered Route (9927xxx) -> SNOMED CT route of administration. Codes without a confident SNOMED target are equivalence=unmatched pending SME review (dual-coding retains the NEMSIS code so nothing is lost).",
+  "group": [
+    {
+      "source": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+      "target": "http://snomed.info/sct",
+      "element": [
+        {"code": "9927003", "display": "Buccal", "target": [{"code": "54471007", "display": "Buccal route", "equivalence": "equivalent"}]},
+        {"code": "9927015", "display": "Intramuscular (IM)", "target": [{"code": "78421000", "display": "Intramuscular route", "equivalence": "equivalent"}]},
+        {"code": "9927017", "display": "Intranasal", "target": [{"code": "46713006", "display": "Nasal route", "equivalence": "equivalent"}]},
+        {"code": "9927023", "display": "Intravenous (IV)", "target": [{"code": "47625008", "display": "Intravenous route", "equivalence": "equivalent"}]},
+        {"code": "9927035", "display": "Oral", "target": [{"code": "26643006", "display": "Oral route", "equivalence": "equivalent"}]},
+        {"code": "9927043", "display": "Rectal", "target": [{"code": "37161004", "display": "Rectal route", "equivalence": "equivalent"}]},
+        {"code": "9927045", "display": "Subcutaneous", "target": [{"code": "34206005", "display": "Subcutaneous route", "equivalence": "equivalent"}]},
+        {"code": "9927047", "display": "Sublingual", "target": [{"code": "37839007", "display": "Sublingual route", "equivalence": "equivalent"}]},
+        {"code": "9927049", "display": "Topical", "target": [{"code": "6064005", "display": "Topical route", "equivalence": "equivalent"}]},
+        {"code": "9927053", "display": "Transdermal", "target": [{"code": "45890007", "display": "Transdermal route", "equivalence": "equivalent"}]},
+        {"code": "9927021", "display": "Intraosseous (IO)", "target": [{"equivalence": "unmatched", "comment": "SME review: SNOMED IO route candidate to confirm"}]},
+        {"code": "9927009", "display": "Inhalation", "target": [{"equivalence": "unmatched", "comment": "SME review: respiratory tract route candidate to confirm"}]}
+      ]
+    }
+  ]
+}

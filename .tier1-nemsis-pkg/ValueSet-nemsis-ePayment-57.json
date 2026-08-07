@@ -1,0 +1,110 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-ePayment-57",
+  "url": "urn:emsinterop:valueset:nemsis:ePayment.57",
+  "version": "0.2.0",
+  "name": "NemsisePayment57",
+  "title": "NEMSIS ePayment.57 Payer Type",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "11",
+            "display": "Other Non-Federal Programs"
+          },
+          {
+            "code": "12",
+            "display": "Preferred Provider Organization (PPO)"
+          },
+          {
+            "code": "13",
+            "display": "Point of Service (POS)"
+          },
+          {
+            "code": "14",
+            "display": "Exclusive Provider Organization (EPO)"
+          },
+          {
+            "code": "15",
+            "display": "Indemnity Insurance"
+          },
+          {
+            "code": "16",
+            "display": "Health Maintenance Organization (HMO) Medicare Risk"
+          },
+          {
+            "code": "17",
+            "display": "Dental Maintenance Organization"
+          },
+          {
+            "code": "AM",
+            "display": "Automobile Medical"
+          },
+          {
+            "code": "BL",
+            "display": "Blue Cross/Blue Shield"
+          },
+          {
+            "code": "CH",
+            "display": "Champus"
+          },
+          {
+            "code": "CI",
+            "display": "Commercial Insurance Co."
+          },
+          {
+            "code": "DS",
+            "display": "Disability"
+          },
+          {
+            "code": "FI",
+            "display": "Federal Employees Program"
+          },
+          {
+            "code": "HM",
+            "display": "Health Maintenance Organization"
+          },
+          {
+            "code": "LM",
+            "display": "Liability Medical"
+          },
+          {
+            "code": "MA",
+            "display": "Medicare Part A"
+          },
+          {
+            "code": "MB",
+            "display": "Medicare Part B"
+          },
+          {
+            "code": "MC",
+            "display": "Medicaid"
+          },
+          {
+            "code": "OF",
+            "display": "Other Federal Program"
+          },
+          {
+            "code": "TV",
+            "display": "Title V"
+          },
+          {
+            "code": "VA",
+            "display": "Veteran Affairs Plan"
+          },
+          {
+            "code": "WC",
+            "display": "Workers' Compensation Health Claim"
+          },
+          {
+            "code": "ZZ",
+            "display": "Mutually Defined"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eAirway-01",
+  "url": "urn:emsinterop:valueset:nemsis:eAirway.01",
+  "version": "0.2.0",
+  "name": "NemsiseAirway01",
+  "title": "NEMSIS eAirway.01 Indications for Invasive Airway",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4001001",
+            "display": "Adequate Airway Reflexes/Effort, Potential for Compromise"
+          },
+          {
+            "code": "4001003",
+            "display": "Airway Reflex Compromised"
+          },
+          {
+            "code": "4001005",
+            "display": "Apnea or Agonal Respirations"
+          },
+          {
+            "code": "4001007",
+            "display": "Illness Involving Airway"
+          },
+          {
+            "code": "4001009",
+            "display": "Injury Involving Airway"
+          },
+          {
+            "code": "4001011",
+            "display": "Other"
+          },
+          {
+            "code": "4001013",
+            "display": "Ventilatory Effort Compromised"
+          }
+        ]
+      }
+    ]
+  }
+}

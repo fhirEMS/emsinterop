@@ -1,0 +1,54 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eResponse-07",
+  "url": "urn:emsinterop:valueset:nemsis:eResponse.07",
+  "version": "0.2.0",
+  "name": "NemsiseResponse07",
+  "title": "NEMSIS eResponse.07 Unit Transport and Equipment Capability",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2207011",
+            "display": "Air Transport-Helicopter"
+          },
+          {
+            "code": "2207013",
+            "display": "Air Transport-Fixed Wing"
+          },
+          {
+            "code": "2207015",
+            "display": "Ground Transport (ALS Equipped)"
+          },
+          {
+            "code": "2207017",
+            "display": "Ground Transport (BLS Equipped)"
+          },
+          {
+            "code": "2207019",
+            "display": "Ground Transport (Critical Care Equipped)"
+          },
+          {
+            "code": "2207021",
+            "display": "Non-Transport-Medical Treatment (ALS Equipped)"
+          },
+          {
+            "code": "2207023",
+            "display": "Non-Transport-Medical Treatment (BLS Equipped)"
+          },
+          {
+            "code": "2207025",
+            "display": "Wheel Chair Van/Ambulette"
+          },
+          {
+            "code": "2207027",
+            "display": "Non-Transport-No Medical Equipment"
+          }
+        ]
+      }
+    ]
+  }
+}

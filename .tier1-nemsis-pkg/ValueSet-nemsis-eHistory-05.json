@@ -1,0 +1,42 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eHistory-05",
+  "url": "urn:emsinterop:valueset:nemsis:eHistory.05",
+  "version": "0.2.0",
+  "name": "NemsiseHistory05",
+  "title": "NEMSIS eHistory.05 Advance Directives",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3105001",
+            "display": "Family/Guardian request DNR (but no documentation)"
+          },
+          {
+            "code": "3105003",
+            "display": "Living Will"
+          },
+          {
+            "code": "3105005",
+            "display": "None"
+          },
+          {
+            "code": "3105007",
+            "display": "Other"
+          },
+          {
+            "code": "3105009",
+            "display": "Other Healthcare Advanced Directive Form"
+          },
+          {
+            "code": "3105011",
+            "display": "State EMS DNR or Medical Order Form"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,170 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eArrest-17",
+  "url": "urn:emsinterop:valueset:nemsis:eArrest.17",
+  "version": "0.2.0",
+  "name": "NemsiseArrest17",
+  "title": "NEMSIS eArrest.17 Cardiac Rhythm on Arrival at Destination",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9901001",
+            "display": "Agonal/Idioventricular"
+          },
+          {
+            "code": "9901003",
+            "display": "Asystole"
+          },
+          {
+            "code": "9901005",
+            "display": "Artifact"
+          },
+          {
+            "code": "9901007",
+            "display": "Atrial Fibrillation"
+          },
+          {
+            "code": "9901009",
+            "display": "Atrial Flutter"
+          },
+          {
+            "code": "9901011",
+            "display": "AV Block-1st Degree"
+          },
+          {
+            "code": "9901013",
+            "display": "AV Block-2nd Degree-Type 1"
+          },
+          {
+            "code": "9901015",
+            "display": "AV Block-2nd Degree-Type 2"
+          },
+          {
+            "code": "9901017",
+            "display": "AV Block-3rd Degree"
+          },
+          {
+            "code": "9901019",
+            "display": "Junctional"
+          },
+          {
+            "code": "9901021",
+            "display": "Left Bundle Branch Block"
+          },
+          {
+            "code": "9901023",
+            "display": "Non-STEMI Anterior Ischemia"
+          },
+          {
+            "code": "9901025",
+            "display": "Non-STEMI Inferior Ischemia"
+          },
+          {
+            "code": "9901027",
+            "display": "Non-STEMI Lateral Ischemia"
+          },
+          {
+            "code": "9901029",
+            "display": "Non-STEMI Posterior Ischemia"
+          },
+          {
+            "code": "9901030",
+            "display": "Non-STEMI Septal Ischemia"
+          },
+          {
+            "code": "9901031",
+            "display": "Other"
+          },
+          {
+            "code": "9901033",
+            "display": "Paced Rhythm"
+          },
+          {
+            "code": "9901035",
+            "display": "PEA"
+          },
+          {
+            "code": "9901037",
+            "display": "Premature Atrial Contractions"
+          },
+          {
+            "code": "9901039",
+            "display": "Premature Ventricular Contractions"
+          },
+          {
+            "code": "9901041",
+            "display": "Right Bundle Branch Block"
+          },
+          {
+            "code": "9901043",
+            "display": "Sinus Arrhythmia"
+          },
+          {
+            "code": "9901045",
+            "display": "Sinus Bradycardia"
+          },
+          {
+            "code": "9901047",
+            "display": "Sinus Rhythm"
+          },
+          {
+            "code": "9901049",
+            "display": "Sinus Tachycardia"
+          },
+          {
+            "code": "9901051",
+            "display": "STEMI Anterior Ischemia"
+          },
+          {
+            "code": "9901053",
+            "display": "STEMI Inferior Ischemia"
+          },
+          {
+            "code": "9901055",
+            "display": "STEMI Lateral Ischemia"
+          },
+          {
+            "code": "9901057",
+            "display": "STEMI Posterior Ischemia"
+          },
+          {
+            "code": "9901058",
+            "display": "STEMI Septal Ischemia"
+          },
+          {
+            "code": "9901059",
+            "display": "Supraventricular Tachycardia"
+          },
+          {
+            "code": "9901061",
+            "display": "Torsades De Points"
+          },
+          {
+            "code": "9901063",
+            "display": "Unknown AED Non-Shockable Rhythm"
+          },
+          {
+            "code": "9901065",
+            "display": "Unknown AED Shockable Rhythm"
+          },
+          {
+            "code": "9901067",
+            "display": "Ventricular Fibrillation"
+          },
+          {
+            "code": "9901069",
+            "display": "Ventricular Tachycardia (With Pulse)"
+          },
+          {
+            "code": "9901071",
+            "display": "Ventricular Tachycardia (Pulseless)"
+          }
+        ]
+      }
+    ]
+  }
+}

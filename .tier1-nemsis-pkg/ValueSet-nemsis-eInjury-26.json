@@ -1,0 +1,54 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eInjury-26",
+  "url": "urn:emsinterop:valueset:nemsis:eInjury.26",
+  "version": "0.2.0",
+  "name": "NemsiseInjury26",
+  "title": "NEMSIS eInjury.26 ACN Vehicle Seat Location",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2926001",
+            "display": "Driver Front Seat"
+          },
+          {
+            "code": "2926003",
+            "display": "Front Row Middle Seat"
+          },
+          {
+            "code": "2926005",
+            "display": "Passenger Front Seat"
+          },
+          {
+            "code": "2926007",
+            "display": "Second Row Left Seat"
+          },
+          {
+            "code": "2926009",
+            "display": "Second Row Middle Seat"
+          },
+          {
+            "code": "2926011",
+            "display": "Second Row Right Seat"
+          },
+          {
+            "code": "2926013",
+            "display": "Third Row Left Seat"
+          },
+          {
+            "code": "2926015",
+            "display": "Third Row Middle Seat"
+          },
+          {
+            "code": "2926017",
+            "display": "Third Row Right Seat"
+          }
+        ]
+      }
+    ]
+  }
+}

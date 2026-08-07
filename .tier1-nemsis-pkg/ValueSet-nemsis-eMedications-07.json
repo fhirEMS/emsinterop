@@ -1,0 +1,30 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eMedications-07",
+  "url": "urn:emsinterop:valueset:nemsis:eMedications.07",
+  "version": "0.2.0",
+  "name": "NemsiseMedications07",
+  "title": "NEMSIS eMedications.07 Response to Medication",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9916001",
+            "display": "Improved"
+          },
+          {
+            "code": "9916003",
+            "display": "Unchanged"
+          },
+          {
+            "code": "9916005",
+            "display": "Worse"
+          }
+        ]
+      }
+    ]
+  }
+}

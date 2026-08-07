@@ -1,0 +1,74 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eOther-09",
+  "url": "urn:emsinterop:valueset:nemsis:eOther.09",
+  "version": "0.2.0",
+  "name": "NemsiseOther09",
+  "title": "NEMSIS eOther.09 External Electronic Document Type",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4509001",
+            "display": "Other Audio Recording"
+          },
+          {
+            "code": "4509003",
+            "display": "Billing Information"
+          },
+          {
+            "code": "4509005",
+            "display": "Diagnostic Image (CT, X-ray, US, etc.)"
+          },
+          {
+            "code": "4509006",
+            "display": "DNR"
+          },
+          {
+            "code": "4509008",
+            "display": "Living Will"
+          },
+          {
+            "code": "4509009",
+            "display": "ECG/Lab Results"
+          },
+          {
+            "code": "4509011",
+            "display": "Guardianship/Power of Attorney"
+          },
+          {
+            "code": "4509013",
+            "display": "Other Healthcare Record"
+          },
+          {
+            "code": "4509015",
+            "display": "Other"
+          },
+          {
+            "code": "4509017",
+            "display": "Patient Identification"
+          },
+          {
+            "code": "4509019",
+            "display": "Patient Refusal Sheet"
+          },
+          {
+            "code": "4509021",
+            "display": "Other Picture/Graphic"
+          },
+          {
+            "code": "4509025",
+            "display": "Other Video/Movie"
+          },
+          {
+            "code": "4509027",
+            "display": "ePCR"
+          }
+        ]
+      }
+    ]
+  }
+}

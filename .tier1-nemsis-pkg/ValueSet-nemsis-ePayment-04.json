@@ -1,0 +1,94 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-ePayment-04",
+  "url": "urn:emsinterop:valueset:nemsis:ePayment.04",
+  "version": "0.2.0",
+  "name": "NemsisePayment04",
+  "title": "NEMSIS ePayment.04 Reason for Physician Certification Statement",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2604001",
+            "display": "Bed Confined"
+          },
+          {
+            "code": "2604003",
+            "display": "Cardiac/Hemodynamic monitoring required during transport"
+          },
+          {
+            "code": "2604005",
+            "display": "Confused, combative, lethargic, comatose"
+          },
+          {
+            "code": "2604007",
+            "display": "Contractures"
+          },
+          {
+            "code": "2604009",
+            "display": "Danger to self or others-monitoring"
+          },
+          {
+            "code": "2604011",
+            "display": "Danger to self or others-seclusion (flight risk)"
+          },
+          {
+            "code": "2604013",
+            "display": "DVT requires elevation of lower extremity"
+          },
+          {
+            "code": "2604015",
+            "display": "IV medications/fluids required during transport"
+          },
+          {
+            "code": "2604017",
+            "display": "Moderate to severe pain on movement"
+          },
+          {
+            "code": "2604019",
+            "display": "Morbid Obesity requires additional personnel/equipment to handle"
+          },
+          {
+            "code": "2604021",
+            "display": "Non-healing fractures"
+          },
+          {
+            "code": "2604023",
+            "display": "Orthopedic device (backboard, halo, use of pins in traction, etc.) requiring special handling in transit"
+          },
+          {
+            "code": "2604025",
+            "display": "Restraints (Physical or Chemical) anticipated or used during transport"
+          },
+          {
+            "code": "2604027",
+            "display": "Risk of falling off wheelchair or stretcher while in motion (not related to obesity)"
+          },
+          {
+            "code": "2604029",
+            "display": "Severe Muscular weakness and de-conditioned state precludes any significant physical activity"
+          },
+          {
+            "code": "2604031",
+            "display": "Special handling en route-Isolation"
+          },
+          {
+            "code": "2604033",
+            "display": "Third Party assistance/attendant required to apply, administer, or regulate or adjust oxygen en route"
+          },
+          {
+            "code": "2604035",
+            "display": "Unable to maintain erect sitting position in a chair for time needed to transport, due to moderate muscular weakness and de-conditioning."
+          },
+          {
+            "code": "2604037",
+            "display": "Unable to sit in chair or wheelchair due to Grade II or greater decubitus ulcers on buttocks."
+          }
+        ]
+      }
+    ]
+  }
+}

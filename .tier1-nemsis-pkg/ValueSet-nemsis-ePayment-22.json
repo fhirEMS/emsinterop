@@ -1,0 +1,54 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-ePayment-22",
+  "url": "urn:emsinterop:valueset:nemsis:ePayment.22",
+  "version": "0.2.0",
+  "name": "NemsisePayment22",
+  "title": "NEMSIS ePayment.22 Relationship to the Insured",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2622001",
+            "display": "Self"
+          },
+          {
+            "code": "2622003",
+            "display": "Spouse"
+          },
+          {
+            "code": "2622005",
+            "display": "Child/Dependent"
+          },
+          {
+            "code": "2622009",
+            "display": "Cadaver Donor"
+          },
+          {
+            "code": "2622011",
+            "display": "Employee"
+          },
+          {
+            "code": "2622013",
+            "display": "Life/Domestic Partner"
+          },
+          {
+            "code": "2622015",
+            "display": "Organ Donor"
+          },
+          {
+            "code": "2622017",
+            "display": "Unknown"
+          },
+          {
+            "code": "2622019",
+            "display": "Other Relationship"
+          }
+        ]
+      }
+    ]
+  }
+}

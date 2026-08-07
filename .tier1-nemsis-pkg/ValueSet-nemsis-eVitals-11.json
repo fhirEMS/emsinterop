@@ -1,0 +1,42 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eVitals-11",
+  "url": "urn:emsinterop:valueset:nemsis:eVitals.11",
+  "version": "0.2.0",
+  "name": "NemsiseVitals11",
+  "title": "NEMSIS eVitals.11 Method of Heart Rate Measurement",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3311001",
+            "display": "Auscultated"
+          },
+          {
+            "code": "3311003",
+            "display": "Doppler"
+          },
+          {
+            "code": "3311005",
+            "display": "Electronic Monitor - Cardiac"
+          },
+          {
+            "code": "3311007",
+            "display": "Electronic Monitor - Pulse Oximeter"
+          },
+          {
+            "code": "3311009",
+            "display": "Electronic Monitor (Other)"
+          },
+          {
+            "code": "3311011",
+            "display": "Palpated"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eDisposition-15",
+  "url": "urn:emsinterop:valueset:nemsis:eDisposition.15",
+  "version": "0.2.0",
+  "name": "NemsiseDisposition15",
+  "title": "NEMSIS eDisposition.15 How Patient Was Moved From Ambulance",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9909001",
+            "display": "Assisted/Walk"
+          },
+          {
+            "code": "9909003",
+            "display": "Backboard"
+          },
+          {
+            "code": "9909005",
+            "display": "Chair"
+          },
+          {
+            "code": "9909007",
+            "display": "Carried"
+          },
+          {
+            "code": "9909009",
+            "display": "Other"
+          },
+          {
+            "code": "9909011",
+            "display": "Stairchair"
+          },
+          {
+            "code": "9909013",
+            "display": "Stretcher"
+          },
+          {
+            "code": "9909015",
+            "display": "Wheelchair"
+          }
+        ]
+      }
+    ]
+  }
+}

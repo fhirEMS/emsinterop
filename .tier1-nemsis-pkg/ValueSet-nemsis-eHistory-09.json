@@ -1,0 +1,34 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eHistory-09",
+  "url": "urn:emsinterop:valueset:nemsis:eHistory.09",
+  "version": "0.2.0",
+  "name": "NemsiseHistory09",
+  "title": "NEMSIS eHistory.09 Medical History Obtained From",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3109001",
+            "display": "Bystander/Other"
+          },
+          {
+            "code": "3109003",
+            "display": "Family"
+          },
+          {
+            "code": "3109005",
+            "display": "Health Care Personnel"
+          },
+          {
+            "code": "3109007",
+            "display": "Patient"
+          }
+        ]
+      }
+    ]
+  }
+}

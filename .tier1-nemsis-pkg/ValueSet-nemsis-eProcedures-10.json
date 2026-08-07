@@ -1,0 +1,102 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eProcedures-10",
+  "url": "urn:emsinterop:valueset:nemsis:eProcedures.10",
+  "version": "0.2.0",
+  "name": "NemsiseProcedures10",
+  "title": "NEMSIS eProcedures.10 Role/Type of Person Performing the Procedure",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9905001",
+            "display": "Advanced Emergency Medical Technician (AEMT)"
+          },
+          {
+            "code": "9905002",
+            "display": "Emergency Medical Technician - Intermediate"
+          },
+          {
+            "code": "9905003",
+            "display": "Emergency Medical Responder (EMR)"
+          },
+          {
+            "code": "9905005",
+            "display": "Emergency Medical Technician (EMT)"
+          },
+          {
+            "code": "9905007",
+            "display": "Paramedic"
+          },
+          {
+            "code": "9905019",
+            "display": "Other Healthcare Professional"
+          },
+          {
+            "code": "9905021",
+            "display": "Other Non-Healthcare Professional"
+          },
+          {
+            "code": "9905025",
+            "display": "Physician"
+          },
+          {
+            "code": "9905027",
+            "display": "Respiratory Therapist"
+          },
+          {
+            "code": "9905029",
+            "display": "Student"
+          },
+          {
+            "code": "9905031",
+            "display": "Critical Care Paramedic"
+          },
+          {
+            "code": "9905033",
+            "display": "Community Paramedicine"
+          },
+          {
+            "code": "9905035",
+            "display": "Nurse Practitioner"
+          },
+          {
+            "code": "9905037",
+            "display": "Physician Assistant"
+          },
+          {
+            "code": "9905039",
+            "display": "Licensed Practical Nurse (LPN)"
+          },
+          {
+            "code": "9905041",
+            "display": "Registered Nurse"
+          },
+          {
+            "code": "9905043",
+            "display": "Patient"
+          },
+          {
+            "code": "9905045",
+            "display": "Lay Person"
+          },
+          {
+            "code": "9905047",
+            "display": "Law Enforcement"
+          },
+          {
+            "code": "9905049",
+            "display": "Family Member"
+          },
+          {
+            "code": "9905051",
+            "display": "Fire Personnel (non EMS)"
+          }
+        ]
+      }
+    ]
+  }
+}

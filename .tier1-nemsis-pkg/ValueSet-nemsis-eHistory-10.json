@@ -1,0 +1,126 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eHistory-10",
+  "url": "urn:emsinterop:valueset:nemsis:eHistory.10",
+  "version": "0.2.0",
+  "name": "NemsiseHistory10",
+  "title": "NEMSIS eHistory.10 The Patient's Type of Immunization",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9910001",
+            "display": "Anthrax"
+          },
+          {
+            "code": "9910003",
+            "display": "Cholera"
+          },
+          {
+            "code": "9910005",
+            "display": "DPT / TDaP (Diphtheria, Pertussis, Tetanus)"
+          },
+          {
+            "code": "9910007",
+            "display": "Hemophilus Influenza B"
+          },
+          {
+            "code": "9910009",
+            "display": "Hepatitis A"
+          },
+          {
+            "code": "9910011",
+            "display": "Hepatitis B"
+          },
+          {
+            "code": "9910013",
+            "display": "Human Papilloma Virus (HPV)"
+          },
+          {
+            "code": "9910015",
+            "display": "Influenza-H1N1"
+          },
+          {
+            "code": "9910017",
+            "display": "Influenza-Other"
+          },
+          {
+            "code": "9910019",
+            "display": "Influenza-Seasonal (In past 12 months)"
+          },
+          {
+            "code": "9910021",
+            "display": "Lyme Disease"
+          },
+          {
+            "code": "9910023",
+            "display": "Meningococcus"
+          },
+          {
+            "code": "9910025",
+            "display": "MMR (Measles, Mumps, Rubella)"
+          },
+          {
+            "code": "9910027",
+            "display": "Other-Not Listed"
+          },
+          {
+            "code": "9910029",
+            "display": "Plague"
+          },
+          {
+            "code": "9910031",
+            "display": "Pneumococcal (Pneumonia)"
+          },
+          {
+            "code": "9910033",
+            "display": "Polio"
+          },
+          {
+            "code": "9910035",
+            "display": "Rabies"
+          },
+          {
+            "code": "9910037",
+            "display": "Rotavirus"
+          },
+          {
+            "code": "9910039",
+            "display": "Shingles"
+          },
+          {
+            "code": "9910041",
+            "display": "Small Pox"
+          },
+          {
+            "code": "9910043",
+            "display": "Tetanus"
+          },
+          {
+            "code": "9910045",
+            "display": "Tuberculosis"
+          },
+          {
+            "code": "9910047",
+            "display": "Typhoid"
+          },
+          {
+            "code": "9910049",
+            "display": "Varicella (Chickenpox)"
+          },
+          {
+            "code": "9910051",
+            "display": "Yellow Fever"
+          },
+          {
+            "code": "9910053",
+            "display": "None"
+          }
+        ]
+      }
+    ]
+  }
+}

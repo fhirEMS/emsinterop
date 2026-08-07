@@ -1,0 +1,34 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eVitals-26",
+  "url": "urn:emsinterop:valueset:nemsis:eVitals.26",
+  "version": "0.2.0",
+  "name": "NemsiseVitals26",
+  "title": "NEMSIS eVitals.26 Level of Responsiveness (AVPU)",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3326001",
+            "display": "Alert"
+          },
+          {
+            "code": "3326003",
+            "display": "Verbal"
+          },
+          {
+            "code": "3326005",
+            "display": "Painful"
+          },
+          {
+            "code": "3326007",
+            "display": "Unresponsive"
+          }
+        ]
+      }
+    ]
+  }
+}

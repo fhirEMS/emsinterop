@@ -1,0 +1,46 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eCrew-03",
+  "url": "urn:emsinterop:valueset:nemsis:eCrew.03",
+  "version": "0.2.0",
+  "name": "NemsiseCrew03",
+  "title": "NEMSIS eCrew.03 Crew Member Response Role",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2403001",
+            "display": "Driver/Pilot-Response"
+          },
+          {
+            "code": "2403003",
+            "display": "Driver/Pilot-Transport"
+          },
+          {
+            "code": "2403005",
+            "display": "Other"
+          },
+          {
+            "code": "2403007",
+            "display": "Other Patient Caregiver-At Scene"
+          },
+          {
+            "code": "2403009",
+            "display": "Other Patient Caregiver-Transport"
+          },
+          {
+            "code": "2403011",
+            "display": "Primary Patient Caregiver-At Scene"
+          },
+          {
+            "code": "2403013",
+            "display": "Primary Patient Caregiver-Transport"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eDisposition-32",
+  "url": "urn:emsinterop:valueset:nemsis:eDisposition.32",
+  "version": "0.2.0",
+  "name": "NemsiseDisposition32",
+  "title": "NEMSIS eDisposition.32 Level of Care Provided per Protocol",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4232001",
+            "display": "BLS - All Levels"
+          },
+          {
+            "code": "4232003",
+            "display": "ALS - AEMT/Intermediate"
+          },
+          {
+            "code": "4232005",
+            "display": "ALS - Paramedic"
+          },
+          {
+            "code": "4232007",
+            "display": "EMS and Other Health-Care Staff"
+          },
+          {
+            "code": "4232009",
+            "display": "Critical Care"
+          },
+          {
+            "code": "4232011",
+            "display": "Integrated Health Care"
+          },
+          {
+            "code": "4232013",
+            "display": "No Care Provided"
+          }
+        ]
+      }
+    ]
+  }
+}

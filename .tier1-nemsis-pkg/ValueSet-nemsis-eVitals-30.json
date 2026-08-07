@@ -1,0 +1,78 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eVitals-30",
+  "url": "urn:emsinterop:valueset:nemsis:eVitals.30",
+  "version": "0.2.0",
+  "name": "NemsiseVitals30",
+  "title": "NEMSIS eVitals.30 Stroke Scale Type",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3330001",
+            "display": "Cincinnati Prehospital Stroke Scale (CPSS)"
+          },
+          {
+            "code": "3330004",
+            "display": "Los Angeles Prehospital Stroke Screen (LAPSS)"
+          },
+          {
+            "code": "3330005",
+            "display": "Massachusetts Stroke Scale (MSS)"
+          },
+          {
+            "code": "3330007",
+            "display": "Miami Emergency Neurologic Deficit Exam (MEND)"
+          },
+          {
+            "code": "3330009",
+            "display": "NIH Stroke Scale (NIHSS)"
+          },
+          {
+            "code": "3330011",
+            "display": "Other Stroke Scale Type"
+          },
+          {
+            "code": "3330013",
+            "display": "FAST"
+          },
+          {
+            "code": "3330015",
+            "display": "Boston Stroke Scale (BOSS)"
+          },
+          {
+            "code": "3330017",
+            "display": "Ontario Prehospital Stroke Scale (OPSS)"
+          },
+          {
+            "code": "3330019",
+            "display": "Melbourne Ambulance Stroke Screen (MASS)"
+          },
+          {
+            "code": "3330021",
+            "display": "Rapid Arterial oCclusion Evaluation (RACE)"
+          },
+          {
+            "code": "3330023",
+            "display": "Los Angeles Motor Score (LAMS)"
+          },
+          {
+            "code": "3330025",
+            "display": "Vision, Aphasia, Neglect (VAN)"
+          },
+          {
+            "code": "3330027",
+            "display": "FAST-ED"
+          },
+          {
+            "code": "3330029",
+            "display": "BEFAST"
+          }
+        ]
+      }
+    ]
+  }
+}

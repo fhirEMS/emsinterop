@@ -1,0 +1,86 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eResponse-12",
+  "url": "urn:emsinterop:valueset:nemsis:eResponse.12",
+  "version": "0.2.0",
+  "name": "NemsiseResponse12",
+  "title": "NEMSIS eResponse.12 Type of Turn-Around Delay",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2212001",
+            "display": "Clean-up"
+          },
+          {
+            "code": "2212003",
+            "display": "Decontamination"
+          },
+          {
+            "code": "2212005",
+            "display": "Distance"
+          },
+          {
+            "code": "2212007",
+            "display": "Documentation"
+          },
+          {
+            "code": "2212009",
+            "display": "ED Overcrowding / Transfer of Care"
+          },
+          {
+            "code": "2212011",
+            "display": "Equipment Failure"
+          },
+          {
+            "code": "2212013",
+            "display": "Equipment/Supply Replenishment"
+          },
+          {
+            "code": "2212015",
+            "display": "None/No Delay"
+          },
+          {
+            "code": "2212017",
+            "display": "Other"
+          },
+          {
+            "code": "2212019",
+            "display": "Rendezvous Transport Unavailable"
+          },
+          {
+            "code": "2212021",
+            "display": "Route Obstruction (e.g., Train)"
+          },
+          {
+            "code": "2212023",
+            "display": "Staff Delay"
+          },
+          {
+            "code": "2212025",
+            "display": "Traffic"
+          },
+          {
+            "code": "2212027",
+            "display": "Vehicle Crash of this Unit"
+          },
+          {
+            "code": "2212029",
+            "display": "Vehicle Failure of this Unit"
+          },
+          {
+            "code": "2212031",
+            "display": "Weather"
+          },
+          {
+            "code": "2212033",
+            "display": "EMS Crew Accompanies Patient for Facility Procedure"
+          }
+        ]
+      }
+    ]
+  }
+}

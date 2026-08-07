@@ -1,0 +1,98 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eOther-07",
+  "url": "urn:emsinterop:valueset:nemsis:eOther.07",
+  "version": "0.2.0",
+  "name": "NemsiseOther07",
+  "title": "NEMSIS eOther.07 Natural, Suspected, Intentional, or Unintentional Disaster",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4507001",
+            "display": "Biologic Agent"
+          },
+          {
+            "code": "4507003",
+            "display": "Building Failure"
+          },
+          {
+            "code": "4507005",
+            "display": "Chemical Agent"
+          },
+          {
+            "code": "4507007",
+            "display": "Explosive Device"
+          },
+          {
+            "code": "4507009",
+            "display": "Fire"
+          },
+          {
+            "code": "4507011",
+            "display": "Hostage Event"
+          },
+          {
+            "code": "4507013",
+            "display": "Mass Gathering"
+          },
+          {
+            "code": "4507015",
+            "display": "Mass Illness"
+          },
+          {
+            "code": "4507017",
+            "display": "Nuclear Agent"
+          },
+          {
+            "code": "4507019",
+            "display": "Radioactive Device"
+          },
+          {
+            "code": "4507021",
+            "display": "Secondary Destructive Device"
+          },
+          {
+            "code": "4507023",
+            "display": "Shooting/Sniper"
+          },
+          {
+            "code": "4507025",
+            "display": "Vehicular"
+          },
+          {
+            "code": "4507027",
+            "display": "Weather (Other)"
+          },
+          {
+            "code": "4507029",
+            "display": "Earthquake"
+          },
+          {
+            "code": "4507031",
+            "display": "Flood"
+          },
+          {
+            "code": "4507033",
+            "display": "Land Slide"
+          },
+          {
+            "code": "4507035",
+            "display": "Winter Storm"
+          },
+          {
+            "code": "4507037",
+            "display": "Tornado"
+          },
+          {
+            "code": "4507039",
+            "display": "Hurricane"
+          }
+        ]
+      }
+    ]
+  }
+}

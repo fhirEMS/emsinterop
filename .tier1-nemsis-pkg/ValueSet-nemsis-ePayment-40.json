@@ -1,0 +1,26 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-ePayment-40",
+  "url": "urn:emsinterop:valueset:nemsis:ePayment.40",
+  "version": "0.2.0",
+  "name": "NemsisePayment40",
+  "title": "NEMSIS ePayment.40 Response Urgency",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2640001",
+            "display": "Immediate"
+          },
+          {
+            "code": "2640003",
+            "display": "Non-Immediate"
+          }
+        ]
+      }
+    ]
+  }
+}

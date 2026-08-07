@@ -1,0 +1,34 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eCustomConfiguration-05",
+  "url": "urn:emsinterop:valueset:nemsis:eCustomConfiguration.05",
+  "version": "0.2.0",
+  "name": "NemsiseCustomConfiguration05",
+  "title": "NEMSIS eCustomConfiguration.05 Custom Data Element Usage",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9903001",
+            "display": "Mandatory"
+          },
+          {
+            "code": "9903003",
+            "display": "Required"
+          },
+          {
+            "code": "9903005",
+            "display": "Recommended"
+          },
+          {
+            "code": "9903007",
+            "display": "Optional"
+          }
+        ]
+      }
+    ]
+  }
+}

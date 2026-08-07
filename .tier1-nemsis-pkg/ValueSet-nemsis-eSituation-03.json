@@ -1,0 +1,30 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eSituation-03",
+  "url": "urn:emsinterop:valueset:nemsis:eSituation.03",
+  "version": "0.2.0",
+  "name": "NemsiseSituation03",
+  "title": "NEMSIS eSituation.03 Complaint Type",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2803001",
+            "display": "Chief (Primary)"
+          },
+          {
+            "code": "2803003",
+            "display": "Other"
+          },
+          {
+            "code": "2803005",
+            "display": "Secondary"
+          }
+        ]
+      }
+    ]
+  }
+}

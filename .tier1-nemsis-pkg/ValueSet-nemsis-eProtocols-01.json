@@ -1,0 +1,466 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eProtocols-01",
+  "url": "urn:emsinterop:valueset:nemsis:eProtocols.01",
+  "version": "0.2.0",
+  "name": "NemsiseProtocols01",
+  "title": "NEMSIS eProtocols.01 Protocols Used",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9914001",
+            "display": "Airway"
+          },
+          {
+            "code": "9914003",
+            "display": "Airway-Failed"
+          },
+          {
+            "code": "9914005",
+            "display": "Airway-Obstruction/Foreign Body"
+          },
+          {
+            "code": "9914007",
+            "display": "Airway-Rapid Sequence Induction (RSI-Paralytic)"
+          },
+          {
+            "code": "9914009",
+            "display": "Airway-Sedation Assisted (Non-Paralytic)"
+          },
+          {
+            "code": "9914011",
+            "display": "Cardiac Arrest-Asystole"
+          },
+          {
+            "code": "9914013",
+            "display": "Cardiac Arrest-Hypothermia-Therapeutic"
+          },
+          {
+            "code": "9914015",
+            "display": "Cardiac Arrest-Pulseless Electrical Activity"
+          },
+          {
+            "code": "9914017",
+            "display": "Cardiac Arrest-Ventricular Fibrillation/ Pulseless Ventricular Tachycardia"
+          },
+          {
+            "code": "9914019",
+            "display": "Cardiac Arrest-Post Resuscitation Care"
+          },
+          {
+            "code": "9914021",
+            "display": "Environmental-Altitude Sickness"
+          },
+          {
+            "code": "9914023",
+            "display": "Environmental-Cold Exposure"
+          },
+          {
+            "code": "9914025",
+            "display": "Environmental-Frostbite/Cold Injury"
+          },
+          {
+            "code": "9914027",
+            "display": "Environmental-Heat Exposure/Exhaustion"
+          },
+          {
+            "code": "9914029",
+            "display": "Environmental-Heat Stroke/Hyperthermia"
+          },
+          {
+            "code": "9914031",
+            "display": "Environmental-Hypothermia"
+          },
+          {
+            "code": "9914033",
+            "display": "Exposure-Airway/Inhalation Irritants"
+          },
+          {
+            "code": "9914035",
+            "display": "Exposure-Biological/Infectious"
+          },
+          {
+            "code": "9914037",
+            "display": "Exposure-Blistering Agents"
+          },
+          {
+            "code": "9914041",
+            "display": "Exposure-Chemicals to Eye"
+          },
+          {
+            "code": "9914043",
+            "display": "Exposure-Cyanide"
+          },
+          {
+            "code": "9914045",
+            "display": "Exposure-Explosive/ Blast Injury"
+          },
+          {
+            "code": "9914047",
+            "display": "Exposure-Nerve Agents"
+          },
+          {
+            "code": "9914049",
+            "display": "Exposure-Radiologic Agents"
+          },
+          {
+            "code": "9914051",
+            "display": "General-Back Pain"
+          },
+          {
+            "code": "9914053",
+            "display": "General-Behavioral/Patient Restraint"
+          },
+          {
+            "code": "9914055",
+            "display": "General-Cardiac Arrest"
+          },
+          {
+            "code": "9914057",
+            "display": "General-Dental Problems"
+          },
+          {
+            "code": "9914059",
+            "display": "General-Epistaxis"
+          },
+          {
+            "code": "9914061",
+            "display": "General-Fever"
+          },
+          {
+            "code": "9914063",
+            "display": "General-Individualized Patient Protocol"
+          },
+          {
+            "code": "9914065",
+            "display": "General-Indwelling Medical Devices/Equipment"
+          },
+          {
+            "code": "9914067",
+            "display": "General-IV Access"
+          },
+          {
+            "code": "9914069",
+            "display": "General-Medical Device Malfunction"
+          },
+          {
+            "code": "9914071",
+            "display": "General-Pain Control"
+          },
+          {
+            "code": "9914073",
+            "display": "General-Spinal Immobilization/Clearance"
+          },
+          {
+            "code": "9914075",
+            "display": "General-Universal Patient Care/ Initial Patient Contact"
+          },
+          {
+            "code": "9914077",
+            "display": "Injury-Amputation"
+          },
+          {
+            "code": "9914079",
+            "display": "Injury-Bites and Envenomations-Land"
+          },
+          {
+            "code": "9914081",
+            "display": "Injury-Bites and Envenomations-Marine"
+          },
+          {
+            "code": "9914083",
+            "display": "Injury-Bleeding/ Hemorrhage Control"
+          },
+          {
+            "code": "9914085",
+            "display": "Injury-Burns-Thermal"
+          },
+          {
+            "code": "9914087",
+            "display": "Injury-Cardiac Arrest"
+          },
+          {
+            "code": "9914089",
+            "display": "Injury-Crush Syndrome"
+          },
+          {
+            "code": "9914091",
+            "display": "Injury-Diving Emergencies"
+          },
+          {
+            "code": "9914093",
+            "display": "Injury-Drowning/Near Drowning"
+          },
+          {
+            "code": "9914095",
+            "display": "Injury-Electrical Injuries"
+          },
+          {
+            "code": "9914097",
+            "display": "Injury-Extremity"
+          },
+          {
+            "code": "9914099",
+            "display": "Injury-Eye"
+          },
+          {
+            "code": "9914101",
+            "display": "Injury-Head"
+          },
+          {
+            "code": "9914103",
+            "display": "Injury-Impaled Object"
+          },
+          {
+            "code": "9914105",
+            "display": "Injury-Multisystem"
+          },
+          {
+            "code": "9914107",
+            "display": "Injury-Spinal Cord"
+          },
+          {
+            "code": "9914109",
+            "display": "Medical-Abdominal Pain"
+          },
+          {
+            "code": "9914111",
+            "display": "Medical-Allergic Reaction/Anaphylaxis"
+          },
+          {
+            "code": "9914113",
+            "display": "Medical-Altered Mental Status"
+          },
+          {
+            "code": "9914115",
+            "display": "Medical-Bradycardia"
+          },
+          {
+            "code": "9914117",
+            "display": "Medical-Cardiac Chest Pain"
+          },
+          {
+            "code": "9914119",
+            "display": "Medical-Diarrhea"
+          },
+          {
+            "code": "9914121",
+            "display": "Medical-Hyperglycemia"
+          },
+          {
+            "code": "9914123",
+            "display": "Medical-Hypertension"
+          },
+          {
+            "code": "9914125",
+            "display": "Medical-Hypoglycemia/Diabetic Emergency"
+          },
+          {
+            "code": "9914127",
+            "display": "Medical-Hypotension/Shock (Non-Trauma)"
+          },
+          {
+            "code": "9914129",
+            "display": "Medical-Influenza-Like Illness/ Upper Respiratory Infection"
+          },
+          {
+            "code": "9914131",
+            "display": "Medical-Nausea/Vomiting"
+          },
+          {
+            "code": "9914133",
+            "display": "Medical-Newborn/ Neonatal Resuscitation"
+          },
+          {
+            "code": "9914135",
+            "display": "General-Overdose/Poisoning/Toxic Ingestion"
+          },
+          {
+            "code": "9914137",
+            "display": "Medical-Pulmonary Edema/CHF"
+          },
+          {
+            "code": "9914139",
+            "display": "Medical-Respiratory Distress/Asthma/COPD/Reactive Airway"
+          },
+          {
+            "code": "9914141",
+            "display": "Medical-Seizure"
+          },
+          {
+            "code": "9914143",
+            "display": "Medical-ST-Elevation Myocardial Infarction (STEMI)"
+          },
+          {
+            "code": "9914145",
+            "display": "Medical-Stroke/TIA"
+          },
+          {
+            "code": "9914147",
+            "display": "Medical-Supraventricular Tachycardia (Including Atrial Fibrillation)"
+          },
+          {
+            "code": "9914149",
+            "display": "Medical-Syncope"
+          },
+          {
+            "code": "9914151",
+            "display": "Medical-Ventricular Tachycardia (With Pulse)"
+          },
+          {
+            "code": "9914153",
+            "display": "Not Done"
+          },
+          {
+            "code": "9914155",
+            "display": "OB/GYN-Childbirth/Labor/Delivery"
+          },
+          {
+            "code": "9914157",
+            "display": "OB/GYN-Eclampsia"
+          },
+          {
+            "code": "9914159",
+            "display": "OB/GYN-Gynecologic Emergencies"
+          },
+          {
+            "code": "9914161",
+            "display": "OB/GYN-Pregnancy Related Emergencies"
+          },
+          {
+            "code": "9914163",
+            "display": "OB/GYN-Post-partum Hemorrhage"
+          },
+          {
+            "code": "9914165",
+            "display": "Other"
+          },
+          {
+            "code": "9914167",
+            "display": "Exposure-Carbon Monoxide"
+          },
+          {
+            "code": "9914169",
+            "display": "Cardiac Arrest-Do Not Resuscitate"
+          },
+          {
+            "code": "9914171",
+            "display": "Cardiac Arrest-Special Resuscitation Orders"
+          },
+          {
+            "code": "9914173",
+            "display": "Exposure-Smoke Inhalation"
+          },
+          {
+            "code": "9914175",
+            "display": "General-Community Paramedicine / Mobile Integrated Healthcare"
+          },
+          {
+            "code": "9914177",
+            "display": "General-Exception Protocol"
+          },
+          {
+            "code": "9914179",
+            "display": "General-Extended Care Guidelines"
+          },
+          {
+            "code": "9914181",
+            "display": "General-Interfacility Transfers"
+          },
+          {
+            "code": "9914183",
+            "display": "General-Law Enforcement - Blood for Legal Purposes"
+          },
+          {
+            "code": "9914185",
+            "display": "General-Law Enforcement - Assist with Law Enforcement Activity"
+          },
+          {
+            "code": "9914187",
+            "display": "General-Neglect or Abuse Suspected"
+          },
+          {
+            "code": "9914189",
+            "display": "General-Refusal of Care"
+          },
+          {
+            "code": "9914191",
+            "display": "Injury-Mass/Multiple Casualties"
+          },
+          {
+            "code": "9914193",
+            "display": "Injury-Thoracic"
+          },
+          {
+            "code": "9914195",
+            "display": "Medical-Adrenal Insufficiency"
+          },
+          {
+            "code": "9914197",
+            "display": "Medical-Apparent Life Threatening Event (ALTE)"
+          },
+          {
+            "code": "9914199",
+            "display": "Medical-Tachycardia"
+          },
+          {
+            "code": "9914201",
+            "display": "Cardiac Arrest-Determination of Death / Withholding Resuscitative Efforts"
+          },
+          {
+            "code": "9914203",
+            "display": "Injury-Conducted Electrical Weapon (e.g., Taser)"
+          },
+          {
+            "code": "9914205",
+            "display": "Injury-Facial Trauma"
+          },
+          {
+            "code": "9914207",
+            "display": "Injury-General Trauma Management"
+          },
+          {
+            "code": "9914209",
+            "display": "Injury-Lightning/Lightning Strike"
+          },
+          {
+            "code": "9914211",
+            "display": "Injury-SCUBA Injury/Accidents"
+          },
+          {
+            "code": "9914213",
+            "display": "Injury-Topical Chemical Burn"
+          },
+          {
+            "code": "9914215",
+            "display": "Medical-Beta Blocker Poisoning/Overdose"
+          },
+          {
+            "code": "9914217",
+            "display": "Medical-Calcium Channel Blocker Poisoning/Overdose"
+          },
+          {
+            "code": "9914219",
+            "display": "Medical-Opioid Poisoning/Overdose"
+          },
+          {
+            "code": "9914221",
+            "display": "Medical-Respiratory Distress-Bronchiolitis"
+          },
+          {
+            "code": "9914223",
+            "display": "Medical-Respiratory Distress-Croup"
+          },
+          {
+            "code": "9914225",
+            "display": "Medical-Stimulant Poisoning/Overdose"
+          }
+        ]
+      }
+    ]
+  }
+}

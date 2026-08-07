@@ -1,0 +1,38 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "NemsisEPatient",
+  "url": "urn:emsinterop:StructureDefinition/NemsisEPatient",
+  "version": "0.1.0",
+  "name": "NemsisEPatient",
+  "title": "NEMSIS ePatient panel (logical model)",
+  "status": "draft",
+  "description": "Logical model of the NEMSIS 3.5.0 ePatient panel as consumed by the emsinterop StructureMaps. Element names are the NEMSIS element ids with '_' replacing '.' (ePatient.02 -> ePatient_02) because '.' is the FHIR path separator. The mapper's parsed intermediate model serializes to instances of this shape; NV/PN attributes ride alongside as <element>_nv / <element>_pn where the map needs them.",
+  "fhirVersion": "4.0.1",
+  "kind": "logical",
+  "abstract": false,
+  "type": "urn:emsinterop:StructureDefinition/NemsisEPatient",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
+  "derivation": "specialization",
+  "differential": {
+    "element": [
+      {"id": "NemsisEPatient", "path": "NemsisEPatient", "short": "NEMSIS ePatient panel"},
+      {"id": "NemsisEPatient.ePatient_01", "path": "NemsisEPatient.ePatient_01", "short": "EMS Patient ID", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_02", "path": "NemsisEPatient.ePatient_02", "short": "Last Name", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_03", "path": "NemsisEPatient.ePatient_03", "short": "First Name", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_04", "path": "NemsisEPatient.ePatient_04", "short": "Middle Initial/Name", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_05", "path": "NemsisEPatient.ePatient_05", "short": "Home Address", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_06", "path": "NemsisEPatient.ePatient_06", "short": "Home City (GNIS)", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_07", "path": "NemsisEPatient.ePatient_07", "short": "Home County", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_08", "path": "NemsisEPatient.ePatient_08", "short": "Home State", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_09", "path": "NemsisEPatient.ePatient_09", "short": "Home ZIP", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_10", "path": "NemsisEPatient.ePatient_10", "short": "Home Country", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_14", "path": "NemsisEPatient.ePatient_14", "short": "Race (repeats)", "min": 0, "max": "*", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_15", "path": "NemsisEPatient.ePatient_15", "short": "Age", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_16", "path": "NemsisEPatient.ePatient_16", "short": "Age Units", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_17", "path": "NemsisEPatient.ePatient_17", "short": "Date of Birth", "min": 0, "max": "1", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_18", "path": "NemsisEPatient.ePatient_18", "short": "Phone (repeats)", "min": 0, "max": "*", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_19", "path": "NemsisEPatient.ePatient_19", "short": "Email (repeats)", "min": 0, "max": "*", "type": [{"code": "string"}]},
+      {"id": "NemsisEPatient.ePatient_25", "path": "NemsisEPatient.ePatient_25", "short": "Sex (9919xxx)", "min": 0, "max": "1", "type": [{"code": "string"}]}
+    ]
+  }
+}

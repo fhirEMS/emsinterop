@@ -1,0 +1,46 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eArrest-22",
+  "url": "urn:emsinterop:valueset:nemsis:eArrest.22",
+  "version": "0.2.0",
+  "name": "NemsiseArrest22",
+  "title": "NEMSIS eArrest.22 Who First Defibrillated the Patient",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3022001",
+            "display": "Bystander"
+          },
+          {
+            "code": "3022003",
+            "display": "Family Member"
+          },
+          {
+            "code": "3022005",
+            "display": "Healthcare Provider (non-911 Responder)"
+          },
+          {
+            "code": "3022007",
+            "display": "First Responder (EMS)"
+          },
+          {
+            "code": "3022009",
+            "display": "First Responder (Law Enforcement)"
+          },
+          {
+            "code": "3022011",
+            "display": "First Responder (non-EMS Fire)"
+          },
+          {
+            "code": "3022013",
+            "display": "EMS Responder (transport EMS)"
+          }
+        ]
+      }
+    ]
+  }
+}

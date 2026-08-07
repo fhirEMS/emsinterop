@@ -1,0 +1,42 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "obtained-prior-to-unit-care",
+  "url": "urn:emsinterop:extension:obtained-prior-to-unit-care",
+  "version": "0.1.0",
+  "name": "ObtainedPriorToUnitCare",
+  "title": "Obtained/Administered/Performed Prior to This Unit's EMS Care",
+  "status": "draft",
+  "description": "Marks a clinical act or measurement recorded in this PCR as obtained, administered, or performed BEFORE this EMS unit assumed care (NEMSIS eVitals.02 / eMedications.02 / eProcedures.02 = Yes). Preserves the two-provenance distinction the NEMSIS repeating groups carry: this crew's care vs a prior unit's or facility's. Proposed upstream to IHE PCC alongside the mPSC NEMSIS mapping (workbook Architecture §4.3).",
+  "fhirVersion": "4.0.1",
+  "kind": "complex-type",
+  "abstract": false,
+  "context": [
+    {"type": "element", "expression": "Observation"},
+    {"type": "element", "expression": "MedicationAdministration"},
+    {"type": "element", "expression": "Procedure"}
+  ],
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Extension",
+        "path": "Extension",
+        "short": "Prior to this unit's EMS care",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Extension.url",
+        "path": "Extension.url",
+        "fixedUri": "urn:emsinterop:extension:obtained-prior-to-unit-care"
+      },
+      {
+        "id": "Extension.value[x]",
+        "path": "Extension.value[x]",
+        "type": [{"code": "boolean"}]
+      }
+    ]
+  }
+}

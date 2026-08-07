@@ -66,6 +66,15 @@ def main(argv: list[str] | None = None) -> int:
     p_reconcile.add_argument("delta_base", help="fhirEngine FHIRENGINE_DELTA_BASE directory")
     p_reconcile.add_argument("--out", metavar="JSON", help="write the gap register here instead of stdout")
 
+    p_deid = sub.add_parser(
+        "deid",
+        help="materialize the Safe Harbor de-identified analytics projection "
+             "(encounters + vitals Delta tables) from fhirEngine's Delta store")
+    p_deid.add_argument("delta_base", help="fhirEngine FHIRENGINE_DELTA_BASE directory")
+    p_deid.add_argument("out_dir", help="directory for the projection Delta tables")
+    p_deid.add_argument("--salt", help="stable pseudonym salt for cross-run linkage "
+                                       "(default: random per run)")
+
     p_outcome = sub.add_parser(
         "outcome", help="match a hospital ADT^A03 to a PCR and write back eOutcome")
     p_outcome.add_argument("adt", help="hospital discharge message (ER7 file)")
@@ -89,6 +98,11 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "package-ig":
         from .terminology.igpackage import build_package
         print(json.dumps(build_package(args.out_dir), indent=2))
+        return 0
+
+    if args.command == "deid":
+        from .analytics import project
+        print(json.dumps(project(args.delta_base, args.out_dir, salt=args.salt)))
         return 0
 
     if args.command == "reconcile":

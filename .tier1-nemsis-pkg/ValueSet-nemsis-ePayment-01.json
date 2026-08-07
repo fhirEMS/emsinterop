@@ -1,0 +1,66 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-ePayment-01",
+  "url": "urn:emsinterop:valueset:nemsis:ePayment.01",
+  "version": "0.2.0",
+  "name": "NemsisePayment01",
+  "title": "NEMSIS ePayment.01 Primary Method of Payment",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2601001",
+            "display": "Insurance"
+          },
+          {
+            "code": "2601003",
+            "display": "Medicaid"
+          },
+          {
+            "code": "2601005",
+            "display": "Medicare"
+          },
+          {
+            "code": "2601007",
+            "display": "Not Billed (for any reason)"
+          },
+          {
+            "code": "2601009",
+            "display": "Other Government"
+          },
+          {
+            "code": "2601011",
+            "display": "Self Pay"
+          },
+          {
+            "code": "2601013",
+            "display": "Workers Compensation"
+          },
+          {
+            "code": "2601015",
+            "display": "Payment by Facility"
+          },
+          {
+            "code": "2601017",
+            "display": "Contracted Payment"
+          },
+          {
+            "code": "2601019",
+            "display": "Community Network"
+          },
+          {
+            "code": "2601021",
+            "display": "No Insurance Identified"
+          },
+          {
+            "code": "2601023",
+            "display": "Other Payment Option"
+          }
+        ]
+      }
+    ]
+  }
+}

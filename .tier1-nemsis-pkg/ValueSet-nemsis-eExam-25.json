@@ -1,0 +1,118 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-25",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.25",
+  "version": "0.2.0",
+  "name": "NemsiseExam25",
+  "title": "NEMSIS eExam.25 Chest Assessment",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3525001",
+            "display": "Abrasion"
+          },
+          {
+            "code": "3525003",
+            "display": "Avulsion"
+          },
+          {
+            "code": "3525005",
+            "display": "Accessory Muscles Used with Breathing"
+          },
+          {
+            "code": "3525007",
+            "display": "Bleeding Controlled"
+          },
+          {
+            "code": "3525009",
+            "display": "Bleeding Uncontrolled"
+          },
+          {
+            "code": "3525011",
+            "display": "Burn-Blistering"
+          },
+          {
+            "code": "3525013",
+            "display": "Burn-Charring"
+          },
+          {
+            "code": "3525015",
+            "display": "Burn-Redness"
+          },
+          {
+            "code": "3525017",
+            "display": "Burn-White/Waxy"
+          },
+          {
+            "code": "3525019",
+            "display": "Crush Injury"
+          },
+          {
+            "code": "3525021",
+            "display": "Deformity"
+          },
+          {
+            "code": "3525023",
+            "display": "Flail Segment"
+          },
+          {
+            "code": "3525025",
+            "display": "Implanted Device"
+          },
+          {
+            "code": "3525027",
+            "display": "Laceration"
+          },
+          {
+            "code": "3525029",
+            "display": "Normal"
+          },
+          {
+            "code": "3525031",
+            "display": "Not Done"
+          },
+          {
+            "code": "3525033",
+            "display": "Pain"
+          },
+          {
+            "code": "3525035",
+            "display": "Pain with Inspiration/Expiration"
+          },
+          {
+            "code": "3525037",
+            "display": "Puncture/Stab Wound"
+          },
+          {
+            "code": "3525039",
+            "display": "Retraction"
+          },
+          {
+            "code": "3525041",
+            "display": "Tenderness"
+          },
+          {
+            "code": "3525043",
+            "display": "Gunshot Wound"
+          },
+          {
+            "code": "3525045",
+            "display": "Swelling"
+          },
+          {
+            "code": "3525047",
+            "display": "Contusion"
+          },
+          {
+            "code": "3525049",
+            "display": "Tenderness-General (DEPRECATED)"
+          }
+        ]
+      }
+    ]
+  }
+}

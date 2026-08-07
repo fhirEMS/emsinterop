@@ -1,0 +1,21 @@
+{
+  "resourceType": "ConceptMap",
+  "id": "cm-nemsis-priority",
+  "url": "urn:emsinterop:conceptmap:cm-nemsis-priority",
+  "version": "0.1.0",
+  "name": "NemsisResponseModeToActPriority",
+  "status": "draft",
+  "description": "eResponse.23 Response Mode to Scene / eDisposition.17 Transport Mode (2223xxx) -> v3 ActPriority for Encounter.priority. Mode-change values map to the final operating mode; the original NEMSIS code is dual-coded for fidelity.",
+  "group": [
+    {
+      "source": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+      "target": "http://terminology.hl7.org/CodeSystem/v3-ActPriority",
+      "element": [
+        {"code": "2223001", "display": "Emergent (Immediate Response)", "target": [{"code": "EM", "display": "emergency", "equivalence": "equivalent"}]},
+        {"code": "2223003", "display": "Emergent Downgraded to Non-Emergent", "target": [{"code": "R", "display": "routine", "equivalence": "wider"}]},
+        {"code": "2223005", "display": "Non-Emergent", "target": [{"code": "R", "display": "routine", "equivalence": "equivalent"}]},
+        {"code": "2223007", "display": "Non-Emergent Upgraded to Emergent", "target": [{"code": "EM", "display": "emergency", "equivalence": "wider"}]}
+      ]
+    }
+  ]
+}

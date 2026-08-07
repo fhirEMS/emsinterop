@@ -1,0 +1,122 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-20",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.20",
+  "version": "0.2.0",
+  "name": "NemsiseExam20",
+  "title": "NEMSIS eExam.20 Neurological Assessment",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3520001",
+            "display": "Aphagia"
+          },
+          {
+            "code": "3520003",
+            "display": "Aphasia"
+          },
+          {
+            "code": "3520005",
+            "display": "Cerebellar Function-Abnormal"
+          },
+          {
+            "code": "3520007",
+            "display": "Cerebellar Function-Normal"
+          },
+          {
+            "code": "3520009",
+            "display": "Decerebrate Posturing"
+          },
+          {
+            "code": "3520011",
+            "display": "Decorticate Posturing"
+          },
+          {
+            "code": "3520013",
+            "display": "Gait-Abnormal"
+          },
+          {
+            "code": "3520015",
+            "display": "Gait-Normal"
+          },
+          {
+            "code": "3520017",
+            "display": "Hemiplegia-Left"
+          },
+          {
+            "code": "3520019",
+            "display": "Hemiplegia-Right"
+          },
+          {
+            "code": "3520021",
+            "display": "Normal Baseline for Patient"
+          },
+          {
+            "code": "3520023",
+            "display": "Not Done"
+          },
+          {
+            "code": "3520026",
+            "display": "Status Seizure"
+          },
+          {
+            "code": "3520027",
+            "display": "Speech Normal"
+          },
+          {
+            "code": "3520029",
+            "display": "Speech Slurring"
+          },
+          {
+            "code": "3520031",
+            "display": "Strength-Asymmetric"
+          },
+          {
+            "code": "3520033",
+            "display": "Strength-Normal"
+          },
+          {
+            "code": "3520035",
+            "display": "Strength-Symmetric"
+          },
+          {
+            "code": "3520037",
+            "display": "Tremors"
+          },
+          {
+            "code": "3520039",
+            "display": "Weakness-Facial Droop-Left"
+          },
+          {
+            "code": "3520041",
+            "display": "Weakness-Facial Droop-Right"
+          },
+          {
+            "code": "3520043",
+            "display": "Weakness-Left Sided"
+          },
+          {
+            "code": "3520045",
+            "display": "Weakness-Right Sided"
+          },
+          {
+            "code": "3520051",
+            "display": "Arm Drift-Left"
+          },
+          {
+            "code": "3520053",
+            "display": "Arm Drift-Right"
+          },
+          {
+            "code": "3520055",
+            "display": "Other Seizures"
+          }
+        ]
+      }
+    ]
+  }
+}

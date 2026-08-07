@@ -1,0 +1,118 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eDevice-03",
+  "url": "urn:emsinterop:valueset:nemsis:eDevice.03",
+  "version": "0.2.0",
+  "name": "NemsiseDevice03",
+  "title": "NEMSIS eDevice.03 Medical Device Event Type",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4103001",
+            "display": "12-Lead ECG"
+          },
+          {
+            "code": "4103003",
+            "display": "Analysis (Button Pressed)"
+          },
+          {
+            "code": "4103005",
+            "display": "CO2"
+          },
+          {
+            "code": "4103007",
+            "display": "Data Transmitted"
+          },
+          {
+            "code": "4103009",
+            "display": "Defibrillation"
+          },
+          {
+            "code": "4103011",
+            "display": "ECG-Monitor"
+          },
+          {
+            "code": "4103013",
+            "display": "Heart Rate"
+          },
+          {
+            "code": "4103015",
+            "display": "Invasive Pressure 1"
+          },
+          {
+            "code": "4103017",
+            "display": "Invasive Pressure 2"
+          },
+          {
+            "code": "4103019",
+            "display": "No Shock Advised"
+          },
+          {
+            "code": "4103021",
+            "display": "Non-Invasive BP"
+          },
+          {
+            "code": "4103023",
+            "display": "Other"
+          },
+          {
+            "code": "4103025",
+            "display": "Pacing Electrical Capture"
+          },
+          {
+            "code": "4103027",
+            "display": "Pacing Started"
+          },
+          {
+            "code": "4103029",
+            "display": "Pacing Stopped"
+          },
+          {
+            "code": "4103031",
+            "display": "Patient Connected"
+          },
+          {
+            "code": "4103033",
+            "display": "Power On"
+          },
+          {
+            "code": "4103035",
+            "display": "Pulse Oximetry"
+          },
+          {
+            "code": "4103037",
+            "display": "Pulse Rate"
+          },
+          {
+            "code": "4103039",
+            "display": "Respiratory Rate"
+          },
+          {
+            "code": "4103041",
+            "display": "Shock Advised"
+          },
+          {
+            "code": "4103043",
+            "display": "Sync Off"
+          },
+          {
+            "code": "4103045",
+            "display": "Sync On"
+          },
+          {
+            "code": "4103047",
+            "display": "Temperature 1"
+          },
+          {
+            "code": "4103049",
+            "display": "Temperature 2"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eInjury-07",
+  "url": "urn:emsinterop:valueset:nemsis:eInjury.07",
+  "version": "0.2.0",
+  "name": "NemsiseInjury07",
+  "title": "NEMSIS eInjury.07 Use of Occupant Safety Equipment",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2907001",
+            "display": "Child Booster Seat"
+          },
+          {
+            "code": "2907003",
+            "display": "Eye Protection"
+          },
+          {
+            "code": "2907005",
+            "display": "Helmet Worn"
+          },
+          {
+            "code": "2907007",
+            "display": "Infant Car Seat Forward Facing"
+          },
+          {
+            "code": "2907009",
+            "display": "Infant Car Seat Rear Facing"
+          },
+          {
+            "code": "2907015",
+            "display": "None"
+          },
+          {
+            "code": "2907017",
+            "display": "Other"
+          },
+          {
+            "code": "2907019",
+            "display": "Personal Floatation Device"
+          },
+          {
+            "code": "2907021",
+            "display": "Protective Clothing"
+          },
+          {
+            "code": "2907023",
+            "display": "Protective Non-Clothing Gear"
+          },
+          {
+            "code": "2907027",
+            "display": "Shoulder and Lap Belt Used"
+          },
+          {
+            "code": "2907029",
+            "display": "Lap Belt Only Used"
+          },
+          {
+            "code": "2907031",
+            "display": "Shoulder Belt Only Used"
+          },
+          {
+            "code": "2907033",
+            "display": "Unable to Determine"
+          }
+        ]
+      }
+    ]
+  }
+}

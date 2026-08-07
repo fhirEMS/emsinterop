@@ -1,0 +1,54 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eVitals-25",
+  "url": "urn:emsinterop:valueset:nemsis:eVitals.25",
+  "version": "0.2.0",
+  "name": "NemsiseVitals25",
+  "title": "NEMSIS eVitals.25 Temperature Method",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3325001",
+            "display": "Axillary"
+          },
+          {
+            "code": "3325003",
+            "display": "Central (Venous or Arterial)"
+          },
+          {
+            "code": "3325005",
+            "display": "Esophageal"
+          },
+          {
+            "code": "3325007",
+            "display": "Oral"
+          },
+          {
+            "code": "3325009",
+            "display": "Rectal"
+          },
+          {
+            "code": "3325011",
+            "display": "Temporal Artery"
+          },
+          {
+            "code": "3325013",
+            "display": "Tympanic"
+          },
+          {
+            "code": "3325015",
+            "display": "Urinary Catheter"
+          },
+          {
+            "code": "3325017",
+            "display": "Skin Probe"
+          }
+        ]
+      }
+    ]
+  }
+}

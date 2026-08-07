@@ -1,0 +1,30 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eVitals-31",
+  "url": "urn:emsinterop:valueset:nemsis:eVitals.31",
+  "version": "0.2.0",
+  "name": "NemsiseVitals31",
+  "title": "NEMSIS eVitals.31 Reperfusion Checklist",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3331001",
+            "display": "Definite Contraindications to Thrombolytic Use"
+          },
+          {
+            "code": "3331003",
+            "display": "No Contraindications to Thrombolytic Use"
+          },
+          {
+            "code": "3331005",
+            "display": "Possible Contraindications to Thrombolytic Use"
+          }
+        ]
+      }
+    ]
+  }
+}

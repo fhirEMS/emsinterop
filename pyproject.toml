@@ -14,7 +14,7 @@ dependencies = [
 
 [project.optional-dependencies]
 bronze = ["deltalake>=0.17", "pyarrow>=17"]
-analytics = ["duckdb>=1.0"]
+analytics = ["duckdb>=1.0", "deltalake>=0.17", "pyarrow>=17"]
 dev = ["pytest>=8.0", "openpyxl>=3.1"]
 
 [build-system]

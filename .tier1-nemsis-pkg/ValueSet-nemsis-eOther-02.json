@@ -1,0 +1,58 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eOther-02",
+  "url": "urn:emsinterop:valueset:nemsis:eOther.02",
+  "version": "0.2.0",
+  "name": "NemsiseOther02",
+  "title": "NEMSIS eOther.02 Potential System of Care/Specialty/Registry Patient",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4502001",
+            "display": "Airway"
+          },
+          {
+            "code": "4502003",
+            "display": "Burn"
+          },
+          {
+            "code": "4502005",
+            "display": "Cardiac/MI"
+          },
+          {
+            "code": "4502007",
+            "display": "CVA/Stroke"
+          },
+          {
+            "code": "4502009",
+            "display": "Drowning"
+          },
+          {
+            "code": "4502011",
+            "display": "Other"
+          },
+          {
+            "code": "4502013",
+            "display": "Spinal Cord Injury"
+          },
+          {
+            "code": "4502015",
+            "display": "STEMI/Acute Cardiac"
+          },
+          {
+            "code": "4502017",
+            "display": "Trauma"
+          },
+          {
+            "code": "4502019",
+            "display": "Traumatic Brain Injury"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,78 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eHistory-20",
+  "url": "urn:emsinterop:valueset:nemsis:eHistory.20",
+  "version": "0.2.0",
+  "name": "NemsiseHistory20",
+  "title": "NEMSIS eHistory.20 Current Medication Frequency",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3120001",
+            "display": "q1h (every hour)"
+          },
+          {
+            "code": "3120003",
+            "display": "q2h (every 2 hours)"
+          },
+          {
+            "code": "3120005",
+            "display": "q3h (every 3 hours)"
+          },
+          {
+            "code": "3120007",
+            "display": "q4h (every 4 hours)"
+          },
+          {
+            "code": "3120009",
+            "display": "qid (four times a day)"
+          },
+          {
+            "code": "3120011",
+            "display": "tid (three times a day)"
+          },
+          {
+            "code": "3120013",
+            "display": "ac (before meals)"
+          },
+          {
+            "code": "3120015",
+            "display": "pc (after meals)"
+          },
+          {
+            "code": "3120017",
+            "display": "bid (twice a day)"
+          },
+          {
+            "code": "3120019",
+            "display": "qd (every day)"
+          },
+          {
+            "code": "3120021",
+            "display": "qd-am (every day in the morning)"
+          },
+          {
+            "code": "3120023",
+            "display": "qd-pm (every day in the evening)"
+          },
+          {
+            "code": "3120025",
+            "display": "hs (at bedtime)"
+          },
+          {
+            "code": "3120027",
+            "display": "qod (every other day)"
+          },
+          {
+            "code": "3120029",
+            "display": "prn (as needed)"
+          }
+        ]
+      }
+    ]
+  }
+}

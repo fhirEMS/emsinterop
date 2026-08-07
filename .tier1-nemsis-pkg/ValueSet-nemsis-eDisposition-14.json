@@ -1,0 +1,74 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eDisposition-14",
+  "url": "urn:emsinterop:valueset:nemsis:eDisposition.14",
+  "version": "0.2.0",
+  "name": "NemsiseDisposition14",
+  "title": "NEMSIS eDisposition.14 Position of Patient During Transport",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4214001",
+            "display": "Car Seat"
+          },
+          {
+            "code": "4214003",
+            "display": "Fowlers (Semi-Upright Sitting)"
+          },
+          {
+            "code": "4214005",
+            "display": "Lateral Left"
+          },
+          {
+            "code": "4214007",
+            "display": "Lateral Right"
+          },
+          {
+            "code": "4214009",
+            "display": "Other"
+          },
+          {
+            "code": "4214011",
+            "display": "Prone"
+          },
+          {
+            "code": "4214013",
+            "display": "Semi-Fowlers"
+          },
+          {
+            "code": "4214015",
+            "display": "Sitting"
+          },
+          {
+            "code": "4214017",
+            "display": "Supine"
+          },
+          {
+            "code": "4214019",
+            "display": "Trendelenburg"
+          },
+          {
+            "code": "4214021",
+            "display": "Pediatric Ambulance Restraint Device"
+          },
+          {
+            "code": "4214023",
+            "display": "Neonatal Ambulance Restraint Device"
+          },
+          {
+            "code": "4214025",
+            "display": "Patient's Car Seat"
+          },
+          {
+            "code": "4214027",
+            "display": "Ambulance Integrated Car Seat"
+          }
+        ]
+      }
+    ]
+  }
+}

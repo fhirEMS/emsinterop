@@ -1,0 +1,30 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eVitals-13",
+  "url": "urn:emsinterop:valueset:nemsis:eVitals.13",
+  "version": "0.2.0",
+  "name": "NemsiseVitals13",
+  "title": "NEMSIS eVitals.13 Pulse Rhythm",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3313001",
+            "display": "Irregularly Irregular"
+          },
+          {
+            "code": "3313003",
+            "display": "Regular"
+          },
+          {
+            "code": "3313005",
+            "display": "Regularly Irregular"
+          }
+        ]
+      }
+    ]
+  }
+}

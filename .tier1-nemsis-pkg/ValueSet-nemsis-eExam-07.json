@@ -1,0 +1,122 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-07",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.07",
+  "version": "0.2.0",
+  "name": "NemsiseExam07",
+  "title": "NEMSIS eExam.07 Neck Assessment",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3507001",
+            "display": "Abrasion"
+          },
+          {
+            "code": "3507003",
+            "display": "Avulsion"
+          },
+          {
+            "code": "3507005",
+            "display": "Bleeding Controlled"
+          },
+          {
+            "code": "3507007",
+            "display": "Bleeding Uncontrolled"
+          },
+          {
+            "code": "3507009",
+            "display": "Burn-Blistering"
+          },
+          {
+            "code": "3507011",
+            "display": "Burn-Charring"
+          },
+          {
+            "code": "3507013",
+            "display": "Burn-Redness"
+          },
+          {
+            "code": "3507015",
+            "display": "Burn-White/Waxy"
+          },
+          {
+            "code": "3507017",
+            "display": "Decapitation"
+          },
+          {
+            "code": "3507019",
+            "display": "Foreign Body"
+          },
+          {
+            "code": "3507025",
+            "display": "JVD"
+          },
+          {
+            "code": "3507027",
+            "display": "Laceration"
+          },
+          {
+            "code": "3507029",
+            "display": "Normal"
+          },
+          {
+            "code": "3507031",
+            "display": "Not Done"
+          },
+          {
+            "code": "3507033",
+            "display": "Pain"
+          },
+          {
+            "code": "3507035",
+            "display": "Puncture/Stab Wound"
+          },
+          {
+            "code": "3507037",
+            "display": "Stridor"
+          },
+          {
+            "code": "3507039",
+            "display": "Subcutaneous Air"
+          },
+          {
+            "code": "3507045",
+            "display": "Tracheal Deviation-Left"
+          },
+          {
+            "code": "3507047",
+            "display": "Tracheal Deviation-Right"
+          },
+          {
+            "code": "3507049",
+            "display": "Gunshot Wound"
+          },
+          {
+            "code": "3507051",
+            "display": "Crush Injury"
+          },
+          {
+            "code": "3507053",
+            "display": "Swelling"
+          },
+          {
+            "code": "3507055",
+            "display": "Contusion"
+          },
+          {
+            "code": "3507057",
+            "display": "Deformity"
+          },
+          {
+            "code": "3507059",
+            "display": "Tenderness"
+          }
+        ]
+      }
+    ]
+  }
+}

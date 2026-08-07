@@ -1,0 +1,46 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eSituation-06",
+  "url": "urn:emsinterop:valueset:nemsis:eSituation.06",
+  "version": "0.2.0",
+  "name": "NemsiseSituation06",
+  "title": "NEMSIS eSituation.06 Time Units of Duration of Complaint",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2806001",
+            "display": "Seconds"
+          },
+          {
+            "code": "2806003",
+            "display": "Minutes"
+          },
+          {
+            "code": "2806005",
+            "display": "Hours"
+          },
+          {
+            "code": "2806007",
+            "display": "Days"
+          },
+          {
+            "code": "2806009",
+            "display": "Weeks"
+          },
+          {
+            "code": "2806011",
+            "display": "Months"
+          },
+          {
+            "code": "2806013",
+            "display": "Years"
+          }
+        ]
+      }
+    ]
+  }
+}

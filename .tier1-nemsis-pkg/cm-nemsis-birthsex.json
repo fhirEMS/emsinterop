@@ -1,0 +1,19 @@
+{
+  "resourceType": "ConceptMap",
+  "id": "cm-nemsis-birthsex",
+  "url": "urn:emsinterop:conceptmap:cm-nemsis-birthsex",
+  "version": "0.1.0",
+  "name": "NemsisSexToUSCoreBirthsex",
+  "status": "draft",
+  "description": "ePatient.25 Sex (9919xxx) -> US Core birthsex (v3 AdministrativeGender F/M). Split from cm-nemsis-sex so each ConceptMap has a single target system (deterministic FML translate()).",
+  "group": [
+    {
+      "source": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+      "target": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
+      "element": [
+        {"code": "9919001", "display": "Female", "target": [{"code": "F", "display": "Female", "equivalence": "equivalent"}]},
+        {"code": "9919003", "display": "Male", "target": [{"code": "M", "display": "Male", "equivalence": "equivalent"}]}
+      ]
+    }
+  ]
+}

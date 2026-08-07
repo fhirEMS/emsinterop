@@ -1,0 +1,82 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eSituation-20",
+  "url": "urn:emsinterop:valueset:nemsis:eSituation.20",
+  "version": "0.2.0",
+  "name": "NemsiseSituation20",
+  "title": "NEMSIS eSituation.20 Reason for Interfacility Transfer/Medical Transport",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2820001",
+            "display": "Cardiac Specialty"
+          },
+          {
+            "code": "2820003",
+            "display": "Convenience Transfer (Patient Request)"
+          },
+          {
+            "code": "2820005",
+            "display": "Diagnostic Testing"
+          },
+          {
+            "code": "2820007",
+            "display": "Dialysis"
+          },
+          {
+            "code": "2820009",
+            "display": "Drug and/or Alcohol Rehabilitation Care"
+          },
+          {
+            "code": "2820011",
+            "display": "Extended Care"
+          },
+          {
+            "code": "2820013",
+            "display": "Maternal/Neonatal"
+          },
+          {
+            "code": "2820015",
+            "display": "Medical Specialty Care (Other, Not Listed)"
+          },
+          {
+            "code": "2820017",
+            "display": "Neurological Specialty Care"
+          },
+          {
+            "code": "2820019",
+            "display": "Palliative/Hospice Care (Home or Facility)"
+          },
+          {
+            "code": "2820021",
+            "display": "Pediatric Specialty Care"
+          },
+          {
+            "code": "2820023",
+            "display": "Psychiatric/Behavioral Care"
+          },
+          {
+            "code": "2820025",
+            "display": "Physical Rehabilitation Care"
+          },
+          {
+            "code": "2820027",
+            "display": "Return to Home/Residence"
+          },
+          {
+            "code": "2820029",
+            "display": "Surgical Specialty Care (Other, Not Listed)"
+          },
+          {
+            "code": "2820031",
+            "display": "Trauma/Orthopedic Specialty Care"
+          }
+        ]
+      }
+    ]
+  }
+}

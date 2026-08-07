@@ -1,0 +1,102 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eInjury-03",
+  "url": "urn:emsinterop:valueset:nemsis:eInjury.03",
+  "version": "0.2.0",
+  "name": "NemsiseInjury03",
+  "title": "NEMSIS eInjury.03 Trauma Triage Criteria (High Risk for Serious Injury)",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2903001",
+            "display": "Amputation proximal to wrist or ankle"
+          },
+          {
+            "code": "2903003",
+            "display": "Crushed, degloved, mangled, or pulseless extremity"
+          },
+          {
+            "code": "2903005",
+            "display": "Chest wall instability, deformity, or suspected flail chest"
+          },
+          {
+            "code": "2903007",
+            "display": "Glasgow Coma Score <= 13 (DEPRECATED)"
+          },
+          {
+            "code": "2903009",
+            "display": "Skull deformity, suspected skull fracture"
+          },
+          {
+            "code": "2903011",
+            "display": "Paralysis (DEPRECATED)"
+          },
+          {
+            "code": "2903013",
+            "display": "Suspected pelvic fracture"
+          },
+          {
+            "code": "2903015",
+            "display": "Penetrating injuries to head, neck, torso, and proximal extremities"
+          },
+          {
+            "code": "2903017",
+            "display": "Respiratory Rate  <10 or >29 breaths per minute (<20 in infants aged <1 year) or need for ventilatory support (DEPRECATED)"
+          },
+          {
+            "code": "2903019",
+            "display": "Systolic Blood Pressure <90 mmHg (DEPRECATED)"
+          },
+          {
+            "code": "2903021",
+            "display": "Suspected fracture of two or more proximal long bones"
+          },
+          {
+            "code": "2903023",
+            "display": "Active bleeding requiring a tourniquet or wound packing with continuous pressure"
+          },
+          {
+            "code": "2903025",
+            "display": "Age >= 10 years: HR > SBP"
+          },
+          {
+            "code": "2903027",
+            "display": "Age >= 65 years: SBP < 110 mmHg"
+          },
+          {
+            "code": "2903029",
+            "display": "Age 0-9 years: SBP < 70mm Hg + (2 x age in years)"
+          },
+          {
+            "code": "2903031",
+            "display": "Age 10-64 years: SBP < 90 mmHg"
+          },
+          {
+            "code": "2903033",
+            "display": "Respiratory distress or need for respiratory support"
+          },
+          {
+            "code": "2903035",
+            "display": "Room-air pulse oximetry < 90%"
+          },
+          {
+            "code": "2903037",
+            "display": "RR < 10 or > 29 breaths/min"
+          },
+          {
+            "code": "2903039",
+            "display": "Suspected spinal injury with new motor or sensory loss"
+          },
+          {
+            "code": "2903041",
+            "display": "Unable to follow commands (motor GCS < 6)"
+          }
+        ]
+      }
+    ]
+  }
+}

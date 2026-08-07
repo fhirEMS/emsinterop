@@ -1,0 +1,50 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-24",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.24",
+  "version": "0.2.0",
+  "name": "NemsiseExam24",
+  "title": "NEMSIS eExam.24 Chest Assessment Finding Location",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3524001",
+            "display": "Left - Anterior"
+          },
+          {
+            "code": "3524003",
+            "display": "Left - Posterior (DEPRECATED)"
+          },
+          {
+            "code": "3524005",
+            "display": "Right - Anterior"
+          },
+          {
+            "code": "3524007",
+            "display": "Right - Posterior (DEPRECATED)"
+          },
+          {
+            "code": "3524009",
+            "display": "General - Anterior"
+          },
+          {
+            "code": "3524011",
+            "display": "General - Posterior"
+          },
+          {
+            "code": "3524013",
+            "display": "Left - Side"
+          },
+          {
+            "code": "3524015",
+            "display": "Right - Side"
+          }
+        ]
+      }
+    ]
+  }
+}

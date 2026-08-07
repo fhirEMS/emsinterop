@@ -1,0 +1,26 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-ePayment-08",
+  "url": "urn:emsinterop:valueset:nemsis:ePayment.08",
+  "version": "0.2.0",
+  "name": "NemsisePayment08",
+  "title": "NEMSIS ePayment.08 Patient Resides in Service Area",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2608001",
+            "display": "Resident Within EMS Service Area"
+          },
+          {
+            "code": "2608003",
+            "display": "Not a Resident Within EMS Service Area"
+          }
+        ]
+      }
+    ]
+  }
+}

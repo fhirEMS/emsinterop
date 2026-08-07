@@ -1,0 +1,42 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eVitals-21",
+  "url": "urn:emsinterop:valueset:nemsis:eVitals.21",
+  "version": "0.2.0",
+  "name": "NemsiseVitals21",
+  "title": "NEMSIS eVitals.21 Glasgow Coma Score-Motor",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "1",
+            "display": "No Motor Response (All Age Groups)"
+          },
+          {
+            "code": "2",
+            "display": "Extension to pain (All Age Groups)"
+          },
+          {
+            "code": "3",
+            "display": "Flexion to pain (All Age Groups)"
+          },
+          {
+            "code": "4",
+            "display": "Withdrawal from pain (All Age Groups)"
+          },
+          {
+            "code": "5",
+            "display": "Localizing pain (All Age Groups)"
+          },
+          {
+            "code": "6",
+            "display": "Obeys commands (>2Years); Appropriate response to stimulation"
+          }
+        ]
+      }
+    ]
+  }
+}

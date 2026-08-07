@@ -1,0 +1,126 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eMedications-06",
+  "url": "urn:emsinterop:valueset:nemsis:eMedications.06",
+  "version": "0.2.0",
+  "name": "NemsiseMedications06",
+  "title": "NEMSIS eMedications.06 Medication Dosage Units",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3706001",
+            "display": "Grams (gms)"
+          },
+          {
+            "code": "3706003",
+            "display": "Inches (in)"
+          },
+          {
+            "code": "3706005",
+            "display": "International Units (IU)"
+          },
+          {
+            "code": "3706007",
+            "display": "Keep Vein Open (kvo)"
+          },
+          {
+            "code": "3706009",
+            "display": "Liters (l)"
+          },
+          {
+            "code": "3706013",
+            "display": "Metered Dose (MDI)"
+          },
+          {
+            "code": "3706015",
+            "display": "Micrograms (mcg)"
+          },
+          {
+            "code": "3706017",
+            "display": "Micrograms per Kilogram per Minute (mcg/kg/min)"
+          },
+          {
+            "code": "3706019",
+            "display": "Milliequivalents (mEq)"
+          },
+          {
+            "code": "3706021",
+            "display": "Milligrams (mg)"
+          },
+          {
+            "code": "3706023",
+            "display": "Milligrams per Kilogram Per Minute (mg/kg/min)"
+          },
+          {
+            "code": "3706025",
+            "display": "Milliliters (ml)"
+          },
+          {
+            "code": "3706027",
+            "display": "Milliliters per Hour (ml/hr)"
+          },
+          {
+            "code": "3706029",
+            "display": "Other"
+          },
+          {
+            "code": "3706031",
+            "display": "Centimeters (cm)"
+          },
+          {
+            "code": "3706033",
+            "display": "Drops (gtts)"
+          },
+          {
+            "code": "3706035",
+            "display": "Liters Per Minute (LPM [gas])"
+          },
+          {
+            "code": "3706037",
+            "display": "Micrograms per Minute (mcg/min)"
+          },
+          {
+            "code": "3706039",
+            "display": "Milligrams per Kilogram (mg/kg)"
+          },
+          {
+            "code": "3706041",
+            "display": "Milligrams per Minute (mg/min)"
+          },
+          {
+            "code": "3706043",
+            "display": "Puffs"
+          },
+          {
+            "code": "3706045",
+            "display": "Units per Hour (units/hr)"
+          },
+          {
+            "code": "3706047",
+            "display": "Micrograms per Kilogram (mcg/kg)"
+          },
+          {
+            "code": "3706049",
+            "display": "Units"
+          },
+          {
+            "code": "3706051",
+            "display": "Units per Kilogram per Hour (units/kg/hr)"
+          },
+          {
+            "code": "3706053",
+            "display": "Units per Kilogram (units/kg)"
+          },
+          {
+            "code": "3706055",
+            "display": "Milligrams per Hour (mg/hr)"
+          }
+        ]
+      }
+    ]
+  }
+}

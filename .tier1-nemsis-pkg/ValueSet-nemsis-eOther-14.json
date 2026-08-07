@@ -1,0 +1,122 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eOther-14",
+  "url": "urn:emsinterop:valueset:nemsis:eOther.14",
+  "version": "0.2.0",
+  "name": "NemsiseOther14",
+  "title": "NEMSIS eOther.14 Type Of Patient Representative",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4514001",
+            "display": "Aunt"
+          },
+          {
+            "code": "4514003",
+            "display": "Brother"
+          },
+          {
+            "code": "4514005",
+            "display": "Daughter"
+          },
+          {
+            "code": "4514007",
+            "display": "Discharge Planner"
+          },
+          {
+            "code": "4514009",
+            "display": "Domestic Partner"
+          },
+          {
+            "code": "4514011",
+            "display": "Father"
+          },
+          {
+            "code": "4514013",
+            "display": "Friend"
+          },
+          {
+            "code": "4514015",
+            "display": "Grandfather"
+          },
+          {
+            "code": "4514017",
+            "display": "Grandmother"
+          },
+          {
+            "code": "4514019",
+            "display": "Guardian"
+          },
+          {
+            "code": "4514021",
+            "display": "Husband"
+          },
+          {
+            "code": "4514023",
+            "display": "Law Enforcement"
+          },
+          {
+            "code": "4514025",
+            "display": "MD/DO"
+          },
+          {
+            "code": "4514027",
+            "display": "Mother"
+          },
+          {
+            "code": "4514029",
+            "display": "Nurse (RN)"
+          },
+          {
+            "code": "4514031",
+            "display": "Nurse Practitioner (NP)"
+          },
+          {
+            "code": "4514033",
+            "display": "Other Care Provider (Home health, hospice, etc.)"
+          },
+          {
+            "code": "4514035",
+            "display": "Other"
+          },
+          {
+            "code": "4514037",
+            "display": "Physician's Assistant (PA)"
+          },
+          {
+            "code": "4514039",
+            "display": "Power of Attorney"
+          },
+          {
+            "code": "4514041",
+            "display": "Other Relative"
+          },
+          {
+            "code": "4514043",
+            "display": "Self"
+          },
+          {
+            "code": "4514045",
+            "display": "Sister"
+          },
+          {
+            "code": "4514047",
+            "display": "Son"
+          },
+          {
+            "code": "4514049",
+            "display": "Uncle"
+          },
+          {
+            "code": "4514051",
+            "display": "Wife"
+          }
+        ]
+      }
+    ]
+  }
+}

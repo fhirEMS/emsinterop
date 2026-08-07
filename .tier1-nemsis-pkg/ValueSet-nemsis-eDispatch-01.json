@@ -1,0 +1,218 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eDispatch-01",
+  "url": "urn:emsinterop:valueset:nemsis:eDispatch.01",
+  "version": "0.2.0",
+  "name": "NemsiseDispatch01",
+  "title": "NEMSIS eDispatch.01 Dispatch Reason",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2301001",
+            "display": "Abdominal Pain/Problems"
+          },
+          {
+            "code": "2301003",
+            "display": "Allergic Reaction/Stings"
+          },
+          {
+            "code": "2301005",
+            "display": "Animal Bite"
+          },
+          {
+            "code": "2301007",
+            "display": "Assault"
+          },
+          {
+            "code": "2301009",
+            "display": "Automated Crash Notification"
+          },
+          {
+            "code": "2301011",
+            "display": "Back Pain (Non-Traumatic)"
+          },
+          {
+            "code": "2301013",
+            "display": "Breathing Problem"
+          },
+          {
+            "code": "2301015",
+            "display": "Burns/Explosion"
+          },
+          {
+            "code": "2301017",
+            "display": "Carbon Monoxide/Hazmat/Inhalation/CBRN"
+          },
+          {
+            "code": "2301019",
+            "display": "Cardiac Arrest/Death"
+          },
+          {
+            "code": "2301021",
+            "display": "Chest Pain (Non-Traumatic)"
+          },
+          {
+            "code": "2301023",
+            "display": "Choking"
+          },
+          {
+            "code": "2301025",
+            "display": "Convulsions/Seizure"
+          },
+          {
+            "code": "2301027",
+            "display": "Diabetic Problem"
+          },
+          {
+            "code": "2301029",
+            "display": "Electrocution/Lightning"
+          },
+          {
+            "code": "2301031",
+            "display": "Eye Problem/Injury"
+          },
+          {
+            "code": "2301033",
+            "display": "Falls"
+          },
+          {
+            "code": "2301035",
+            "display": "Fire"
+          },
+          {
+            "code": "2301037",
+            "display": "Headache"
+          },
+          {
+            "code": "2301039",
+            "display": "Healthcare Professional/Admission"
+          },
+          {
+            "code": "2301041",
+            "display": "Heart Problems/AICD"
+          },
+          {
+            "code": "2301043",
+            "display": "Heat/Cold Exposure"
+          },
+          {
+            "code": "2301045",
+            "display": "Hemorrhage/Laceration"
+          },
+          {
+            "code": "2301047",
+            "display": "Industrial Accident/Inaccessible Incident/Other Entrapments (Non-Vehicle)"
+          },
+          {
+            "code": "2301049",
+            "display": "Medical Alarm"
+          },
+          {
+            "code": "2301051",
+            "display": "No Other Appropriate Choice"
+          },
+          {
+            "code": "2301053",
+            "display": "Overdose/Poisoning/Ingestion"
+          },
+          {
+            "code": "2301055",
+            "display": "Pandemic/Epidemic/Outbreak"
+          },
+          {
+            "code": "2301057",
+            "display": "Pregnancy/Childbirth/Miscarriage"
+          },
+          {
+            "code": "2301059",
+            "display": "Psychiatric Problem/Abnormal Behavior/Suicide Attempt"
+          },
+          {
+            "code": "2301061",
+            "display": "Sick Person"
+          },
+          {
+            "code": "2301063",
+            "display": "Stab/Gunshot Wound/Penetrating Trauma"
+          },
+          {
+            "code": "2301065",
+            "display": "Standby"
+          },
+          {
+            "code": "2301067",
+            "display": "Stroke/CVA"
+          },
+          {
+            "code": "2301069",
+            "display": "Traffic/Transportation Incident"
+          },
+          {
+            "code": "2301071",
+            "display": "Transfer/Interfacility/Palliative Care"
+          },
+          {
+            "code": "2301073",
+            "display": "Traumatic Injury"
+          },
+          {
+            "code": "2301075",
+            "display": "Well Person Check"
+          },
+          {
+            "code": "2301077",
+            "display": "Unconscious/Fainting/Near-Fainting"
+          },
+          {
+            "code": "2301079",
+            "display": "Unknown Problem/Person Down"
+          },
+          {
+            "code": "2301081",
+            "display": "Drowning/Diving/SCUBA Accident"
+          },
+          {
+            "code": "2301083",
+            "display": "Airmedical Transport"
+          },
+          {
+            "code": "2301085",
+            "display": "Altered Mental Status"
+          },
+          {
+            "code": "2301087",
+            "display": "Intercept"
+          },
+          {
+            "code": "2301089",
+            "display": "Nausea"
+          },
+          {
+            "code": "2301091",
+            "display": "Vomiting"
+          },
+          {
+            "code": "2301093",
+            "display": "Hanging/Strangulation/Asphyxiation"
+          },
+          {
+            "code": "2301095",
+            "display": "Intoxicated Subject"
+          },
+          {
+            "code": "2301097",
+            "display": "EMS Requested by Law Enforcement"
+          },
+          {
+            "code": "2301099",
+            "display": "Active Shooter"
+          }
+        ]
+      }
+    ]
+  }
+}

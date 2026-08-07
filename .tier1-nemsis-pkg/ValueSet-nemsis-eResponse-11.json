@@ -1,0 +1,82 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eResponse-11",
+  "url": "urn:emsinterop:valueset:nemsis:eResponse.11",
+  "version": "0.2.0",
+  "name": "NemsiseResponse11",
+  "title": "NEMSIS eResponse.11 Type of Transport Delay",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2211001",
+            "display": "Crowd"
+          },
+          {
+            "code": "2211003",
+            "display": "Directions/Unable to Locate"
+          },
+          {
+            "code": "2211005",
+            "display": "Distance"
+          },
+          {
+            "code": "2211007",
+            "display": "Diversion"
+          },
+          {
+            "code": "2211009",
+            "display": "HazMat"
+          },
+          {
+            "code": "2211011",
+            "display": "None/No Delay"
+          },
+          {
+            "code": "2211013",
+            "display": "Other"
+          },
+          {
+            "code": "2211015",
+            "display": "Rendezvous Transport Unavailable"
+          },
+          {
+            "code": "2211017",
+            "display": "Route Obstruction (e.g., Train)"
+          },
+          {
+            "code": "2211019",
+            "display": "Safety"
+          },
+          {
+            "code": "2211021",
+            "display": "Staff Delay"
+          },
+          {
+            "code": "2211023",
+            "display": "Traffic"
+          },
+          {
+            "code": "2211025",
+            "display": "Vehicle Crash Involving this Unit"
+          },
+          {
+            "code": "2211027",
+            "display": "Vehicle Failure of this Unit"
+          },
+          {
+            "code": "2211029",
+            "display": "Weather"
+          },
+          {
+            "code": "2211031",
+            "display": "Patient Condition Change (e.g., Unit Stopped)"
+          }
+        ]
+      }
+    ]
+  }
+}

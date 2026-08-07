@@ -1,0 +1,30 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-21",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.21",
+  "version": "0.2.0",
+  "name": "NemsiseExam21",
+  "title": "NEMSIS eExam.21 Stroke/CVA Symptoms Resolved",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3521001",
+            "display": "No"
+          },
+          {
+            "code": "3521003",
+            "display": "Yes-Resolved Prior to EMS Arrival"
+          },
+          {
+            "code": "3521005",
+            "display": "Yes-Resolved in EMS Presence"
+          }
+        ]
+      }
+    ]
+  }
+}

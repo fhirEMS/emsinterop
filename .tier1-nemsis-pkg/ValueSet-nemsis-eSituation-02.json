@@ -1,0 +1,30 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eSituation-02",
+  "url": "urn:emsinterop:valueset:nemsis:eSituation.02",
+  "version": "0.2.0",
+  "name": "NemsiseSituation02",
+  "title": "NEMSIS eSituation.02 Possible Injury",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9922001",
+            "display": "No"
+          },
+          {
+            "code": "9922003",
+            "display": "Unknown"
+          },
+          {
+            "code": "9922005",
+            "display": "Yes"
+          }
+        ]
+      }
+    ]
+  }
+}

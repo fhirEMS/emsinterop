@@ -1,0 +1,106 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eMedications-08",
+  "url": "urn:emsinterop:valueset:nemsis:eMedications.08",
+  "version": "0.2.0",
+  "name": "NemsiseMedications08",
+  "title": "NEMSIS eMedications.08 Medication Complication",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3708001",
+            "display": "Altered Mental Status"
+          },
+          {
+            "code": "3708003",
+            "display": "Apnea"
+          },
+          {
+            "code": "3708005",
+            "display": "Bleeding"
+          },
+          {
+            "code": "3708007",
+            "display": "Bradycardia"
+          },
+          {
+            "code": "3708009",
+            "display": "Bradypnea"
+          },
+          {
+            "code": "3708011",
+            "display": "Diarrhea"
+          },
+          {
+            "code": "3708013",
+            "display": "Extravasation"
+          },
+          {
+            "code": "3708015",
+            "display": "Hypertension"
+          },
+          {
+            "code": "3708017",
+            "display": "Hyperthermia"
+          },
+          {
+            "code": "3708019",
+            "display": "Hypotension"
+          },
+          {
+            "code": "3708021",
+            "display": "Hypothermia"
+          },
+          {
+            "code": "3708023",
+            "display": "Hypoxia"
+          },
+          {
+            "code": "3708025",
+            "display": "Injury"
+          },
+          {
+            "code": "3708029",
+            "display": "Nausea"
+          },
+          {
+            "code": "3708031",
+            "display": "None"
+          },
+          {
+            "code": "3708033",
+            "display": "Other"
+          },
+          {
+            "code": "3708035",
+            "display": "Respiratory Distress"
+          },
+          {
+            "code": "3708037",
+            "display": "Tachycardia"
+          },
+          {
+            "code": "3708039",
+            "display": "Tachypnea"
+          },
+          {
+            "code": "3708041",
+            "display": "Vomiting"
+          },
+          {
+            "code": "3708043",
+            "display": "Itching"
+          },
+          {
+            "code": "3708045",
+            "display": "Urticaria"
+          }
+        ]
+      }
+    ]
+  }
+}

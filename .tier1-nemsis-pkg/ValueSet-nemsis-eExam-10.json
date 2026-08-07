@@ -1,0 +1,46 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-10",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.10",
+  "version": "0.2.0",
+  "name": "NemsiseExam10",
+  "title": "NEMSIS eExam.10 Abdominal Assessment Finding Location",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3510001",
+            "display": "Generalized"
+          },
+          {
+            "code": "3510003",
+            "display": "Left Lower Quadrant"
+          },
+          {
+            "code": "3510005",
+            "display": "Left Upper Quadrant"
+          },
+          {
+            "code": "3510007",
+            "display": "Periumbilical"
+          },
+          {
+            "code": "3510009",
+            "display": "Right Lower Quadrant"
+          },
+          {
+            "code": "3510011",
+            "display": "Right Upper Quadrant"
+          },
+          {
+            "code": "3510013",
+            "display": "Epigastric"
+          }
+        ]
+      }
+    ]
+  }
+}

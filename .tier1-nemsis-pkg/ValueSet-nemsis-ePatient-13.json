@@ -1,0 +1,42 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-ePatient-13",
+  "url": "urn:emsinterop:valueset:nemsis:ePatient.13",
+  "version": "0.2.0",
+  "name": "NemsisePatient13",
+  "title": "NEMSIS ePatient.13 Gender (DEPRECATED)",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9906001",
+            "display": "Female (DEPRECATED)"
+          },
+          {
+            "code": "9906003",
+            "display": "Male (DEPRECATED)"
+          },
+          {
+            "code": "9906005",
+            "display": "Unknown (Unable to Determine) (DEPRECATED)"
+          },
+          {
+            "code": "9906007",
+            "display": "Female-to-Male, Transgender Male (DEPRECATED)"
+          },
+          {
+            "code": "9906009",
+            "display": "Male-to-Female, Transgender Female (DEPRECATED)"
+          },
+          {
+            "code": "9906011",
+            "display": "Other, neither exclusively male or female (DEPRECATED)"
+          }
+        ]
+      }
+    ]
+  }
+}

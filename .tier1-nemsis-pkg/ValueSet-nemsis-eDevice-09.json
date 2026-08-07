@@ -1,0 +1,26 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eDevice-09",
+  "url": "urn:emsinterop:valueset:nemsis:eDevice.09",
+  "version": "0.2.0",
+  "name": "NemsiseDevice09",
+  "title": "NEMSIS eDevice.09 Type of Shock",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4109001",
+            "display": "Biphasic"
+          },
+          {
+            "code": "4109003",
+            "display": "Monophasic"
+          }
+        ]
+      }
+    ]
+  }
+}

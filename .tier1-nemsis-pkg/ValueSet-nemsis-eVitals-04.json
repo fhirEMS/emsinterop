@@ -1,0 +1,54 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eVitals-04",
+  "url": "urn:emsinterop:valueset:nemsis:eVitals.04",
+  "version": "0.2.0",
+  "name": "NemsiseVitals04",
+  "title": "NEMSIS eVitals.04 ECG Type",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3304000",
+            "display": "2 Lead ECG (pads or paddles)"
+          },
+          {
+            "code": "3304001",
+            "display": "3 Lead"
+          },
+          {
+            "code": "3304003",
+            "display": "4 Lead"
+          },
+          {
+            "code": "3304005",
+            "display": "5 Lead"
+          },
+          {
+            "code": "3304007",
+            "display": "12 Lead-Left Sided (Normal)"
+          },
+          {
+            "code": "3304009",
+            "display": "12 Lead-Right Sided"
+          },
+          {
+            "code": "3304011",
+            "display": "15 Lead"
+          },
+          {
+            "code": "3304013",
+            "display": "18 Lead"
+          },
+          {
+            "code": "3304015",
+            "display": "Other"
+          }
+        ]
+      }
+    ]
+  }
+}

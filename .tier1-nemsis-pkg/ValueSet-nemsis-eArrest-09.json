@@ -1,0 +1,74 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eArrest-09",
+  "url": "urn:emsinterop:valueset:nemsis:eArrest.09",
+  "version": "0.2.0",
+  "name": "NemsiseArrest09",
+  "title": "NEMSIS eArrest.09 Type of CPR Provided",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3009001",
+            "display": "Compressions-Manual"
+          },
+          {
+            "code": "3009003",
+            "display": "Compressions-External Band Type Device"
+          },
+          {
+            "code": "3009005",
+            "display": "Compressions-External Plunger Type Device"
+          },
+          {
+            "code": "3009007",
+            "display": "Compressions-External Thumper Type Device"
+          },
+          {
+            "code": "3009009",
+            "display": "Compressions-Intermittent with Ventilation"
+          },
+          {
+            "code": "3009011",
+            "display": "Compressions-Other Device"
+          },
+          {
+            "code": "3009013",
+            "display": "Ventilation-Bag Valve Mask"
+          },
+          {
+            "code": "3009015",
+            "display": "Ventilation-Impedance Threshold Device"
+          },
+          {
+            "code": "3009017",
+            "display": "Ventilation-Mouth to Mouth"
+          },
+          {
+            "code": "3009019",
+            "display": "Ventilation-Pocket Mask"
+          },
+          {
+            "code": "3009021",
+            "display": "Compressions-Hands Only CPR (DEPRECATED)"
+          },
+          {
+            "code": "3009023",
+            "display": "Ventilation-with OPA/NPA"
+          },
+          {
+            "code": "3009025",
+            "display": "Ventilation-Advanced Airway Device"
+          },
+          {
+            "code": "3009027",
+            "display": "Ventilation-Passive Ventilation with Oxygen"
+          }
+        ]
+      }
+    ]
+  }
+}

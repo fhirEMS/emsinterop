@@ -1,0 +1,26 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-ePayment-49",
+  "url": "urn:emsinterop:valueset:nemsis:ePayment.49",
+  "version": "0.2.0",
+  "name": "NemsisePayment49",
+  "title": "NEMSIS ePayment.49 ALS Assessment Performed and Warranted",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9923001",
+            "display": "No"
+          },
+          {
+            "code": "9923003",
+            "display": "Yes"
+          }
+        ]
+      }
+    ]
+  }
+}

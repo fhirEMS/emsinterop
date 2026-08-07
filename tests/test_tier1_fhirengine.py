@@ -58,3 +58,42 @@ def test_resubmission_is_idempotent(client, path):
     response = client.submit(result.transaction)
     statuses = _statuses(response)
     assert set(statuses) == {"200"}, f"expected all updates, got {statuses}"
+
+
+def test_ds4p_labels_survive_round_trip(client):
+    """The mapper tags, fhirEngine enforces — which requires the labels to
+    SURVIVE ingest. Submit an R-labeled substance-use Observation and read it
+    back: meta.security must still carry R + ETH (Roadmap P5: 'DS4P tagging
+    verified end-to-end')."""
+    from .conftest import CHEST_PAIN
+
+    result = convert(CHEST_PAIN, agency_names=AGENCY_NAMES)[0]
+    labeled = [
+        r for r in result.resources
+        if any(c.get("code") == "R" for c in r.get("meta", {}).get("security", []))
+    ]
+    assert labeled, "corpus fixture lost its DS4P-labeled resource"
+    client.submit(result.transaction)
+
+    for resource in labeled:
+        stored = client.read(resource["resourceType"], resource["id"])
+        codes = {c.get("code") for c in stored.get("meta", {}).get("security", [])}
+        assert {"R", "ETH"} <= codes, (
+            f"{resource['resourceType']}/{resource['id']} lost DS4P labels: {codes}")
+
+
+def test_nemsis_terminology_is_registered(client):
+    """tier1-up.sh installs the emsinterop.nemsis package; the dual-coded
+    NEMSIS codings the mapper emits must pass $validate-code."""
+    from emsinterop.terminology import systems
+
+    params = client.get("/CodeSystem/$validate-code",
+                        {"url": systems.NEMSIS, "code": "4001001"})
+    result = {p["name"]: p.get("valueBoolean") for p in params["parameter"]}
+    assert result.get("result") is True, params
+
+    valueset = client.get("/ValueSet/$validate-code",
+                          {"url": "urn:emsinterop:valueset:nemsis:eAirway.01",
+                           "system": systems.NEMSIS, "code": "4001003"})
+    result = {p["name"]: p.get("valueBoolean") for p in valueset["parameter"]}
+    assert result.get("result") is True, valueset

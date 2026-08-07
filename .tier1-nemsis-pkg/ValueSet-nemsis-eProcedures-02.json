@@ -1,0 +1,26 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eProcedures-02",
+  "url": "urn:emsinterop:valueset:nemsis:eProcedures.02",
+  "version": "0.2.0",
+  "name": "NemsiseProcedures02",
+  "title": "NEMSIS eProcedures.02 Procedure Performed Prior to this Unit's EMS Care",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "9923001",
+            "display": "No"
+          },
+          {
+            "code": "9923003",
+            "display": "Yes"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-09",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.09",
+  "version": "0.2.0",
+  "name": "NemsiseExam09",
+  "title": "NEMSIS eExam.09 Heart Assessment",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3509001",
+            "display": "Clicks"
+          },
+          {
+            "code": "3509003",
+            "display": "Heart Sounds Decreased"
+          },
+          {
+            "code": "3509005",
+            "display": "Murmur-Diastolic"
+          },
+          {
+            "code": "3509007",
+            "display": "Murmur-Systolic"
+          },
+          {
+            "code": "3509009",
+            "display": "Normal"
+          },
+          {
+            "code": "3509011",
+            "display": "Not Done"
+          },
+          {
+            "code": "3509013",
+            "display": "Rubs"
+          },
+          {
+            "code": "3509015",
+            "display": "S1"
+          },
+          {
+            "code": "3509017",
+            "display": "S2"
+          },
+          {
+            "code": "3509019",
+            "display": "S3"
+          },
+          {
+            "code": "3509021",
+            "display": "S4"
+          }
+        ]
+      }
+    ]
+  }
+}

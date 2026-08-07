@@ -63,6 +63,18 @@ class FhirEngineClient:
               status_code=response.status_code, entries=entries)
         return response.json()
 
+    def read(self, resource_type: str, resource_id: str) -> dict:
+        """GET a single resource (read-after-write checks, e.g. DS4P labels)."""
+        response = self._client.get(f"/{resource_type}/{resource_id}")
+        response.raise_for_status()
+        return response.json()
+
+    def get(self, path: str, params: dict | None = None) -> dict:
+        """GET an arbitrary server path (operations like $validate-code)."""
+        response = self._client.get(path, params=params)
+        response.raise_for_status()
+        return response.json()
+
     def capability(self) -> dict:
         response = self._client.get("/metadata")
         response.raise_for_status()

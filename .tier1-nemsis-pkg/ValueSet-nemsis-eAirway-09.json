@@ -1,0 +1,58 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eAirway-09",
+  "url": "urn:emsinterop:valueset:nemsis:eAirway.09",
+  "version": "0.2.0",
+  "name": "NemsiseAirway09",
+  "title": "NEMSIS eAirway.09 Suspected Reasons for Failed Airway Management",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "4009001",
+            "display": "Difficult Patient Airway Anatomy"
+          },
+          {
+            "code": "4009003",
+            "display": "ETI Attempted, but Arrived At Destination Facility Before Accomplished"
+          },
+          {
+            "code": "4009005",
+            "display": "Facial or Oral Trauma"
+          },
+          {
+            "code": "4009007",
+            "display": "Inability to Expose Vocal Cords"
+          },
+          {
+            "code": "4009009",
+            "display": "Inadequate Patient Relaxation/Presence of Protective Airway Reflexes"
+          },
+          {
+            "code": "4009011",
+            "display": "Jaw Clenched (Trismus)"
+          },
+          {
+            "code": "4009013",
+            "display": "Other"
+          },
+          {
+            "code": "4009015",
+            "display": "Poor Patient Access"
+          },
+          {
+            "code": "4009017",
+            "display": "Secretions/Blood/Vomit"
+          },
+          {
+            "code": "4009019",
+            "display": "Unable to Position or Access Patient"
+          }
+        ]
+      }
+    ]
+  }
+}

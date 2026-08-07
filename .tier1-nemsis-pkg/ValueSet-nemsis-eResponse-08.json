@@ -1,0 +1,66 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eResponse-08",
+  "url": "urn:emsinterop:valueset:nemsis:eResponse.08",
+  "version": "0.2.0",
+  "name": "NemsiseResponse08",
+  "title": "NEMSIS eResponse.08 Type of Dispatch Delay",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "2208001",
+            "display": "Caller (Uncooperative)"
+          },
+          {
+            "code": "2208003",
+            "display": "Diversion/Failure (of previous unit)"
+          },
+          {
+            "code": "2208005",
+            "display": "High Call Volume"
+          },
+          {
+            "code": "2208007",
+            "display": "Language Barrier"
+          },
+          {
+            "code": "2208009",
+            "display": "Incomplete Address Information Provided"
+          },
+          {
+            "code": "2208011",
+            "display": "No EMS Vehicles (Units) Available"
+          },
+          {
+            "code": "2208013",
+            "display": "None/No Delay"
+          },
+          {
+            "code": "2208015",
+            "display": "Other"
+          },
+          {
+            "code": "2208017",
+            "display": "Technical Failure (Computer, Phone etc.)"
+          },
+          {
+            "code": "2208019",
+            "display": "Communication Specialist-Assignment Error"
+          },
+          {
+            "code": "2208021",
+            "display": "No Receiving MD, Bed, Hospital"
+          },
+          {
+            "code": "2208023",
+            "display": "Specialty Team Delay"
+          }
+        ]
+      }
+    ]
+  }
+}

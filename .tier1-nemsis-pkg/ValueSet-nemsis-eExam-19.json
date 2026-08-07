@@ -1,0 +1,114 @@
+{
+  "resourceType": "ValueSet",
+  "id": "nemsis-eExam-19",
+  "url": "urn:emsinterop:valueset:nemsis:eExam.19",
+  "version": "0.2.0",
+  "name": "NemsiseExam19",
+  "title": "NEMSIS eExam.19 Mental Status Assessment",
+  "status": "active",
+  "compose": {
+    "include": [
+      {
+        "system": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
+        "concept": [
+          {
+            "code": "3519001",
+            "display": "Combative"
+          },
+          {
+            "code": "3519003",
+            "display": "Confused"
+          },
+          {
+            "code": "3519005",
+            "display": "Hallucinations"
+          },
+          {
+            "code": "3519007",
+            "display": "Normal Baseline for Patient"
+          },
+          {
+            "code": "3519009",
+            "display": "Not Done"
+          },
+          {
+            "code": "3519011",
+            "display": "Oriented-Person"
+          },
+          {
+            "code": "3519013",
+            "display": "Oriented-Place"
+          },
+          {
+            "code": "3519015",
+            "display": "Oriented-Event"
+          },
+          {
+            "code": "3519017",
+            "display": "Oriented-Time"
+          },
+          {
+            "code": "3519021",
+            "display": "Unresponsive"
+          },
+          {
+            "code": "3519023",
+            "display": "Agitation"
+          },
+          {
+            "code": "3519025",
+            "display": "Somnolent"
+          },
+          {
+            "code": "3519027",
+            "display": "Stupor"
+          },
+          {
+            "code": "3519029",
+            "display": "Altered mental status, unspecified"
+          },
+          {
+            "code": "3519031",
+            "display": "Developmentally Impaired"
+          },
+          {
+            "code": "3519033",
+            "display": "Disorientation, unspecified"
+          },
+          {
+            "code": "3519035",
+            "display": "Pharmacologically Paralyzed"
+          },
+          {
+            "code": "3519037",
+            "display": "Pharmacologically Sedated"
+          },
+          {
+            "code": "3519039",
+            "display": "Psychologically Impaired"
+          },
+          {
+            "code": "3519041",
+            "display": "Slowness and poor responsiveness"
+          },
+          {
+            "code": "3519043",
+            "display": "State of emotional shock and stress, unspecified"
+          },
+          {
+            "code": "3519045",
+            "display": "Strange and inexplicable behavior"
+          },
+          {
+            "code": "3519047",
+            "display": "Uncooperative"
+          },
+          {
+            "code": "3519049",
+            "display": "Unspecified coma"
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -94,13 +94,19 @@ authoring device + agency, custodian, encompassingEncounter; document code
 content is present) and five entry-bearing sections with narrative. NV/PN land
 in their **native CDA idioms**: NV → `nullFlavor` (NA/UNK/MSK), PN →
 `negationInd="true"` (medication-not-given with originalText reason,
-procedure-not-done, NKDA as a negated drug-allergy assertion). The template
-table is parameterized so IHE PCS CDA-supplement templateIds can layer on once
-pinned. Structural conformance is corpus-tested; **known v1 gaps**: no
-schematron tier yet (ONC C-CDA validator — same Java/CI pattern as the other
-oracles), NEMSIS originals not yet carried as `<translation>`, SNOMED (not
-NCI) routes, LOINC-coded vitals only (AVPU/rhythm skipped), and a placeholder
-OID root for NEMSIS identifiers pending a real assignment.
+procedure-not-done, NKDA as a negated drug-allergy assertion). Dual-coding
+parity (ADR-003): NEMSIS originals ride as CDA `<translation>` elements
+(routeCode SNOMED+NEMSIS, PN reason codes, problem values), and NEMSIS-coded
+vitals (AVPU, cardiac rhythm, stroke scale, GCS qualifier) render as
+CD-valued component observations — nothing with a value is dropped. The
+template table is parameterized so IHE PCS CDA-supplement templateIds can
+layer on once pinned. Structural conformance is corpus-tested, and an
+**XSD schema tier** validates every corpus render against the vendored
+normative CDA R2 schema (`schemas/cda/`, HL7 BSD-style license):
+`NEMSIS2FHIR_CCDA_SCHEMA=1 .venv/bin/python -m pytest tests/test_ccda_schema.py`.
+**Known v1 gaps**: no schematron tier yet (ONC C-CDA validator — same
+Java/CI pattern as the other oracles), SNOMED (not NCI) routes, and a
+placeholder OID root for NEMSIS identifiers pending a real assignment.
 
 ### ITI-65 handoff packaging (Phase 5, ADR-008)
 

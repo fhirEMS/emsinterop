@@ -103,6 +103,72 @@ def test_pn_procedure_negated():
     assert negated[0].find("c:code/c:originalText", NS).text == "Refused"
 
 
+OID_NEMSIS = "2.16.840.1.113883.3.10.100"
+
+
+def test_route_code_snomed_with_nemsis_translation():
+    doc = _render()
+    routes = doc.xpath(
+        ".//c:substanceAdministration[not(@negationInd)]/c:routeCode", namespaces=NS)
+    assert routes, "given medication must carry routeCode"
+    route = routes[0]
+    assert route.get("code") == "26643006"  # Oral route, SNOMED primary
+    assert route.get("codeSystem") == "2.16.840.1.113883.6.96"
+    translation = route.find("c:translation", NS)
+    assert translation.get("code") == "9927035"  # NEMSIS Oral
+    assert translation.get("codeSystem") == OID_NEMSIS
+    assert translation.get("codeSystemName") == "NEMSIS"
+
+
+def test_pn_medication_code_carries_nemsis_translation():
+    doc = _render()
+    negated = doc.xpath(
+        ".//c:substanceAdministration[@negationInd='true']"
+        "//c:manufacturedMaterial/c:code", namespaces=NS)[0]
+    translation = negated.find("c:translation", NS)
+    assert translation.get("code") == "8801001"  # Contraindication Noted
+    assert translation.get("codeSystem") == OID_NEMSIS
+
+
+def test_procedure_outcome_component_observation():
+    doc = _render()
+    outcomes = doc.xpath(
+        ".//c:procedure/c:entryRelationship[@typeCode='COMP']/c:observation",
+        namespaces=NS)
+    assert outcomes, "eProcedures.06 outcome must render"
+    outcome = outcomes[0]
+    assert outcome.find("c:code", NS).get("code") == "eProcedures.06"
+    value = outcome.find("c:value", NS)
+    assert value.get(f"{{{NS['xsi']}}}type") == "CD"
+    assert value.get("code") == "9923003"  # Yes
+    assert value.get("codeSystem") == OID_NEMSIS
+
+
+def test_avpu_and_rhythm_render_as_cd_components():
+    doc = _render()
+    vitals = doc.xpath(".//c:section[c:code/@code='8716-3']", namespaces=NS)[0]
+    avpu = vitals.xpath(".//c:observation[c:code/@code='eVitals.26']", namespaces=NS)
+    rhythm = vitals.xpath(".//c:observation[c:code/@code='eVitals.03']", namespaces=NS)
+    assert avpu and rhythm  # previously silently skipped
+    for obs in avpu + rhythm:
+        code = obs.find("c:code", NS)
+        assert code.get("codeSystem") == OID_NEMSIS
+        assert code.get("codeSystemName") == "NEMSIS"
+        value = obs.find("c:value", NS)
+        assert value.get(f"{{{NS['xsi']}}}type") == "CD"
+        assert value.get("codeSystem") == OID_NEMSIS
+        assert value.get("displayName")
+        assert value.find("c:originalText", NS) is not None
+    # AVPU Alert in the chest-pain fixture
+    assert {v.get("code") for v in (o.find("c:value", NS) for o in avpu)} == {"3326001"}
+
+
+def test_gcs_total_no_longer_dropped():
+    doc = _render()
+    gcs = doc.xpath(".//c:observation[c:code/@code='9269-2']/c:value", namespaces=NS)
+    assert gcs and gcs[0].get("value") == "15"
+
+
 @pytest.mark.parametrize("path", sorted(FIXTURES.glob("*.xml")), ids=lambda p: p.stem)
 def test_corpus_renders_wellformed(path):
     doc = _render(path)

@@ -75,6 +75,28 @@ requires. Operational resources no section claims (PractitionerRole) stay in
 the transaction only. mPSC/IPS profile-level validation is deferred until a
 pinnable (non-draft) mPSC package exists.
 
+### Raw-NEMSIS bronze (audit/replay — the mapper's ONE Delta table, ADR-009)
+
+`python -m nemsis2fhir land <xml> <table>` shreds an EMSDataSet into the raw
+bronze Delta table (`deltalake`, one row per PCR stored as a self-contained
+single-PCR document with its header). Landing is **idempotent by file sha256**;
+`ingest.bronze.replay()` returns payloads that XSD-validate and convert to
+**byte-identical FHIR** (same deterministic ids) as the original file — the
+audit/replay guarantee, test-enforced. This table never holds FHIR resources:
+fhirEngine is the sole writer of FHIR storage.
+
+### ITI-65 handoff packaging (Phase 5, ADR-008)
+
+`nemsis2fhir.transport.provide_document_bundle(result)` wraps the mPSC document
+in an **MHD Provide Document Bundle**: SubmissionSet (`List`) + MHD Minimal
+DocumentReference (EntryUUID identifier, type mirrors the Composition,
+confidentiality carried as `securityLabel`) + `Binary` (the document,
+application/fhir+json) + the Patient. **Validates 0-errors against
+`ihe.iti.mhd#4.2.2`** — enforced in the Tier-2 suite. Delivery is pluggable
+(`MhdHttpTransport` push, `FileDropTransport` for portable-media/batch; XDR/XDM
+can join behind the same `Transport` protocol). CLI:
+`python -m nemsis2fhir convert <xml> --iti65`.
+
 ### FML fidelity oracle (CI-only Java — ADR-002)
 
 The mapping spec is authored as FML StructureMaps over NEMSIS logical models

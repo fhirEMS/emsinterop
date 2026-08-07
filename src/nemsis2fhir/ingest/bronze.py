@@ -20,10 +20,14 @@ from .parser import NEMSIS_NS, parse
 
 
 def land(xml_path: str | Path, table_path: str | Path) -> int:
-    """Shred an EMSDataSet file into the bronze table; returns rows written."""
+    """Shred an EMSDataSet file into the bronze table; returns rows written.
+
+    Idempotent by file content: a file whose sha256 has already been landed is
+    skipped (returns 0) — re-running an ingest sweep never duplicates audit
+    rows, while a changed file (new hash) lands as new rows for replay."""
     try:
         import pyarrow as pa
-        from deltalake import write_deltalake
+        from deltalake import DeltaTable, write_deltalake
     except ImportError as error:  # pragma: no cover
         raise RuntimeError(
             "raw-NEMSIS bronze requires the 'bronze' extra: pip install nemsis2fhir[bronze]"
@@ -32,12 +36,36 @@ def land(xml_path: str | Path, table_path: str | Path) -> int:
     raw = Path(xml_path).read_bytes()
     dataset = parse(raw)
     file_hash = hashlib.sha256(raw).hexdigest()
+    try:
+        table = DeltaTable(str(table_path))
+        already = table.to_pyarrow_table(columns=["file_sha256"]).column("file_sha256")
+        if file_hash in {str(v) for v in already}:
+            return 0
+    except Exception:
+        pass  # table doesn't exist yet — first landing
     received_at = datetime.now(timezone.utc).isoformat()
     agency = dataset.header.value("dAgency.02")
 
-    # Re-serialize each PatientCareReport for row-level replay.
+    # One row per PatientCareReport, each stored as a SELF-CONTAINED
+    # single-PCR EMSDataSet (its Header's DemographicGroup + any
+    # eCustomConfiguration preserved) so replay feeds convert() directly.
+    import copy as _copy
+
     root = etree.fromstring(raw)
     pcr_nodes = root.findall(f".//{{{NEMSIS_NS}}}PatientCareReport")
+
+    def single_pcr_document(pcr_node: etree._Element) -> str:
+        source_header = pcr_node.getparent()
+        single = etree.Element(root.tag, nsmap=root.nsmap)
+        for name, value in root.attrib.items():
+            single.set(name, value)
+        header = etree.SubElement(single, f"{{{NEMSIS_NS}}}Header")
+        for child in source_header:
+            if child.tag == f"{{{NEMSIS_NS}}}PatientCareReport":
+                continue
+            header.append(_copy.deepcopy(child))
+        header.append(_copy.deepcopy(pcr_node))
+        return etree.tostring(single, encoding="unicode")
 
     rows = {
         "pcr_number": [],
@@ -49,14 +77,38 @@ def land(xml_path: str | Path, table_path: str | Path) -> int:
         "raw_xml": [],
     }
     for pcr, node in zip(dataset.reports, pcr_nodes):
-        record = pcr.section("eRecord")
         rows["pcr_number"].append(pcr.pcr_number)
-        rows["pcr_uuid"].append(record.uuid if record else None)
+        rows["pcr_uuid"].append(pcr.uuid)
         rows["agency_number"].append(agency)
         rows["nemsis_version"].append(dataset.nemsis_version)
         rows["file_sha256"].append(file_hash)
         rows["received_at"].append(received_at)
-        rows["raw_xml"].append(etree.tostring(node, encoding="unicode"))
+        rows["raw_xml"].append(single_pcr_document(node))
 
     write_deltalake(str(table_path), pa.table(rows), mode="append")
     return len(dataset.reports)
+
+
+def replay(table_path: str | Path, pcr_number: str | None = None) -> list[bytes]:
+    """Raw PCR XML back out of bronze — the replay half of audit/replay.
+
+    Each returned payload is a self-contained EMSDataSet (original header +
+    the stored PatientCareReport) so it feeds straight back into convert()."""
+    try:
+        from deltalake import DeltaTable
+    except ImportError as error:  # pragma: no cover
+        raise RuntimeError(
+            "raw-NEMSIS bronze requires the 'bronze' extra: pip install nemsis2fhir[bronze]"
+        ) from error
+
+    table = DeltaTable(str(table_path)).to_pyarrow_table(
+        columns=["pcr_number", "raw_xml"]
+    )
+    out: list[bytes] = []
+    for row_pcr, raw_xml in zip(
+        table.column("pcr_number").to_pylist(), table.column("raw_xml").to_pylist()
+    ):
+        if pcr_number is not None and row_pcr != pcr_number:
+            continue
+        out.append(raw_xml.encode() if isinstance(raw_xml, str) else raw_xml)
+    return out

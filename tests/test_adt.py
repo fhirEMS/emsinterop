@@ -132,3 +132,31 @@ def test_mllp_transport_round_trip():
     frame = received["frame"]
     assert frame.startswith(b"\x0bMSH|") and frame.endswith(b"\x1c\x0d")
     assert b"ADT^A03^ADT_A03" in frame
+
+
+def test_policy_default_is_completed_only():
+    from nemsis2fhir.assemble.adt import build_adt_messages
+    result = convert(CHEST_PAIN)[0]
+    messages = build_adt_messages(result.context)
+    assert [event for event, _ in messages] == ["A03"]
+
+
+def test_policy_both_sends_prearrival_first():
+    from nemsis2fhir.assemble.adt import AdtConfig, build_adt_messages
+    result = convert(CHEST_PAIN)[0]
+    messages = build_adt_messages(result.context, AdtConfig(send_prearrival=True))
+    assert [event for event, _ in messages] == ["A04", "A03"]
+
+
+def test_prearrival_self_gates_without_destination():
+    from nemsis2fhir.assemble.adt import AdtConfig, build_adt_messages
+    result = convert(REFUSAL)[0]  # refusal: no destination recorded
+    messages = build_adt_messages(result.context, AdtConfig(send_prearrival=True))
+    assert [event for event, _ in messages] == ["A03"]
+
+
+def test_policy_prearrival_only():
+    from nemsis2fhir.assemble.adt import AdtConfig, build_adt_messages
+    result = convert(CHEST_PAIN)[0]
+    config = AdtConfig(send_completed=False, send_prearrival=True)
+    assert [e for e, _ in build_adt_messages(result.context, config)] == ["A04"]

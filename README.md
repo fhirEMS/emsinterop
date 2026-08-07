@@ -103,10 +103,11 @@ eOutcome speaks natively) via `cm-nemsis-nubc-discharge` with clinical
 precedence (deceased → 20, refusal/AMA → 07, transported → 02, released → 01);
 PV1-44/45 = patient contact → transfer of care; DG1 carries the ICD-10-CM
 impressions pass-through (primary F, secondary W); ER7 escaping and deterministic MSH-10 control
-ids (pass `message_time` in production). **ADT^A04 prearrival notification**
-(`--adt-a04`, A01 structure, EVN at the destination-team alert time or scene
-departure, no discharge fields) tells the ED what's coming before the doors
-open. Delivery: `MllpTransport` (VT/FS/CR framing, MSA ack codes) joins the
+ids (pass `message_time` in production). **Sending is policy-driven** (`AdtConfig` /
+`--adt [completed|both|prearrival]`): the default sends only the completed
+A03 — the common case — while prearrival A04 (A01 structure, EVN at the
+destination-team alert time, no discharge fields) is opt-in and self-gates
+on the call having a destination, so refusals/no-transports never emit one. Delivery: `MllpTransport` (VT/FS/CR framing, MSA ack codes) joins the
 `Transport` protocol alongside MHD HTTP and file drop.
 
 ### Inbound outcome loop (Phase 6): hospital A03 → eOutcome write-back

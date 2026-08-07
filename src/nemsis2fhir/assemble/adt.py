@@ -20,10 +20,42 @@ real senders pass `message_time=now`.
 
 from __future__ import annotations
 
+from dataclasses import dataclass
+
 from ..mapping.context import MappingContext
 from ..terminology import conceptmaps
 
 HL7_VERSION = "2.5.1"
+
+
+@dataclass
+class AdtConfig:
+    """The sending policy. Most deployments send only the completed call
+    (the default); prearrival notification is opt-in — and even then it
+    fires only for calls that actually have a destination (a refusal or
+    no-transport never emits an A04)."""
+
+    send_completed: bool = True   # ADT^A03 at end of visit
+    send_prearrival: bool = False  # ADT^A04 when the destination is alerted
+    receiving_application: str = ""
+    receiving_facility: str = ""
+    message_time: str | None = None
+
+
+def build_adt_messages(ctx: MappingContext, config: AdtConfig | None = None) -> list[tuple[str, str]]:
+    """The (event, message) pairs this call's policy produces, in send order."""
+    config = config or AdtConfig()
+    messages: list[tuple[str, str]] = []
+    has_destination = bool(
+        ctx.pcr.value("eDisposition.01") or ctx.pcr.value("eDisposition.02")
+    )
+    if config.send_prearrival and has_destination:
+        messages.append(("A04", build_adt_a04(
+            ctx, config.receiving_application, config.receiving_facility, config.message_time)))
+    if config.send_completed:
+        messages.append(("A03", build_adt_a03(
+            ctx, config.receiving_application, config.receiving_facility, config.message_time)))
+    return messages
 
 _FIELD_ESCAPES = [("\\", "\\E\\"), ("|", "\\F\\"), ("^", "\\S\\"), ("~", "\\R\\"), ("&", "\\T\\")]
 

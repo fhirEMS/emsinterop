@@ -48,3 +48,23 @@ def test_from_file_and_mode_validation(tmp_path):
     assert config.adt.receiving_facility == "STATE-HIE"
     with pytest.raises(ValueError):
         MessagingConfig(mode="fax")
+
+
+def test_ccda_rail(chest_pain, tmp_path):
+    pytest.importorskip("nemsis2ccda")
+    config = MessagingConfig.from_dict(
+        {"mode": ["ccda"], "ccda": {"out_dir": str(tmp_path)}})
+    report = dispatch(chest_pain, config)
+    assert [e["kind"] for e in report] == ["ccda"]
+    assert report[0]["artifact"].lstrip().startswith("<?xml")
+    assert "ClinicalDocument" in report[0]["artifact"]
+    assert report[0]["sent"] is True
+    assert (tmp_path / "PCR-2026-000123.ccda.xml").exists()
+
+
+def test_rail_list_and_legacy_modes(chest_pain):
+    pytest.importorskip("nemsis2ccda")
+    report = dispatch(chest_pain, MessagingConfig(mode=["fhir", "adt", "ccda"]))
+    assert [e["kind"] for e in report] == ["fhir-transaction", "ccda", "adt-a03"]
+    legacy = dispatch(chest_pain, MessagingConfig(mode="both"))
+    assert [e["kind"] for e in legacy] == ["fhir-transaction", "adt-a03"]

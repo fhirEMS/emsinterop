@@ -1,8 +1,9 @@
 """Deployment messaging configuration: which rails a converted call rides.
 
 One switch picks the modality — `fhir` (transaction to fhirEngine + optional
-ITI-65 handoff; the default), `adt` (HL7 v2 per AdtConfig), or `both` — with
-per-rail policy nested underneath. Loadable from a JSON file so a deployment
+ITI-65 handoff; the default), `adt` (HL7 v2 per AdtConfig), `ccda` (C-CDA CCD
+via the optional nemsis2ccda package), or a list of rails — with per-rail
+policy nested underneath. Loadable from a JSON file so a deployment
 is one --config away:
 
     {
@@ -24,7 +25,15 @@ from pathlib import Path
 
 from .assemble.adt import AdtConfig, build_adt_messages
 
-MODES = ("fhir", "adt", "both")
+RAILS = ("fhir", "adt", "ccda")
+_LEGACY_MODES = {"both": ("fhir", "adt"), "all": RAILS}
+
+
+@dataclass
+class CcdaConfig:
+    """C-CDA rail (rendered by the optional nemsis2ccda package)."""
+
+    out_dir: str | None = None  # write .ccda.xml files when set
 
 
 @dataclass
@@ -37,22 +46,37 @@ class FhirConfig:
 
 @dataclass
 class MessagingConfig:
-    mode: str = "fhir"
+    """`mode` accepts a single rail ("fhir" | "adt" | "ccda"), a list of
+    rails, or the legacy shorthands "both" (fhir+adt) / "all"."""
+
+    mode: str | list[str] = "fhir"
     fhir: FhirConfig = field(default_factory=FhirConfig)
     adt: AdtConfig = field(default_factory=AdtConfig)
+    ccda: CcdaConfig = field(default_factory=CcdaConfig)
     adt_endpoint: str | None = None  # "host:port" MLLP; send when set
 
     def __post_init__(self) -> None:
-        if self.mode not in MODES:
-            raise ValueError(f"mode must be one of {MODES}, got {self.mode!r}")
+        raw = self.mode
+        if isinstance(raw, str):
+            rails = _LEGACY_MODES.get(raw, (raw,))
+        else:
+            rails = tuple(raw)
+        bad = [r for r in rails if r not in RAILS]
+        if bad or not rails:
+            raise ValueError(f"mode rails must be from {RAILS}, got {raw!r}")
+        self.rails: tuple[str, ...] = rails
 
     @property
     def wants_fhir(self) -> bool:
-        return self.mode in ("fhir", "both")
+        return "fhir" in self.rails
 
     @property
     def wants_adt(self) -> bool:
-        return self.mode in ("adt", "both")
+        return "adt" in self.rails
+
+    @property
+    def wants_ccda(self) -> bool:
+        return "ccda" in self.rails
 
     @classmethod
     def from_dict(cls, data: dict) -> "MessagingConfig":
@@ -60,6 +84,7 @@ class MessagingConfig:
             mode=data.get("mode", "fhir"),
             fhir=FhirConfig(**data.get("fhir", {})),
             adt=AdtConfig(**data.get("adt", {})),
+            ccda=CcdaConfig(**data.get("ccda", {})),
             adt_endpoint=data.get("adt_endpoint"),
         )
 
@@ -92,6 +117,25 @@ def dispatch(result, config: MessagingConfig | None = None) -> list[dict]:
                 entry["detail"] = MhdHttpTransport(config.fhir.iti65_endpoint).send(bundle)
                 entry["sent"] = True
             report.append(entry)
+
+    if config.wants_ccda:
+        entry = {"kind": "ccda", "sent": False}
+        try:
+            from nemsis2ccda import render_ccda
+        except ImportError:
+            entry["error"] = ("ccda rail requires the nemsis2ccda package: "
+                              "pip install nemsis2ccda (or -e a sibling checkout)")
+        else:
+            xml = render_ccda(result.context)
+            entry["artifact"] = xml.decode("utf-8")
+            if config.ccda.out_dir:
+                out = Path(config.ccda.out_dir)
+                out.mkdir(parents=True, exist_ok=True)
+                target = out / f"{result.context.pcr_number or 'pcr'}.ccda.xml"
+                target.write_bytes(xml)
+                entry["detail"] = {"status": "written", "path": str(target)}
+                entry["sent"] = True
+        report.append(entry)
 
     if config.wants_adt:
         transport = None

@@ -189,11 +189,15 @@ exporter/projection pair.
 ## Deployment messaging configuration
 
 One JSON config picks the rails (`python -m nemsis2fhir convert <xml> --config messaging.json`):
-`mode: fhir | adt | both` — FHIR (transaction to fhirEngine + optional ITI-65)
+`mode` is a rail or list of rails from `fhir | adt | ccda` (legacy shorthands
+`both` = fhir+adt, `all`) — FHIR (transaction to fhirEngine + optional ITI-65)
 is the default; ADT rides the `AdtConfig` policy (completed-call A03 by
-default, prearrival opt-in). Endpoints are optional per rail (fhirEngine URL,
-MHD recipient, MLLP host:port) — configured, artifacts are delivered;
-unconfigured, they're produced and reported. See `nemsis2fhir/config.py`.
+default, prearrival opt-in); `ccda` renders a C-CDA R2.1 CCD via the optional
+[nemsis2ccda](https://github.com/FHIRmedicConsulting/nemsis2ccda) package
+(install it to enable the rail; `ccda.out_dir` writes the documents).
+Endpoints are optional per rail (fhirEngine URL, MHD recipient, MLLP
+host:port) — configured, artifacts are delivered; unconfigured, they're
+produced and reported. See `nemsis2fhir/config.py`.
 
 ## Documentation
 | File | What it is |

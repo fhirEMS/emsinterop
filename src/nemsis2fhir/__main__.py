@@ -3,6 +3,7 @@
   python -m nemsis2fhir convert path/to/pcr.xml            # transaction bundle to stdout
   python -m nemsis2fhir convert path/to/pcr.xml --document # mPSC document bundle
   python -m nemsis2fhir convert path/to/pcr.xml --submit http://localhost:8080
+  python -m nemsis2fhir convert path/to/pcr.xml --dem dem.xml  # agency names from DEMDataSet
   python -m nemsis2fhir validate path/to/pcr.xml           # XSD check only
 """
 
@@ -27,6 +28,11 @@ def main(argv: list[str] | None = None) -> int:
     p_convert.add_argument("--iti65", action="store_true", help="print the ITI-65 Provide Document Bundle")
     p_convert.add_argument("--ccda", action="store_true", help="print the C-CDA document (XML)")
     p_convert.add_argument("--variant", choices=["CR", "CS"], default="CR")
+    p_convert.add_argument(
+        "--dem",
+        metavar="DEM_XML",
+        help="NEMSIS DEMDataSet file supplying agency names (dAgency.03) for the Organization",
+    )
     p_convert.add_argument("--submit", metavar="BASE_URL", help="POST the transaction to fhirEngine")
     p_convert.add_argument("--token", help="bearer token for --submit")
     p_convert.add_argument("--issues", action="store_true", help="print the conversion issue log to stderr")
@@ -51,7 +57,18 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps({"landed_rows": written, "table": args.table}))
         return 0
 
-    results = convert(args.xml, document_variant=args.variant)
+    names = None
+    if args.dem:
+        from .ingest import validate_dem
+        from .ingest.demographics import agency_names
+
+        dem_errors = validate_dem(args.dem)
+        if dem_errors:
+            print(json.dumps(to_operation_outcome(dem_errors), indent=2), file=sys.stderr)
+            return 1
+        names = agency_names(args.dem)
+
+    results = convert(args.xml, document_variant=args.variant, agency_names=names)
     for result in results:
         if args.issues:
             for issue in result.issues.issues:

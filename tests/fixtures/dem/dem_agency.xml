@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Demographics fixture: the DEMDataSet roster for the golden-corpus agency
+(UT-4901 / 4901 — matches every EMSDataSet fixture header). Supplies the
+dAgency.03 agency name that the EMSDataSet header cannot carry, so the
+Organization can claim US Core. Synthetic data only.
+
+Required-but-unpopulated nillable elements carry xsi:nil + an NV code from
+that element's allowed union (never nil-skipped): dAgency.07 census tracts
+NV=7701003 (Not Recorded), dAgency.25 NPI NV=7701003, dAgency.26 fire
+department ID NV=7701001 (Not Applicable — not a fire-based agency).
+-->
+<DEMDataSet xmlns="http://www.nemsis.org"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.nemsis.org https://nemsis.org/media/nemsis_v3/release-3.5.0/XSDs/NEMSIS_XSDs/DEMDataSet_v3.xsd">
+  <DemographicReport timeStamp="2026-01-15T08:00:00-07:00">
+    <dAgency>
+      <dAgency.01>UT-4901</dAgency.01>
+      <dAgency.02>4901</dAgency.02>
+      <dAgency.03>Wasatch Valley EMS (synthetic)</dAgency.03>
+      <dAgency.04>49</dAgency.04>
+      <dAgency.AgencyServiceGroup UUID="3d1a2f40-9c1e-4b7a-8f2d-6e5a4c3b2a01">
+        <dAgency.05>49</dAgency.05>
+        <dAgency.06>49035</dAgency.06>
+        <dAgency.07 xsi:nil="true" NV="7701003"/>
+        <dAgency.08>84101</dAgency.08>
+      </dAgency.AgencyServiceGroup>
+      <dAgency.09>9920001</dAgency.09>
+      <dAgency.11>9917019</dAgency.11>
+      <dAgency.12>1016003</dAgency.12>
+      <dAgency.13>9912007</dAgency.13>
+      <dAgency.14>1018003</dAgency.14>
+      <dAgency.25 xsi:nil="true" NV="7701003"/>
+      <dAgency.26 xsi:nil="true" NV="7701001"/>
+    </dAgency>
+    <dConfiguration>
+      <dConfiguration.ConfigurationGroup UUID="3d1a2f40-9c1e-4b7a-8f2d-6e5a4c3b2a02">
+        <dConfiguration.01>49</dConfiguration.01>
+        <dConfiguration.ProcedureGroup UUID="3d1a2f40-9c1e-4b7a-8f2d-6e5a4c3b2a03">
+          <dConfiguration.06>9917019</dConfiguration.06>
+          <dConfiguration.07>392230005</dConfiguration.07>
+        </dConfiguration.ProcedureGroup>
+        <dConfiguration.MedicationGroup UUID="3d1a2f40-9c1e-4b7a-8f2d-6e5a4c3b2a04">
+          <dConfiguration.08>9917019</dConfiguration.08>
+          <dConfiguration.09>1191</dConfiguration.09>
+        </dConfiguration.MedicationGroup>
+        <dConfiguration.10>9914001</dConfiguration.10>
+        <dConfiguration.13>1213003</dConfiguration.13>
+        <dConfiguration.16>WV EMS 1</dConfiguration.16>
+      </dConfiguration.ConfigurationGroup>
+    </dConfiguration>
+    <dFacility>
+      <dFacilityGroup UUID="3d1a2f40-9c1e-4b7a-8f2d-6e5a4c3b2a05">
+        <dFacility.01>1701001</dFacility.01>
+        <dFacility.FacilityGroup UUID="3d1a2f40-9c1e-4b7a-8f2d-6e5a4c3b2a06">
+          <dFacility.02>Wasatch Valley Medical Center (synthetic)</dFacility.02>
+          <dFacility.03>UT-HOSP-100</dFacility.03>
+        </dFacility.FacilityGroup>
+      </dFacilityGroup>
+    </dFacility>
+  </DemographicReport>
+</DEMDataSet>

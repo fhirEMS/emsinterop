@@ -63,6 +63,16 @@ land → convert → dispatch (fhir | adt | ccda per MessagingConfig) → reconc
   non-empty `unmatched_dead_letter` means some *other* client's submissions
   are failing, not ours.
 
+## 3b. Real-time push (at-the-door)
+
+`python -m emsinterop serve --config deploy.json --bronze <bronze-table>`
+runs the push endpoint (default `127.0.0.1:8096`). EMS units (or the CAD/ePCR
+bridge) `POST /push` the EMSDataSet as the crew departs scene; the same
+config rails fire immediately — enable `adt.send_prearrival` for the A04.
+The endpoint is mechanism only: put TLS and authentication in front of it
+(same proxy posture as fhirEngine), and point it at the bronze table so
+pushed calls are audit-landed before conversion. `GET /healthz` for probes.
+
 ## 4. Medallion promotion (fhirEngine `medallion` mode only)
 
 Default `single` mode needs none of this (read-after-write off Bronze). In

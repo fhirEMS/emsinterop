@@ -110,10 +110,13 @@ destination-team alert time, no discharge fields) is opt-in and self-gates
 on the call having a destination, so refusals/no-transports never emit one. Delivery: `MllpTransport` (VT/FS/CR framing, MSA ack codes) joins the
 `Transport` protocol alongside MHD HTTP and file drop.
 
-### Inbound outcome loop (Phase 6): hospital A03 → eOutcome write-back
+### Inbound outcome loop (Phase 6): hospital discharge → eOutcome write-back
 
-`python -m emsinterop outcome <discharge.hl7> <pcr.xml...> [--apply out.xml]`
-parses a hospital ADT^A03, scores each candidate PCR on three signal groups —
+`python -m emsinterop outcome <discharge> <pcr.xml...> [--apply out.xml]`
+takes the hospital discharge on either rail — an ADT^A03 (ER7) or a FHIR
+Discharge Summary document Bundle (LOINC 18842-5, detected by content); both
+reduce to the same transport-neutral `OutcomeRecord`. It then scores each
+candidate PCR on three signal groups —
 identity (name+DOB or shared identifier), timing (hospital admit within a
 window after transfer of care), facility (sender vs EMS destination) — and
 links **only when every available signal agrees**; anything partial is
@@ -124,6 +127,26 @@ in .10/.13, the hospital visit number in .03/.04 (Hospital-Receiving), and
 the output re-validates against the pinned NEMSIS XSD — the state-registry
 resubmission form. Matching thresholds and delta-vs-full submission format
 are deliberately conservative defaults, revisable by policy.
+
+### Reverse mapping (Phase 6): FHIR → NEMSIS
+
+The authored ConceptMaps run backwards: `reverse_translate()` reverses only
+`equivalent`/`equal` rows (a `wider` row must not reverse — it would
+fabricate precision), and `mapping/reverse.py` applies the direction
+discipline — the dual-coded NEMSIS original wins when present; reversed
+ConceptMaps cover foreign US-Core-only resources. Demographics
+(`patient_to_nemsis`) are the round-trip proof, corpus-verified.
+
+### At-the-door push endpoint (Phase 6)
+
+`python -m emsinterop serve --config messaging.json [--bronze table]` — a
+stdlib WSGI service: `POST /push` takes a NEMSIS EMSDataSet and runs the
+same pipeline as the batch CLI synchronously (XSD → optional bronze landing
+→ convert → per-rail dispatch), so with fhirEngine in `single` mode the
+encounter is queryable the moment the push returns; prearrival A04 rides
+the same AdtConfig policy. 422 + OperationOutcome for invalid XML, 502 when
+a configured rail fails, delivery summaries only (never artifacts) in the
+response. Deploy behind TLS + an authenticating proxy.
 
 ### ITI-65 handoff packaging (Phase 5, ADR-008)
 

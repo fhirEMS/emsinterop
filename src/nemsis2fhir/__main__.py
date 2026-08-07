@@ -26,7 +26,6 @@ def main(argv: list[str] | None = None) -> int:
     p_convert.add_argument("xml")
     p_convert.add_argument("--document", action="store_true", help="print the mPSC document bundle")
     p_convert.add_argument("--iti65", action="store_true", help="print the ITI-65 Provide Document Bundle")
-    p_convert.add_argument("--ccda", action="store_true", help="print the C-CDA document (XML)")
     p_convert.add_argument("--variant", choices=["CR", "CS"], default="CR")
     p_convert.add_argument(
         "--dem",
@@ -80,9 +79,6 @@ def main(argv: list[str] | None = None) -> int:
             client = FhirEngineClient(args.submit, token=args.token)
             response = client.submit(result.transaction)
             print(json.dumps(response, indent=2))
-        elif args.ccda:
-            from .assemble.ccda import render_ccda
-            sys.stdout.buffer.write(render_ccda(result.context))
         else:
             if args.iti65:
                 from .transport import provide_document_bundle

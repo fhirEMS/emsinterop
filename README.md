@@ -85,28 +85,13 @@ single-PCR document with its header). Landing is **idempotent by file sha256**;
 audit/replay guarantee, test-enforced. This table never holds FHIR resources:
 fhirEngine is the sole writer of FHIR storage.
 
-### C-CDA projection (second document projection over Layer A)
+### C-CDA projection → moved to nemsis2ccda
 
-`assemble/ccda.py` renders the same in-memory graph as a **C-CDA R2.1 CCD**
-(`python -m nemsis2fhir convert <xml> --ccda`): US Realm header (patient,
-authoring device + agency, custodian, encompassingEncounter; document code
-34133-9 with 67796-3 EMS-PCR translation; confidentiality R when DS4P-tagged
-content is present) and five entry-bearing sections with narrative. NV/PN land
-in their **native CDA idioms**: NV → `nullFlavor` (NA/UNK/MSK), PN →
-`negationInd="true"` (medication-not-given with originalText reason,
-procedure-not-done, NKDA as a negated drug-allergy assertion). Dual-coding
-parity (ADR-003): NEMSIS originals ride as CDA `<translation>` elements
-(routeCode SNOMED+NEMSIS, PN reason codes, problem values), and NEMSIS-coded
-vitals (AVPU, cardiac rhythm, stroke scale, GCS qualifier) render as
-CD-valued component observations — nothing with a value is dropped. The
-template table is parameterized so IHE PCS CDA-supplement templateIds can
-layer on once pinned. Structural conformance is corpus-tested, and an
-**XSD schema tier** validates every corpus render against the vendored
-normative CDA R2 schema (`schemas/cda/`, HL7 BSD-style license):
-`NEMSIS2FHIR_CCDA_SCHEMA=1 .venv/bin/python -m pytest tests/test_ccda_schema.py`.
-**Known v1 gaps**: no schematron tier yet (ONC C-CDA validator — same
-Java/CI pattern as the other oracles), SNOMED (not NCI) routes, and a
-placeholder OID root for NEMSIS identifiers pending a real assignment.
+The C-CDA R2.1 projection now lives in its own repo —
+[**nemsis2ccda**](https://github.com/FHIRmedicConsulting/nemsis2ccda)
+(split 2026-08-07 with full history; separate administration). It consumes
+this repo's canonical graph as a dependency: one Layer A, two document
+projections. `python -m nemsis2ccda convert <xml> --dem dem.xml`.
 
 ### ITI-65 handoff packaging (Phase 5, ADR-008)
 

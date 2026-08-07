@@ -52,6 +52,12 @@ def main(argv: list[str] | None = None) -> int:
     p_land.add_argument("xml")
     p_land.add_argument("table", help="path to the bronze Delta table")
 
+    p_pkg = sub.add_parser(
+        "package-ig",
+        help="write the NEMSIS terminology + conformance artifacts as an unpacked "
+             "FHIR package (installable via fhirEngine's install-ig)")
+    p_pkg.add_argument("out_dir", help="directory to write the package into")
+
     p_reconcile = sub.add_parser(
         "reconcile",
         help="reconcile the conversion issue log against fhirEngine's dead-letter "
@@ -78,6 +84,11 @@ def main(argv: list[str] | None = None) -> int:
         from .ingest.bronze import land
         written = land(args.xml, args.table)
         print(json.dumps({"landed_rows": written, "table": args.table}))
+        return 0
+
+    if args.command == "package-ig":
+        from .terminology.igpackage import build_package
+        print(json.dumps(build_package(args.out_dir), indent=2))
         return 0
 
     if args.command == "reconcile":

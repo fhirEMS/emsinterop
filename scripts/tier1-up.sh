@@ -37,6 +37,15 @@ export FHIRENGINE_STORAGE_MODE=single
 # 2. Install US Core 6.1.0 (idempotent)
 (cd "$SERVER_DIR" && npx tsx scripts/fhirengine-terminology.ts install-ig "$USCORE_PKG" hl7.fhir.us.core)
 
+# 2b. Build + install the emsinterop.nemsis package (NEMSIS CodeSystem,
+# per-element ValueSets, ConceptMaps, extension SD) so the dual-coded NEMSIS
+# codings the mapper emits resolve in fhirEngine's terminology store.
+NEMSIS_PKG="$REPO_ROOT/.tier1-nemsis-pkg"
+PYTHON_BIN="${EMSINTEROP_PYTHON:-$REPO_ROOT/.venv/bin/python}"
+[ -x "$PYTHON_BIN" ] || PYTHON_BIN=python3
+PYTHONPATH="$REPO_ROOT/src" "$PYTHON_BIN" -m emsinterop package-ig "$NEMSIS_PKG"
+(cd "$SERVER_DIR" && npx tsx scripts/fhirengine-terminology.ts install-ig "$NEMSIS_PKG" emsinterop.nemsis)
+
 # 3. Server with declared-profile enforcement
 (cd "$SERVER_DIR" && PORT="$SERVER_PORT" FHIRENGINE_VALIDATION_PROFILES=declared npx tsx src/server.ts) &
 SERVER_PID=$!

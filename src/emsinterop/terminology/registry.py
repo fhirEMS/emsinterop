@@ -21,6 +21,11 @@ def _codes() -> dict[str, dict[str, str]]:
     return json.loads(ref.read_text())
 
 
+def elements() -> dict[str, dict[str, str]]:
+    """The whole registry: element id -> {code: display, "__name__": name}."""
+    return _codes()
+
+
 def display(element_id: str, code: str) -> str | None:
     """Official display text for a NEMSIS code, scoped by element id."""
     return _codes().get(element_id, {}).get(code)

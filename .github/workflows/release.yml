@@ -27,7 +27,36 @@ jobs:
       - name: Build the unpacked package
         run: |
           python -m emsinterop package-ig staging/package | tee summary.json
-          { echo '```json'; cat summary.json; echo '```'; } > release-notes.md
+      - name: Release notes = this version's CHANGELOG section + package summary
+        id: notes
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          # Pre-1.0 or any non-numeric suffix (a1/rc1/-beta) => GitHub pre-release.
+          case "$VERSION" in
+            0.*|*[!0-9.]*) echo "prerelease=true"  >> "$GITHUB_OUTPUT" ;;
+            *)             echo "prerelease=false" >> "$GITHUB_OUTPUT" ;;
+          esac
+          # The section for this version, up to (not including) the next "## v".
+          awk -v v="## v$VERSION" '
+            $0 ~ "^" v { inside = 1; next }
+            inside && /^## v/ { exit }
+            inside { print }
+          ' CHANGELOG.md > release-notes.md
+          if [ ! -s release-notes.md ]; then
+            echo "no CHANGELOG section for v$VERSION" >&2
+            exit 1
+          fi
+          {
+            echo
+            echo '### Terminology package'
+            echo
+            echo 'Attached as `emsinterop.nemsis-'"$VERSION"'.tgz` — install into fhirEngine with'
+            echo '`fhirengine-terminology install-ig <unpacked-dir> emsinterop.nemsis`.'
+            echo
+            echo '```json'
+            cat summary.json
+            echo '```'
+          } >> release-notes.md
       - name: Version must match the tag
         run: |
           PKG_VERSION=$(python -c "import json; print(json.load(open('staging/package/package.json'))['version'])")
@@ -44,4 +73,4 @@ jobs:
         with:
           files: emsinterop.nemsis-*.tgz
           body_path: release-notes.md
-          append_body: true
+          prerelease: ${{ steps.notes.outputs.prerelease }}

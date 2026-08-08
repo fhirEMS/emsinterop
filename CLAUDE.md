@@ -7,8 +7,13 @@ Guidance for Claude Code working in this repo. Read `docs/01_Architecture_Design
 A translation engine that converts **NEMSIS v3.5 ePCR XML** into **IHE-conformant FHIR R4** and
 loads it into **fhirEngine** (Chad's OSS FHIR R4 server, sibling repo at `../fhirEngine`).
 
-It is **greenfield** — the `docs/` here are the specification; the code does not exist yet.
-Build it in the phase order of `docs/04_Phased_Roadmap.md`.
+**It is built.** As of **v0.3.0 (alpha)** every roadmap phase P0–P7 is implemented: ingest,
+canonical mapping, mPSC documents, HL7 v2 ADT, C-CDA (sibling `nemsis2ccda`), submission,
+transport, the outcome loop, ops tooling, and the upstream contribution package. `docs/` is
+still the specification — read it before changing behavior — but treat the code as the
+current truth and keep the two in sync. Remaining work is field hardening, not phase work
+(see the README's "Scope & limitations"). The suite is `python -m pytest` (187 passing;
+Tier-1/Tier-2/FML-oracle tiers are env-gated skips).
 
 ## The one framing that governs everything
 "The IHE EMS spec" is two IGs:
@@ -51,7 +56,7 @@ no JVM in production.** DuckDB reads fhirEngine's Gold Delta tables for analytic
 - **Sex:** prefer `ePatient.25 Sex`; `ePatient.13 Gender` is deprecated in 3.5.0 (legacy fallback).
 - **The mapper tags DS4P/security labels** (fhirEngine enforces but expects upstream tagging).
 
-## Suggested initial structure (propose before scaffolding)
+## Structure (as built)
 ```
 src/                 # Python mapper
   ingest/            # XML load → raw-NEMSIS Delta bronze (deltalake); XSD/Schematron validate
@@ -61,18 +66,26 @@ src/                 # Python mapper
   assemble/          # mPSC-CS / mPSC-CR Composition + document Bundle builders
   submit/            # transaction Bundle builder + fhirEngine REST client
   transport/         # ITI-65 / XDR / XDM / file adapters
+  outcome/           # inbound loop: ADT^A03 + FHIR Discharge Summary → match → eOutcome
+  analytics/         # Safe-Harbor de-id projection over fhirEngine Gold (DuckDB read)
+  config.py          # MessagingConfig rails (fhir | adt | ccda) + dispatch()
+  serve.py           # at-the-door push endpoint (WSGI)
+  reconcile.py       # issue log ↔ fhirEngine dead-letter → gap register
+  log.py             # PHI-safe structured logging (field allowlist)
 maps/                # StructureMaps (FML) + ConceptMaps — the upstream-contributable spec
 tests/               # golden corpus (NV/PN, arrest, MCI, interfacility, peds, refusal) + harness
-docs/                # the specification (start here)
+docs/                # the specification (start here); 05_Operations.md is the runbook
+contrib/             # IHE PCC mPSC contribution package (field map, gap report, proposals)
+nemsis2ccda/         # sibling repo, nested + gitignored: the C-CDA rail
 ```
 Language: **Python** (matches fhirEngine's sidecar; lxml/pydantic/deltalake/duckdb). TS is fine for
 any thin service colocated with the server, but the mapper is Python.
 
-## Build order (from docs/04_Phased_Roadmap.md)
-P0 foundations (pin IG versions; stand up fhirEngine + install US Core 6.1.0 / IPS / mPSC IG
-packages; confirm source NEMSIS version) → P1 ingest/parse/validate → **P2 golden corpus + harness
-(before heavy mapping)** → P3 canonical mapper (the bulk) → P4 document assembly → P5 packaging/
-transport/ops → P6 outcome loop (future) → P7 upstream contribution (parallel).
+## Build order (historical — all phases delivered in v0.3.0)
+P0 foundations → P1 ingest/parse/validate → P2 golden corpus + harness → P3 canonical mapper →
+P4 document assembly → P5 packaging/transport/ops → P6 outcome loop → P7 upstream contribution.
+Kept for context on *why* the code is shaped this way; new work is field hardening, so start
+from the code and `CHANGELOG.md` rather than the phase plan.
 
 ## Definition of done for a panel
 Every element dispositioned in `docs/02_..._S2T_Mapping.xlsx`; golden-corpus cases green through
@@ -81,4 +94,14 @@ Provenance emitted; NV/PN cases covered.
 
 ## Open items to confirm with Chad
 - Exact source NEMSIS minor/patch (3.5.0 CP-level vs 3.5.1) — drives XSD pinning + sex logic.
+  (Pinned to 3.5.0 today; 3.5.1 deltas handled as overrides but not corpus-tested.)
 - Whether to add `$translate` to fhirEngine (optional upstream contribution).
+- Production PHI enablement — needs fhirEngine's fail-closed profile and a DS4P/consent
+  review (`docs/05_Operations.md` §1). Until then: **synthetic data only.**
+
+## Standing constraints
+- **Never open issues or PRs in repositories Chad does not own** (IHE and any other
+  third party). Upstream material lives in `contrib/` as channel-neutral proposals;
+  the delivery channel is Chad's decision.
+- Local dev gotcha: after any `pip install -e`, pip-written `__editable__*.pth` files are
+  silently ignored on this Mac — rewrite them in place, or use `PYTHONPATH=src`.

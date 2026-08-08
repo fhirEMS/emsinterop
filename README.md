@@ -4,8 +4,16 @@ A translation engine converting **NEMSIS v3.5 EMS Patient Care Report (ePCR) XML
 **IHE-conformant FHIR R4** (IHE PCC mPSC / US Core), loaded into
 [**fhirEngine**](../fhirEngine) on OSS Delta Lake. No Databricks, no Spark, no JVM.
 
-> **Status:** design complete, greenfield code. The `docs/` folder is the specification.
-> Start with `docs/01_Architecture_Design.md`, then build in the order of `docs/04_Phased_Roadmap.md`.
+> **Status: v0.3.0 — alpha.** Every roadmap phase (P0–P7) is implemented: ingest,
+> canonical mapping, mPSC documents, HL7 v2 ADT, C-CDA (via `nemsis2ccda`), submission,
+> transport, the outcome loop, ops tooling, and the upstream contribution package.
+> The corpus validates clean through the official HL7 validator and a live fhirEngine.
+>
+> Alpha means: **synthetic data only — not yet run against production PHI**; the target
+> mPSC IG is itself a draft (v2.0.0-draft) and moves; the golden corpus is six cases, not
+> a field-scale sample. Read `docs/01_Architecture_Design.md` for the design,
+> `docs/05_Operations.md` to deploy, and "Scope & limitations" below before trusting it
+> with real patients.
 
 ## How it works (short version)
 NEMSIS XML → a native **Python mapper** (this repo) that parses, applies ConceptMaps, and builds a
@@ -25,17 +33,35 @@ NEMSIS 3.5 XML ─▶ emsinterop (Python: parse → map → ConceptMaps → asse
 ## Getting started (dev)
 
 ```bash
-python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'
+python3 -m venv .venv && .venv/bin/python -m pip install -e '.[dev,bronze,analytics]'
 .venv/bin/python -m pytest                       # golden-corpus + unit tests
 .venv/bin/python -m emsinterop validate tests/fixtures/pcr_chest_pain.xml
 .venv/bin/python -m emsinterop convert tests/fixtures/pcr_chest_pain.xml --issues
 .venv/bin/python -m emsinterop convert tests/fixtures/pcr_chest_pain.xml --submit http://localhost:8080
 ```
 
+Extras: `bronze` (raw-NEMSIS Delta audit/replay), `analytics` (de-id projection),
+`dev` (pytest + openpyxl). The core install has no Delta/DuckDB dependency — a
+deployment that only converts and transmits needs neither.
+
+### The CLI at a glance
+
+| Command | What it does |
+|---|---|
+| `validate <xml>` | XSD-validate a NEMSIS EMSDataSet; prints an `OperationOutcome` |
+| `convert <xml>` | Convert → transaction bundle (or `--document`, `--iti65`, `--adt`, `--config` to dispatch rails, `--submit` to POST) |
+| `serve` | At-the-door push endpoint (`POST /push`) running the same pipeline in real time |
+| `outcome <discharge> <pcr…>` | Match a hospital ADT^A03 or FHIR Discharge Summary to a PCR; `--apply` writes back eOutcome |
+| `land <xml> <table>` | Land raw NEMSIS in the bronze Delta table (audit/replay) |
+| `reconcile <bronze> <delta-base>` | Join fhirEngine's dead-letter tables to the conversion issue log → gap register |
+| `deid <delta-base> <out>` | Safe-Harbor de-identified analytics projection |
+| `package-ig <dir>` | Build the `emsinterop.nemsis` FHIR package (CodeSystem + ValueSets + ConceptMaps) |
+
 Layout: `src/emsinterop/` (ingest → model → mapping → terminology → assemble →
-submit), `maps/conceptmaps/` (authored FHIR ConceptMaps — the upstream-contributable
-spec), `schemas/nemsis/3.5.0/` (pinned NEMSIS XSDs), `tests/fixtures/` (XSD-valid
-golden corpus).
+submit, plus `outcome/`, `transport/`, `analytics/`, `serve.py`), `maps/` (authored
+ConceptMaps, StructureMaps, logical models — the upstream-contributable spec),
+`schemas/nemsis/3.5.0/` (pinned NEMSIS XSDs), `tests/fixtures/` (XSD-valid golden
+corpus), `contrib/` (the IHE contribution package).
 
 ### Tier-1 validation (live fhirEngine)
 
@@ -221,6 +247,32 @@ default, prearrival opt-in); `ccda` renders a C-CDA R2.1 CCD via the optional
 Endpoints are optional per rail (fhirEngine URL, MHD recipient, MLLP
 host:port) — configured, artifacts are delivered; unconfigured, they're
 produced and reported. See `emsinterop/config.py`.
+
+## Scope & limitations (read before production use)
+
+What the alpha label means concretely:
+
+- **Synthetic data only.** Nothing here has processed production PHI. Before it does,
+  fhirEngine must boot under `FHIRENGINE_SECURITY_PROFILE=production` (fail-closed on
+  auth/audit/TLS) and the DS4P/consent posture in `docs/05_Operations.md` §1 must be
+  reviewed by someone accountable for it.
+- **The target IG is a moving draft.** IHE PCC mPSC is at v2.0.0-draft with no tagged
+  release; its published and master branches differ. Layer B (document assembly) is
+  deliberately thin so the canonical graph survives IG churn — but mPSC conformance
+  claims are provisional until the IG stabilizes. Findings we filed against it are in
+  `contrib/gap-report.md`.
+- **Six-case corpus.** Cardiac arrest, MCI, interfacility, pediatric, refusal, chest
+  pain — chosen for edge-case coverage (NV/PN, negation, repeating groups), not
+  statistical representativeness. Real agency exports will surface elements these
+  cases never exercise; the conversion issue log is designed to make that visible
+  rather than silent.
+- **Deferred by design:** the `eOutcome` panel beyond the implemented loop, `ePayment`
+  billing detail, and reverse mapping outside demographics. All are ledgered as
+  `Deferred` in the workbook, never silently dropped.
+- **Single-node throughput.** No Spark/cluster path (ADR-010). Fine for agency-scale
+  PCR volumes; a very large state-registry backfill would need revisiting.
+- **NEMSIS 3.5.0** is the pinned source version; 3.5.1 deltas are handled as overrides
+  but not corpus-tested.
 
 ## Documentation
 | File | What it is |

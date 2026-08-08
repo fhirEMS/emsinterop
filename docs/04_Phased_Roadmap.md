@@ -1,6 +1,15 @@
-# Phased Build Roadmap — nemsis2FHIR
+# Phased Build Roadmap — emsInterop
 NEMSIS 3.5 → IHE EMS (mPSC / US Core) FHIR translation engine
-Date: 2026-08-06 · Status: Proposed
+Date: 2026-08-06 · Status: **all phases delivered as of v0.3.0 (2026-08-08)**
+
+> **Delivery status.** P0–P5 shipped across v0.1.0–v0.3.0; P6 (outcome loop,
+> reverse mapping, at-the-door push) and P7 (upstream contribution package)
+> shipped in v0.3.0 — both ahead of their "future / post-MVP" planning position
+> below, which is left unedited as the historical plan of record. What remains is
+> not phase work but **field hardening**: production PHI enablement, a
+> larger corpus from real agency exports, and whatever the mPSC IG returns.
+> See `CHANGELOG.md` for what each release contains and the README's
+> "Scope & limitations" for what alpha still means.
 
 Effort bands are relative (S ≈ days, M ≈ 1–2 wks, L ≈ 3–6 wks, XL ≈ quarter); treat as planning shape, not commitments. Risk = likelihood × impact on delivery. **Runtime (rev 2): native Python mapper → fhirEngine REST; Delta OSS is fhirEngine's backing store; no Databricks/Spark (ADR-002/009/010).**
 

@@ -1,5 +1,75 @@
 # Changelog
 
+## v0.3.0 — 2026-08-08 — **alpha**
+
+First release with every roadmap phase (P0–P7) implemented. Additive over the
+0.2 line: no breaking changes to the downstream compatibility surface
+(`MappingContext`, `convert()`/`ConversionResult`, corpus layout).
+
+**Phase 5 — operations & governance**
+
+- **Dead-letter reconciliation** (`emsinterop reconcile <bronze> <delta-base>`):
+  replays raw-NEMSIS bronze, re-converts, and joins fhirEngine's
+  `deadletter/<type>` Delta tables (read-only) back to PCRs by deterministic
+  resource id or PCR business identifier — the gap-register feed. The
+  conversion issue log now persists (`IssueLog.write_jsonl` / `read_jsonl`,
+  `convert --issues-out`), and submit-time rejections fold into it: fhirEngine
+  rejects transactions *atomically*, so a rejected PCR never reaches the
+  server-side dead-letter and its `OperationOutcome` is the only record.
+  `--submit` and `--config` dispatch now exit non-zero on failure.
+- **PHI-safe structured logging** (`emsinterop.log`): `event()` enforces
+  metadata-only output through a field allowlist — non-allowlisted fields are
+  dropped by name, never by value — so a call site cannot leak a patient value.
+  `NullHandler` on the library root; instrumented at the convert/submit/bronze/
+  dispatch seams. Corpus-wide test asserts no fixture PHI reaches DEBUG logs.
+- **`emsinterop.nemsis` FHIR package** (`emsinterop package-ig <dir>`): the local
+  clean NEMSIS registry as a CodeSystem (2,321 concepts, `content=fragment`)
+  plus 205 per-element ValueSets and the authored ConceptMaps/extension/logical
+  models — installable into fhirEngine via `fhirengine-terminology install-ig`,
+  so dual-coded NEMSIS codings pass `$validate-code`. `scripts/tier1-up.sh`
+  installs it alongside US Core 6.1.0.
+- **Safe-Harbor de-identified analytics** (`emsinterop deid <delta-base> <out>`):
+  reads fhirEngine's Gold (Bronze fallback) Delta tables via DuckDB and
+  materializes flattened `encounters`/`vitals` tables, de-identified by
+  *construction* — salted-hash pseudonyms (stable `--salt` for cross-run
+  linkage), year-only dates, ages capped at 90, state + ZIP3 with the 17
+  restricted prefixes nulled. Names/addresses/telecoms/identifiers are never
+  projected.
+- **Release CI + runbook**: tag-triggered workflow builds and attaches the
+  terminology package (refusing a version/tag mismatch); `docs/05_Operations.md`
+  documents prod gates, provisioning, the steady-state pipeline, promotion,
+  de-id cadence, and releases. DS4P labels and NEMSIS terminology are now
+  asserted end-to-end in the Tier-1 harness.
+
+**Phase 6 — the outcome loop closes**
+
+- **FHIR Discharge Summary rail**: a hospital discharge document (LOINC 18842-5)
+  reduces to the same transport-neutral `OutcomeRecord` as ADT^A03, so the
+  conservative three-signal matcher and XSD-order-preserving eOutcome write-back
+  are shared. `emsinterop outcome` sniffs ER7 vs JSON.
+- **Reverse mapping** (FHIR → NEMSIS): `reverse_translate()` runs the authored
+  ConceptMaps backwards, reversing only `equivalent`/`equal` rows — a `wider`
+  row must not reverse, as it would fabricate precision the source never
+  asserted. `patient_to_nemsis()` recovers the demographics panel; corpus
+  round-trip tested.
+- **At-the-door push endpoint** (`emsinterop serve`): stdlib WSGI; `POST /push`
+  runs the batch pipeline synchronously (XSD → optional bronze landing →
+  convert → per-rail dispatch), so with fhirEngine in `single` mode the
+  encounter is queryable the moment the push returns. 422 + `OperationOutcome`
+  for invalid XML, 502 when a configured rail fails; delivery summaries only —
+  artifacts and resource content are never echoed back.
+
+**Phase 7 — upstream contribution**
+
+- `contrib/`: the completed 212-row NEMSIS→FHIR field map exported from the S2T
+  workbook (`scripts/export-fieldmap.py`), a gap report re-verified against the
+  live mPSC v2.0.0-draft CI build, and six channel-neutral proposal documents.
+  No issues are filed in third-party repositories; the delivery channel is the
+  maintainer's decision.
+
+**Compatibility.** Downstream consumers pinning `emsinterop>=0.2.0,<0.3` should
+widen to `<0.4` — the surface is unchanged, the cap is what needs moving.
+
 ## v0.2.0 — 2026-08-07
 
 **Renamed: nemsis2fhir → emsInterop** (package `emsinterop`). The engine now

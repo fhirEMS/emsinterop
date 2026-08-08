@@ -32,11 +32,13 @@ line, body ready to paste:
 3. **issue-03** — mapping-table errata (typos, missing elements, version pin)
 4. **issue-04** — proposed clinical Composition sections
 5. **issue-05** — eOutcome / QRPH "QORE" binding pin
-6. **issue-06** — alignment & process (US Core note, release cadence, ITI bindings — the ITI item belongs on the EMS-Overall repo, noted inline)
+6. **issue-06** — alignment & process (US Core note, release cadence, ITI bindings — the ITI item concerns EMS-Overall but is raised on PCC.PCS with a redirect note; we file on PCC.PCS only)
 
-Suggested order: file 01 first (it frames the rest), then 02–04 referencing
-it; 05–06 are discussion-starters. Keep each issue self-contained — IG
-editors triage independently.
+Suggested order: a short heads-up first (one intro issue, or direct contact
+with the named repo contact) so the editors can say how they'd like to
+receive the set; then 01 (it frames the rest), then 02–04 referencing it;
+05–06 are discussion-starters. Keep each issue self-contained — IG editors
+triage independently. All filing happens on github.com/IHE/PCC.PCS only.
 
 ## Regenerating
 

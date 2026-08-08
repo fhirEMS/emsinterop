@@ -1,7 +1,8 @@
 # Alignment & process: US Core note, release cadence, EMS-Overall transaction bindings
 
-Three smaller items, offered as discussion-starters. (The third belongs on
-the EMS-Overall repo — filed here only if the editors prefer one venue.)
+Three smaller items, offered as discussion-starters. The third concerns the
+companion EMS-Overall IG rather than mPSC itself — raised here since the
+same PCC editors maintain both; please redirect it wherever it belongs.
 
 **1. US Core alignment note (US realm).** The IG carries race/ethnicity via
 the universal `pcc-uv-race` / `pcc-uv-ethnicity` extensions only. US-realm

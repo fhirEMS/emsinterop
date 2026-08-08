@@ -114,7 +114,7 @@ fhirEngine is the sole writer of FHIR storage.
 ### C-CDA projection → moved to nemsis2ccda
 
 The C-CDA R2.1 projection now lives in its own repo —
-[**nemsis2ccda**](https://github.com/FHIRmedicConsulting/nemsis2ccda)
+[**nemsis2ccda**](https://github.com/fhirEMS/nemsis2CCDA)
 (split 2026-08-07 with full history; separate administration). It consumes
 this repo's canonical graph as a dependency: one Layer A, two document
 projections. `python -m nemsis2ccda convert <xml> --dem dem.xml`.
@@ -242,7 +242,7 @@ One JSON config picks the rails (`python -m emsinterop convert <xml> --config me
 `both` = fhir+adt, `all`) — FHIR (transaction to fhirEngine + optional ITI-65)
 is the default; ADT rides the `AdtConfig` policy (completed-call A03 by
 default, prearrival opt-in); `ccda` renders a C-CDA R2.1 CCD via the optional
-[nemsis2ccda](https://github.com/FHIRmedicConsulting/nemsis2ccda) package
+[nemsis2ccda](https://github.com/fhirEMS/nemsis2CCDA) package
 (install it to enable the rail; `ccda.out_dir` writes the documents).
 Endpoints are optional per rail (fhirEngine URL, MHD recipient, MLLP
 host:port) — configured, artifacts are delivered; unconfigured, they're

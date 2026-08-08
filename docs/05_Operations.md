@@ -101,9 +101,33 @@ the identified store is never exposed to analytics.
 
 ## 6. Release process
 
-Bump `pyproject.toml` version + `CHANGELOG.md`, tag `vX.Y.Z`, push the tag.
-CI gates every push (local suite + Tier-2 HL7 validator); the release workflow
-builds the terminology package, refuses a version/tag mismatch, and attaches
-the tarball. Tier-1 (live fhirEngine) and the FML oracle remain local
-pre-release checks: `./scripts/tier1-up.sh`, then
-`EMSINTEROP_TIER1_URL=http://127.0.0.1:8095 python -m pytest tests/test_tier1_fhirengine.py`.
+**Gates, in order.** The first two run in CI on every push; the last two are
+local because they need a live server / JVM + network.
+
+```sh
+python -m pytest                                          # 1. local suite
+EMSINTEROP_TIER2=1 EMSINTEROP_VALIDATOR_JAR=~/validator_cli.jar \
+  python -m pytest tests/test_tier2_validator.py          # 2. official HL7 validator (authoritative)
+./scripts/tier1-up.sh &                                   # 3. live fhirEngine (~18 min harness)
+EMSINTEROP_TIER1_URL=http://127.0.0.1:8095 \
+  python -m pytest tests/test_tier1_fhirengine.py
+EMSINTEROP_FML_ORACLE=1 python -m pytest tests/test_fml_oracle.py   # 4. FML fidelity oracle
+```
+
+**Cut the release.** Bump `version` in `pyproject.toml` and add the matching
+`## vX.Y.Z` section to `CHANGELOG.md` (the workflow reads that section verbatim
+as the release notes and **fails if it is missing**). Then tag and push:
+
+```sh
+git tag -a vX.Y.Z -m "vX.Y.Z" && git push origin main --follow-tags
+```
+
+The workflow builds the `emsinterop.nemsis` terminology package, refuses a
+version/tag mismatch, attaches the tarball, and marks any `0.x` or
+suffixed (`a1`/`rc1`) tag as a GitHub pre-release.
+
+**Downstream.** `nemsis2ccda` pins `emsinterop>=X.Y,<X.Y+1`; a minor bump means
+bumping that cap in the sibling repo and re-running its suite. The compatibility
+surface it consumes is `MappingContext` (`resources`, `pcr`, `header`, `rid()`,
+`agency_names`), `convert()`/`ConversionResult`, and the corpus layout — changes
+there need a heads-up, not just a version bump.

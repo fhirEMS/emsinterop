@@ -32,6 +32,6 @@ We'd gladly PR the cleaned CodeSystem (and ValueSets/ConceptMaps if wanted)
 into the IG source, or hand over the generator.
 
 Package: release tarballs at
-<https://github.com/FHIRmedicConsulting/emsInterop/releases>
+<https://github.com/fhirEMS/emsinterop/releases>
 (`emsinterop.nemsis-<version>.tgz`); regenerable via
 `python -m emsinterop package-ig <dir>`.

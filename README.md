@@ -294,6 +294,8 @@ What the alpha label means concretely:
   table, structured to contribute back to IHE PCC / HL7 EMS WG.
 
 ## Related
+- **This repo:** <https://github.com/fhirEMS/emsinterop> — releases carry the
+  `emsinterop.nemsis` terminology package as a tarball.
 - [`../fhirEngine`](../fhirEngine) — the FHIR R4 server / repository this loads into.
 - IHE EMS-Overall: https://build.fhir.org/ig/IHE/EMS-Overall/
 - IHE PCC mPSC: https://build.fhir.org/ig/IHE/PCC.PCS/

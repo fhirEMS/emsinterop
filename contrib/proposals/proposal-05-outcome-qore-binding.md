@@ -21,5 +21,5 @@ hospital outcome data has no target.
 Happy to share the matching heuristics and the eOutcome write-back rules as
 input to the QORE/mPSC discussion.
 
-Reference: <https://github.com/FHIRmedicConsulting/emsInterop>
+Reference: <https://github.com/fhirEMS/emsinterop>
 (`src/emsinterop/outcome/`).

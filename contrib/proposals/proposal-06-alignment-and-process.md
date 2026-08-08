@@ -27,4 +27,4 @@ default, with XDR/XDM as alternates behind a transport interface — that
 choice being blessed or corrected upstream would settle it for everyone).
 
 Reference implementation for all three:
-<https://github.com/FHIRmedicConsulting/emsInterop>.
+<https://github.com/fhirEMS/emsinterop>.

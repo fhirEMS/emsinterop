@@ -67,6 +67,10 @@ First release with every roadmap phase (P0–P7) implemented. Additive over the
   No issues are filed in third-party repositories; the delivery channel is the
   maintainer's decision.
 
+**Repository.** Canonical home is now <https://github.com/fhirEMS/emsinterop>.
+Git-URL installs and the `nemsis2ccda` pin comment point there; update any local
+remote with `git remote set-url origin https://github.com/fhirEMS/emsinterop.git`.
+
 **Compatibility.** Downstream consumers pinning `emsinterop>=0.2.0,<0.3` should
 widen to `<0.4` — the surface is unchanged, the cap is what needs moving.
 

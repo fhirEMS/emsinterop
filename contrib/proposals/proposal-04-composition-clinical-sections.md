@@ -30,5 +30,5 @@ validator, sections populated from real NEMSIS panels including the
 NV/PN edge cases. We can contribute the slice definitions as FSH/SD PRs if
 the direction is agreeable.
 
-Reference: <https://github.com/FHIRmedicConsulting/emsInterop>
+Reference: <https://github.com/fhirEMS/emsinterop>
 (`src/emsinterop/assemble/composition.py`, golden corpus under `tests/`).

@@ -34,6 +34,6 @@ the core panels and are CI-checked against the reference Java engine.
 page's table source, the CSV as an IG input, or the markdown tables as a
 starting point for review. We're happy to rework the format.
 
-Artifacts: <https://github.com/FHIRmedicConsulting/emsInterop> —
+Artifacts: <https://github.com/fhirEMS/emsinterop> —
 `contrib/fieldmap/` (tables), `maps/` (FML + ConceptMaps + logical models),
 `docs/02_NEMSIS35_to_FHIR_S2T_Mapping.xlsx` (source workbook).

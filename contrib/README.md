@@ -1,16 +1,16 @@
 # Upstream contribution package — IHE PCC mPSC (Roadmap P7)
 
-Everything needed to file the emsInterop mapping superset as a contribution
-to the **IHE PCC mobile Paramedicine Summary of Care (mPSC)** IG, prepared
-and evidence-checked; the actual filing is a human step (Chad's GitHub
-identity, IHE's channels).
+The emsInterop mapping superset prepared as a contribution to the **IHE PCC
+mobile Paramedicine Summary of Care (mPSC)** IG, evidence-checked and
+channel-neutral. **Policy: no issues will be opened in IHE (or any
+third-party) repositories.** The proposals are standalone documents; whether
+and how they are sent is Chad's call.
 
 **Verification baseline:** every defect claim below was re-verified
 **2026-08-07** against the mPSC **v2.0.0-draft CI build** (page footer
-2025-10-30) at <https://build.fhir.org/ig/IHE/PCC.PCS/>. Source repo:
-<https://github.com/IHE/PCC.PCS> (repo README: under construction; questions
-to Andrea Fourquet). If the CI build has moved when filing, re-check the
-three quick probes in `gap-report.md` first.
+2025-10-30) at <https://build.fhir.org/ig/IHE/PCC.PCS/>. If the CI build has
+moved when submitting, re-check the three quick probes in `gap-report.md`
+first.
 
 ## What we are offering
 
@@ -22,23 +22,34 @@ three quick probes in `gap-report.md` first.
 | Errata reconciliation vs NEMSIS 3.5.0 | `issues/issue-03-*.md` | Typos + missing elements in the mapping table |
 | StructureMaps (FML) + logical models | `maps/structuremaps/`, `maps/logical/` | Executable form of the mapping, CI-checked against the reference Java engine |
 
-## Filing plan
+## The proposals
 
-Draft issue texts live in `issues/` — one file per issue, title on the first
-line, body ready to paste:
+Six standalone documents in `proposals/` — title on the first line, body
+self-contained, no channel assumed:
 
-1. **issue-01** — the completed field map (the headline contribution)
-2. **issue-02** — NEMSIS CodeSystem cleanup + offered replacement
-3. **issue-03** — mapping-table errata (typos, missing elements, version pin)
-4. **issue-04** — proposed clinical Composition sections
-5. **issue-05** — eOutcome / QRPH "QORE" binding pin
-6. **issue-06** — alignment & process (US Core note, release cadence, ITI bindings — the ITI item concerns EMS-Overall but is raised on PCC.PCS with a redirect note; we file on PCC.PCS only)
+1. **proposal-01** — the completed field map (the headline contribution)
+2. **proposal-02** — NEMSIS CodeSystem cleanup + offered replacement
+3. **proposal-03** — mapping-table errata (typos, missing elements, version pin)
+4. **proposal-04** — proposed clinical Composition sections
+5. **proposal-05** — eOutcome / QRPH "QORE" binding pin
+6. **proposal-06** — alignment & process (US Core note, release cadence, ITI bindings — includes an EMS-Overall concern, with a note asking the editors to route it)
 
-Suggested order: a short heads-up first (one intro issue, or direct contact
-with the named repo contact) so the editors can say how they'd like to
-receive the set; then 01 (it frames the rest), then 02–04 referencing it;
-05–06 are discussion-starters. Keep each issue self-contained — IG editors
-triage independently. All filing happens on github.com/IHE/PCC.PCS only.
+## Channels (no repo issues)
+
+Options that do not involve opening issues anywhere:
+
+- **Direct email** to the IHE PCC Technical Committee / the mPSC editor
+  (the IG repo names Andrea Fourquet as contact), with the proposals
+  attached or this directory linked once public.
+- **IHE's public-comment process** (ihe.net) when the IG next opens a
+  comment period — proposals 03/05/06 fit that format directly.
+- **chat.fhir.org** — the implementers' Zulip has IHE-adjacent streams;
+  a summary post linking here starts the conversation without any filing.
+- **Passive publication** — this directory in the public repo IS the
+  contribution; the IG editors can take any of it under its license
+  whenever they find it.
+
+proposal-01 doubles as the cover letter for any of these.
 
 ## Regenerating
 

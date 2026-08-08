@@ -1,7 +1,7 @@
 # NEMSIS-Mapping.html errata: element-id typos, missing elements, no version pin
 
 Verified against the v2.0.0-draft CI build (2026-08-07). Three independent
-fixes, filed together because they all concern the mapping table's use as a
+fixes, grouped because they all concern the mapping table's use as a
 machine-consumable inventory:
 
 **1. Element-id typos**
@@ -23,7 +23,7 @@ the NEMSIS v3.5.0 data dictionary:
 - ePayment rows appear out of dictionary order mid-panel
 
 A full reconciliation against the 3.5.0 dictionary is available (the
-complete field map offered in the companion issue covers every national
+complete field map offered in the companion proposal covers every national
 element per panel).
 
 **3. No NEMSIS version declared.** The mapping page never states which

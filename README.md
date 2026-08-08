@@ -230,7 +230,7 @@ produced and reported. See `emsinterop/config.py`.
 | `docs/03_ADRs.md` | 10 architecture decision records (layered output, native-Python-mapper→fhirEngine runtime, terminology, identity/MPI, conformance, validation contract, versioning, transport, fhirEngine-as-SoR, no-Spark). |
 | `docs/04_Phased_Roadmap.md` | Phased build plan (P0–P7) with effort/risk and critical path. |
 | `docs/05_Operations.md` | Deployment runbook: prod gates, terminology provisioning, land→convert→dispatch→reconcile pipeline, promotion, de-id analytics, releases. |
-| `contrib/` | The IHE PCC mPSC contribution package (Phase 7): completed field map export, verified gap report, draft IG issues ready to file. |
+| `contrib/` | The IHE PCC mPSC contribution package (Phase 7): completed field map export, verified gap report, six channel-neutral proposal documents (no repo issues are opened; delivery channel is Chad's call). |
 | `CLAUDE.md` | Fast orientation + hard rules for Claude Code sessions. |
 
 ## Key design commitments

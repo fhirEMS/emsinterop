@@ -33,9 +33,9 @@ def fixture_path():
     return CHEST_PAIN
 
 
-# Optional sibling: the ccda rail's renderer (the nemsis2ccda checkout
+# Optional sibling: the ccda rail's renderer (the nemsis2CCDA checkout
 # nests inside this repo; its conftest resolves us the same way). Harmless when absent — the rail reports its unavailability.
 import sys as _sys
-_ccda_src = Path(__file__).resolve().parents[1] / "nemsis2ccda" / "src"
+_ccda_src = Path(__file__).resolve().parents[1] / "nemsis2CCDA" / "src"
 if _ccda_src.exists() and str(_ccda_src) not in _sys.path:
     _sys.path.insert(0, str(_ccda_src))

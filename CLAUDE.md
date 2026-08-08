@@ -76,7 +76,7 @@ maps/                # StructureMaps (FML) + ConceptMaps — the upstream-contri
 tests/               # golden corpus (NV/PN, arrest, MCI, interfacility, peds, refusal) + harness
 docs/                # the specification (start here); 05_Operations.md is the runbook
 contrib/             # IHE PCC mPSC contribution package (field map, gap report, proposals)
-nemsis2ccda/         # sibling repo, nested + gitignored: the C-CDA rail
+nemsis2CCDA/         # sibling repo, nested + gitignored: the C-CDA rail
 ```
 Language: **Python** (matches fhirEngine's sidecar; lxml/pydantic/deltalake/duckdb). TS is fine for
 any thin service colocated with the server, but the mapper is Python.

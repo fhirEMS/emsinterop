@@ -271,27 +271,22 @@ What the alpha label means concretely:
   finds something new, that gets distilled into a hostile fixture. Real agency
   exports will still surface elements none of these exercise; the conversion
   issue log is designed to make that visible rather than silent.
-- **Known non-conformances**, both standards limitations rather than mapping
-  bugs, and both recorded in the issue ledger per record:
-  - *A patient who refused to state their sex cannot produce a US-Core-conformant
-    document.* `us-core-patient` requires `gender` (min 1), a data-absent
-    extension does not satisfy a minimum, and US Core requires every `subject`
-    reference to point at a `us-core-patient` — so the non-conformance cascades
-    to Encounter/Condition/Observation. We withhold the claim rather than invent
-    a gender the source never recorded.
+- **Known non-conformance**, a standards limitation rather than a mapping bug:
   - *`24:00:00±hh:mm` is XSD-valid NEMSIS and invalid FHIR.* Not yet normalized.
 - **Absence is carried, never papered over.** A VitalGroup with no `eVitals.01`
   is expressed at the encounter's **date** precision — FHIR `dateTime` is
   variable-precision, so this asserts exactly what the source supports and no
-  time of day it never recorded. Where nothing is derivable at any precision
-  (sex refused, or an encounter spanning midnight), the primitive carries the
-  **standard** `data-absent-reason` extension with the NV/PN mapped to its
-  closest FHIR reason (`asked-declined` for Refused, `unknown` for Not
-  Recorded), and the affected US Core claim is withheld. No bespoke extension:
-  a custom one would force every downstream consumer to load our
-  StructureDefinition before the resource validates. Coded elements still
-  dual-code the NEMSIS original natively in their CodeableConcept; on a
-  primitive, the exact source code lives in the conversion issue ledger.
+  time of day it never recorded. An unrecorded **sex** maps to
+  `administrative-gender#unknown` via `cm-nemsis-sex` — FHIR's own "the gender
+  is not known", which is the receiver's situation whether the field was
+  refused, not recorded, or not applicable. Those rows are `equivalence=wider`,
+  so the reverse mapper can never resurrect "Refused" from `unknown`. Where
+  nothing is derivable at all, the primitive carries the **standard**
+  `data-absent-reason` extension (no bespoke extension — a custom one would
+  force every downstream consumer to load our StructureDefinition first). Coded
+  elements still dual-code the NEMSIS original natively in their
+  CodeableConcept; on a primitive the exact source code lives in the conversion
+  issue ledger.
 - **Deferred by design:** the `eOutcome` panel beyond the implemented loop, `ePayment`
   billing detail, and reverse mapping outside demographics. All are ledgered as
   `Deferred` in the workbook, never silently dropped.

@@ -64,17 +64,26 @@ def _apply_sex(ctx: MappingContext, patient: dict) -> None:
                     "(see cm-nemsis-sex); Patient.gender absent and the US Core "
                     "claim withheld", "information")
     elif el.nv or el.pn:
-        # Refused/not-recorded: carry WHY on the primitive, but the claim is
-        # still withheld — an extension does not satisfy min=1.
-        # Carry the absence on the primitive: data-absent-reason + the NEMSIS
-        # original (NV/PN-are-first-class). gender has a required binding, so
-        # the validator still reports a missing code — accepted deliberately,
-        # because inventing `unknown` would assert the sex was assessed.
-        patient["_gender"] = common.primitive_absent_extension(el)
+        # Absence maps to administrative-gender#unknown via cm-nemsis-sex.
+        # Leaving gender absent fails us-core-patient's min=1 AND cascades to
+        # every resource whose subject must reference a us-core-patient — the
+        # whole document loses conformance over one unrecorded field.
+        # `unknown` is FHIR's own "the gender is not known", which is the
+        # receiver's situation however it came about. The precise NV/PN stays
+        # in the ledger, and the map marks these rows `wider` so a reverse
+        # mapping can never turn `unknown` back into "Refused".
+        absent = conceptmaps.translate(
+            "cm-nemsis-sex", el.nv or el.pn, systems.ADMINISTRATIVE_GENDER
+        )
+        if absent:
+            patient["gender"] = absent[0]["code"]
+        else:
+            patient["_gender"] = common.primitive_absent_extension(el)
         ctx.log("ePatient.25", Disposition.SEEDED,
                 f"sex not available ({'NV ' + el.nv if el.nv else 'PN ' + el.pn}); "
-                "Patient.gender carries a data-absent reason with the NEMSIS "
-                "original retained; the US Core claim is withheld",
+                "Patient.gender mapped to administrative-gender#unknown "
+                "(cm-nemsis-sex, equivalence=wider — not reversible); the "
+                "precise NEMSIS reason is retained here, not in the resource",
                 "information")
 
 

@@ -20,12 +20,16 @@ documents the official HL7 validator rejected.
 - **Conformance, and absence carried faithfully**: an undated vital is
   expressed at the encounter's **date** precision (FHIR `dateTime` is
   variable-precision) rather than a fabricated timestamp. Where nothing is
-  derivable — a refused sex — the primitive carries the **standard** FHIR
-  `data-absent-reason` extension with the NV/PN mapped to its closest FHIR
-  reason (`asked-declined` for PN 8801019 Refused), and the US Core claim is
-  withheld rather than satisfied by an invented `unknown`. Standard extensions
-  only: a bespoke one validates nowhere until the consumer loads our
-  StructureDefinition. Off-scale glucose (`High`/`Low`) becomes interpretation
+  derivable — an unrecorded or refused **sex** — `cm-nemsis-sex` now maps the
+  NV/PN codes to `administrative-gender#unknown`, FHIR's own "the gender is not
+  known". Those rows are `equivalence=wider`, so a reverse mapping can never
+  resurrect "Refused" from `unknown`, and the precise NEMSIS code stays in the
+  issue ledger. This matters beyond the one field: `us-core-patient` requires
+  `gender`, and US Core requires every `subject` reference to point at a
+  `us-core-patient`, so an absent gender cost the WHOLE document its
+  conformance. Where a value genuinely cannot be derived, the primitive carries
+  the **standard** `data-absent-reason` extension — no bespoke extension, which
+  would validate nowhere until the consumer loads our StructureDefinition. Off-scale glucose (`High`/`Low`) becomes interpretation
   `>` / `<` ("above/below the maximum quantifiable limit"), not a data fault.
 - **Identity**: PCR UUIDs are case-normalized — a re-export with different
   casing previously produced different ids and duplicated instead of updating.

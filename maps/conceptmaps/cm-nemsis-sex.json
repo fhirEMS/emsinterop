@@ -2,18 +2,120 @@
   "resourceType": "ConceptMap",
   "id": "cm-nemsis-sex",
   "url": "urn:emsinterop:conceptmap:cm-nemsis-sex",
-  "version": "0.1.0",
+  "version": "0.3.1",
   "name": "NemsisSexToAdministrativeGender",
   "status": "draft",
-  "description": "ePatient.25 Sex (source of truth per ADR-007; ePatient.13 Gender legacy fallback uses the same 9919xxx codes) -> FHIR administrative-gender. Single-target so FML translate() is deterministic; the US Core birthsex mapping lives in cm-nemsis-birthsex.",
+  "description": "ePatient.25 Sex (source of truth per ADR-007; ePatient.13 Gender legacy fallback uses the same 9919xxx codes) -> FHIR administrative-gender. Single-target so FML translate() is deterministic; the US Core birthsex mapping lives in cm-nemsis-birthsex.\n\nAlso maps the NV/PN absence codes to `unknown`. us-core-patient requires gender (min 1) and US Core requires every subject reference to point at a us-core-patient, so leaving it absent makes the whole document non-conformant, not just the Patient. `unknown` is FHIR's own answer for 'the gender is not known', which is exactly the receiver's situation whether the field was refused, not recorded, or not applicable. Those rows are equivalence=wider \u2014 NEMSIS is MORE specific than the FHIR code, so they must never be reversed (the reverse mapper refuses wider rows); the precise NV/PN is preserved in the conversion issue ledger.",
   "group": [
     {
       "source": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
       "target": "http://hl7.org/fhir/administrative-gender",
       "element": [
-        {"code": "9919001", "display": "Female", "target": [{"code": "female", "display": "Female", "equivalence": "equivalent"}]},
-        {"code": "9919003", "display": "Male", "target": [{"code": "male", "display": "Male", "equivalence": "equivalent"}]},
-        {"code": "9919005", "display": "Unknown", "target": [{"code": "unknown", "display": "Unknown", "equivalence": "equivalent"}]}
+        {
+          "code": "9919001",
+          "display": "Female",
+          "target": [
+            {
+              "code": "female",
+              "display": "Female",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "9919003",
+          "display": "Male",
+          "target": [
+            {
+              "code": "male",
+              "display": "Male",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "9919005",
+          "display": "Unknown",
+          "target": [
+            {
+              "code": "unknown",
+              "display": "Unknown",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "7701001",
+          "display": "Not Applicable",
+          "target": [
+            {
+              "code": "unknown",
+              "display": "Unknown",
+              "equivalence": "wider",
+              "comment": "NEMSIS Not Applicable is more specific than administrative-gender#unknown; not reversible"
+            }
+          ]
+        },
+        {
+          "code": "7701003",
+          "display": "Not Recorded",
+          "target": [
+            {
+              "code": "unknown",
+              "display": "Unknown",
+              "equivalence": "wider",
+              "comment": "NEMSIS Not Recorded is more specific than administrative-gender#unknown; not reversible"
+            }
+          ]
+        },
+        {
+          "code": "7701005",
+          "display": "Not Reporting",
+          "target": [
+            {
+              "code": "unknown",
+              "display": "Unknown",
+              "equivalence": "wider",
+              "comment": "NEMSIS Not Reporting is more specific than administrative-gender#unknown; not reversible"
+            }
+          ]
+        },
+        {
+          "code": "8801019",
+          "display": "Refused",
+          "target": [
+            {
+              "code": "unknown",
+              "display": "Unknown",
+              "equivalence": "wider",
+              "comment": "NEMSIS Refused is more specific than administrative-gender#unknown; not reversible"
+            }
+          ]
+        },
+        {
+          "code": "8801021",
+          "display": "Unresponsive",
+          "target": [
+            {
+              "code": "unknown",
+              "display": "Unknown",
+              "equivalence": "wider",
+              "comment": "NEMSIS Unresponsive is more specific than administrative-gender#unknown; not reversible"
+            }
+          ]
+        },
+        {
+          "code": "8801023",
+          "display": "Unable to Complete",
+          "target": [
+            {
+              "code": "unknown",
+              "display": "Unknown",
+              "equivalence": "wider",
+              "comment": "NEMSIS Unable to Complete is more specific than administrative-gender#unknown; not reversible"
+            }
+          ]
+        }
       ]
     }
   ]

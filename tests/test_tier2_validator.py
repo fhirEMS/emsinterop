@@ -35,19 +35,6 @@ ALL_FIXTURES = sorted(FIXTURES.glob("*.xml")) + sorted(
 )
 
 
-#: Fixtures that CANNOT be US Core conformant, with the reason. Not a way to
-#: silence inconvenient failures — each entry is a limitation of the standard
-#: meeting a fact of the source data, and it is documented in the README.
-KNOWN_NON_CONFORMANT = {
-    "hostile_sex_refused":
-        "the patient refused to state their sex, so Patient cannot claim "
-        "us-core-patient (gender is min=1) — and US Core requires every "
-        "subject reference to point at a us-core-patient, so the "
-        "non-conformance cascades to Encounter/Condition/Observation. "
-        "Conforming would mean inventing a gender the source never recorded.",
-}
-
-
 def _validate(payload: dict, path, extra_igs: list[str]) -> None:
     path.write_text(json.dumps(payload))
     run = subprocess.run(
@@ -70,16 +57,12 @@ def _validate(payload: dict, path, extra_igs: list[str]) -> None:
 
 @pytest.mark.parametrize("path", ALL_FIXTURES, ids=lambda p: p.stem)
 def test_document_passes_hl7_validator(path, tmp_path):
-    if path.stem in KNOWN_NON_CONFORMANT:
-        pytest.xfail(KNOWN_NON_CONFORMANT[path.stem])
     result = convert(path, agency_names={"4901": "Wasatch Valley EMS (synthetic)"})[0]
     _validate(result.document, tmp_path / f"{path.stem}_document.json", [])
 
 
 @pytest.mark.parametrize("path", ALL_FIXTURES, ids=lambda p: p.stem)
 def test_iti65_passes_mhd_validation(path, tmp_path):
-    if path.stem in KNOWN_NON_CONFORMANT:
-        pytest.xfail(KNOWN_NON_CONFORMANT[path.stem])
     """The ITI-65 Provide Document Bundle conforms to MHD 4.2.2 Minimal
     Metadata (closed ProvideBundle slicing, EntryUUID identifiers)."""
     from emsinterop.transport import provide_document_bundle

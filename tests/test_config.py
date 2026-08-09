@@ -62,6 +62,24 @@ def test_ccda_rail(chest_pain, tmp_path):
     assert (tmp_path / "PCR-2026-000123.ccda.xml").exists()
 
 
+def test_ccda_rail_degrades_when_package_absent(chest_pain, monkeypatch):
+    """The other half of the optional-rail contract: without nemsis2ccda the
+    rail reports an actionable error instead of raising. Runs everywhere —
+    test_ccda_rail above skips wherever the sibling isn't installed (CI), so
+    without this the branch would be untested exactly where it matters."""
+    import sys
+
+    # A None entry in sys.modules makes `from nemsis2ccda import ...` raise
+    # ImportError even when the package is installed locally.
+    monkeypatch.setitem(sys.modules, "nemsis2ccda", None)
+    report = dispatch(chest_pain, MessagingConfig(mode="ccda"))
+
+    assert [e["kind"] for e in report] == ["ccda"]
+    assert report[0]["sent"] is False
+    assert "artifact" not in report[0]
+    assert "pip install nemsis2ccda" in report[0]["error"]
+
+
 def test_rail_list_and_legacy_modes(chest_pain):
     pytest.importorskip("nemsis2ccda")
     report = dispatch(chest_pain, MessagingConfig(mode=["fhir", "adt", "ccda"]))

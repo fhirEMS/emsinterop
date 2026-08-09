@@ -57,8 +57,16 @@ class PushApp:
                 length = int(environ.get("CONTENT_LENGTH") or 0)
             except ValueError:
                 length = 0
-            raw = environ["wsgi.input"].read(length) if length else b""
-            status, body = self.push(raw)
+            cap = self.config.max_body_bytes
+            if length > cap:
+                status, body = 413, {
+                    "ok": False,
+                    "error": f"body exceeds max_body_bytes ({cap})",
+                }
+            else:
+                # Read at most the cap even if CONTENT_LENGTH understated it.
+                raw = environ["wsgi.input"].read(min(length, cap)) if length else b""
+                status, body = self.push(raw)
         else:
             status, body = 404, {"ok": False, "error": "not found"}
         payload = json.dumps(body).encode()
@@ -137,8 +145,8 @@ class PushApp:
 
 
 _REASONS = {200: "OK", 400: "Bad Request", 404: "Not Found",
-            422: "Unprocessable Entity", 500: "Internal Server Error",
-            502: "Bad Gateway"}
+            413: "Payload Too Large", 422: "Unprocessable Entity",
+            500: "Internal Server Error", 502: "Bad Gateway"}
 
 
 def create_app(config: MessagingConfig | None = None,

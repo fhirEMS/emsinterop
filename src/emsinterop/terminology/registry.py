@@ -21,6 +21,23 @@ def _codes() -> dict[str, dict[str, str]]:
     return json.loads(ref.read_text())
 
 
+@lru_cache(maxsize=1)
+def _national() -> frozenset[str]:
+    ref = resources.files("emsinterop.terminology").joinpath(
+        "data/nemsis_national_elements.json")
+    return frozenset(json.loads(ref.read_text())["national"])
+
+
+def is_national(element_id: str) -> bool:
+    """Is this element part of the NATIONAL NEMSIS dataset?
+
+    NEMSIS marks each element <national>Yes|No</national>. This project maps
+    the national set (roadmap: "every national NEMSIS element dispositioned");
+    state/local elements are out of scope by design, not coverage gaps.
+    Generated from the pinned XSDs by scripts/extract-national-elements.py."""
+    return element_id in _national()
+
+
 def elements() -> dict[str, dict[str, str]]:
     """The whole registry: element id -> {code: display, "__name__": name}."""
     return _codes()

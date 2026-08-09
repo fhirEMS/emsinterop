@@ -13,7 +13,7 @@ from emsinterop.serve import create_app
 from .conftest import CHEST_PAIN
 
 
-def call(app, method="GET", path="/", body=b""):
+def call(app, method="GET", path="/", body=b"", content_length=None):
     captured = {}
 
     def start_response(status, headers):
@@ -23,7 +23,7 @@ def call(app, method="GET", path="/", body=b""):
     environ = {
         "REQUEST_METHOD": method,
         "PATH_INFO": path,
-        "CONTENT_LENGTH": str(len(body)),
+        "CONTENT_LENGTH": str(len(body) if content_length is None else content_length),
         "wsgi.input": io.BytesIO(body),
     }
     payload = b"".join(app(environ, start_response))
@@ -119,3 +119,42 @@ def test_push_survives_transport_crash(monkeypatch):
     status, body = call(app, "POST", "/push", CHEST_PAIN.read_bytes())
     assert status == 502 and body["ok"] is False
     assert "error" in body["pcrs"][0]["deliveries"][0]
+
+
+# -- the untrusted door -------------------------------------------------------
+# /push accepts XML from anyone who can reach it, so these pin the hostile-input
+# contract: quarantine (422), never a 500 traceback, never echo the body, and
+# never resolve an entity.
+
+def test_push_non_xml_body_quarantines_not_crashes():
+    status, body = call(create_app(), "POST", "/push", b"this is not xml")
+    assert status == 422
+    assert body["resourceType"] == "OperationOutcome"
+
+
+def test_push_rejects_doctype_and_leaks_nothing():
+    """XXE: a DOCTYPE with an external entity must be refused outright, and no
+    file content may appear anywhere in the response."""
+    xxe = (b'<?xml version="1.0"?>'
+           b'<!DOCTYPE r [<!ENTITY x SYSTEM "file:///etc/passwd">]>'
+           b"<EMSDataSet>&x;</EMSDataSet>")
+    status, body = call(create_app(), "POST", "/push", xxe)
+    assert status == 422
+    assert "root:" not in json.dumps(body)
+
+
+def test_push_rejects_entity_expansion_bomb():
+    """Billion laughs — refused by the same doctype gate, so expansion never
+    starts."""
+    bomb = (b'<?xml version="1.0"?>'
+            b'<!DOCTYPE l [<!ENTITY a "aaaaaaaaaa"><!ENTITY b "&a;&a;&a;&a;&a;">]>'
+            b"<EMSDataSet>&b;</EMSDataSet>")
+    assert call(create_app(), "POST", "/push", bomb)[0] == 422
+
+
+def test_push_caps_oversized_body():
+    """CONTENT_LENGTH is attacker-declared; an overstated length is refused
+    before anything is read."""
+    app = create_app(MessagingConfig(max_body_bytes=1024))
+    status, body = call(app, "POST", "/push", b"x", content_length=10_000_000)
+    assert status == 413 and body["ok"] is False

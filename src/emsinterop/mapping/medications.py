@@ -8,6 +8,7 @@ content. Response/complication become Observations partOf the administration.
 
 from __future__ import annotations
 
+from ..issues import Disposition
 from ..model import NemsisGroup
 from ..terminology import conceptmaps, nv_pn, registry, systems
 from . import common
@@ -100,7 +101,12 @@ def map_medications(ctx: MappingContext) -> list[dict]:
                 if unit is not None and unit.has_value
                 else None
             )
-            dosage["dose"] = common.quantity(dose.value, unit_display)
+            if common.is_numeric(dose.value):
+                dosage["dose"] = common.quantity(dose.value, unit_display)
+            else:
+                ctx.log("eMedications.05", Disposition.INVALID,
+                        "non-numeric medication dose; dose omitted from dosage",
+                        "warning")
         if dosage and admin["status"] != "not-done":
             admin["dosage"] = dosage
 

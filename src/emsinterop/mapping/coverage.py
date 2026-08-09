@@ -10,6 +10,7 @@ panel, UNMAPPED (warning) otherwise. Nothing disappears without a ledger entry.
 from __future__ import annotations
 
 from ..issues import Disposition
+from ..terminology import registry
 from .context import MappingContext
 
 # Workbook-sanctioned deferrals (docs/02, Coverage_Matrix + panel tabs).
@@ -35,6 +36,26 @@ def _classify(element_id: str) -> tuple[Disposition, str, str]:
         return (
             Disposition.DEFERRED,
             "billing detail deferred (workbook: ePayment mostly Deferred)",
+            "information",
+        )
+    if element_id == "ePatient.13":
+        # Deprecated in 3.5.0 in favour of ePatient.25 Sex (ADR-007). Consumed
+        # only as a legacy fallback, so it lands here whenever .25 is present.
+        return (
+            Disposition.DEFERRED,
+            "deprecated in NEMSIS 3.5.0; superseded by ePatient.25 Sex "
+            "(read only as a legacy fallback when .25 is absent)",
+            "information",
+        )
+    if not registry.is_national(element_id):
+        # State/local element. The project maps the NATIONAL dataset; these are
+        # out of scope by design, not coverage gaps. Still ledgered — the
+        # never-silently-drop rule is about visibility, not about pretending
+        # every state extension is a defect.
+        return (
+            Disposition.DEFERRED,
+            "state/local element (NEMSIS national=No) — outside the national "
+            "dataset this project maps",
             "information",
         )
     return (

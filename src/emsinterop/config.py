@@ -57,6 +57,9 @@ class MessagingConfig:
     adt: AdtConfig = field(default_factory=AdtConfig)
     ccda: CcdaConfig = field(default_factory=CcdaConfig)
     adt_endpoint: str | None = None  # "host:port" MLLP; send when set
+    # Push endpoint guard: CONTENT_LENGTH is attacker-declared, so cap what
+    # serve.py is willing to read. 32 MiB is ~1000x the largest real EMSDataSet.
+    max_body_bytes: int = 32 * 1024 * 1024
 
     def __post_init__(self) -> None:
         raw = self.mode
@@ -89,6 +92,7 @@ class MessagingConfig:
             adt=AdtConfig(**data.get("adt", {})),
             ccda=CcdaConfig(**data.get("ccda", {})),
             adt_endpoint=data.get("adt_endpoint"),
+            max_body_bytes=data.get("max_body_bytes", 32 * 1024 * 1024),
         )
 
     @classmethod

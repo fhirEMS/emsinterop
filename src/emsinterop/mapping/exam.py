@@ -72,9 +72,11 @@ def _weight_observation(ctx: MappingContext) -> dict | None:
                 {"url": systems.DATA_ABSENT_REASON_EXT, "valueCode": "unknown"}
             ]
         }
-    if weight.has_value:
+    if weight.has_value and common.is_numeric(weight.value):
         obs["valueQuantity"] = common.quantity(weight.value, "kg", "kg")
         common.claim_profiles(obs, "us-core-vital-signs", "us-core-body-weight")
+    elif weight.has_value:
+        obs["dataAbsentReason"] = common.unusable_value_concept("error")
     else:
         obs["dataAbsentReason"] = common.absent_reason_concept(weight)
     return ctx.add(obs)

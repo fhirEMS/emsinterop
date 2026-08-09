@@ -172,7 +172,19 @@ def build_composition(ctx: MappingContext, variant: str = "CR") -> dict:
                 {"reference": f"{r['resourceType']}/{r['id']}"} for r in resources
             ]
         else:
-            section["emptyReason"] = _empty_reason(ctx, spec)
+            empty_reason = _empty_reason(ctx, spec)
+            section["emptyReason"] = empty_reason
+            # cmp-1: a section MUST have text, entries, or sub-sections —
+            # emptyReason alone does not satisfy it. Give the empty section a
+            # narrative stating why, so the coded reason has a human-readable
+            # counterpart and the document stays conformant.
+            display = (empty_reason["coding"][0].get("display")
+                       or empty_reason["coding"][0]["code"])
+            section["text"] = {
+                "status": "empty",
+                "div": '<div xmlns="http://www.w3.org/1999/xhtml">'
+                       f"<p>No {spec.title.lower()} recorded: {display}.</p></div>",
+            }
         sections.append(section)
     composition["section"] = sections
     return ctx.add(composition)

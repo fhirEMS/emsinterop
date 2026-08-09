@@ -113,8 +113,11 @@ def _apply_birth_and_age(ctx: MappingContext, patient: dict) -> None:
             "status": "final",
             "code": common.loinc("30525-0", "Age"),
             "subject": {"reference": f"Patient/{patient['id']}"},
-            "valueQuantity": common.quantity(age.value, unit_name, ucum),
         }
+        if common.is_numeric(age.value):
+            obs["valueQuantity"] = common.quantity(age.value, unit_name, ucum)
+        else:
+            obs["dataAbsentReason"] = common.unusable_value_concept("error")
         if ctx.encounter_id:
             obs["encounter"] = ctx.encounter_ref()
         ctx.add(obs)

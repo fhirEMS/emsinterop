@@ -12,6 +12,8 @@ from pathlib import Path
 
 from lxml import etree
 
+from . import safexml
+
 from ..model import (
     DemographicHeader,
     EMSDataSet,
@@ -90,9 +92,9 @@ def _detect_version(root: etree._Element) -> str | None:
 def parse(source: str | Path | bytes) -> EMSDataSet:
     """Parse an EMSDataSet document from a path or raw bytes."""
     if isinstance(source, bytes):
-        root = etree.fromstring(source)
+        root = safexml.fromstring(source)
     else:
-        root = etree.parse(str(source)).getroot()
+        root = safexml.parse(source).getroot()
     if _local(root.tag) != "EMSDataSet":
         raise ValueError(f"Expected EMSDataSet root, got {_local(root.tag)}")
 

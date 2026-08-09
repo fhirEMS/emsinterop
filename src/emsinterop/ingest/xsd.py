@@ -11,6 +11,8 @@ from pathlib import Path
 
 from lxml import etree
 
+from . import safexml
+
 SCHEMA_ROOT = Path(__file__).resolve().parents[3] / "schemas" / "nemsis"
 PINNED_VERSION = "3.5.0"
 
@@ -39,10 +41,17 @@ def validate_dataset(
     version: str = PINNED_VERSION,
 ) -> list[str]:
     """Validate any pinned NEMSIS dataset kind; returns error strings (empty = valid)."""
-    if isinstance(source, bytes):
-        doc = etree.fromstring(source).getroottree()
-    else:
-        doc = etree.parse(str(source))
+    try:
+        if isinstance(source, bytes):
+            doc = safexml.fromstring(source).getroottree()
+        else:
+            doc = safexml.parse(source)
+    except (etree.XMLSyntaxError, ValueError, UnicodeDecodeError) as error:
+        # Quarantine, don't crash (Architecture §8). This is the boundary that
+        # owns that rule, so fixing it here also fixes the push endpoint, the
+        # CLI, and convert(). The message names the fault, never the content —
+        # an untrusted body must not be echoed into logs or responses.
+        return [f"line 0: not well-formed XML: {type(error).__name__}"]
     schema = _schema(version, dataset)
     if schema.validate(doc):
         return []

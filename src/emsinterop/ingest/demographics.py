@@ -29,6 +29,8 @@ from pathlib import Path
 
 from lxml import etree
 
+from . import safexml
+
 from .xsd import PINNED_VERSION, validate_dataset
 
 XSI_NS = "http://www.w3.org/2001/XMLSchema-instance"
@@ -41,8 +43,8 @@ def _local(tag) -> str:
 
 def _parse(source: str | Path | bytes) -> etree._Element:
     if isinstance(source, bytes):
-        return etree.fromstring(source)
-    return etree.parse(str(source)).getroot()
+        return safexml.fromstring(source)
+    return safexml.parse(source).getroot()
 
 
 def _text(node: etree._Element) -> str | None:

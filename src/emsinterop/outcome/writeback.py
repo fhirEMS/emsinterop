@@ -16,6 +16,7 @@ from __future__ import annotations
 
 from lxml import etree
 
+from ..ingest import safexml
 from ..ingest.parser import NEMSIS_NS, XSI_NS
 from .records import OutcomeRecord
 
@@ -52,7 +53,7 @@ def _set_repeating(parent: etree._Element, element_id: str, values: list[str]) -
 
 def apply_outcome(pcr_xml: bytes | str, record: OutcomeRecord) -> bytes:
     """The corrected EMSDataSet with eOutcome populated from the discharge."""
-    root = etree.fromstring(pcr_xml if isinstance(pcr_xml, bytes) else pcr_xml.encode())
+    root = safexml.fromstring(pcr_xml)
     outcome = root.find(f".//{_N}eOutcome")
     if outcome is None:
         raise ValueError("PCR has no eOutcome section")

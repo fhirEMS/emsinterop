@@ -34,6 +34,22 @@ def identifier(system: str, value: str) -> dict:
     return {"system": system, "value": value}
 
 
+def is_numeric(value: str | None) -> bool:
+    """Is this NEMSIS value coercible to a FHIR Quantity value?
+
+    Real exports carry non-numeric sentinels in numeric-looking slots — the
+    XSD sanctions some (eVitals.07 'P'/'p' for a palpated BP) and dirty data
+    supplies others. Callers check first and ledger the miss rather than
+    letting one bad value abort the whole PCR (§8 quarantine-don't-crash)."""
+    if value is None:
+        return False
+    try:
+        float(value)
+    except (TypeError, ValueError):
+        return False
+    return True
+
+
 def quantity(value: str, unit: str | None = None, code: str | None = None) -> dict:
     num = float(value)
     q: dict = {"value": int(num) if num.is_integer() else num}
@@ -43,6 +59,12 @@ def quantity(value: str, unit: str | None = None, code: str | None = None) -> di
         q["system"] = systems.UCUM
         q["code"] = code
     return q
+
+
+def unusable_value_concept(code: str = "error") -> dict:
+    """dataAbsentReason for a value present in the source but not usable as a
+    Quantity (non-numeric where a number is required)."""
+    return {"coding": [{"system": systems.DATA_ABSENT_REASON, "code": code}]}
 
 
 def loinc(code: str, display: str | None = None) -> dict:
@@ -104,6 +126,17 @@ def negative_interpretation() -> list[dict]:
 def primitive_absent_extension(element: NemsisElement) -> dict:
     """data-absent-reason extension for a nil FHIR primitive (e.g. _birthDate)."""
     return {"extension": [nv_pn.data_absent_extension(element.nv or "")]}
+
+
+def can_claim_vital_signs(obs: dict) -> bool:
+    """US Core vital signs (and the base vitalsigns profile) require an
+    effective time precise to the day — invariant vs-1. NEMSIS groups whose
+    eVitals.01 is missing or NV cannot satisfy it, so they must not claim the
+    profile; the observation still carries its data, it just doesn't assert a
+    conformance it would fail. Same posture as the Organization that withholds
+    its US Core claim when it has no name."""
+    effective = obs.get("effectiveDateTime")
+    return isinstance(effective, str) and len(effective) >= 10
 
 
 def claim_profiles(resource: dict, *profile_names: str) -> dict:

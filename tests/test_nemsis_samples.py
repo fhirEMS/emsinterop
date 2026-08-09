@@ -1,0 +1,106 @@
+"""Real-world NEMSIS samples — the field-hardening tier.
+
+The golden corpus is six cases we authored ourselves, so it can only prove the
+mapper handles what we thought of. These are the published NEMSIS v3.5.0
+scenario samples (overdose, suicide, MVC, eBike, chest pain/MIH), authored by
+someone else against the same standard — the closest thing to a real agency
+export this project can test against.
+
+They live outside the repo, so point EMSINTEROP_SAMPLES at the directory:
+
+    EMSINTEROP_SAMPLES=/path/to/samples python -m pytest tests/test_nemsis_samples.py
+
+What this tier locks in (each was a real defect these files exposed):
+  - every sample XSD-validates and converts without an exception;
+  - no NATIONAL element is left unmapped, and no issue is a warning — every
+    leftover is a state/local element correctly dispositioned as deferred;
+  - eVitals.07's XSD-sanctioned 'P'/'p' (palpated BP) survives as a systolic
+    with an honestly-absent diastolic, rather than crashing the conversion.
+"""
+
+from __future__ import annotations
+
+import os
+from pathlib import Path
+
+import pytest
+
+from emsinterop.convert import convert
+from emsinterop.ingest import validate
+from emsinterop.issues import Disposition
+from emsinterop.terminology import registry
+
+SAMPLES = Path(os.environ.get("EMSINTEROP_SAMPLES", ""))
+SAMPLE_FILES = sorted(SAMPLES.glob("*_v350.xml")) if SAMPLES.is_dir() else []
+
+pytestmark = pytest.mark.skipif(
+    not SAMPLE_FILES,
+    reason="set EMSINTEROP_SAMPLES to the NEMSIS sample directory to run this tier",
+)
+
+
+@pytest.fixture(scope="module")
+def converted():
+    return {p.stem: convert(p)[0] for p in SAMPLE_FILES}
+
+
+@pytest.mark.parametrize("path", SAMPLE_FILES, ids=lambda p: p.stem)
+def test_sample_is_xsd_valid(path):
+    assert validate(path) == []
+
+
+@pytest.mark.parametrize("path", SAMPLE_FILES, ids=lambda p: p.stem)
+def test_sample_converts(path, converted):
+    result = converted[path.stem]
+    assert result.resources, "conversion produced no resources"
+    assert result.context.pcr_number
+    # The document projection must close its reference graph too.
+    assert result.document["entry"]
+
+
+@pytest.mark.parametrize("path", SAMPLE_FILES, ids=lambda p: p.stem)
+def test_no_national_element_is_unmapped(path, converted):
+    """The national dataset is what this project claims to cover; real files
+    must not turn up gaps in it."""
+    result = converted[path.stem]
+    unmapped = result.issues.by_disposition(Disposition.UNMAPPED)
+    national = [i.element_id for i in unmapped if registry.is_national(i.element_id)]
+    assert national == [], f"national elements left unmapped: {sorted(set(national))}"
+
+
+@pytest.mark.parametrize("path", SAMPLE_FILES, ids=lambda p: p.stem)
+def test_every_issue_is_informational(path, converted):
+    """Real exports carry many state/local elements. They must be ledgered as
+    deferrals (information), never as warnings — otherwise the issue log cries
+    wolf and the genuine signals get lost."""
+    result = converted[path.stem]
+    loud = [(i.element_id, i.severity, i.reason) for i in result.issues.issues
+            if i.severity != "information"]
+    assert loud == [], f"non-informational issues: {loud[:6]}"
+
+
+def test_palpated_blood_pressure_survives(converted):
+    """eVitals.07 'P'/'p' — a palpated BP, routine on hypotensive patients.
+    It used to raise ValueError and abort the whole PCR."""
+    palpated = []
+    for result in converted.values():
+        for obs in result.resources:
+            if obs["resourceType"] != "Observation":
+                continue
+            if not any(c.get("code") == "85354-9"
+                       for c in obs.get("code", {}).get("coding", [])):
+                continue
+            components = {
+                c["code"]["coding"][0]["code"]: c for c in obs.get("component", [])
+            }
+            diastolic = components.get("8462-4", {})
+            reason = (diastolic.get("dataAbsentReason", {}).get("coding") or [{}])[0]
+            if reason.get("code") == "not-performed":
+                palpated.append((obs, components))
+
+    assert palpated, "no palpated BP in the samples — fixture assumption changed"
+    obs, components = palpated[0]
+    # Systolic is real data and must be preserved, not discarded with the pair.
+    assert components["8480-6"]["valueQuantity"]["value"] > 0
+    assert "valueQuantity" not in components["8462-4"]
+    assert obs["method"]["text"] == "Palpated"

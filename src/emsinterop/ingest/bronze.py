@@ -16,6 +16,8 @@ from pathlib import Path
 
 from lxml import etree
 
+from . import safexml
+
 from ..log import event, get_logger
 from .parser import NEMSIS_NS, parse
 
@@ -56,7 +58,7 @@ def land(xml_path: str | Path | bytes, table_path: str | Path) -> int:
     # eCustomConfiguration preserved) so replay feeds convert() directly.
     import copy as _copy
 
-    root = etree.fromstring(raw)
+    root = safexml.fromstring(raw)
     pcr_nodes = root.findall(f".//{{{NEMSIS_NS}}}PatientCareReport")
 
     def single_pcr_document(pcr_node: etree._Element) -> str:

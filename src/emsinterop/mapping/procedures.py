@@ -39,8 +39,10 @@ def _part_of_observation(
         "partOf": [{"reference": f"Procedure/{procedure['id']}"}],
     }
     if element.has_value:
-        if value_kind == "integer":
-            obs["valueInteger"] = int(element.value)
+        if value_kind == "integer" and common.is_numeric(element.value):
+            obs["valueInteger"] = int(float(element.value))
+        elif value_kind == "integer":
+            obs["dataAbsentReason"] = common.unusable_value_concept("error")
         else:
             obs["valueCodeableConcept"] = conceptmaps.dual_code(element_id, element.value)
     else:

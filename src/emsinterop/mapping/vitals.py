@@ -62,6 +62,17 @@ def _base_observation(
         obs["effectiveDateTime"] = taken.value
     elif taken is not None and taken.nv:
         obs["_effectiveDateTime"] = common.primitive_absent_extension(taken)
+    if not common.can_claim_vital_signs(obs):
+        # vs-1 needs a day-precise effective time; without eVitals.01 we keep
+        # the reading but withhold the US Core claim. Ledger it so the gap is
+        # visible rather than a silently weaker resource.
+        ctx.log(
+            "eVitals.01",
+            Disposition.SEEDED,
+            "no usable measurement time; US Core vital-signs profile claim "
+            "withheld (invariant vs-1) — the observation is still emitted",
+            "information",
+        )
     prior = group.first("eVitals.02")
     if prior is not None and prior.has_value and prior.value == common.YES:
         obs.setdefault("extension", []).append(
@@ -73,12 +84,25 @@ def _base_observation(
 def _apply_value_quantity(
     obs: dict, element: NemsisElement, unit: str, ucum: str
 ) -> None:
-    if element.has_value:
+    if element.has_value and common.is_numeric(element.value):
         obs["valueQuantity"] = common.quantity(element.value, unit, ucum)
+    elif element.has_value:
+        # Present but not a number: keep the observation, mark the value
+        # unusable. Never abort the PCR over one dirty field.
+        obs["dataAbsentReason"] = common.unusable_value_concept("error")
     elif common.is_negative_finding(element):
         obs["interpretation"] = common.negative_interpretation()
     else:
         obs["dataAbsentReason"] = common.absent_reason_concept(element)
+
+
+def _is_palpated(value: str | None) -> bool:
+    """eVitals.07's XSD-sanctioned non-numeric values: 'P' / 'p' (palpated)."""
+    return (value or "").strip().upper() == "P"
+
+
+def _element_id_of(element, loinc_code: str) -> str:
+    return "eVitals.06" if loinc_code == "8480-6" else "eVitals.07"
 
 
 def _blood_pressure(ctx: MappingContext, group: NemsisGroup) -> dict | None:
@@ -86,10 +110,12 @@ def _blood_pressure(ctx: MappingContext, group: NemsisGroup) -> dict | None:
     dbp = group.first("eVitals.07")
     if sbp is None and dbp is None:
         return None
+    palpated = False
     obs = _base_observation(
         ctx, group, "bp", common.loinc("85354-9", "Blood pressure panel with all children optional")
     )
-    common.claim_profiles(obs, "us-core-vital-signs", "us-core-blood-pressure")
+    if common.can_claim_vital_signs(obs):
+        common.claim_profiles(obs, "us-core-vital-signs", "us-core-blood-pressure")
     components = []
     for element, code, display in [
         (sbp, "8480-6", "Systolic blood pressure"),
@@ -99,8 +125,25 @@ def _blood_pressure(ctx: MappingContext, group: NemsisGroup) -> dict | None:
         # dataAbsentReason) — an element absent from the source group still
         # yields a component, with the absence explained.
         component: dict = {"code": common.loinc(code, display)}
-        if element is not None and element.has_value:
+        if element is not None and element.has_value and common.is_numeric(element.value):
             component["valueQuantity"] = common.quantity(element.value, "mmHg", "mm[Hg]")
+        elif element is not None and element.has_value and _is_palpated(element.value):
+            # eVitals.07 'P'/'p' is XSD-sanctioned: the BP was obtained by
+            # PALPATION, which yields a systolic only. Routine field practice
+            # on hypotensive patients — the reading must survive, with the
+            # diastolic honestly marked as never measured, not dropped and not
+            # crashed on.
+            component["dataAbsentReason"] = common.unusable_value_concept("not-performed")
+            palpated = True
+        elif element is not None and element.has_value:
+            component["dataAbsentReason"] = common.unusable_value_concept("error")
+            ctx.log(
+                _element_id_of(element, code),
+                Disposition.INVALID,
+                "blood pressure value is neither numeric nor the XSD's palpated "
+                "sentinel; carried as dataAbsentReason=error",
+                "warning",
+            )
         elif element is not None:
             component["dataAbsentReason"] = common.absent_reason_concept(element)
         else:
@@ -112,6 +155,10 @@ def _blood_pressure(ctx: MappingContext, group: NemsisGroup) -> dict | None:
     method = group.first("eVitals.08")
     if method is not None and method.has_value:
         obs["method"] = conceptmaps.dual_code("eVitals.08", method.value)
+    elif palpated:
+        # NEMSIS recorded the technique in the value slot rather than
+        # eVitals.08; preserve it as the observation's method.
+        obs["method"] = {"text": "Palpated"}
     return ctx.add(obs)
 
 
@@ -130,9 +177,12 @@ def _gcs(ctx: MappingContext, group: NemsisGroup) -> dict | None:
             complete = False
             continue
         component: dict = {"code": common.loinc(code, display)}
-        if element.has_value:
+        if element.has_value and common.is_numeric(element.value):
             component["valueQuantity"] = common.quantity(element.value, "{score}", "{score}")
-            component_sum += int(element.value)
+            component_sum += int(float(element.value))
+        elif element.has_value:
+            component["dataAbsentReason"] = common.unusable_value_concept("error")
+            complete = False
         else:
             component["dataAbsentReason"] = common.absent_reason_concept(element)
             complete = False
@@ -150,14 +200,16 @@ def _gcs(ctx: MappingContext, group: NemsisGroup) -> dict | None:
         )
     if components:
         obs["component"] = components
-    if total is not None and total.has_value:
+    if total is not None and total.has_value and common.is_numeric(total.value):
         obs["valueQuantity"] = common.quantity(total.value, "{score}", "{score}")
-        if complete and int(total.value) != component_sum:
+        if complete and int(float(total.value)) != component_sum:
             ctx.log(
                 "eVitals.23",
                 Disposition.INVALID,
                 f"GCS total {total.value} != component sum {component_sum}",
             )
+    elif total is not None and total.has_value:
+        obs["dataAbsentReason"] = common.unusable_value_concept("error")
     elif complete and components:
         # typed-helper aggregation: total derivable from complete components
         obs["valueQuantity"] = common.quantity(str(component_sum), "{score}", "{score}")
@@ -182,7 +234,7 @@ def map_vitals(ctx: MappingContext) -> list[dict]:
                 # US Core pulse-ox: primary 59408-5 plus the base SpO2 code.
                 concept["coding"].append({"system": systems.LOINC, "code": "2708-6"})
             obs = _base_observation(ctx, group, element_id, concept)
-            if profile:
+            if profile and common.can_claim_vital_signs(obs):
                 common.claim_profiles(obs, "us-core-vital-signs", profile)
             if element_id == "eVitals.27":
                 # eVitals.28 Pain Scale Type qualifies the score as its method.

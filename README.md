@@ -261,11 +261,29 @@ What the alpha label means concretely:
   deliberately thin so the canonical graph survives IG churn — but mPSC conformance
   claims are provisional until the IG stabilizes. Findings we filed against it are in
   `contrib/gap-report.md`.
-- **Six-case corpus.** Cardiac arrest, MCI, interfacility, pediatric, refusal, chest
-  pain — chosen for edge-case coverage (NV/PN, negation, repeating groups), not
-  statistical representativeness. Real agency exports will surface elements these
-  cases never exercise; the conversion issue log is designed to make that visible
-  rather than silent.
+- **Three corpora, none of them field-scale.** The *golden* corpus (six cases:
+  cardiac arrest, MCI, interfacility, pediatric, refusal, chest pain) covers
+  NV/PN, negation, and repeating groups. The *hostile* corpus
+  (`tests/fixtures/hostile/`) is XSD-valid input that broke us once — a palpated
+  BP, an off-scale glucose, a comment inside a value, a refused sex, a PCR
+  number with a slash — and runs in default CI. The *discovery* tier
+  (`EMSINTEROP_SAMPLES`) runs real published NEMSIS scenario samples; when it
+  finds something new, that gets distilled into a hostile fixture. Real agency
+  exports will still surface elements none of these exercise; the conversion
+  issue log is designed to make that visible rather than silent.
+- **Known non-conformances**, both standards limitations rather than mapping
+  bugs, and both recorded in the issue ledger per record:
+  - *A patient who refused to state their sex cannot produce a US-Core-conformant
+    document.* `us-core-patient` requires `gender` (min 1), a data-absent
+    extension does not satisfy a minimum, and US Core requires every `subject`
+    reference to point at a `us-core-patient` — so the non-conformance cascades
+    to Encounter/Condition/Observation. We withhold the claim rather than invent
+    a gender the source never recorded.
+  - *`24:00:00±hh:mm` is XSD-valid NEMSIS and invalid FHIR.* Not yet normalized.
+- **Undated vitals carry date precision.** A VitalGroup with no `eVitals.01`
+  gets the encounter's date, not a fabricated timestamp — FHIR R4's `vs-1`
+  invariant permits date precision but (through a spec defect) rejects the
+  `Period` its own profile allows.
 - **Deferred by design:** the `eOutcome` panel beyond the implemented loop, `ePayment`
   billing detail, and reverse mapping outside demographics. All are ledgered as
   `Deferred` in the workbook, never silently dropped.

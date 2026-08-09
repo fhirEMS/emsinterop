@@ -1,5 +1,47 @@
 # Changelog
 
+## v0.3.1 — 2026-08-09 — field hardening
+
+The first release driven by **real** NEMSIS data. Running five published v3.5.0
+scenario samples exposed defects six self-authored fixtures never could: one
+crashed the converter, one destroyed a reading silently, and two produced
+documents the official HL7 validator rejected.
+
+- **New hostile corpus** (`tests/fixtures/hostile/`, `test_hostile_corpus.py`,
+  default CI): XSD-*valid* input that broke us once. Plus an env-gated
+  discovery tier (`EMSINTEROP_SAMPLES`) for the external samples themselves.
+- **Silent data loss fixed**: a comment inside a valued element made it parse
+  as an empty group and the reading vanished with no ledger entry — lxml counts
+  comments as children, and puts following text in the comment's tail.
+- **Untrusted-input hardening**: new `ingest/safexml.py` (no entity resolution,
+  no DTD, no network, doctype rejected) closes XXE and entity-expansion on the
+  push endpoint; a non-XML body now quarantines as 422 instead of a 500
+  traceback; `max_body_bytes` caps attacker-declared CONTENT_LENGTH (413).
+- **Conformance**: undated vitals carry the encounter's **date** (FHIR
+  variable precision) rather than a value-less element, an omitted one, or a
+  fabricated timestamp; `us-core-patient` / `us-core-vital-signs` claims are
+  withheld when they cannot be met; off-scale glucose (`High`/`Low`) is an
+  interpretation, not a data fault.
+- **Identity**: PCR UUIDs are case-normalized — a re-export with different
+  casing previously produced different ids and duplicated instead of updating.
+  Conditional-update URLs escape identifier values.
+- **Outcome rail**: `apply_outcome` re-validates its own output and refuses to
+  emit an XSD-invalid document to a state registry; mixed naive/aware
+  timestamps report unavailable instead of raising; short HL7 DTMs no longer
+  become month/day `00`; non-NUBC discharge codes are no longer written into
+  NUBC-enumerated fields.
+- **Numerics**: `nan`/`Infinity`/`1e400`/`1_0` are rejected — they serialize as
+  bare `NaN`, which is invalid JSON and made the entire bundle unparseable.
+
+`MAPPING_RULESET_VERSION` is now `0.3.1` (stamped in every resource's
+`meta.tag`) because mapping semantics changed. `__version__` now reads from
+installed metadata rather than drifting on its own.
+
+**Id-affecting:** the UUID normalization changes deterministic ids for any
+record previously ingested with a non-lowercase `PatientCareReport/@UUID`.
+Those submit once more as new ids, then remain stable. The golden corpus is
+unaffected (all six already carry canonical lowercase UUIDs).
+
 ## v0.3.0 — 2026-08-08 — **alpha**
 
 First release with every roadmap phase (P0–P7) implemented. Additive over the

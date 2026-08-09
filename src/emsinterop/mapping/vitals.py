@@ -113,15 +113,17 @@ def _apply_value_quantity(
         # scale. That is a clinical finding, not malformed data, so it is
         # recorded as an interpretation rather than flattened to "error".
         obs["dataAbsentReason"] = common.unusable_value_concept("not-a-number")
+        code, display = off_scale
         obs["interpretation"] = [
-            {"coding": [{"system": common.V3_INTERPRETATION, "code": off_scale,
-                         "display": "off scale high" if off_scale == "HX"
-                                    else "off scale low"}]}
+            {"coding": [{"system": common.V3_INTERPRETATION,
+                         "code": code, "display": display}],
+             "text": display}
         ]
         if ctx is not None and element_id:
             ctx.log(element_id, Disposition.SEEDED,
                     f"meter reported {element.value!r} (off-scale); carried as "
-                    f"interpretation {off_scale} with no numeric value",
+                    f"interpretation {off_scale[0]!r} ({off_scale[1]}) with no "
+                    "numeric value",
                     "information")
     elif element.has_value:
         # Present but not a number: keep the observation, mark the value
@@ -137,11 +139,15 @@ def _apply_value_quantity(
 #: slot are eVitals.07 (P/p, palpated) and eVitals.18 (High/Low, off-scale
 #: glucose). Verified by sweeping every pattern in the pinned 3.5.0 schemas —
 #: this list is complete, not a sample.
-_OFF_SCALE = {"HIGH": "HX", "LOW": "LX"}
+#: v3-ObservationInterpretation '>' / '<' — "above/below the maximum
+#: quantifiable limit". That is what a meter reporting High/Low means. NOT
+#: HX/LX, which are clinical ALERT thresholds ("above high threshold") — a
+#: different assertion the source never made.
+_OFF_SCALE = {"HIGH": (">", "Off scale high"), "LOW": ("<", "Off scale low")}
 
 
-def _off_scale_code(element_id: str, value: str | None) -> str | None:
-    """v3 interpretation code for an off-scale meter reading, else None."""
+def _off_scale_code(element_id: str, value: str | None) -> tuple[str, str] | None:
+    """(code, display) for an off-scale meter reading, else None."""
     if element_id != "eVitals.18":
         return None
     return _OFF_SCALE.get((value or "").strip().upper())

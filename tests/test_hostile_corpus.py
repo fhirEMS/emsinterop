@@ -172,7 +172,9 @@ def test_glucose_high_is_a_reading_not_malformed_data(converted):
         for concept in obs.get("interpretation", [])
         for c in concept.get("coding", [])
     }
-    assert "HX" in interpretations, "off-scale-high not recorded as an interpretation"
+    # '>' is "above the maximum quantifiable limit" — what a meter's "High"
+    # means. HX would assert a clinical alert threshold the source never stated.
+    assert ">" in interpretations, "off-scale-high not recorded as an interpretation"
 
 
 def test_uppercase_uuid_yields_the_same_ids_as_lowercase(converted):

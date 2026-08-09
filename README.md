@@ -283,11 +283,15 @@ What the alpha label means concretely:
 - **Absence is carried, never papered over.** A VitalGroup with no `eVitals.01`
   is expressed at the encounter's **date** precision — FHIR `dateTime` is
   variable-precision, so this asserts exactly what the source supports and no
-  time of day it never recorded — with the NEMSIS NV retained alongside in a
-  `nemsis-original-code` extension. Where nothing is derivable at any precision
-  (sex refused, or an encounter spanning midnight), the primitive instead
-  carries `data-absent-reason` with the mapped FHIR code *and* the original
-  NEMSIS NV/PN, and the affected US Core claim is withheld.
+  time of day it never recorded. Where nothing is derivable at any precision
+  (sex refused, or an encounter spanning midnight), the primitive carries the
+  **standard** `data-absent-reason` extension with the NV/PN mapped to its
+  closest FHIR reason (`asked-declined` for Refused, `unknown` for Not
+  Recorded), and the affected US Core claim is withheld. No bespoke extension:
+  a custom one would force every downstream consumer to load our
+  StructureDefinition before the resource validates. Coded elements still
+  dual-code the NEMSIS original natively in their CodeableConcept; on a
+  primitive, the exact source code lives in the conversion issue ledger.
 - **Deferred by design:** the `eOutcome` panel beyond the implemented loop, `ePayment`
   billing detail, and reverse mapping outside demographics. All are ledgered as
   `Deferred` in the workbook, never silently dropped.

@@ -64,11 +64,11 @@ def _base_observation(
     # answer is not "absent" but "known less precisely": the measurement
     # happened during this call, so carry the encounter's DATE. That asserts
     # exactly what the source supports and no time of day it never recorded.
-    # The NEMSIS original rides alongside as an extension, so why the precision
-    # is reduced survives the translation (NV/PN are first-class).
+    # The exact NEMSIS NV is recorded in the issue ledger below; FHIR has no
+    # standard place to hang it on a primitive that already has a value, and a
+    # bespoke extension would burden every consumer with our StructureDefinition.
     elif (date := common.encounter_date(ctx.encounter_period)) and taken is not None:
         obs["effectiveDateTime"] = date
-        obs["_effectiveDateTime"] = common.nemsis_original_extension(taken)
     # Nothing derivable at any precision (no encounter period, or it spans
     # midnight so even the date would be a guess): now it genuinely IS absent,
     # so carry data-absent-reason + the original.
@@ -87,7 +87,7 @@ def _base_observation(
             "no measurement time recorded"
             + (f" (NV {nv})" if nv else "")
             + ("; carried at the encounter's DATE precision (FHIR dateTime is "
-               "variable-precision) with the NEMSIS original retained"
+               "variable-precision) rather than a time the source never recorded"
                if reduced else
                "; effective[x] omitted and the US Core vital-signs claim withheld"),
             "information",

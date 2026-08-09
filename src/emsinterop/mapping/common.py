@@ -136,36 +136,37 @@ def primitive_absent_extension(element: NemsisElement) -> dict:
     """Data-absent-reason for a nil FHIR primitive (`_birthDate`, `_gender`,
     `_effectiveDateTime`), dual-carrying the NEMSIS original.
 
-    Two extensions, mirroring what `absent_reason_concept` does for coded
-    elements: the standard FHIR `data-absent-reason` so any consumer knows the
-    value is absent AND WHY in FHIR's own vocabulary, plus the original NEMSIS
-    NV/PN coding so nothing is lost in translation (the dual-coding rule,
-    ADR-003). A primitive cannot hold a CodeableConcept, so the fidelity half
-    rides a project-owned extension.
+Uses the STANDARD FHIR `data-absent-reason` extension only — no bespoke
+    extension. A custom one would force every downstream consumer to load our
+    StructureDefinition before the resource validates, which is a real
+    distribution burden for a translation engine whose output is meant to be
+    consumed by systems we do not control.
+
+    The NEMSIS NV/PN is mapped to its closest FHIR reason (`asked-declined`
+    for Refused, `unknown` for Not Recorded, `not-applicable` for Not
+    Applicable, `masked` for Not Reporting), so the source's distinction is
+    preserved as far as FHIR's own vocabulary allows. Where the element has a
+    CodeableConcept slot rather than a primitive — `Observation.dataAbsentReason`
+    — `absent_reason_concept()` dual-codes the NEMSIS original natively; on a
+    primitive there is nowhere standard to put it, so the exact source code
+    lives in the conversion issue ledger.
 
     Handles PN as well as NV: a refused sex carries only a PN, and "the patient
     declined to state it" is clinically different from "not recorded"."""
-    extensions: list[dict] = []
     if element.nv:
-        extensions.append(nv_pn.data_absent_extension(element.nv))
-        extensions.append(
-            {"url": systems.NEMSIS_ORIGINAL_EXT,
-             "valueCoding": nv_pn.nv_coding(element.nv)}
-        )
-    elif element.pn:
-        extensions.append(
-            {"url": systems.DATA_ABSENT_REASON_EXT,
-             "valueCode": _PN_TO_DATA_ABSENT.get(element.pn, "not-performed")}
-        )
-        extensions.append(
-            {"url": systems.NEMSIS_ORIGINAL_EXT,
-             "valueCoding": nv_pn.pn_coding(element.pn)}
-        )
-    else:
-        extensions.append(
+        return {"extension": [nv_pn.data_absent_extension(element.nv)]}
+    if element.pn:
+        return {
+            "extension": [
+                {"url": systems.DATA_ABSENT_REASON_EXT,
+                 "valueCode": _PN_TO_DATA_ABSENT.get(element.pn, "not-performed")}
+            ]
+        }
+    return {
+        "extension": [
             {"url": systems.DATA_ABSENT_REASON_EXT, "valueCode": "unknown"}
-        )
-    return {"extension": extensions}
+        ]
+    }
 
 
 def encounter_date(period: dict | None) -> str | None:
@@ -185,24 +186,6 @@ def encounter_date(period: dict | None) -> str | None:
     if end and end != start:
         return None  # spans midnight: which day is not knowable
     return start
-
-
-def nemsis_original_extension(element: NemsisElement) -> dict | None:
-    """Retain the original NEMSIS NV/PN coding NEXT TO a value that is present
-    but less precise than the source's intent (e.g. a vital carried at date
-    precision because no measurement time was recorded).
-
-    Deliberately NOT data-absent-reason: there IS a value here, so claiming
-    absence would be wrong. This says only "the source's own code for why this
-    is what it is"."""
-    coding = None
-    if element.nv:
-        coding = nv_pn.nv_coding(element.nv)
-    elif element.pn:
-        coding = nv_pn.pn_coding(element.pn)
-    if coding is None:
-        return None
-    return {"extension": [{"url": systems.NEMSIS_ORIGINAL_EXT, "valueCoding": coding}]}
 
 
 def can_claim_vital_signs(obs: dict) -> bool:

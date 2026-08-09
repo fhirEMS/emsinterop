@@ -19,12 +19,13 @@ documents the official HL7 validator rejected.
   traceback; `max_body_bytes` caps attacker-declared CONTENT_LENGTH (413).
 - **Conformance, and absence carried faithfully**: an undated vital is
   expressed at the encounter's **date** precision (FHIR `dateTime` is
-  variable-precision) with the NEMSIS NV retained beside it, rather than a
-  fabricated timestamp or a dropped reason. Where nothing is derivable — a
-  refused sex — the primitive carries `data-absent-reason` with the mapped
-  code (`asked-declined` for PN 8801019 Refused) *and* the original NEMSIS
-  coding, and the US Core claim is withheld rather than satisfied by an
-  invented `unknown`. Off-scale glucose (`High`/`Low`) becomes interpretation
+  variable-precision) rather than a fabricated timestamp. Where nothing is
+  derivable — a refused sex — the primitive carries the **standard** FHIR
+  `data-absent-reason` extension with the NV/PN mapped to its closest FHIR
+  reason (`asked-declined` for PN 8801019 Refused), and the US Core claim is
+  withheld rather than satisfied by an invented `unknown`. Standard extensions
+  only: a bespoke one validates nowhere until the consumer loads our
+  StructureDefinition. Off-scale glucose (`High`/`Low`) becomes interpretation
   `>` / `<` ("above/below the maximum quantifiable limit"), not a data fault.
 - **Identity**: PCR UUIDs are case-normalized — a re-export with different
   casing previously produced different ids and duplicated instead of updating.

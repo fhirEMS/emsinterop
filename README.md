@@ -280,10 +280,14 @@ What the alpha label means concretely:
     to Encounter/Condition/Observation. We withhold the claim rather than invent
     a gender the source never recorded.
   - *`24:00:00±hh:mm` is XSD-valid NEMSIS and invalid FHIR.* Not yet normalized.
-- **Undated vitals carry date precision.** A VitalGroup with no `eVitals.01`
-  gets the encounter's date, not a fabricated timestamp — FHIR R4's `vs-1`
-  invariant permits date precision but (through a spec defect) rejects the
-  `Period` its own profile allows.
+- **Absence is carried, never papered over.** A VitalGroup with no `eVitals.01`
+  is expressed at the encounter's **date** precision — FHIR `dateTime` is
+  variable-precision, so this asserts exactly what the source supports and no
+  time of day it never recorded — with the NEMSIS NV retained alongside in a
+  `nemsis-original-code` extension. Where nothing is derivable at any precision
+  (sex refused, or an encounter spanning midnight), the primitive instead
+  carries `data-absent-reason` with the mapped FHIR code *and* the original
+  NEMSIS NV/PN, and the affected US Core claim is withheld.
 - **Deferred by design:** the `eOutcome` panel beyond the implemented loop, `ePayment`
   billing detail, and reverse mapping outside demographics. All are ledgered as
   `Deferred` in the workbook, never silently dropped.

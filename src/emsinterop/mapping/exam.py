@@ -67,8 +67,14 @@ def _weight_observation(ctx: MappingContext) -> dict | None:
     if effective:
         obs["effectiveDateTime"] = effective
     elif date := common.encounter_date(ctx.encounter_period):
-        # Date precision, not a fabricated timestamp — see mapping/vitals.py.
+        # Reduced precision, not absence — see mapping/vitals.py.
         obs["effectiveDateTime"] = date
+    else:
+        obs["_effectiveDateTime"] = {
+            "extension": [
+                {"url": systems.DATA_ABSENT_REASON_EXT, "valueCode": "unknown"}
+            ]
+        }
     if weight.has_value and common.is_numeric(weight.value):
         obs["valueQuantity"] = common.quantity(weight.value, "kg", "kg")
         if common.can_claim_vital_signs(obs):

@@ -66,13 +66,15 @@ def _apply_sex(ctx: MappingContext, patient: dict) -> None:
     elif el.nv or el.pn:
         # Refused/not-recorded: carry WHY on the primitive, but the claim is
         # still withheld — an extension does not satisfy min=1.
-        # NOT `_gender`: gender has a REQUIRED binding, and the validator
-        # rejects a value-less element ("no code provided, and a code is
-        # required"). The reason lives in the ledger instead.
+        # Carry the absence on the primitive: data-absent-reason + the NEMSIS
+        # original (NV/PN-are-first-class). gender has a required binding, so
+        # the validator still reports a missing code — accepted deliberately,
+        # because inventing `unknown` would assert the sex was assessed.
+        patient["_gender"] = common.primitive_absent_extension(el)
         ctx.log("ePatient.25", Disposition.SEEDED,
                 f"sex not available ({'NV ' + el.nv if el.nv else 'PN ' + el.pn}); "
-                "Patient.gender omitted (its required binding rejects a "
-                "value-less element) and the US Core claim withheld",
+                "Patient.gender carries a data-absent reason with the NEMSIS "
+                "original retained; the US Core claim is withheld",
                 "information")
 
 

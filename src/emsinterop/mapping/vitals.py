@@ -60,32 +60,35 @@ def _base_observation(
     taken = group.first("eVitals.01")
     if taken is not None and taken.has_value:
         obs["effectiveDateTime"] = taken.value
-    # No usable time. Every alternative was checked against the official
-    # validator: a value-less `_effectiveDateTime` trips vs-1; omitting
-    # effective[x] trips the bp/heartrate profiles' min=1; and a Period trips
-    # vs-1 too, because R4's expression `($this as dateTime).toString()
-    # .length() >= 8` has no guard for the Period branch it permits.
-    #
-    # What DOES work is FHIR's variable-precision dateTime: vs-1 asks for >= 8
-    # characters, i.e. a DATE is enough. "Measured on 2024-10-07" is true and
-    # asserts no time of day the source never recorded — unlike copying the
-    # encounter's start timestamp, which would invent precision.
-    elif date := common.encounter_date(ctx.encounter_period):
+    # No recorded time. FHIR dateTime is VARIABLE PRECISION, so the honest
+    # answer is not "absent" but "known less precisely": the measurement
+    # happened during this call, so carry the encounter's DATE. That asserts
+    # exactly what the source supports and no time of day it never recorded.
+    # The NEMSIS original rides alongside as an extension, so why the precision
+    # is reduced survives the translation (NV/PN are first-class).
+    elif (date := common.encounter_date(ctx.encounter_period)) and taken is not None:
         obs["effectiveDateTime"] = date
+        obs["_effectiveDateTime"] = common.nemsis_original_extension(taken)
+    # Nothing derivable at any precision (no encounter period, or it spans
+    # midnight so even the date would be a guess): now it genuinely IS absent,
+    # so carry data-absent-reason + the original.
+    elif taken is not None and (taken.nv or taken.pn):
+        obs["_effectiveDateTime"] = common.primitive_absent_extension(taken)
     if taken is None or not taken.has_value:
         # Ledger EVERY undated measurement, whether or not we managed to bound
         # it — substituting a period is a real change to what the resource
         # asserts, and a silent substitution is exactly what the
         # never-silently-drop rule exists to prevent.
         nv = taken.nv if taken is not None else None
-        bounded = "effectiveDateTime" in obs
+        reduced = "effectiveDateTime" in obs
         ctx.log(
             "eVitals.01",
             Disposition.SEEDED,
             "no measurement time recorded"
             + (f" (NV {nv})" if nv else "")
-            + ("; recorded at the encounter's DATE precision rather than given "
-               "a false precise timestamp" if bounded else
+            + ("; carried at the encounter's DATE precision (FHIR dateTime is "
+               "variable-precision) with the NEMSIS original retained"
+               if reduced else
                "; effective[x] omitted and the US Core vital-signs claim withheld"),
             "information",
         )

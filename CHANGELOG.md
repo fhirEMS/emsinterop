@@ -17,11 +17,15 @@ documents the official HL7 validator rejected.
   no DTD, no network, doctype rejected) closes XXE and entity-expansion on the
   push endpoint; a non-XML body now quarantines as 422 instead of a 500
   traceback; `max_body_bytes` caps attacker-declared CONTENT_LENGTH (413).
-- **Conformance**: undated vitals carry the encounter's **date** (FHIR
-  variable precision) rather than a value-less element, an omitted one, or a
-  fabricated timestamp; `us-core-patient` / `us-core-vital-signs` claims are
-  withheld when they cannot be met; off-scale glucose (`High`/`Low`) is an
-  interpretation, not a data fault.
+- **Conformance, and absence carried faithfully**: an undated vital is
+  expressed at the encounter's **date** precision (FHIR `dateTime` is
+  variable-precision) with the NEMSIS NV retained beside it, rather than a
+  fabricated timestamp or a dropped reason. Where nothing is derivable — a
+  refused sex — the primitive carries `data-absent-reason` with the mapped
+  code (`asked-declined` for PN 8801019 Refused) *and* the original NEMSIS
+  coding, and the US Core claim is withheld rather than satisfied by an
+  invented `unknown`. Off-scale glucose (`High`/`Low`) becomes interpretation
+  `>` / `<` ("above/below the maximum quantifiable limit"), not a data fault.
 - **Identity**: PCR UUIDs are case-normalized — a re-export with different
   casing previously produced different ids and duplicated instead of updating.
   Conditional-update URLs escape identifier values.

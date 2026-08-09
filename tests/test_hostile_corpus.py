@@ -114,8 +114,12 @@ def test_vital_signs_conformance(path, converted):
         }
         if "vital-signs" not in categories:
             continue
-        assert "_effectiveDateTime" not in obs, (
-            f"{obs['id']} carries a value-less effective time (vs-1)")
+        # The vs-1 trap is a VALUE-LESS `_effectiveDateTime`. The same key
+        # alongside a value is fine and is how the NEMSIS original is retained
+        # when the time is carried at reduced precision.
+        if "_effectiveDateTime" in obs:
+            assert "effectiveDateTime" in obs, (
+                f"{obs['id']} carries a value-less effective time (vs-1)")
         claims = obs.get("meta", {}).get("profile", [])
         if any("vital-signs" in c or "blood-pressure" in c for c in claims):
             assert common.can_claim_vital_signs(obs), (

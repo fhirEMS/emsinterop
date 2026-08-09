@@ -41,6 +41,12 @@ AGENCY_NUMBER = "urn:nemsis:identifier:agency-number"
 PATIENT_AGENCY_ID = "urn:nemsis:identifier:patient"
 PERSONNEL_ID = "urn:nemsis:identifier:personnel"
 
+# Retains the original NEMSIS NV/PN coding alongside a data-absent-reason on a
+# FHIR PRIMITIVE. CodeableConcepts dual-code natively (absent_reason_concept);
+# primitives cannot, so the fidelity half rides this extension. Project-owned
+# URN, same convention as the prior-to-unit-care extension.
+NEMSIS_ORIGINAL_EXT = "urn:emsinterop:extension:nemsis-original-code"
+
 # Security labels (mapper tags, fhirEngine enforces — hard rule).
 V3_CONFIDENTIALITY = "http://terminology.hl7.org/CodeSystem/v3-Confidentiality"
 V3_ACT_CODE_42CFR = "42CFRPart2"

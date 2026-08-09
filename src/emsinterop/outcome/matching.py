@@ -63,7 +63,13 @@ def _timing(pcr: PatientCareReport, record: OutcomeRecord, window_hours: float) 
     try:
         handoff = datetime.fromisoformat(transfer)
         admit = datetime.fromisoformat(record.admit_time)
-    except ValueError:
+    except (ValueError, TypeError):
+        return None
+    # NEMSIS mandates an offset; an HL7 DTM may omit one. Comparing a naive to
+    # an aware datetime raises TypeError, and ASSUMING a timezone to bridge the
+    # gap is exactly the kind of silent guess that produces a wrong-patient
+    # link. Unknown beats wrong: report the signal as unavailable -> REVIEW.
+    if (handoff.tzinfo is None) != (admit.tzinfo is None):
         return None
     delta = admit - handoff
     return timedelta(hours=-1) <= delta <= timedelta(hours=window_hours)

@@ -6,6 +6,7 @@ owns validation-prior-to-Bronze, indexing, persistence, MPI, and security.
 
 from __future__ import annotations
 
+import json
 import logging
 
 import httpx
@@ -47,7 +48,12 @@ class FhirEngineClient:
     def submit(self, bundle: dict) -> dict:
         """POST a transaction Bundle to the server root."""
         entries = len(bundle.get("entry", []))
-        response = self._client.post("/", json=bundle)
+        # allow_nan=False: httpx's encoder would happily emit bare NaN /
+        # Infinity, which no conforming JSON parser accepts. Fail here rather
+        # than put an unparseable bundle on the wire.
+        response = self._client.post(
+            "/", content=json.dumps(bundle, allow_nan=False).encode()
+        )
         if response.status_code >= 300:
             outcome = None
             try:

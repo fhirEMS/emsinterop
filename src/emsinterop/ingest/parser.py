@@ -32,6 +32,20 @@ def _local(tag) -> str:
     return etree.QName(tag).localname
 
 
+def _leaf_text(node: etree._Element) -> str | None:
+    """The element's text content, including text that follows a comment.
+
+    lxml splits character data around comments: in
+    `<eVitals.06><!-- recalibrated -->124</eVitals.06>` the `124` is the
+    COMMENT's `.tail`, not the element's `.text`, so reading `.text` alone
+    returns None and the reading is lost without a ledger entry. Join the
+    element's own text with every child's tail to recover it."""
+    parts = [node.text or ""]
+    parts.extend(child.tail or "" for child in node)
+    text = "".join(parts).strip()
+    return text or None
+
+
 def _parse_leaf(node: etree._Element) -> NemsisElement:
     attrs: dict[str, str] = {}
     nv = pn = correlation = None
@@ -48,7 +62,7 @@ def _parse_leaf(node: etree._Element) -> NemsisElement:
             correlation = val
         else:
             attrs[local] = val
-    text = None if nil else (node.text.strip() if node.text and node.text.strip() else None)
+    text = None if nil else _leaf_text(node)
     return NemsisElement(
         element_id=_local(node.tag),
         value=text,
@@ -58,6 +72,24 @@ def _parse_leaf(node: etree._Element) -> NemsisElement:
         correlation_id=correlation,
         attributes=attrs,
     )
+
+
+def _is_group(node: etree._Element, tag: str) -> bool:
+    """Container or leaf?
+
+    NOT `len(node) > 0` — lxml's len() counts comments and PIs, so
+    `<eVitals.06><!-- recalibrated -->120</eVitals.06>` would be read as an
+    empty group and the reading would vanish with no ledger entry, silently
+    breaking the never-silently-drop rule. Count ELEMENT children only.
+
+    The `Group` suffix is the backstop for the converse case, an empty
+    container like `<eVitals.VitalGroup/>`, which has no element children but
+    is still a group. The convention is total across the pinned 3.5.0 schemas:
+    every container element's name ends in `Group`, and no leaf's does.
+    """
+    if tag.endswith("Group"):
+        return True
+    return any(isinstance(child.tag, str) for child in node)
 
 
 def _parse_group(node: etree._Element, index: int = 0) -> NemsisGroup:
@@ -71,8 +103,8 @@ def _parse_group(node: etree._Element, index: int = 0) -> NemsisGroup:
     for child in node:
         if not isinstance(child.tag, str):
             continue  # comments / PIs
-        if len(child) > 0:
-            tag = _local(child.tag)
+        tag = _local(child.tag)
+        if _is_group(child, tag):
             counts[tag] = counts.get(tag, 0) + 1
             group.groups.append(_parse_group(child, counts[tag] - 1))
         else:

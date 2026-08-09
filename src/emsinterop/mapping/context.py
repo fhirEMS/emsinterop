@@ -28,6 +28,9 @@ class MappingContext:
     patient_id: str | None = None
     encounter_id: str | None = None
     organization_id: str | None = None
+    #: The Encounter.period, once mapped. Vitals/exam use it to bound an
+    #: undated measurement to the call it was taken during (see vitals.py).
+    encounter_period: dict | None = None
 
     # Every element id any mapper looks up (recorded automatically by the
     # model's lookup methods). The coverage sweep diffs this against what the

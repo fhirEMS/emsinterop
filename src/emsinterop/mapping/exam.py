@@ -66,15 +66,18 @@ def _weight_observation(ctx: MappingContext) -> dict | None:
             break
     if effective:
         obs["effectiveDateTime"] = effective
-    else:
-        obs["_effectiveDateTime"] = {
-            "extension": [
-                {"url": systems.DATA_ABSENT_REASON_EXT, "valueCode": "unknown"}
-            ]
-        }
+    elif date := common.encounter_date(ctx.encounter_period):
+        # Date precision, not a fabricated timestamp — see mapping/vitals.py.
+        obs["effectiveDateTime"] = date
     if weight.has_value and common.is_numeric(weight.value):
         obs["valueQuantity"] = common.quantity(weight.value, "kg", "kg")
-        common.claim_profiles(obs, "us-core-vital-signs", "us-core-body-weight")
+        if common.can_claim_vital_signs(obs):
+            common.claim_profiles(obs, "us-core-vital-signs", "us-core-body-weight")
+        else:
+            ctx.log("eExam.01", Disposition.SEEDED,
+                    "no usable measurement time for body weight; effective[x] "
+                    "omitted and the US Core claim withheld (invariant vs-1)",
+                    "information")
     elif weight.has_value:
         obs["dataAbsentReason"] = common.unusable_value_concept("error")
     else:

@@ -33,7 +33,14 @@ def _dtm_to_iso(dtm: str) -> str | None:
             if len(tz) == 5:
                 tz = f"{tz[:3]}:{tz[3:]}"
             break
-    body = body.ljust(14, "0")[:14]
+    # Pad SECONDS and MINUTES only. Zero-padding a short DTM blindly turns
+    # `202608` into 2026-08-00T00:00:00 — a month and day of "00", which is not
+    # a real date, silently degrades matching, and would be written verbatim
+    # into eOutcome where it fails the state registry's XSD.
+    body = body.strip()
+    if not body.isdigit() or len(body) not in (8, 10, 12, 14):
+        return None
+    body = body.ljust(14, "0")
     return (
         f"{body[0:4]}-{body[4:6]}-{body[6:8]}T{body[8:10]}:{body[10:12]}:{body[12:14]}{tz}"
     )

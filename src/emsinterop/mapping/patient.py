@@ -42,6 +42,10 @@ def _gender_element(ctx: MappingContext) -> NemsisElement | None:
 def _apply_sex(ctx: MappingContext, patient: dict) -> None:
     el = _gender_element(ctx)
     if el is None:
+        ctx.log("ePatient.25", Disposition.SEEDED,
+                "no sex recorded (neither ePatient.25 nor the deprecated .13); "
+                "Patient.gender absent and the US Core claim withheld",
+                "information")
         return
     if el.has_value:
         genders = conceptmaps.translate(
@@ -54,8 +58,22 @@ def _apply_sex(ctx: MappingContext, patient: dict) -> None:
             patient.setdefault("extension", []).append(
                 {"url": systems.US_CORE_BIRTHSEX_EXT, "valueCode": birthsex[0]["code"]}
             )
-    elif el.nv:
-        patient["_gender"] = common.primitive_absent_extension(el)
+        if not genders:
+            ctx.log("ePatient.25", Disposition.SEEDED,
+                    f"sex code {el.value} has no administrative-gender target "
+                    "(see cm-nemsis-sex); Patient.gender absent and the US Core "
+                    "claim withheld", "information")
+    elif el.nv or el.pn:
+        # Refused/not-recorded: carry WHY on the primitive, but the claim is
+        # still withheld — an extension does not satisfy min=1.
+        # NOT `_gender`: gender has a REQUIRED binding, and the validator
+        # rejects a value-less element ("no code provided, and a code is
+        # required"). The reason lives in the ledger instead.
+        ctx.log("ePatient.25", Disposition.SEEDED,
+                f"sex not available ({'NV ' + el.nv if el.nv else 'PN ' + el.pn}); "
+                "Patient.gender omitted (its required binding rejects a "
+                "value-less element) and the US Core claim withheld",
+                "information")
 
 
 def _apply_race(ctx: MappingContext, patient: dict) -> None:
@@ -187,7 +205,8 @@ def map_patient(ctx: MappingContext) -> dict:
 
     _apply_sex(ctx, patient)
     _apply_race(ctx, patient)
-    common.claim_profiles(patient, "us-core-patient")
+    if common.can_claim_us_core_patient(patient):
+        common.claim_profiles(patient, "us-core-patient")
 
     ctx.patient_id = patient["id"]
     ctx.add(patient)

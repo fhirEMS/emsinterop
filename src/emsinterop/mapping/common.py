@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 import re
 
 from ..model import NemsisElement
@@ -11,6 +12,9 @@ US_CORE_PROFILE_BASE = "http://hl7.org/fhir/us/core/StructureDefinition/"
 
 _DATETIME_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}")
 _INT_RE = re.compile(r"^-?\d+$")
+#: Deliberately stricter than float(): rejects nan / inf / Infinity (valid
+#: Python floats but INVALID JSON) and 1_0 (which float() silently reads as 10).
+_NUMERIC_RE = re.compile(r"^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$")
 
 YES = "9923003"  # ItemsYesNo: Yes
 NO = "9923001"  # ItemsYesNo: No
@@ -41,17 +45,22 @@ def is_numeric(value: str | None) -> bool:
     XSD sanctions some (eVitals.07 'P'/'p' for a palpated BP) and dirty data
     supplies others. Callers check first and ledger the miss rather than
     letting one bad value abort the whole PCR (§8 quarantine-don't-crash)."""
-    if value is None:
+    if value is None or not _NUMERIC_RE.match(value.strip()):
         return False
     try:
-        float(value)
-    except (TypeError, ValueError):
+        # Catches overflow to inf (e.g. "1e400"), which the regex cannot see.
+        return math.isfinite(float(value))
+    except (TypeError, ValueError, OverflowError):
         return False
-    return True
 
 
 def quantity(value: str, unit: str | None = None, code: str | None = None) -> dict:
     num = float(value)
+    if not math.isfinite(num):
+        # NaN/Infinity serialize as bare NaN/Infinity, which is invalid JSON —
+        # one such value makes the ENTIRE bundle unparseable. Fail loudly here
+        # rather than emit it; callers gate on is_numeric() first.
+        raise ValueError(f"non-finite quantity value: {value!r}")
     q: dict = {"value": int(num) if num.is_integer() else num}
     if unit:
         q["unit"] = unit
@@ -124,8 +133,40 @@ def negative_interpretation() -> list[dict]:
 
 
 def primitive_absent_extension(element: NemsisElement) -> dict:
-    """data-absent-reason extension for a nil FHIR primitive (e.g. _birthDate)."""
+    """data-absent-reason extension for a nil FHIR primitive (e.g. _birthDate).
+
+    Handles PN as well as NV: a refused sex carries only a PN, and reading NV
+    alone emitted nothing at all — losing the fact that the question WAS asked
+    and declined, which is clinically different from "not recorded"."""
+    if not element.nv and element.pn:
+        return {
+            "extension": [
+                {
+                    "url": systems.DATA_ABSENT_REASON_EXT,
+                    "valueCode": _PN_TO_DATA_ABSENT.get(element.pn, "not-performed"),
+                }
+            ]
+        }
     return {"extension": [nv_pn.data_absent_extension(element.nv or "")]}
+
+
+def encounter_date(period: dict | None) -> str | None:
+    """The encounter's DATE, for measurements the source left undated.
+
+    Date precision is deliberate: it is what the source actually supports
+    ("during this call"), and FHIR's variable-precision dateTime carries it
+    honestly. Returns None if the encounter spans midnight — then even the date
+    would be a guess — or if there is no period at all.
+    """
+    if not period:
+        return None
+    start = (period.get("start") or "")[:10]
+    end = (period.get("end") or "")[:10]
+    if len(start) != 10:
+        return None
+    if end and end != start:
+        return None  # spans midnight: which day is not knowable
+    return start
 
 
 def can_claim_vital_signs(obs: dict) -> bool:
@@ -136,7 +177,24 @@ def can_claim_vital_signs(obs: dict) -> bool:
     conformance it would fail. Same posture as the Organization that withholds
     its US Core claim when it has no name."""
     effective = obs.get("effectiveDateTime")
-    return isinstance(effective, str) and len(effective) >= 10
+    if isinstance(effective, str) and len(effective) >= 10:
+        return True
+    # A Period is equally conformant (the profile allows dateTime | Period) and
+    # is how an undated measurement is bounded to its encounter.
+    period = obs.get("effectivePeriod") or {}
+    return bool(period.get("start") or period.get("end"))
+
+
+def can_claim_us_core_patient(patient: dict) -> bool:
+    """us-core-patient requires `gender` (min 1). A `_gender` data-absent
+    extension does NOT satisfy a minimum cardinality — the validator counts
+    values, not extension-only nodes — so when the source has no usable sex we
+    withhold the claim rather than assert a conformance we fail. We do not
+    substitute `unknown`: that asserts the sex was assessed and is not known,
+    a different and stronger claim than "the patient declined to state it".
+    Same posture as the Organization that withholds its claim when it has no
+    name (mapping/agency.py)."""
+    return isinstance(patient.get("gender"), str) and bool(patient["gender"])
 
 
 def claim_profiles(resource: dict, *profile_names: str) -> dict:

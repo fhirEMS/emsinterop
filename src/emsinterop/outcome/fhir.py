@@ -16,10 +16,11 @@ from .records import OutcomeRecord
 DISCHARGE_SUMMARY_LOINC = "18842-5"
 
 _ICD10CM = "http://hl7.org/fhir/sid/icd-10-cm"
-_NUBC_SYSTEMS = (
-    "https://www.nubc.org/CodeSystem/PatDischargeStatus",
-    "http://terminology.hl7.org/CodeSystem/discharge-disposition",
-)
+#: eOutcome.01/.02 enumerate NUBC patient-discharge-status codes, so ONLY the
+#: NUBC system may be passed through. The HL7 `discharge-disposition` system
+#: (home/hosp/exp/…) is a different vocabulary; treating its codes as NUBC
+#: would write a value the state registry's XSD rejects.
+_NUBC_SYSTEMS = ("https://www.nubc.org/CodeSystem/PatDischargeStatus",)
 # v3-ActCode encounter classes that are the ED visit; everything else is
 # treated as inpatient for eOutcome.01-vs-.02 routing.
 _EMERGENCY_CLASSES = {"EMER", "E"}
@@ -49,11 +50,23 @@ def _resolve(bundle: dict, reference: dict | None) -> dict:
     return {}
 
 
-def _code_in(concept: dict | None, systems: tuple[str, ...] = ()) -> str | None:
+def _code_in(
+    concept: dict | None,
+    systems: tuple[str, ...] = (),
+    allow_any: bool = True,
+) -> str | None:
+    """Code from a CodeableConcept, preferring the named systems.
+
+    `allow_any=False` for slots bound to a specific vocabulary: falling back to
+    whatever coding happens to be first would hand a SNOMED code to a field
+    that enumerates NUBC, silently corrupting the value. No code is better
+    than a wrong one — the caller leaves the element nil+NV instead."""
     codings = (concept or {}).get("coding", [])
     for coding in codings:
         if coding.get("system") in systems:
             return coding.get("code")
+    if not allow_any or not systems:
+        return codings[0].get("code") if (codings and not systems) else None
     return codings[0].get("code") if codings else None
 
 
@@ -93,7 +106,7 @@ def outcome_record_from_fhir(bundle: dict) -> OutcomeRecord:
 
     diagnoses: list[str] = []
     for condition in _entries(bundle, "Condition"):
-        code = _code_in(condition.get("code"), (_ICD10CM,))
+        code = _code_in(condition.get("code"), (_ICD10CM,), allow_any=False)
         if code and code not in diagnoses:
             diagnoses.append(code)
 
@@ -108,7 +121,7 @@ def outcome_record_from_fhir(bundle: dict) -> OutcomeRecord:
         visit_number=next((i.get("value") for i in encounter.get("identifier", [])
                            if i.get("value")), ""),
         discharge_status=_code_in(hospitalization.get("dischargeDisposition"),
-                                  _NUBC_SYSTEMS) or "",
+                                  _NUBC_SYSTEMS, allow_any=False) or "",
         admit_time=period.get("start"),
         discharge_time=period.get("end"),
         diagnoses=diagnoses,

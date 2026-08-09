@@ -23,7 +23,10 @@ PYTHONPATH="$REPO_ROOT/src" "$REPO_ROOT/.venv/bin/python" - "$OUT" <<'EOF'
 import json, glob, sys
 from emsinterop.convert import convert
 out = sys.argv[1]
-for path in sorted(glob.glob("tests/fixtures/*.xml")):
+# Golden corpus + the hostile corpus (XSD-valid edge cases) — Tier-2 is the
+# authoritative verdict on the conformance those fixtures pin.
+for path in sorted(glob.glob("tests/fixtures/*.xml")) + sorted(
+        glob.glob("tests/fixtures/hostile/*.xml")):
     name = path.split("/")[-1].replace(".xml", "")
     r = convert(path, agency_names={"4901": "Wasatch Valley EMS (synthetic)"})[0]
     json.dump(r.document, open(f"{out}/{name}_document.json", "w"))

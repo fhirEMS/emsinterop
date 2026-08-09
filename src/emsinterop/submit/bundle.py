@@ -13,6 +13,7 @@ FHIR storage — this bundle over its REST API is the seam.
 from __future__ import annotations
 
 from datetime import datetime, timezone
+from urllib.parse import quote
 
 RESOURCE_ID_SYSTEM = "urn:emsinterop:resource-id"
 
@@ -34,17 +35,23 @@ def _conditional_url(resource: dict) -> str:
             if t.get("reference", "").startswith("Patient/")
         ]
         if patient_targets:
-            return f"Provenance?target={patient_targets[0]}"
+            return f"Provenance?target={quote(patient_targets[0], safe='/')}"
         return f"Provenance/{resource['id']}"  # last resort: plain PUT
     if resource_type == "Composition":
         business = resource.get("identifier") or {}
         if business.get("value"):
+            # Escape the VALUE only: eRecord.01 is xs:string with no pattern,
+            # so a PCR number may contain / & ? # — unescaped, those would
+            # truncate the search and could match the WRONG Composition. The
+            # system is our own literal urn:/http: constant and stays readable.
             return (
-                f"Composition?identifier={business.get('system', '')}|{business['value']}"
+                f"Composition?identifier={business.get('system', '')}"
+                f"|{quote(business['value'], safe='')}"
             )
     for identifier in resource.get("identifier", []):
         if identifier.get("system") == RESOURCE_ID_SYSTEM:
-            return f"{resource_type}?identifier={RESOURCE_ID_SYSTEM}|{identifier['value']}"
+            return (f"{resource_type}?identifier={RESOURCE_ID_SYSTEM}"
+                    f"|{quote(identifier['value'], safe='')}")
     return f"{resource_type}/{resource['id']}"
 
 

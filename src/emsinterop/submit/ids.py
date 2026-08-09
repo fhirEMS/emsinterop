@@ -25,5 +25,13 @@ def pcr_key(agency_number: str | None, pcr_number: str | None, pcr_uuid: str | N
     source emits one (per the NEMSIS V3 UUID Guide); falls back to
     agency + PCR number, which is unique within an agency."""
     if pcr_uuid:
-        return f"uuid:{pcr_uuid}"
-    return f"pcr:{agency_number}:{pcr_number}"
+        # Case-normalize: the NEMSIS UUID pattern is [a-fA-F0-9], so the SAME
+        # record re-exported with different casing would otherwise key
+        # differently, produce different UUIDv5 ids, and DUPLICATE in fhirEngine
+        # instead of updating in place.
+        return f"uuid:{pcr_uuid.strip().lower()}"
+    if not (agency_number or pcr_number):
+        raise ValueError(
+            "cannot derive a stable PCR key: no UUID, agency number, or PCR number"
+        )
+    return f"pcr:{agency_number or ''}:{pcr_number or ''}"

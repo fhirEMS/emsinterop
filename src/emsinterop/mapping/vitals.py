@@ -60,17 +60,33 @@ def _base_observation(
     taken = group.first("eVitals.01")
     if taken is not None and taken.has_value:
         obs["effectiveDateTime"] = taken.value
-    elif taken is not None and taken.nv:
-        obs["_effectiveDateTime"] = common.primitive_absent_extension(taken)
-    if not common.can_claim_vital_signs(obs):
-        # vs-1 needs a day-precise effective time; without eVitals.01 we keep
-        # the reading but withhold the US Core claim. Ledger it so the gap is
-        # visible rather than a silently weaker resource.
+    # No usable time. Every alternative was checked against the official
+    # validator: a value-less `_effectiveDateTime` trips vs-1; omitting
+    # effective[x] trips the bp/heartrate profiles' min=1; and a Period trips
+    # vs-1 too, because R4's expression `($this as dateTime).toString()
+    # .length() >= 8` has no guard for the Period branch it permits.
+    #
+    # What DOES work is FHIR's variable-precision dateTime: vs-1 asks for >= 8
+    # characters, i.e. a DATE is enough. "Measured on 2024-10-07" is true and
+    # asserts no time of day the source never recorded — unlike copying the
+    # encounter's start timestamp, which would invent precision.
+    elif date := common.encounter_date(ctx.encounter_period):
+        obs["effectiveDateTime"] = date
+    if taken is None or not taken.has_value:
+        # Ledger EVERY undated measurement, whether or not we managed to bound
+        # it — substituting a period is a real change to what the resource
+        # asserts, and a silent substitution is exactly what the
+        # never-silently-drop rule exists to prevent.
+        nv = taken.nv if taken is not None else None
+        bounded = "effectiveDateTime" in obs
         ctx.log(
             "eVitals.01",
             Disposition.SEEDED,
-            "no usable measurement time; US Core vital-signs profile claim "
-            "withheld (invariant vs-1) — the observation is still emitted",
+            "no measurement time recorded"
+            + (f" (NV {nv})" if nv else "")
+            + ("; recorded at the encounter's DATE precision rather than given "
+               "a false precise timestamp" if bounded else
+               "; effective[x] omitted and the US Core vital-signs claim withheld"),
             "information",
         )
     prior = group.first("eVitals.02")
@@ -82,10 +98,31 @@ def _base_observation(
 
 
 def _apply_value_quantity(
-    obs: dict, element: NemsisElement, unit: str, ucum: str
+    obs: dict,
+    element: NemsisElement,
+    unit: str,
+    ucum: str,
+    ctx: MappingContext | None = None,
+    element_id: str | None = None,
 ) -> None:
+    off_scale = _off_scale_code(element_id or "", element.value)
     if element.has_value and common.is_numeric(element.value):
         obs["valueQuantity"] = common.quantity(element.value, unit, ucum)
+    elif element.has_value and off_scale:
+        # eVitals.18 'High'/'Low' — XSD-sanctioned: the meter read off its
+        # scale. That is a clinical finding, not malformed data, so it is
+        # recorded as an interpretation rather than flattened to "error".
+        obs["dataAbsentReason"] = common.unusable_value_concept("not-a-number")
+        obs["interpretation"] = [
+            {"coding": [{"system": common.V3_INTERPRETATION, "code": off_scale,
+                         "display": "off scale high" if off_scale == "HX"
+                                    else "off scale low"}]}
+        ]
+        if ctx is not None and element_id:
+            ctx.log(element_id, Disposition.SEEDED,
+                    f"meter reported {element.value!r} (off-scale); carried as "
+                    f"interpretation {off_scale} with no numeric value",
+                    "information")
     elif element.has_value:
         # Present but not a number: keep the observation, mark the value
         # unusable. Never abort the PCR over one dirty field.
@@ -94,6 +131,20 @@ def _apply_value_quantity(
         obs["interpretation"] = common.negative_interpretation()
     else:
         obs["dataAbsentReason"] = common.absent_reason_concept(element)
+
+
+#: The ONLY NEMSIS elements whose XSD pattern admits a letter in a numeric
+#: slot are eVitals.07 (P/p, palpated) and eVitals.18 (High/Low, off-scale
+#: glucose). Verified by sweeping every pattern in the pinned 3.5.0 schemas —
+#: this list is complete, not a sample.
+_OFF_SCALE = {"HIGH": "HX", "LOW": "LX"}
+
+
+def _off_scale_code(element_id: str, value: str | None) -> str | None:
+    """v3 interpretation code for an off-scale meter reading, else None."""
+    if element_id != "eVitals.18":
+        return None
+    return _OFF_SCALE.get((value or "").strip().upper())
 
 
 def _is_palpated(value: str | None) -> bool:
@@ -241,7 +292,7 @@ def map_vitals(ctx: MappingContext) -> list[dict]:
                 pain_type = group.first("eVitals.28")
                 if pain_type is not None and pain_type.has_value:
                     obs["method"] = conceptmaps.dual_code("eVitals.28", pain_type.value)
-            _apply_value_quantity(obs, element, unit, ucum)
+            _apply_value_quantity(obs, element, unit, ucum, ctx, element_id)
             out.append(ctx.add(obs))
 
         gcs = _gcs(ctx, group)

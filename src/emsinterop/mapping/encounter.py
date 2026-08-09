@@ -268,6 +268,7 @@ def map_encounter(ctx: MappingContext) -> dict:
         period["end"] = end.value
     if period:
         encounter["period"] = period
+        ctx.encounter_period = period
 
     # eResponse.01 ties the Encounter to the responding agency; the Organization
     # itself comes from the header. Cross-check the two, surfacing a mismatch.

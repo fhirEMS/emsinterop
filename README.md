@@ -1,34 +1,57 @@
 # emsInterop
 
-A translation engine converting **NEMSIS v3.5 EMS Patient Care Report (ePCR) XML** into
-**IHE-conformant FHIR R4** (IHE PCC mPSC / US Core), loaded into
-[**fhirEngine**](../fhirEngine) on OSS Delta Lake. No Databricks, no Spark, no JVM.
+**A poly-HL7 translation engine for NEMSIS-schema'd EMS data.** One NEMSIS v3.5
+ePCR goes in; **HL7 v2**, **C-CDA (HL7 v3)**, and **FHIR R4** come out — because
+the hospital, the state registry, and the HIE each want a different standard,
+and an EMS agency should not have to run three integrations to satisfy them.
 
-> **Status: v0.3.0 — alpha.** Every roadmap phase (P0–P7) is implemented: ingest,
-> canonical mapping, mPSC documents, HL7 v2 ADT, C-CDA (via `nemsis2ccda`), submission,
-> transport, the outcome loop, ops tooling, and the upstream contribution package.
-> The corpus validates clean through the official HL7 validator and a live fhirEngine.
+| Rail | Output | Who consumes it |
+|---|---|---|
+| **FHIR R4** | US-Core-aligned resource graph + IHE PCC mPSC document, submitted as a transaction Bundle | [fhirEngine](../fhirEngine) or any FHIR server; ITI-65 document sharing |
+| **HL7 v2** | ADT^A03 (completed call) and ADT^A04 (prearrival), MLLP-delivered | Hospital ADT feeds, encounter-notification networks |
+| **C-CDA (v3)** | CCD R2.1, via the [nemsis2CCDA](https://github.com/fhirEMS/nemsis2CCDA) sibling | Hospital document repositories, HIEs on CDA |
+| **Inbound** | Hospital discharge (ADT^A03 **or** FHIR Discharge Summary) → matched → NEMSIS `eOutcome` write-back | State registries — closes the outcome loop |
+
+All four ride **one canonical mapping** (ADR-001): NEMSIS is mapped once into a
+US-Core-aligned FHIR R4 resource graph, and every output is a projection over
+that graph. Add a standard by adding a projection, not another mapper — which
+is why the three rails cannot drift apart.
+
+Supports **NEMSIS 3.5.0 and 3.5.1**, validating against the release each
+document declares. No Databricks, no Spark, no JVM in the runtime.
+
+> **Status: v0.3.1 — alpha.** Every roadmap phase (P0–P7) is implemented, and
+> the corpus validates clean through the official HL7 validator, a live
+> fhirEngine, and the FML fidelity oracle. Five published real-world NEMSIS
+> scenario samples convert with **0 validation errors**.
 >
-> Alpha means: **synthetic data only — not yet run against production PHI**; the target
-> mPSC IG is itself a draft (v2.0.0-draft) and moves; the golden corpus is six cases, not
-> a field-scale sample. Read `docs/01_Architecture_Design.md` for the design,
-> `docs/05_Operations.md` to deploy, and "Scope & limitations" below before trusting it
-> with real patients.
+> Alpha means: **synthetic data only — not yet run against production PHI**
+> (see `docs/05_Operations.md` §1 and `emsinterop preflight`); the target mPSC
+> IG is itself a draft (v2.0.0-draft) and moves; the corpora are curated edge
+> cases, not a field-scale sample. Read `docs/01_Architecture_Design.md` for
+> the design and "Scope & limitations" below before trusting it with real
+> patients.
 
 ## How it works (short version)
-NEMSIS XML → a native **Python mapper** (this repo) that parses, applies ConceptMaps, and builds a
-canonical FHIR R4 resource graph **and** the mPSC IPS document → **submitted as a FHIR transaction
-Bundle to fhirEngine's REST API**. fhirEngine validates, indexes, persists to Delta, and serves.
-DuckDB reads Gold tables for analytics.
+
+A native **Python mapper** parses the NEMSIS XML, applies ConceptMaps, and builds
+one canonical US-Core-aligned FHIR R4 resource graph. Every output standard is a
+projection over that single graph — which is what keeps them consistent.
 
 ```
-NEMSIS 3.5 XML ─▶ emsinterop (Python: parse → map → ConceptMaps → assemble mPSC)
-                        │  FHIR transaction Bundle (POST /)
-                        ▼
-                  fhirEngine (../fhirEngine) ── Delta OSS ── DuckDB (analytics)
-                        │
-                        ▼  Provide Document Bundle [ITI-65] / [PCC-1]  (handoff)
+                                    ┌─▶ FHIR transaction Bundle ─▶ fhirEngine ─▶ Delta ─▶ DuckDB
+                                    │        └─▶ mPSC document ─▶ ITI-65 / [PCC-1] handoff
+NEMSIS 3.5 XML ─▶ parse ─▶ ConceptMaps ─▶ CANONICAL FHIR R4 GRAPH
+   (XSD-gated)                      ├─▶ HL7 v2 ADT^A03 / A04 ─▶ MLLP ─▶ hospital ADT feed
+                                    └─▶ C-CDA R2.1 CCD ─▶ document repository / HIE
+
+hospital discharge (ADT^A03 | FHIR Discharge Summary) ─▶ match ─▶ NEMSIS eOutcome ─▶ state registry
 ```
+
+Which rails fire is one config switch (`mode: fhir | adt | ccda`, or a list), so
+a deployment sends only what its partners accept. Endpoints are optional per
+rail: configured, artifacts are delivered; unconfigured, they are produced and
+reported.
 
 ## Getting started (dev)
 
@@ -303,6 +326,7 @@ What the alpha label means concretely:
 | `docs/03_ADRs.md` | 10 architecture decision records (layered output, native-Python-mapper→fhirEngine runtime, terminology, identity/MPI, conformance, validation contract, versioning, transport, fhirEngine-as-SoR, no-Spark). |
 | `docs/04_Phased_Roadmap.md` | Phased build plan (P0–P7) with effort/risk and critical path. |
 | `docs/05_Operations.md` | Deployment runbook: prod gates, terminology provisioning, land→convert→dispatch→reconcile pipeline, promotion, de-id analytics, releases. |
+| `docs/06_Synthetic_Corpus_Plan.md` | Plan for `nemsynth`, a Synthea-equivalent synthetic NEMSIS generator — the path to corpus breadth while real agency exports are unavailable. |
 | `contrib/` | The IHE PCC mPSC contribution package (Phase 7): completed field map export, verified gap report, six channel-neutral proposal documents (no repo issues are opened; delivery channel is Chad's call). |
 | `CLAUDE.md` | Fast orientation + hard rules for Claude Code sessions. |
 

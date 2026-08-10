@@ -100,8 +100,11 @@ Provenance emitted; NV/PN cases covered.
   review (`docs/05_Operations.md` §1). Until then: **synthetic data only.**
 
 ## Standing constraints
-- **Never open issues or PRs in repositories Chad does not own** (IHE and any other
-  third party). Upstream material lives in `contrib/` as channel-neutral proposals;
-  the delivery channel is Chad's decision.
+- **Never publish anything to IHE — or any third party — without Chad's express
+  permission, per submission.** This is absolute and covers every channel, not just
+  GitHub: no issues, no PRs, no email, no public comment, no chat.fhir.org post, no
+  handing material to an intermediary. `contrib/` is a KEPT-SEPARATE working set, not
+  a queue awaiting dispatch; "it was ready" is never authorization. Standing consent
+  does not exist here — permission is per submission, and silence is not permission.
 - Local dev gotcha: after any `pip install -e`, pip-written `__editable__*.pth` files are
   silently ignored on this Mac — rewrite them in place, or use `PYTHONPATH=src`.

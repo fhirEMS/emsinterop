@@ -34,9 +34,9 @@ self-contained, no channel assumed:
 5. **proposal-05** — eOutcome / QRPH "QORE" binding pin
 6. **proposal-06** — alignment & process (US Core note, release cadence, ITI bindings — includes an EMS-Overall concern, with a note asking the editors to route it)
 
-## Channels (no repo issues)
+## Channels — for reference only, none to be used without express permission
 
-Options that do not involve opening issues anywhere:
+If and when Chad authorizes a specific submission, these are the routes:
 
 - **Direct email** to the IHE PCC Technical Committee / the mPSC editor
   (the IG repo names Andrea Fourquet as contact), with the proposals
@@ -45,9 +45,11 @@ Options that do not involve opening issues anywhere:
   comment period — proposals 03/05/06 fit that format directly.
 - **chat.fhir.org** — the implementers' Zulip has IHE-adjacent streams;
   a summary post linking here starts the conversation without any filing.
-- **Passive publication** — this directory in the public repo IS the
-  contribution; the IG editors can take any of it under its license
-  whenever they find it.
+- **Passive publication** — NOTE: the repository went public on 2026-08-09, so
+  this directory is now world-readable whether or not anyone points to it.
+  That is a consequence of the repo's visibility, not a decision to publish;
+  if the material should not be discoverable, it has to move out of the public
+  repo (and note that git history is already public).
 
 proposal-01 doubles as the cover letter for any of these.
 

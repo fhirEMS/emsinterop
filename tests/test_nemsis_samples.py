@@ -31,7 +31,10 @@ from emsinterop.issues import Disposition
 from emsinterop.terminology import registry
 
 SAMPLES = Path(os.environ.get("EMSINTEROP_SAMPLES", ""))
-SAMPLE_FILES = sorted(SAMPLES.glob("*_v350.xml")) if SAMPLES.is_dir() else []
+# Any *.xml in the directory: this tier consumes the published NEMSIS scenario
+# samples AND generated corpora (nemsynth), so it must not assume the
+# publisher's filename convention.
+SAMPLE_FILES = sorted(SAMPLES.glob("*.xml")) if SAMPLES.is_dir() else []
 
 pytestmark = pytest.mark.skipif(
     not SAMPLE_FILES,
@@ -81,7 +84,12 @@ def test_every_issue_is_informational(path, converted):
 
 def test_palpated_blood_pressure_survives(converted):
     """eVitals.07 'P'/'p' — a palpated BP, routine on hypotensive patients.
-    It used to raise ValueError and abort the whole PCR."""
+    It used to raise ValueError and abort the whole PCR.
+
+    Skipped when the pointed-at corpus contains no palpated BP: this asserts a
+    property of the PUBLISHED samples, and the tier also runs over generated
+    corpora that may not contain one. The permanent guard is the in-repo
+    hostile fixture, which always runs."""
     palpated = []
     for result in converted.values():
         for obs in result.resources:
@@ -98,7 +106,8 @@ def test_palpated_blood_pressure_survives(converted):
             if reason.get("code") == "not-performed":
                 palpated.append((obs, components))
 
-    assert palpated, "no palpated BP in the samples — fixture assumption changed"
+    if not palpated:
+        pytest.skip("this corpus contains no palpated BP")
     obs, components = palpated[0]
     # Systolic is real data and must be preserved, not discarded with the pair.
     assert components["8480-6"]["valueQuantity"]["value"] > 0

@@ -137,6 +137,31 @@ from the EMSDataSet header) are supplied via `convert(..., agency_names={...})`;
 without one the Organization ships `_name` data-absent and withholds its US Core
 claim.
 
+### Corpus sweep (generated NEMSIS at volume)
+
+The hand-authored corpus can only prove the mapper handles what we thought of.
+[nemsynth](https://github.com/fhirEMS/nemsynth) — a separate public repo,
+deliberately with **no dependency on this one** — generates NEMSIS at volume
+across 15 clinical presentations, 4 messiness profiles, both releases and
+mass-casualty datasets. The sweep converts them and triages what falls out:
+
+```bash
+pip install 'git+https://github.com/fhirEMS/nemsynth'
+python -m emsinterop.fuzz --count 3000
+```
+
+Findings are **deduplicated** by signature (an invariant rule id, or the
+exception type plus the innermost frame in this package), so one defect in a
+shared path is one finding rather than thousands. Each carries a **byte-
+reproducible** replay command. The sweep fails only on signatures absent from
+`tests/fuzz-baseline.json`, which is currently empty: a 20,000-case sweep
+(~28,000 PatientCareReports, counting MCI) reports **0 findings**.
+
+The rules it applies live in `src/emsinterop/invariants.py` and are shared with
+the hostile-fixture tier, so the two cannot drift. `tests/test_invariants.py`
+hands each rule input that breaks it — a rule that cannot fail is worse than no
+rule, and a clean sweep only means something if the harness can report a defect.
+
 ### Tier-2 validation (official HL7 validator — authoritative)
 
 The whole corpus's mPSC document bundles pass the official validator with

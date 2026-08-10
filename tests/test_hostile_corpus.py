@@ -19,12 +19,12 @@ hostile case shouldn't have to keep.
 
 from __future__ import annotations
 
-import json
 from pathlib import Path
 from urllib.parse import parse_qs, urlsplit
 
 import pytest
 
+from emsinterop import invariants
 from emsinterop.convert import convert
 from emsinterop.ingest import validate
 from emsinterop.issues import Disposition
@@ -54,91 +54,24 @@ def test_converts_without_raising(path, converted):
 
 
 @pytest.mark.parametrize("path", FIXTURES, ids=lambda p: p.stem)
-def test_nothing_is_silently_dropped(path, converted):
-    """The #1 hard rule. Every source element is consumed by a mapper or
-    ledgered — hostile input must not open a third path."""
-    result = converted[path.stem]
-    present = result.context.pcr.element_ids()
-    flagged = {i.element_id for i in result.issues.issues}
-    assert present - result.context.consumed - flagged == set()
-    assert result.issues.by_disposition(Disposition.UNMAPPED) == []
+def test_satisfies_every_conversion_invariant(path, converted):
+    """The shared rule set in `emsinterop.invariants` — the same checks the
+    corpus sweep applies to tens of thousands of generated documents.
 
-
-@pytest.mark.parametrize("path", FIXTURES, ids=lambda p: p.stem)
-def test_output_is_serializable_json(path, converted):
-    """`allow_nan=False` is the generic guard: NaN/Infinity are valid Python
-    floats but INVALID JSON, so one leak anywhere in the graph makes the whole
-    bundle unparseable by any conforming server."""
-    result = converted[path.stem]
-    json.dumps(result.transaction, allow_nan=False)
-    json.dumps(result.document, allow_nan=False)
-
-
-@pytest.mark.parametrize("path", FIXTURES, ids=lambda p: p.stem)
-def test_conditional_update_urls_are_well_formed(path, converted):
-    """A PCR number is xs:string with no pattern, so it can carry /, &, ?, #.
-    Those must not leak into the request URL's structure — an unescaped `?`
-    would truncate the search and could match the WRONG resource."""
-    result = converted[path.stem]
-    for entry in result.transaction["entry"]:
-        url = entry["request"]["url"]
-        # Structural characters must appear only where they are structure. We
-        # assert on the RAW url, not on parse_qs output — parse_qs percent-
-        # DECODES, so a correctly-escaped value legitimately contains '?' once
-        # decoded and checking there would test nothing.
-        assert "#" not in url, f"unescaped fragment marker in request URL: {url}"
-        assert url.count("?") <= 1, f"unescaped query marker in request URL: {url}"
-        assert urlsplit(url).fragment == ""
-
-
-@pytest.mark.parametrize("path", FIXTURES, ids=lambda p: p.stem)
-def test_vital_signs_conformance(path, converted):
-    """Two US Core invariants, checked structurally so any future fixture is
-    covered automatically:
-
-    vs-1 — a vital-signs Observation must not carry a value-less
-    `_effectiveDateTime`; the validator applies the base vitalsigns profile on
-    the strength of `category`, not `meta.profile`, so the element has to be
-    omitted entirely, not merely stripped of its profile claim.
-
-    And a profile is only claimed when it can actually be met.
+    These used to be spelled out here, which meant the sweep needed its own
+    copy and the two would drift. One definition, two callers: this tier proves
+    the rules hold for the cases we chose deliberately, the sweep proves it for
+    the ones nobody thought of.
     """
-    result = converted[path.stem]
-    for obs in result.resources:
-        if obs.get("resourceType") != "Observation":
-            continue
-        categories = {
-            coding.get("code")
-            for concept in obs.get("category", [])
-            for coding in concept.get("coding", [])
-        }
-        if "vital-signs" not in categories:
-            continue
-        # The vs-1 trap is a VALUE-LESS `_effectiveDateTime`. The same key
-        # alongside a value is fine and is how the NEMSIS original is retained
-        # when the time is carried at reduced precision.
-        if "_effectiveDateTime" in obs:
-            assert "effectiveDateTime" in obs, (
-                f"{obs['id']} carries a value-less effective time (vs-1)")
-        claims = obs.get("meta", {}).get("profile", [])
-        if any("vital-signs" in c or "blood-pressure" in c for c in claims):
-            assert common.can_claim_vital_signs(obs), (
-                f"{obs['id']} claims a vital-signs profile it cannot satisfy")
+    assert invariants.check(converted[path.stem]) == []
 
 
 @pytest.mark.parametrize("path", FIXTURES, ids=lambda p: p.stem)
-def test_us_core_patient_claim_is_earned(path, converted):
-    """us-core-patient requires gender (min 1). A data-absent extension does
-    NOT satisfy that, so the claim must be withheld rather than asserted —
-    and we never invent a gender to satisfy a validator."""
-    result = converted[path.stem]
-    for patient in result.resources:
-        if patient.get("resourceType") != "Patient":
-            continue
-        if any("us-core-patient" in c
-               for c in patient.get("meta", {}).get("profile", [])):
-            assert isinstance(patient.get("gender"), str), (
-                "us-core-patient claimed without a gender value")
+def test_no_element_is_left_unmapped_at_all(path, converted):
+    """Stricter than the shared rule, which only reports NATIONAL gaps. A
+    hostile fixture is minimal and deliberate, so nothing in it should be
+    deferred — including state and local elements."""
+    assert converted[path.stem].issues.by_disposition(Disposition.UNMAPPED) == []
 
 
 # -- what each fixture specifically pins --------------------------------------

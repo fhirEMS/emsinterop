@@ -2,6 +2,18 @@
 
 ## Unreleased
 
+- **Corpus sweep (`python -m emsinterop.fuzz`).** Generates NEMSIS at volume via
+  nemsynth, converts it, and triages the results: findings deduplicate to a
+  stable signature, each carries a byte-reproducible replay command, and the
+  run fails only on signatures absent from `tests/fuzz-baseline.json`. A
+  20,000-case sweep across 15 scenarios, 4 messiness profiles, both releases
+  and MCI datasets reports 0 findings; the baseline is empty on purpose.
+- **`emsinterop.invariants`** — the rules that must hold of any conversion, in
+  one place, shared by the sweep and the hostile-fixture tier so they cannot
+  drift. Adds a reference-closure rule nothing previously checked: a dangling
+  relative reference survives JSON validity and profile checks all the way to
+  a server. `tests/test_invariants.py` proves every rule can actually fire.
+
 - **Symptom onset is no longer dropped when there is no impression.**
   `eSituation.01` (national, Required) was read *inside* the primary-impression
   branch, so a record whose impression was NV/PN never even looked at it — the

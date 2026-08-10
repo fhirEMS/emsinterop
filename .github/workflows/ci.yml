@@ -6,6 +6,29 @@ on:
   pull_request:
 
 jobs:
+  fuzz:
+    name: corpus sweep (generated NEMSIS)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e '.[dev]'
+
+      # nemsynth is a SEPARATE public repo and an optional dev dependency. The
+      # dependency runs one way only: the mapper may know about the generator,
+      # never the reverse — a generator carrying its consumer's assumptions
+      # could only ever generate what that consumer already handles.
+      - run: pip install 'git+https://github.com/fhirEMS/nemsynth'
+
+      # Fails only on signatures absent from tests/fuzz-baseline.json, so this
+      # can run per-PR without crying wolf. Findings are deduplicated and each
+      # carries a byte-reproducible replay command.
+      - name: Sweep generated corpora through the mapper
+        run: python -m emsinterop.fuzz --count 3000
+
   test:
     name: local suite (XSD · mappers · corpus · bronze)
     runs-on: ubuntu-latest

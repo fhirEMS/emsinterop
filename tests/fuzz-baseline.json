@@ -1,0 +1,4 @@
+{
+  "accepted": [],
+  "note": "Signatures the corpus sweep (python -m emsinterop.fuzz) may report without failing. It is EMPTY on purpose: as of this commit a 20,000-case sweep across 15 scenarios, 4 messiness profiles and both releases finds nothing, so every signature is genuinely new. Adding one is a deliberate act that needs a reason in the PR — a baseline nobody defends is just a mute button, and the whole value of this harness is that a new signature means something."
+}

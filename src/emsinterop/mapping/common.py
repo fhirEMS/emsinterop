@@ -11,7 +11,11 @@ from ..terminology import conceptmaps, nv_pn, registry, systems
 US_CORE_PROFILE_BASE = "http://hl7.org/fhir/us/core/StructureDefinition/"
 
 _DATETIME_RE = re.compile(r"^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}")
-_INT_RE = re.compile(r"^-?\d+$")
+#: ASCII digits only — `\d` is Unicode-wide, so without [0-9] a value in
+#: another numeral system would round-trip into something the source did not say.
+_INT_RE = re.compile(r"^-?[0-9]+$")
+#: FHIR `integer` is int32; a longer digit string is not representable.
+_INT32 = (-2_147_483_648, 2_147_483_647)
 #: Deliberately stricter than float(): rejects nan / inf / Infinity (valid
 #: Python floats but INVALID JSON) and 1_0 (which float() silently reads as 10).
 _NUMERIC_RE = re.compile(r"^[+-]?(\d+(\.\d*)?|\.\d+)([eE][+-]?\d+)?$")
@@ -236,7 +240,7 @@ def apply_smart_value(obs: dict, element: NemsisElement) -> None:
         obs["valueCodeableConcept"] = conceptmaps.dual_code(element.element_id, value)
     elif _DATETIME_RE.match(value):
         obs["valueDateTime"] = value
-    elif _INT_RE.match(value):
+    elif _INT_RE.match(value) and _INT32[0] <= int(value) <= _INT32[1]:
         obs["valueInteger"] = int(value)
     else:
         obs["valueString"] = value

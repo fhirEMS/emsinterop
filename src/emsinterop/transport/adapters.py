@@ -8,6 +8,7 @@ join later behind the same Protocol).
 from __future__ import annotations
 
 import json
+import re
 from pathlib import Path
 from typing import Protocol
 
@@ -58,8 +59,7 @@ class FileDropTransport:
              if i.get("system") == "urn:nemsis:identifier:pcr"),
             "document",
         )
-        safe = identifier.replace(":", "_").replace("/", "_")
-        path = self._directory / f"iti65-{safe}.json"
+        path = self._directory / f"iti65-{safe_filename(identifier)}.json"
         path.write_text(json.dumps(iti65_bundle, indent=1))
         return {"status": "written", "path": str(path)}
 
@@ -95,3 +95,16 @@ class MllpTransport:
         )
         return {"status": "delivered" if code == "AA" else "ack-error",
                 "ack_code": code, "ack": ack}
+
+
+#: NEMSIS `eRecord.01` is xs:string with NO pattern, so a PCR number may
+#: contain path separators, `..`, NUL, or anything else. Any code that turns
+#: one into a FILENAME must go through here — `Path(out) / f"{pcr}.xml"` with a
+#: raw value writes wherever the value says, including outside `out`.
+_UNSAFE_FILENAME = re.compile(r"[^A-Za-z0-9._-]")
+
+
+def safe_filename(value: str, fallback: str = "document") -> str:
+    """A single, contained path segment derived from untrusted text."""
+    cleaned = _UNSAFE_FILENAME.sub("_", value or "").strip("._")
+    return cleaned[:120] or fallback

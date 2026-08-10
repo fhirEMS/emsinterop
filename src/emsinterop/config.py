@@ -152,7 +152,12 @@ def dispatch(result, config: MessagingConfig | None = None) -> list[dict]:
             if config.ccda.out_dir:
                 out = Path(config.ccda.out_dir)
                 out.mkdir(parents=True, exist_ok=True)
-                target = out / f"{result.context.pcr_number or 'pcr'}.ccda.xml"
+                # Never interpolate a PCR number into a path unsanitized:
+                # eRecord.01 has no pattern, so "../../x" or "a/b" escapes or
+                # redirects the write. transport/adapters.py already learned
+                # this; this rail had not.
+                from .transport.adapters import safe_filename
+                target = out / f"{safe_filename(result.context.pcr_number, 'pcr')}.ccda.xml"
                 target.write_bytes(xml)
                 entry["detail"] = {"status": "written", "path": str(target)}
                 entry["sent"] = True

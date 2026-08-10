@@ -155,12 +155,14 @@ def build_composition(ctx: MappingContext, variant: str = "CR") -> dict:
         resources = _section_resources(ctx, spec)
         if variant == "CS" and spec.loinc == "8716-3" and resources:
             # Clinical Subset carries the last vitals set only (handoff moment).
-            last_effective = max(
-                (r.get("effectiveDateTime", "") for r in resources), default=""
-            )
-            resources = [
-                r for r in resources if r.get("effectiveDateTime", "") == last_effective
-            ]
+            # Compare as INSTANTS, not lexically: NEMSIS timestamps carry
+            # offsets, and "…T09:00:00-06:00" sorts after "…T10:00:00Z" as a
+            # string while being six hours earlier. Getting this wrong puts the
+            # WRONG vitals set in the handoff subset — silent clinical data
+            # loss with no ledger entry.
+            latest = max((_instant(r) for r in resources), default=None)
+            if latest is not None:
+                resources = [r for r in resources if _instant(r) == latest]
         if not resources and not spec.mandatory:
             continue
         section: dict = {
@@ -188,6 +190,27 @@ def build_composition(ctx: MappingContext, variant: str = "CR") -> dict:
         sections.append(section)
     composition["section"] = sections
     return ctx.add(composition)
+
+
+def _instant(resource: dict):
+    """Sortable instant for an Observation's effective time, offset-aware.
+
+    Returns None when there is no usable time, which `max(..., default=None)`
+    and the equality filter both treat as "not the latest" — the same
+    behaviour the previous string comparison had for missing values."""
+    from datetime import datetime
+
+    value = resource.get("effectiveDateTime")
+    if not isinstance(value, str):
+        return None
+    try:
+        parsed = datetime.fromisoformat(value)
+    except ValueError:
+        return None
+    # A date-precision value (an undated vital bounded to its encounter) parses
+    # naive; treat it as ordering before any offset-aware instant rather than
+    # raising on the comparison.
+    return (parsed.tzinfo is not None, parsed)
 
 
 def _collect_references(value, refs: set[str]) -> None:

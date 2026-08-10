@@ -51,6 +51,11 @@ def zip3(postal_code: str | None) -> str | None:
     if not postal_code or len(postal_code) < 3:
         return None
     prefix = postal_code[:3]
+    # Must be a US 5-digit ZIP: a Canadian or free-text code would yield an
+    # alphabetic "ZIP3" that sails past the restricted-prefix list entirely,
+    # and Safe Harbor's geographic rule assumes US ZIPs.
+    if not prefix.isdigit():
+        return None
     return None if prefix in RESTRICTED_ZIP3 else prefix
 
 

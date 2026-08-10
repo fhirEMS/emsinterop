@@ -42,7 +42,16 @@ def provide_document_bundle(result, submitted_at: str | None = None) -> dict:
     document = result.document
     composition = result.composition
 
-    patient = next(r for r in ctx.resources if r["resourceType"] == "Patient")
+    patient = next(
+        (r for r in ctx.resources if r["resourceType"] == "Patient"), None
+    )
+    if patient is None:
+        # Every mapped PCR emits a Patient today, so this is a guard against a
+        # future caller — but a bare next() would raise StopIteration, which
+        # unwinds as a confusing generator error rather than a clear fault.
+        raise ValueError(
+            "cannot build an ITI-65 bundle: the conversion produced no Patient"
+        )
     patient_ref = {"reference": f"urn:uuid:{patient['id']}"}
     when = submitted_at or composition.get("date")
 

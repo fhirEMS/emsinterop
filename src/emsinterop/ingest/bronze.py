@@ -59,7 +59,25 @@ def land(xml_path: str | Path | bytes, table_path: str | Path) -> int:
     import copy as _copy
 
     root = safexml.fromstring(raw)
-    pcr_nodes = root.findall(f".//{{{NEMSIS_NS}}}PatientCareReport")
+    # Walk exactly as parser.py does — root -> Header -> PatientCareReport —
+    # NOT `.//PatientCareReport`. Two different traversals can return different
+    # lists (a PCR outside a Header, a nested one, a second Header), and the
+    # zip() below would then pair one PCR's number/UUID with ANOTHER's raw XML:
+    # silent audit corruption, plus zip() truncating the excess while the
+    # return value still claims the full count.
+    pcr_nodes = [
+        child
+        for header in root
+        if isinstance(header.tag, str) and header.tag.endswith("}Header")
+        for child in header
+        if isinstance(child.tag, str) and child.tag.endswith("}PatientCareReport")
+    ]
+    if len(pcr_nodes) != len(dataset.reports):
+        raise ValueError(
+            f"bronze traversal disagrees with the parser: {len(pcr_nodes)} "
+            f"PatientCareReport node(s) vs {len(dataset.reports)} parsed "
+            "report(s) — refusing to land misaligned audit rows"
+        )
 
     def single_pcr_document(pcr_node: etree._Element) -> str:
         source_header = pcr_node.getparent()

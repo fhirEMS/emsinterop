@@ -73,12 +73,17 @@ def _esc(value: str | None) -> str:
 
 
 def _ts(iso: str | None) -> str:
-    """ISO 8601 -> HL7 DTM (YYYYMMDDHHMMSS±ZZZZ)."""
+    """ISO 8601 -> HL7 DTM (YYYYMMDDHHMMSS±ZZZZ).
+
+    `Z` is a legal ISO offset but NOT a legal HL7 v2 one — HL7 wants a signed
+    numeric offset — so it becomes +0000. NEMSIS timestamps always carry
+    ±hh:mm, but the outcome rail and callers can supply anything."""
     if not iso:
         return ""
-    return (
-        iso.replace("-", "", 2).replace(":", "").replace("T", "")
-    )
+    dtm = iso.replace("-", "", 2).replace(":", "").replace("T", "")
+    if dtm.endswith(("Z", "z")):
+        dtm = dtm[:-1] + "+0000"
+    return dtm
 
 
 def _discharge_status(ctx: MappingContext) -> str:

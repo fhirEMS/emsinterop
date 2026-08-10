@@ -1,0 +1,24 @@
+{
+  "_comment": [
+    "Starter config — pick which standards this deployment emits.",
+    "  mode: \"fhir\" | \"adt\" | \"ccda\", or a list such as [\"fhir\", \"adt\"].",
+    "A rail not listed is never rendered at all.",
+    "",
+    "No endpoints are set here, so this runs out of the box: artifacts are",
+    "produced and reported but not delivered — the way to dry-run a partner",
+    "before pointing at their endpoint. Add \"fhirengine_url\" (fhir) or",
+    "\"adt_endpoint\" (host:port, MLLP) when they are ready.",
+    "",
+    "For production start from messaging.prod.example.json and gate the deploy",
+    "on `emsinterop preflight --config <file>`."
+  ],
+  "mode": ["fhir", "adt"],
+  "fhir": {
+    "iti65": false
+  },
+  "adt": {
+    "send_completed": true,
+    "send_prearrival": false,
+    "receiving_facility": "RECEIVING-HOSPITAL"
+  }
+}

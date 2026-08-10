@@ -23,10 +23,16 @@ import json
 from dataclasses import dataclass, field
 from pathlib import Path
 
+import httpx
+
 from .assemble.adt import AdtConfig, build_adt_messages
 from .log import event as log_event, get_logger
 
 logger = get_logger("dispatch")
+
+#: A rejection is a SubmissionError carrying an OperationOutcome; these are the
+#: other kind — the request never reached a server that could evaluate it.
+_TRANSPORT_ERRORS = (httpx.HTTPError, OSError)
 
 RAILS = ("fhir", "adt", "ccda")
 _LEGACY_MODES = {"both": ("fhir", "adt"), "all": RAILS}
@@ -117,6 +123,17 @@ def dispatch(result, config: MessagingConfig | None = None) -> list[dict]:
             try:
                 entry["detail"] = client.submit(result.transaction)
                 entry["sent"] = True
+            except _TRANSPORT_ERRORS as error:
+                # Unreachable server / DNS / TLS failure. A rejection is a
+                # SubmissionError with an OperationOutcome; this is the other
+                # kind — nothing was ever evaluated. Report it as a failed
+                # delivery instead of letting a transport traceback escape the
+                # CLI, and ledger it so the gap register sees the miss.
+                from .issues import ConversionIssue, Disposition
+                result.issues.extend([ConversionIssue(
+                    result.context.pcr_number, "transaction", Disposition.INVALID,
+                    f"fhirEngine unreachable: {type(error).__name__}", "error")])
+                entry["error"] = f"unreachable: {type(error).__name__}"
             except _submit.SubmissionError as error:
                 # Rejected transactions never reach fhirEngine's dead-letter
                 # (atomic pre-validation) — fold the OperationOutcome into the

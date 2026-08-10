@@ -86,3 +86,33 @@ def test_rail_list_and_legacy_modes(chest_pain):
     assert [e["kind"] for e in report] == ["fhir-transaction", "ccda", "adt-a03"]
     legacy = dispatch(chest_pain, MessagingConfig(mode="both"))
     assert [e["kind"] for e in legacy] == ["fhir-transaction", "adt-a03"]
+
+
+def test_unreachable_endpoint_reports_instead_of_crashing(chest_pain):
+    """A configured endpoint that cannot be reached is a failed delivery, not a
+    traceback out of the CLI. Distinct from a SubmissionError, where the server
+    DID evaluate the bundle and rejected it — here nothing was evaluated."""
+    config = MessagingConfig.from_dict(
+        # port 9 (discard) refuses fast and needs no network
+        {"mode": "fhir", "fhir": {"fhirengine_url": "http://127.0.0.1:9"}})
+    report = dispatch(chest_pain, config)
+
+    (entry,) = report
+    assert entry["sent"] is False
+    assert entry["error"].startswith("unreachable:")
+    assert "outcome" not in entry  # no OperationOutcome — nothing was evaluated
+    # Ledgered, so the gap register sees the miss.
+    assert any("unreachable" in i.reason for i in chest_pain.issues.issues)
+
+
+def test_shipped_example_configs_load(tmp_path):
+    """The templates the README tells people to copy must actually parse."""
+    import json
+    from pathlib import Path
+
+    for name in ("messaging.example.json", "messaging.prod.example.json"):
+        path = Path("deploy") / name
+        data = json.loads(path.read_text())
+        config = MessagingConfig.from_dict(
+            {k: v for k, v in data.items() if not k.startswith("_")})
+        assert config.rails

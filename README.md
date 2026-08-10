@@ -78,6 +78,25 @@ Extras: `bronze` (raw-NEMSIS Delta audit/replay), `analytics` (de-id projection)
 `dev` (pytest + openpyxl). The core install has no Delta/DuckDB dependency — a
 deployment that only converts and transmits needs neither.
 
+### Choosing which standards to emit
+
+Rail selection is configuration, not code. Copy a template, set `mode`, and pass
+it with `--config`:
+
+```bash
+cp deploy/messaging.example.json my-agency.json     # starter: FHIR + HL7 v2
+# edit "mode": "fhir" | "adt" | "ccda", or a list
+
+.venv/bin/python -m emsinterop convert tests/fixtures/pcr_chest_pain.xml \
+    --config my-agency.json                          # dispatches the enabled rails
+.venv/bin/python -m emsinterop serve --config my-agency.json
+```
+
+`convert --config` prints one line per artifact — its rail, whether it was sent,
+and any delivery error — so you can see exactly what a config produces before
+wiring up endpoints. `deploy/messaging.prod.example.json` is the production
+starting point; gate that deploy on `emsinterop preflight --config`.
+
 ### The CLI at a glance
 
 | Command | What it does |

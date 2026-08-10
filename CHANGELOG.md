@@ -2,30 +2,7 @@
 
 ## Unreleased
 
-- **`MAPPING_RULESET_VERSION` bumped to 0.3.2.** It is stamped into every
-  resource's `meta.tag` and into Provenance, and the convention is to bump on
-  semantic change rather than package change. The onset fix below adds a
-  resource to the output, so a consumer must be able to tell which rules
-  produced what it is holding.
-
-- **The corpus sweep now pairs records with an agency roster.** The agency name
-  lives only in the DEMDataSet, so without one every `Organization` withholds
-  its US Core claim and that branch went unswept. Half the cases now run with a
-  generated roster and half without — an agency that reports no name is the
-  other real-world branch, and the one a consumer gets wrong by turning absence
-  into an empty string.
-
-- **Corpus sweep (`python -m emsinterop.fuzz`).** Generates NEMSIS at volume via
-  nemsynth, converts it, and triages the results: findings deduplicate to a
-  stable signature, each carries a byte-reproducible replay command, and the
-  run fails only on signatures absent from `tests/fuzz-baseline.json`. A
-  20,000-case sweep across 15 scenarios, 4 messiness profiles, both releases
-  and MCI datasets reports 0 findings; the baseline is empty on purpose.
-- **`emsinterop.invariants`** — the rules that must hold of any conversion, in
-  one place, shared by the sweep and the hostile-fixture tier so they cannot
-  drift. Adds a reference-closure rule nothing previously checked: a dangling
-  relative reference survives JSON validity and profile checks all the way to
-  a server. `tests/test_invariants.py` proves every rule can actually fire.
+### Fixed
 
 - **Symptom onset is no longer dropped when there is no impression.**
   `eSituation.01` (national, Required) was read *inside* the primary-impression
@@ -37,16 +14,48 @@
   already used. `eSituation.07`/`.08` had the identical defect — read only
   inside the chief-complaint branch — and are now resolved up front too, with an
   explicit deferral when no Condition exists to carry an anatomic location.
-- **Found by generated volume, not by hand.** 300 documents from
+
+  Found by generated volume, not by hand: 300 documents from
   [nemsynth](https://github.com/fhirEMS/nemsynth) at `--messiness high` reached
   a branch combination that neither the six hand-authored fixtures nor the five
   published NEMSIS samples contained. Distilled into
   `tests/fixtures/hostile/hostile_onset_no_impression.xml` so default CI holds
   it permanently.
+
 - **The sample discovery tier scopes itself by namespace.** It globs `*.xml` so
   it can consume generated corpora as well as published samples; a pointed-at
   directory holding unrelated XML previously failed the tier. Non-NEMSIS files
   are now excluded *and named* in the skip reason rather than silently ignored.
+
+### Added
+
+- **Corpus sweep (`python -m emsinterop.fuzz`).** Generates NEMSIS at volume via
+  nemsynth, converts it, and triages the results: findings deduplicate to a
+  stable signature, each carries a byte-reproducible replay command, and the
+  run fails only on signatures absent from `tests/fuzz-baseline.json`. A
+  20,000-case sweep across 15 scenarios, 4 messiness profiles, both releases
+  and MCI datasets reports 0 findings; the baseline is empty on purpose.
+
+  Half the cases pair with a generated **DEMDataSet** roster. The agency name
+  lives only there, so without one every `Organization` withholds its US Core
+  claim and that branch went unswept; an agency that reports no name is the
+  other real-world branch, and the one a consumer gets wrong by turning absence
+  into an empty string.
+
+- **`emsinterop.invariants`** — the rules that must hold of any conversion, in
+  one place, shared by the sweep and the hostile-fixture tier so they cannot
+  drift. Adds a reference-closure rule nothing previously checked: a dangling
+  relative reference survives JSON validity and profile checks all the way to
+  a server. `tests/test_invariants.py` proves every rule can actually fire —
+  a rule that cannot fail is worse than no rule.
+
+### Changed
+
+- **`MAPPING_RULESET_VERSION` bumped to 0.3.2.** It is stamped into every
+  resource's `meta.tag` and into Provenance, and the convention is to bump on
+  mapping semantics rather than package version. The onset fix adds a resource
+  to the output, so a consumer must be able to tell which rules produced what
+  it is holding.
 
 ## v0.3.2 — 2026-08-10
 

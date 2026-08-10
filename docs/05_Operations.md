@@ -4,26 +4,75 @@ Roadmap P5's "governed and observable" deliverable, written down. This is the
 deployment-facing companion to `01_Architecture_Design.md` §7–§8; everything
 here exists in code today.
 
-## 1. Gates before any PHI
+## 1. Enabling production PHI
 
-**fhirEngine side** — boot with `FHIRENGINE_SECURITY_PROFILE=production`
-(`deploy/docker-compose.prod.yml` in the fhirEngine repo sets it). The
-profile is fail-closed: the server refuses to start until auth
+Until this procedure passes, the deployment runs **synthetic data only**. That
+is the default and it is deliberate: reaching real patient data should require
+a decision, not the absence of one.
+
+### 1.1 Run the preflight — it is the machine-checkable gate
+
+```sh
+EMSINTEROP_ALLOW_PHI=1 python -m emsinterop preflight --config deploy.json
+```
+
+Exits non-zero until every required control is actually in place, and prints
+what to fix. Wire it into the deploy pipeline ahead of the first real
+submission; a template config is in `deploy/messaging.prod.example.json`.
+
+What it verifies, from outside the system:
+
+| Check | Why it is required |
+|---|---|
+| `EMSINTEROP_ALLOW_PHI=1` | Explicit opt-in. Its absence is the safe default. |
+| Endpoints use TLS (`https://`) | PHI in cleartext is a transmission-security failure, HIPAA §164.312(e). |
+| fhirEngine **rejects unauthenticated reads** | Proves auth is on from the outside, rather than trusting configuration. An anonymous `Patient` search that succeeds is a hard fail. |
+| Submission credential configured | A server enforcing auth rejects every submission without one. |
+| NEMSIS terminology installed | Otherwise every dual-coded NEMSIS code fails validation under declared-profile enforcement. |
+| MLLP channel (warning) | MLLP has no transport security of its own; the preflight cannot see your tunnel, so a human confirms it. |
+
+### 1.2 fhirEngine must boot fail-closed
+
+Set `FHIRENGINE_SECURITY_PROFILE=production` (`deploy/docker-compose.prod.yml`
+in the fhirEngine repo). The server then **refuses to start** until auth
 (`FHIRENGINE_AUTH_ENABLED`), audit (`FHIRENGINE_AUDIT_ENABLED`), transport
-security (`FHIRENGINE_TLS_CERT`/`KEY` or `FHIRENGINE_TLS_TERMINATED_AT_PROXY`),
-and persistent OAuth signing keys are configured. Consent/DS4P read-time
-enforcement (`FHIRENGINE_CONSENT_ENFORCEMENT`) is advisory even in
-production — turn it on when serving 42 CFR Part 2 data; the mapper's labels
-(below) are what it consumes.
+security (`FHIRENGINE_TLS_CERT`/`KEY`, or `FHIRENGINE_TLS_TERMINATED_AT_PROXY`
+when a proxy terminates it), and persistent OAuth signing keys are configured.
 
-**Mapper side** — the mapper tags, fhirEngine enforces: DS4P labels are
-applied at creation (substance-use `eHistory.17` → `R` + `ETH`, rolled up to
-`Composition.confidentiality` and the ITI-65 `DocumentReference.securityLabel`)
-and verified end-to-end by the Tier-1 harness (`test_ds4p_labels_survive_round_trip`).
-Mapper logging is PHI-safe by construction (`emsinterop.log`): the `event()`
-helper only emits allowlisted metadata fields (ids, codes, counts); the
-library root logger has a `NullHandler` — attach handlers in the embedding
-service to collect events, and nothing you attach can receive a patient value.
+Consent/DS4P read-time enforcement (`FHIRENGINE_CONSENT_ENFORCEMENT`) is
+advisory *even in production* — turn it on before serving 42 CFR Part 2 data.
+The mapper's labels are what it consumes.
+
+### 1.3 What the mapper already guarantees
+
+- **DS4P labels** are applied at creation (substance-use `eHistory.17` → `R` +
+  `ETH`, rolled up to `Composition.confidentiality` and the ITI-65
+  `DocumentReference.securityLabel`) and verified end-to-end by Tier-1
+  (`test_ds4p_labels_survive_round_trip`).
+- **PHI-safe logging** is structural, not a convention: `emsinterop.log.event()`
+  drops any field outside its metadata allowlist, so no handler you attach can
+  receive a patient value. The library root logger carries a `NullHandler` —
+  attach your own to collect events.
+- **The push endpoint** rejects doctypes (XXE/entity expansion), caps request
+  bodies, and quarantines malformed input as a 422 rather than a traceback.
+  Deploy it behind TLS and an authenticating proxy regardless.
+
+### 1.4 What no script can check — the actual gate
+
+The preflight verifies configuration. It does **not** certify compliance, and
+its output says so. Before real patient data flows, someone accountable must
+confirm:
+
+- a **BAA** is in place with every party touching the data (hosting, the
+  receiving facility, any HIE);
+- a **risk assessment / security review** has been done for this deployment;
+- the **consent and DS4P policy** matches the jurisdiction and the data —
+  42 CFR Part 2 substance-use records carry restrictions beyond HIPAA;
+- **retention, breach-notification, and audit-review** procedures exist and
+  someone owns them;
+- **incident rollback** is understood: the raw-NEMSIS bronze table and
+  fhirEngine's `_history` are both PHI once real data lands, and the de-id
+  projection's salt becomes a re-identification key that needs protecting.
 
 ## 2. Terminology provisioning
 

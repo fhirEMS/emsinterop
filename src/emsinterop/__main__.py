@@ -75,6 +75,14 @@ def main(argv: list[str] | None = None) -> int:
     p_deid.add_argument("--salt", help="stable pseudonym salt for cross-run linkage "
                                        "(default: random per run)")
 
+    p_preflight = sub.add_parser(
+        "preflight",
+        help="verify a deployment is actually configured for production PHI "
+             "(TLS, auth enforcement, terminology, explicit opt-in); exits "
+             "non-zero unless every required check passes")
+    p_preflight.add_argument("--config", metavar="CONFIG_JSON", required=True,
+                             help="the deployment's messaging config")
+
     p_serve = sub.add_parser(
         "serve",
         help="run the at-the-door push endpoint (POST /push: NEMSIS XML in, "
@@ -131,6 +139,14 @@ def main(argv: list[str] | None = None) -> int:
         else:
             print(rendered)
         return 0
+
+    if args.command == "preflight":
+        from .config import MessagingConfig
+        from .preflight import report, run as run_preflight
+        checks = run_preflight(MessagingConfig.from_file(args.config))
+        text, ready = report(checks)
+        print(text)
+        return 0 if ready else 1
 
     if args.command == "serve":
         from .config import MessagingConfig

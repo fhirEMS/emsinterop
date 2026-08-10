@@ -1,0 +1,16 @@
+{
+  "_comment": [
+    "Production deployment template. Copy, fill in, and gate every deploy on:",
+    "    EMSINTEROP_ALLOW_PHI=1 python -m emsinterop preflight --config <this file>",
+    "The preflight exits non-zero until the technical controls are actually in",
+    "place. It does not certify compliance — see docs/05_Operations.md §1."
+  ],
+  "mode": "fhir",
+  "fhir": {
+    "fhirengine_url": "https://fhir.example.org",
+    "token": "REPLACE — a Backend Services access token, injected at deploy time, never committed",
+    "iti65": true,
+    "iti65_endpoint": "https://xds.example.org/mhd"
+  },
+  "max_body_bytes": 33554432
+}

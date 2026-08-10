@@ -24,6 +24,7 @@ import os
 from pathlib import Path
 
 import pytest
+from lxml import etree
 
 from emsinterop.convert import convert
 from emsinterop.ingest import validate
@@ -31,15 +32,42 @@ from emsinterop.issues import Disposition
 from emsinterop.terminology import registry
 
 SAMPLES = Path(os.environ.get("EMSINTEROP_SAMPLES", ""))
-# Any *.xml in the directory: this tier consumes the published NEMSIS scenario
-# samples AND generated corpora (nemsynth), so it must not assume the
-# publisher's filename convention.
-SAMPLE_FILES = sorted(SAMPLES.glob("*.xml")) if SAMPLES.is_dir() else []
+NEMSIS_NS = "http://www.nemsis.org"
+
+
+def _is_nemsis_document(path: Path) -> bool:
+    """Is this actually a NEMSIS EMSDataSet, by namespace?
+
+    The tier globs *.xml so it can consume published samples AND generated
+    corpora without assuming a filename convention. That breadth means a
+    pointed-at directory may hold unrelated XML — the fhirEMSCore tree, for
+    one, keeps a namespace-less hand-written stub next to the real samples.
+    Judging by namespace rather than filename keeps out-of-scope files out
+    without narrowing the glob back down."""
+    try:
+        return etree.parse(str(path)).getroot().tag == f"{{{NEMSIS_NS}}}EMSDataSet"
+    except etree.XMLSyntaxError:
+        return False
+
+
+_ALL_XML = sorted(SAMPLES.glob("*.xml")) if SAMPLES.is_dir() else []
+SAMPLE_FILES = [p for p in _ALL_XML if _is_nemsis_document(p)]
+# Named, never silently dropped — the same discipline the mapper owes NEMSIS
+# elements, the harness owes the files it was pointed at.
+OUT_OF_SCOPE = [p.name for p in _ALL_XML if p not in SAMPLE_FILES]
 
 pytestmark = pytest.mark.skipif(
     not SAMPLE_FILES,
     reason="set EMSINTEROP_SAMPLES to the NEMSIS sample directory to run this tier",
 )
+
+
+def test_out_of_scope_files_are_named_not_hidden():
+    """If the pointed-at directory holds non-NEMSIS XML, say which files. A
+    harness that quietly ignores input is the same failure mode as a mapper
+    that quietly drops an element."""
+    if OUT_OF_SCOPE:
+        pytest.skip(f"not NEMSIS EMSDataSet documents, excluded: {OUT_OF_SCOPE}")
 
 
 @pytest.fixture(scope="module")

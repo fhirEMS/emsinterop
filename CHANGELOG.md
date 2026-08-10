@@ -1,5 +1,28 @@
 # Changelog
 
+## Unreleased
+
+- **Symptom onset is no longer dropped when there is no impression.**
+  `eSituation.01` (national, Required) was read *inside* the primary-impression
+  branch, so a record whose impression was NV/PN never even looked at it — the
+  time the patient's symptoms began vanished with no ledger entry, breaching the
+  never-silently-drop rule. Onset is now resolved once and carried by whichever
+  Condition exists (impression or chief complaint); with neither, it survives as
+  a standalone dated Observation, the shape `eSituation.18` (Last Known Well)
+  already used. `eSituation.07`/`.08` had the identical defect — read only
+  inside the chief-complaint branch — and are now resolved up front too, with an
+  explicit deferral when no Condition exists to carry an anatomic location.
+- **Found by generated volume, not by hand.** 300 documents from
+  [nemsynth](https://github.com/fhirEMS/nemsynth) at `--messiness high` reached
+  a branch combination that neither the six hand-authored fixtures nor the five
+  published NEMSIS samples contained. Distilled into
+  `tests/fixtures/hostile/hostile_onset_no_impression.xml` so default CI holds
+  it permanently.
+- **The sample discovery tier scopes itself by namespace.** It globs `*.xml` so
+  it can consume generated corpora as well as published samples; a pointed-at
+  directory holding unrelated XML previously failed the tier. Non-NEMSIS files
+  are now excluded *and named* in the skip reason rather than silently ignored.
+
 ## v0.3.2 — 2026-08-10
 
 - **NEMSIS 3.5.1 supported.** Its XSDs are vendored and `validate()` selects the

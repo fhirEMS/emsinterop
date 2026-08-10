@@ -78,6 +78,31 @@ def map_situation(ctx: MappingContext) -> list[dict]:
     out: list[dict] = []
     pcr = ctx.pcr
 
+    # Symptom onset (.01) is resolved ONCE, up front, and carried by whichever
+    # Condition this document turns out to have. It used to be read inside the
+    # primary-impression branch, so an NV/PN impression — routine in real
+    # exports — meant a national Required element was never even looked at, and
+    # the time the patient's symptoms began was dropped without a ledger entry.
+    onset = pcr.first("eSituation.01")
+    onset_dt = (
+        common.fhir_datetime(onset.value)
+        if onset is not None and onset.has_value
+        else None
+    )
+    onset_carried = False
+
+    # Body site (.07) and organ system (.08) had the same defect as onset: read
+    # only inside the chief-complaint branch, so a document with no complaint
+    # never touched them. Resolve them up front for the same reason.
+    site = pcr.first("eSituation.07")
+    organ_system = pcr.first("eSituation.08")
+    body_sites = [
+        conceptmaps.dual_code(element.element_id, element.value)
+        for element in (site, organ_system)
+        if element is not None and element.has_value
+    ]
+    body_sites_carried = False
+
     primary = pcr.first("eSituation.11")
     if primary is not None and primary.has_value:
         condition = _condition(
@@ -86,9 +111,9 @@ def map_situation(ctx: MappingContext) -> list[dict]:
             {"coding": [{"system": systems.ICD10CM, "code": primary.value}]},
             "encounter-diagnosis",
         )
-        onset = pcr.first("eSituation.01")
-        if onset is not None and onset.has_value:
-            condition["onsetDateTime"] = common.fhir_datetime(onset.value)
+        if onset_dt is not None:
+            condition["onsetDateTime"] = onset_dt
+            onset_carried = True
         common.claim_profiles(condition, "us-core-condition-encounter-diagnosis")
         out.append(ctx.add(condition))
     elif primary is not None and (primary.nv or primary.pn):
@@ -121,15 +146,12 @@ def map_situation(ctx: MappingContext) -> list[dict]:
             condition["category"].append(
                 conceptmaps.dual_code("eSituation.03", complaint_type.value)
             )
-        body_sites = []
-        site = pcr.first("eSituation.07")
-        if site is not None and site.has_value:
-            body_sites.append(conceptmaps.dual_code("eSituation.07", site.value))
-        organ_system = pcr.first("eSituation.08")
-        if organ_system is not None and organ_system.has_value:
-            body_sites.append(conceptmaps.dual_code("eSituation.08", organ_system.value))
         if body_sites:
             condition["bodySite"] = body_sites
+            body_sites_carried = True
+        if onset_dt is not None:
+            condition["onsetDateTime"] = onset_dt
+            onset_carried = True
         common.claim_profiles(condition, "us-core-condition-problems-health-concerns")
         out.append(ctx.add(condition))
 
@@ -183,4 +205,59 @@ def map_situation(ctx: MappingContext) -> list[dict]:
                 }
             )
         )
+
+    # No Condition existed to carry onset — an impression that is NV/PN with no
+    # chief complaint, which is a shape real exports take. Rather than drop the
+    # time the symptoms began, emit it the same way Last Known Well above is
+    # emitted: a standalone dated Observation. Same kind of fact, proven shape.
+    # Anatomic location belongs to a Condition; with none emitted there is no
+    # valid FHIR home for it. Ledger it as a deferral naming the reason rather
+    # than letting it fall through to an "unmapped" warning.
+    if body_sites and not body_sites_carried:
+        for element in (site, organ_system):
+            if element is not None and element.has_value:
+                ctx.log(
+                    element.element_id,
+                    Disposition.DEFERRED,
+                    "anatomic location has no Condition to attach to (no"
+                    " impression and no chief complaint in this record)",
+                    "information",
+                )
+
+    if onset is not None and not onset_carried:
+        if onset_dt is not None:
+            out.append(
+                ctx.add(
+                    {
+                        "resourceType": "Observation",
+                        "id": ctx.rid("Observation", "eSituation.01"),
+                        "status": "final",
+                        "code": {
+                            "coding": [
+                                {"system": systems.NEMSIS, "code": "eSituation.01"}
+                            ],
+                            "text": "Date/Time of Symptom Onset",
+                        },
+                        "subject": ctx.patient_ref(),
+                        "encounter": ctx.encounter_ref(),
+                        "valueDateTime": onset_dt,
+                    }
+                )
+            )
+            ctx.log(
+                "eSituation.01",
+                Disposition.MAPPED,
+                "no Condition available to carry onset; emitted as a standalone"
+                " Observation so the onset time is not lost",
+                "information",
+            )
+        else:
+            ctx.log(
+                "eSituation.01",
+                Disposition.SEEDED,
+                "symptom onset carries "
+                f"{'NV ' + onset.nv if onset.nv else 'PN ' + (onset.pn or 'no value')}"
+                "; nothing to date",
+                "information",
+            )
     return out

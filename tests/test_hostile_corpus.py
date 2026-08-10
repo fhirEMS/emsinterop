@@ -213,3 +213,24 @@ def test_url_unsafe_pcr_number_survives_round_trip(converted):
         _, _, value = raw.rpartition("|")
         assert value == pcr_number, f"{value!r} != {pcr_number!r}"
     assert seen, "no Composition conditional-update URL to check"
+
+
+def test_symptom_onset_survives_without_any_condition(converted):
+    """eSituation.01 with no impression and no chief complaint.
+
+    Onset was read inside the primary-impression branch, so this document —
+    legal NEMSIS, and the shape an unresponsive patient with a bystander-
+    reported onset time produces — lost a national Required element silently.
+    It now falls back to a standalone dated Observation, the same shape
+    eSituation.18 (Last Known Well) already used."""
+    result = converted["hostile_onset_no_impression"]
+    assert not [r for r in result.resources if r["resourceType"] == "Condition"], \
+        "fixture assumption: no Condition should be emitted"
+    onset = [
+        r for r in result.resources
+        if r["resourceType"] == "Observation"
+        and any(c.get("code") == "eSituation.01"
+                for c in r.get("code", {}).get("coding", []))
+    ]
+    assert len(onset) == 1, "symptom onset was dropped"
+    assert onset[0]["valueDateTime"] == "2026-08-06T13:40:00-06:00"

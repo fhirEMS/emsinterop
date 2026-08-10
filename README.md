@@ -161,6 +161,12 @@ reproducible** replay command. The sweep fails only on signatures absent from
 `tests/fuzz-baseline.json`, which is currently empty: a 20,000-case sweep
 (~28,000 PatientCareReports, counting MCI) reports **0 findings**.
 
+Coverage is measured, not assumed: `tests/test_corpus_coverage.py` asserts the
+generated corpus populates most of the national dataset with **real values**
+(93% today). That number is the denominator for the sweep's result — a clean
+sweep over a corpus of nils would prove nothing, which is exactly what the
+first measurement found (22%).
+
 The rules it applies live in `src/emsinterop/invariants.py` and are shared with
 the hostile-fixture tier, so the two cannot drift. `tests/test_invariants.py`
 hands each rule input that breaks it — a rule that cannot fail is worse than no

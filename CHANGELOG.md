@@ -1,5 +1,16 @@
 # Changelog
 
+## Unreleased
+
+- **`tests/test_corpus_coverage.py`** — the honest denominator for every "0
+  findings" the sweep reports. When the sweep first came back clean across
+  20,000 cases, measurement showed only **19 of 83 national elements (22%)**
+  ever carried a real value; the rest were nil+NV, so the mapper's handling of
+  them never executed. nemsynth now populates **93%**, and this test holds that
+  floor and requires every unpopulated element to be a documented decision
+  (`eOutcome.01/.02` come from the inbound outcome loop, not from a crew at the
+  time of the call) rather than an oversight.
+
 ## v0.3.3 — 2026-08-10
 
 ### Fixed

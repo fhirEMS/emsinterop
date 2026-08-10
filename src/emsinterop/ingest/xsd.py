@@ -16,6 +16,15 @@ from . import safexml
 SCHEMA_ROOT = Path(__file__).resolve().parents[3] / "schemas" / "nemsis"
 PINNED_VERSION = "3.5.0"
 
+#: NEMSIS releases whose schemas are vendored here. 3.5.1's XSDs differ from
+#: 3.5.0's by exactly ONE line — ePatient.25 gains an explicit minOccurs="1",
+#: which is XSD's default and therefore a no-op clarification. Verified by
+#: normalizing line endings and diffing all 46 files; the whole golden and
+#: hostile corpora validate identically against both. So a 3.5.1 document is
+#: structurally a 3.5.0 document, and vice versa — but we validate against the
+#: version the document DECLARES rather than assuming that stays true.
+SUPPORTED_VERSIONS = ("3.5.0", "3.5.1")
+
 #: Root XSD file per NEMSIS dataset kind (both pinned in schemas/nemsis/<version>/).
 DATASET_XSDS = {
     "EMSDataSet": "EMSDataSet_v3.xsd",
@@ -58,9 +67,37 @@ def validate_dataset(
     return [f"line {e.line}: {e.message}" for e in schema.error_log]
 
 
-def validate(source: str | Path | bytes, version: str = PINNED_VERSION) -> list[str]:
-    """Validate an EMSDataSet document; returns a list of error strings (empty = valid)."""
+def resolve_version(declared: str | None) -> str:
+    """Which vendored schema set validates a document declaring `declared`?
+
+    Unknown or absent -> the pinned default. We do NOT guess forward: a future
+    3.5.2 validates against 3.5.0's schemas and any genuine difference surfaces
+    as a validation error rather than being silently accepted."""
+    if declared in SUPPORTED_VERSIONS:
+        return declared
+    return PINNED_VERSION
+
+
+def validate(
+    source: str | Path | bytes, version: str | None = None
+) -> list[str]:
+    """Validate an EMSDataSet document; returns error strings (empty = valid).
+
+    With no explicit version, validates against the release the document
+    itself declares (`xsi:schemaLocation`), falling back to the pinned one."""
+    if version is None:
+        version = resolve_version(_declared_version(source))
     return validate_dataset(source, "EMSDataSet", version)
+
+
+def _declared_version(source: str | Path | bytes) -> str | None:
+    """The NEMSIS release a document declares, without a full parse."""
+    from .parser import declared_version
+
+    try:
+        return declared_version(source)
+    except Exception:
+        return None
 
 
 def to_operation_outcome(errors: list[str]) -> dict:

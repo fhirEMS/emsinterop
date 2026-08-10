@@ -42,6 +42,34 @@ def identifier(system: str, value: str) -> dict:
     return {"system": system, "value": value}
 
 
+_MIDNIGHT_24 = re.compile(r"^(\d{4})-(\d{2})-(\d{2})T24:00:00(\.\d+)?(.*)$")
+
+
+def fhir_datetime(value: str | None) -> str | None:
+    """A NEMSIS dateTime as a FHIR-legal one.
+
+    `xs:dateTime` permits hour 24 to mean end-of-day, and the NEMSIS pattern
+    allows it — but FHIR's dateTime regex caps hours at 23, so `24:00:00`
+    passes the XSD gate and then fails every FHIR validator. Normalize it to
+    00:00:00 the NEXT day, which is the same instant.
+
+    Everything else passes through untouched: NEMSIS mandates an offset, so
+    the values we see are already FHIR-shaped."""
+    if not value:
+        return value
+    match = _MIDNIGHT_24.match(value)
+    if not match:
+        return value
+    from datetime import date, timedelta
+
+    year, month, day, frac, tz = match.groups()
+    try:
+        following = date(int(year), int(month), int(day)) + timedelta(days=1)
+    except ValueError:
+        return value  # not a real date; leave it for the validator to reject
+    return f"{following.isoformat()}T00:00:00{frac or ''}{tz}"
+
+
 def is_numeric(value: str | None) -> bool:
     """Is this NEMSIS value coercible to a FHIR Quantity value?
 
@@ -239,7 +267,7 @@ def apply_smart_value(obs: dict, element: NemsisElement) -> None:
     if registry.is_known(element.element_id, value):
         obs["valueCodeableConcept"] = conceptmaps.dual_code(element.element_id, value)
     elif _DATETIME_RE.match(value):
-        obs["valueDateTime"] = value
+        obs["valueDateTime"] = fhir_datetime(value)
     elif _INT_RE.match(value) and _INT32[0] <= int(value) <= _INT32[1]:
         obs["valueInteger"] = int(value)
     else:

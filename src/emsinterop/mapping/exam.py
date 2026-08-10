@@ -138,7 +138,7 @@ def _assessment_observations(ctx: MappingContext, group: NemsisGroup) -> list[di
                 "encounter": ctx.encounter_ref(),
             }
             if taken is not None and taken.has_value:
-                obs["effectiveDateTime"] = taken.value
+                obs["effectiveDateTime"] = common.fhir_datetime(taken.value)
             common.apply_smart_value(obs, element)
             out.append(ctx.add(obs))
     return out

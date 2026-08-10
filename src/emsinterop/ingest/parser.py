@@ -112,6 +112,15 @@ def _parse_group(node: etree._Element, index: int = 0) -> NemsisGroup:
     return group
 
 
+def declared_version(source: str | Path | bytes) -> str | None:
+    """The NEMSIS release a document declares, parsed cheaply for the XSD gate."""
+    if isinstance(source, (bytes, bytearray)):
+        root = safexml.fromstring(bytes(source))
+    else:
+        root = safexml.parse(source).getroot()
+    return _detect_version(root)
+
+
 def _detect_version(root: etree._Element) -> str | None:
     loc = root.get(f"{{{XSI_NS}}}schemaLocation")
     if loc:

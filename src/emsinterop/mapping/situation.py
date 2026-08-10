@@ -88,7 +88,7 @@ def map_situation(ctx: MappingContext) -> list[dict]:
         )
         onset = pcr.first("eSituation.01")
         if onset is not None and onset.has_value:
-            condition["onsetDateTime"] = onset.value
+            condition["onsetDateTime"] = common.fhir_datetime(onset.value)
         common.claim_profiles(condition, "us-core-condition-encounter-diagnosis")
         out.append(ctx.add(condition))
     elif primary is not None and (primary.nv or primary.pn):
@@ -179,7 +179,7 @@ def map_situation(ctx: MappingContext) -> list[dict]:
                     },
                     "subject": ctx.patient_ref(),
                     "encounter": ctx.encounter_ref(),
-                    "valueDateTime": lkw.value,
+                    "valueDateTime": common.fhir_datetime(lkw.value),
                 }
             )
         )

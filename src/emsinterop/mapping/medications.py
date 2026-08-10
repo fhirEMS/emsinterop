@@ -59,7 +59,7 @@ def map_medications(ctx: MappingContext) -> list[dict]:
 
         taken = group.first("eMedications.01")
         if taken is not None and taken.has_value:
-            admin["effectiveDateTime"] = taken.value
+            admin["effectiveDateTime"] = common.fhir_datetime(taken.value)
         elif taken is not None and taken.nv:
             admin["_effectiveDateTime"] = common.primitive_absent_extension(taken)
 

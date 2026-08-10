@@ -57,7 +57,7 @@ def _prearrival_alert(ctx: MappingContext) -> dict | None:
             conceptmaps.dual_code("eDisposition.24", alert.value)
         ]
         if sent is not None and sent.has_value:
-            communication["sent"] = sent.value
+            communication["sent"] = common.fhir_datetime(sent.value)
     elif alert.has_value:  # explicit "No" — the negative is preserved
         communication["status"] = "not-done"
         communication["statusReason"] = conceptmaps.dual_code(

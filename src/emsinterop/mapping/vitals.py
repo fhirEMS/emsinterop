@@ -59,7 +59,7 @@ def _base_observation(
     }
     taken = group.first("eVitals.01")
     if taken is not None and taken.has_value:
-        obs["effectiveDateTime"] = taken.value
+        obs["effectiveDateTime"] = common.fhir_datetime(taken.value)
     # No recorded time. FHIR dateTime is VARIABLE PRECISION, so the honest
     # answer is not "absent" but "known less precisely": the measurement
     # happened during this call, so carry the encounter's DATE. That asserts

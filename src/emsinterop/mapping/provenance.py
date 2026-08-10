@@ -9,6 +9,7 @@ from __future__ import annotations
 
 from .. import MAPPING_RULESET_VERSION
 from ..terminology import systems
+from . import common
 from .context import MappingContext
 
 
@@ -49,7 +50,7 @@ def map_provenance(ctx: MappingContext) -> dict:
     }
     transfer_of_care = ctx.pcr.first("eTimes.12")
     if transfer_of_care is not None and transfer_of_care.has_value:
-        provenance["occurredDateTime"] = transfer_of_care.value
+        provenance["occurredDateTime"] = common.fhir_datetime(transfer_of_care.value)
 
     software = [
         ctx.pcr.value("eRecord.02"),

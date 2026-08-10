@@ -66,7 +66,7 @@ def map_procedures(ctx: MappingContext) -> list[dict]:
 
         performed = group.first("eProcedures.01")
         if performed is not None and performed.has_value:
-            procedure["performedDateTime"] = performed.value
+            procedure["performedDateTime"] = common.fhir_datetime(performed.value)
         elif performed is not None and performed.nv:
             procedure["_performedDateTime"] = common.primitive_absent_extension(performed)
 

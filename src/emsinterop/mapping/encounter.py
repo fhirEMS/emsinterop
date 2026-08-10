@@ -181,7 +181,7 @@ def _timeline_observations(ctx: MappingContext) -> None:
                 },
                 "subject": ctx.patient_ref(),
                 "encounter": ctx.encounter_ref(),
-                "valueDateTime": el.value,
+                "valueDateTime": common.fhir_datetime(el.value),
             }
         )
 
@@ -262,10 +262,10 @@ def map_encounter(ctx: MappingContext) -> dict:
     period: dict = {}
     start = pcr.first("eTimes.06") or pcr.first("eTimes.03")
     if start is not None and start.has_value:
-        period["start"] = start.value
+        period["start"] = common.fhir_datetime(start.value)
     end = pcr.first("eTimes.12") or pcr.first("eTimes.11")
     if end is not None and end.has_value:
-        period["end"] = end.value
+        period["end"] = common.fhir_datetime(end.value)
     if period:
         encounter["period"] = period
         ctx.encounter_period = period

@@ -25,11 +25,12 @@ import shutil
 from importlib import metadata
 from pathlib import Path
 
+from .. import conformance
 from . import registry, systems
 from .conceptmaps import maps_dir
 
 PACKAGE_NAME = "emsinterop.nemsis"
-VALUESET_URL_BASE = "urn:emsinterop:valueset:nemsis:"
+VALUESET_URL_BASE = conformance.CANONICAL_BASE + "/ValueSet/nemsis-"
 
 
 def package_version() -> str:
@@ -51,14 +52,34 @@ def nemsis_codesystem(version: str) -> dict:
             concepts.setdefault(code, display)
     return {
         "resourceType": "CodeSystem",
-        "id": "nemsis",
-        "url": systems.NEMSIS,
+        "id": "nemsis-registry",
+        # OUR canonical, not the mPSC one. Codings keep pointing at
+        # systems.NEMSIS (see below) so this project's data stays conformant
+        # the day the IG is fixed — but publishing a definition AT that
+        # canonical would assert we define it, and two conflicting definitions
+        # of one identifier break whichever terminology server loads ours
+        # second. Reference theirs; publish ours.
+        "url": conformance.canonical("CodeSystem", "nemsis-registry"),
         "version": version,
-        "name": "NEMSIS",
-        "title": "NEMSIS v3.5.0 (emsInterop local clean registry)",
+        "name": "NEMSISRegistry",
+        "title": "NEMSIS v3.5.0 concepts (emsInterop registry-derived)",
         "status": "active",
         "experimental": False,
         "content": "fragment",
+        "description": (
+            "Registry-derived NEMSIS v3.5.0 concepts, published under this "
+            "project's own canonical. It MIRRORS the concepts expected at "
+            f"{systems.NEMSIS}, which this project's resources reference in "
+            "coding.system. As verified 2026-08-07 the mPSC build carries 18 "
+            "placeholder concepts there (displays reading 'TODO: JFM', codes "
+            "including 99270235, C7 and todo1), so it is not usable at "
+            "runtime. This is not a CodeSystem supplement: it does not add "
+            "designations to a working code system, it stands in for one that "
+            "is not yet populated. It is retired when IHE publishes a usable "
+            "NEMSIS CodeSystem — see conformance.GAPS['nemsis-codesystem-"
+            "placeholders']."
+        ),
+        "identifier": [{"system": "urn:ietf:rfc:3986", "value": systems.NEMSIS}],
         "count": len(concepts),
         "concept": [
             {"code": code, **({"display": display} if display else {})}
@@ -104,10 +125,18 @@ def build_package(out_dir: str | Path) -> dict:
                        "artifacts from the emsInterop translation engine",
         "fhirVersions": ["4.0.1"],
         "dependencies": {"hl7.fhir.r4.core": "4.0.1"},
+        # A machine-readable statement of what in this package is IHE's and
+        # what is ours, so a consumer need not read our source to find out.
+        # It rides in the MANIFEST, not as a sibling file: fhirEngine's
+        # readPackageResources() parses every non-manifest file as a FHIR
+        # resource, and this is not one.
+        "emsinterop:conformance": conformance.summary(),
     }, indent=2) + "\n")
 
     cs = nemsis_codesystem(version)
-    (out / "CodeSystem-nemsis.json").write_text(json.dumps(cs, indent=2) + "\n")
+    (out / "CodeSystem-nemsis-registry.json").write_text(
+        json.dumps(cs, indent=2) + "\n")
+
 
     elements = sorted(registry.elements())
     for element_id in elements:

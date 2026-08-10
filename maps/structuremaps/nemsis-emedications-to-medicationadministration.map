@@ -7,9 +7,9 @@
 // Production execution is native Python (mapping/medications.py); the
 // reference Java engine runs this map in CI as the fidelity oracle.
 
-map "urn:emsinterop:StructureMap/NemsisEMedicationsToMedicationAdministration" = "NemsisEMedicationsToMedicationAdministration"
+map "https://fhirems.github.io/emsinterop/fhir/StructureMap/NemsisEMedicationsToMedicationAdministration" = "NemsisEMedicationsToMedicationAdministration"
 
-uses "urn:emsinterop:StructureDefinition/NemsisEMedicationGroup" alias EMedGroup as source
+uses "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisEMedicationGroup" alias EMedGroup as source
 uses "http://hl7.org/fhir/StructureDefinition/MedicationAdministration" alias MedicationAdministration as target
 
 group MedicationGroupToAdministration(source grp : EMedGroup, target tgt : MedicationAdministration) {
@@ -29,7 +29,7 @@ group MedicationGroupToAdministration(source grp : EMedGroup, target tgt : Medic
   grp.eMedications_03 as med -> tgt.dosage as d then {
     grp.eMedications_04 as rt -> d.route = create('CodeableConcept') as cc, cc.coding as c,
       c.system = 'http://snomed.info/sct',
-      c.code = translate(rt, 'urn:emsinterop:conceptmap:cm-nemsis-medroute', 'code') "route";
+      c.code = translate(rt, 'https://fhirems.github.io/emsinterop/fhir/ConceptMap/cm-nemsis-medroute', 'code') "route";
     grp.eMedications_05 as dv -> d.dose as q, q.value = cast(dv, "decimal") "doseValue";
   } "dosage";
 }

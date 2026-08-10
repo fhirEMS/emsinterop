@@ -2,6 +2,35 @@
 
 ## Unreleased
 
+- **Conformance/gap policy (`src/emsinterop/conformance.py`,
+  `docs/07_Conformance_and_Gaps.md`).** Where the IHE EMS profiles are silent
+  this project decides; those decisions are now *declared* rather than blended
+  into conformance. Two rules, both enforced by `tests/test_conformance.py`:
+  reference other people's canonicals but never publish at them, and canonical
+  URLs resolve while naming systems need not.
+- **Fixed canonical squatting on the mPSC NEMSIS CodeSystem.** The
+  `emsinterop.nemsis` package published 2,321 concepts at
+  `https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS` — the identifier where
+  IHE publishes 18 `TODO: JFM` placeholders. Two conflicting definitions of one
+  canonical break whichever terminology server loads ours second. The package
+  now publishes under our own canonical and records, via `identifier` and a
+  description, which canonical it stands in for. **Emitted codings are
+  unchanged** — they still reference the mPSC canonical, so our data becomes
+  conformant the day the IG is fixed, with no migration.
+- **Authored canonicals moved to a resolvable base**
+  (`https://fhirems.github.io/emsinterop/fhir`), from unresolvable
+  `urn:emsinterop:*`. Affects the `obtained-prior-to-unit-care` extension URL in
+  emitted resources (hence the ruleset bump), plus ConceptMaps, StructureMaps
+  and logical models. Old URNs are retained as `identifier` entries for one
+  release. **Identifier naming systems are deliberately unchanged**:
+  `urn:emsinterop:resource-id` is embedded in every conditional-update URL, so
+  moving it would fail to match already-stored resources and duplicate them.
+- **Seven-entry gap register**, each with a citable source, an ISO verification
+  date and — the part usually missing — a retirement trigger. A local decision
+  with no retirement trigger is a permanent fork wearing a temporary label. It
+  ships in the terminology package manifest under `emsinterop:conformance`.
+- **`MAPPING_RULESET_VERSION` bumped to 0.3.3** for the emitted extension URL.
+
 - **`tests/test_corpus_coverage.py`** — the honest denominator for every "0
   findings" the sweep reports. When the sweep first came back clean across
   20,000 cases, measurement showed only **19 of 83 national elements (22%)**

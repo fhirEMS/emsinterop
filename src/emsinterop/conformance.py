@@ -1,0 +1,276 @@
+"""Where IHE stops, and what this project does about it.
+
+The mPSC IG's NEMSIS→FHIR mapping table is ~90% empty and EMS-Overall names no
+ITI transaction numbers, so a working translator has to decide a great many
+things the standard has not yet decided. Those decisions are legitimate — an
+implementation that refused to act where the spec is silent would produce
+nothing — but they are **not** conformance, and the difference has to survive
+contact with a consumer who is validating against IHE and reasonably expects
+our output to mean what the IG says.
+
+This module is the single place that difference is declared.
+
+## The two rules
+
+**1. Reference other people's canonicals; never publish at them.**
+A `coding.system` may point anywhere — that is a reference, and pointing NEMSIS
+codes at the mPSC canonical is exactly right, because it keeps our data
+conformant the day the IG stabilises. But shipping a `CodeSystem` *resource*
+that claims `url = <the IHE canonical>` asserts we define that identifier. We
+do not. Two different definitions at one canonical is a collision that breaks
+any terminology server loading both, and the loser is whoever loaded ours
+second. So: our artifacts carry OUR canonical, and say what they mirror.
+
+**2. Canonical URLs resolve; naming systems need not.**
+A canonical URL identifies fetchable content — a profile, a value set, a map —
+so it belongs under a base we control and can serve. A *naming system* (the
+`system` of an identifier or a `meta.tag`) identifies no document at all;
+`urn:` is the honest form, and changing one is not cosmetic. `resource-id` in
+particular is embedded in every conditional-update URL, so moving it would stop
+matching resources already stored in a fhirEngine and silently duplicate the
+lot. Those stay put, deliberately.
+
+## The gap register
+
+Every artifact we mint exists because the IG left a hole. `GAPS` records which
+hole, verified against a dated build, and — the part that is usually missing
+from work like this — **what makes it go away**. A local decision with no
+retirement trigger is a permanent fork wearing a temporary label.
+"""
+
+from __future__ import annotations
+
+from dataclasses import dataclass, field
+
+#: Base for every canonical URL this project mints.
+#:
+#: GitHub Pages under the org that already hosts the code: resolvable today,
+#: which `urn:` is not, and an IHE reviewer can dereference it. Everything
+#: derives from this one constant, so moving to a purchased domain later is a
+#: single-line change plus a version bump — see `docs/07_Conformance_and_Gaps.md`
+#: for the migration rule.
+CANONICAL_BASE = "https://fhirems.github.io/emsinterop/fhir"
+
+#: Canonicals owned by other people. We reference these and never define them.
+FOREIGN_CANONICAL_PREFIXES = (
+    "http://hl7.org/",
+    "https://hl7.org/",
+    "http://terminology.hl7.org/",
+    "https://profiles.ihe.net/",
+    "http://snomed.info/",
+    "http://loinc.org",
+    "http://www.nlm.nih.gov/",
+    "http://unitsofmeasure.org",
+)
+
+#: Naming systems: the `system` of an identifier or tag. These name a scheme,
+#: not a document, so they are URNs on purpose and are NOT migrated.
+#:
+#: `resource-id` is load-bearing for identity: it appears in every conditional
+#: update URL, so changing it would fail to match already-stored resources and
+#: duplicate them silently. Any change here is a data migration, not a rename.
+NAMING_SYSTEMS = {
+    "resource-id": "urn:emsinterop:resource-id",
+    "mapping-ruleset": "urn:emsinterop:mapping-ruleset",
+}
+
+
+def canonical(kind: str, name: str) -> str:
+    """Mint a canonical URL for something this project authors.
+
+    `kind` is the resource type it belongs to (`StructureDefinition`,
+    `ValueSet`, `ConceptMap`, `StructureMap`), so the URL is self-describing
+    and matches the layout a published IG would serve.
+    """
+    return f"{CANONICAL_BASE}/{kind}/{name}"
+
+
+def is_foreign(url: str) -> bool:
+    """Is this canonical someone else's to define?"""
+    return url.startswith(FOREIGN_CANONICAL_PREFIXES)
+
+
+def is_ours(url: str) -> bool:
+    return url.startswith(CANONICAL_BASE + "/")
+
+
+@dataclass(frozen=True)
+class Gap:
+    """One thing the IHE profiles leave open, and how we occupy it."""
+
+    id: str
+    #: What the IG does not say, as verified — not as remembered.
+    finding: str
+    #: Where that was checked, and when. A gap report with no date is a rumour
+    #: about a moving CI build.
+    source: str
+    verified: str
+    #: What we do instead, and why it is defensible.
+    decision: str
+    #: Canonicals/artifacts this decision produces, if any.
+    artifacts: tuple[str, ...] = ()
+    #: What ends this. Without one, "interim" is a permanent fork.
+    retirement: str = ""
+    #: The upstream proposal that would close it, if we have written one.
+    proposal: str = ""
+    #: Does the decision change bytes a consumer receives?
+    affects_output: bool = True
+
+
+#: Verified against the mPSC v2.0.0-draft CI build (footer 2025-10-30) and the
+#: EMS-Overall build, on the dates below. Re-probe before relying on any of it:
+#: these are CI builds and they move.
+GAPS: tuple[Gap, ...] = (
+    Gap(
+        id="mapping-table-empty",
+        finding="NEMSIS-Mapping.html leaves the FHIR-path column empty on ~90-95% "
+                "of rows; only scattered entries such as Organization.identifier "
+                "are populated.",
+        source="https://build.fhir.org/ig/IHE/PCC.PCS/NEMSIS-Mapping.html",
+        verified="2026-08-07",
+        decision="Author the complete field-level mapping for all NEMSIS 3.5 "
+                 "national elements (ADR-005), dispositioning every element as "
+                 "Mapped/Seeded/Deferred rather than dropping any.",
+        artifacts=(
+            "contrib/fieldmap/",
+            # The logical models are the SOURCE side of the StructureMaps. They
+            # exist only because the IG publishes no computable mapping: FML
+            # needs a typed source definition, and NEMSIS panels have none in
+            # FHIR. They retire with the rest of this gap.
+            canonical("StructureDefinition", "NemsisEPatient"),
+            canonical("StructureDefinition", "NemsisESituation"),
+            canonical("StructureDefinition", "NemsisEVitalsGroup"),
+            canonical("StructureDefinition", "NemsisEMedicationGroup"),
+            canonical("StructureDefinition", "NemsisEProcedureGroup"),
+        ),
+        retirement="IHE populates the FHIR-path column. Ours then becomes a "
+                   "conformance test against theirs rather than the source.",
+        proposal="proposal-01",
+    ),
+    Gap(
+        id="composition-sections",
+        finding="The Medical Summary Composition profile defines three mandatory "
+                "sections (Problems, Allergies, Medications) with open slicing, "
+                "and no section for vitals, procedures, EMS course or narrative.",
+        source="https://build.fhir.org/ig/IHE/PCC.PCS/"
+               "StructureDefinition-IHE.PCC.FHIR.MS.Composition.html",
+        verified="2026-08-07",
+        decision="Emit additional LOINC-coded sections (Vital Signs 8716-3, "
+                 "Procedures 47519-4, EMS Narrative 28568-4, EMS Course 46240-8). "
+                 "The profile's slicing is OPEN, so these are conformant, not a "
+                 "deviation — most clinical panels would otherwise have no home "
+                 "in the document at all.",
+        retirement="mPSC defines its own clinical sections. Ours align to the "
+                   "codes it picks; where they differ, theirs win.",
+        proposal="proposal-04",
+    ),
+    Gap(
+        id="nemsis-codesystem-placeholders",
+        finding="CodeSystem-NEMSIS contains 18 placeholder concepts with "
+                "'TODO: JFM' displays, including malformed codes 99270235, C7 "
+                "and todo1.",
+        source="https://build.fhir.org/ig/IHE/PCC.PCS/CodeSystem-NEMSIS.html",
+        verified="2026-08-07",
+        decision="Keep REFERENCING the mPSC canonical in coding.system so our "
+                 "data is conformant the day the IG is fixed, but publish our "
+                 "registry-derived CodeSystem (2,321 concepts, content=fragment) "
+                 "under our OWN canonical. Publishing ours at theirs would be two "
+                 "conflicting definitions of one identifier.",
+        artifacts=(canonical("CodeSystem", "nemsis-registry"),),
+        retirement="IHE publishes a usable NEMSIS CodeSystem. We then drop ours "
+                   "and rely on theirs; no coding.system changes, because we "
+                   "never stopped pointing at it.",
+        proposal="proposal-02",
+        affects_output=False,
+    ),
+    Gap(
+        id="outcome-delegated-to-qore",
+        finding="eOutcome is delegated to the QRPH 'QORE' profile, which is "
+                "named but not linked, bound or profiled anywhere in the IG.",
+        source="https://build.fhir.org/ig/IHE/PCC.PCS/NEMSIS-Mapping.html",
+        verified="2026-08-07",
+        decision="Represent outcome as an interim Observation/Encounter cluster "
+                 "so the loop is expressible at all, and mark it interim rather "
+                 "than presenting it as an IHE-sanctioned model.",
+        retirement="QORE is published with a binding. Our interim model is then "
+                   "replaced, not merged — this one is explicitly disposable.",
+        proposal="proposal-05",
+    ),
+    Gap(
+        id="prior-care-vitals-flag",
+        finding="NEMSIS eVitals.02 records whether a reading was obtained before "
+                "this unit's care began. FHIR has no element for it and the IG "
+                "proposes none, so the distinction is lost on every vital sign.",
+        source="https://build.fhir.org/ig/IHE/PCC.PCS/NEMSIS-Mapping.html",
+        verified="2026-08-07",
+        decision="Carry it in a project extension. A reading taken by a prior "
+                 "crew is a materially different clinical claim from one this "
+                 "crew took, and silently flattening the two is the kind of "
+                 "loss this project exists to prevent.",
+        artifacts=(canonical("StructureDefinition",
+                             "ems-obtained-prior-to-unit-care"),),
+        retirement="IHE or US Core defines an equivalent. Dual-carry for one "
+                   "minor release, then drop ours — the pattern ADR-006 already "
+                   "uses for US Core vs pcc-uv race/ethnicity.",
+    ),
+    Gap(
+        id="no-source-version-pin",
+        finding="No NEMSIS version is declared anywhere on the mapping page, so "
+                "the source scope is ambiguous between 3.4, 3.5.0 and 3.5.1.",
+        source="https://build.fhir.org/ig/IHE/PCC.PCS/NEMSIS-Mapping.html",
+        verified="2026-08-07",
+        decision="Pin explicitly to NEMSIS 3.5.0 and handle 3.5.1 as declared "
+                 "deltas (ADR-007), rather than guessing what the table means.",
+        retirement="IHE pins a version. If it differs from 3.5.0, that is a "
+                   "scope change for this project, not a mapping tweak.",
+        proposal="proposal-03",
+        affects_output=False,
+    ),
+    Gap(
+        id="transport-binding-loose",
+        finding="EMS-Overall names no ITI transaction numbers; the transport "
+                "binding is described narratively.",
+        source="https://build.fhir.org/ig/IHE/EMS-Overall/",
+        verified="2026-08-07",
+        decision="Treat transport as a pluggable interface with ITI-65 (MHD "
+                 "Provide Document Bundle) as the default binding (ADR-008), so "
+                 "a different binding is configuration rather than a rewrite.",
+        retirement="EMS-Overall names its transactions. The default changes to "
+                   "whatever it names; the interface does not.",
+        proposal="proposal-06",
+        affects_output=False,
+    ),
+)
+
+GAPS_BY_ID = {gap.id: gap for gap in GAPS}
+
+#: Every canonical this project is allowed to mint. Anything we publish that is
+#: not in here is either an oversight or an undeclared local decision, and the
+#: conformance tests refuse both.
+def registered_artifacts() -> set[str]:
+    return {art for gap in GAPS for art in gap.artifacts if art.startswith("http")}
+
+
+def summary() -> dict:
+    """A machine-readable statement of what is IHE's and what is ours.
+
+    Emitted alongside the terminology package so a consumer can answer "which
+    parts of this are the standard?" without reading our source."""
+    return {
+        "canonicalBase": CANONICAL_BASE,
+        "namingSystems": NAMING_SYSTEMS,
+        "gaps": [
+            {
+                "id": gap.id,
+                "finding": gap.finding,
+                "source": gap.source,
+                "verified": gap.verified,
+                "decision": gap.decision,
+                "artifacts": list(gap.artifacts),
+                "retirement": gap.retirement,
+                "proposal": gap.proposal,
+                "affectsOutput": gap.affects_output,
+            }
+            for gap in GAPS
+        ],
+    }

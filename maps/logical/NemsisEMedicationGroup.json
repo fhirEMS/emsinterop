@@ -1,7 +1,7 @@
 {
   "resourceType": "StructureDefinition",
   "id": "NemsisEMedicationGroup",
-  "url": "urn:emsinterop:StructureDefinition/NemsisEMedicationGroup",
+  "url": "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisEMedicationGroup",
   "version": "0.1.0",
   "name": "NemsisEMedicationGroup",
   "title": "NEMSIS eMedications.MedicationGroup (logical model)",
@@ -10,7 +10,7 @@
   "fhirVersion": "4.0.1",
   "kind": "logical",
   "abstract": false,
-  "type": "urn:emsinterop:StructureDefinition/NemsisEMedicationGroup",
+  "type": "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisEMedicationGroup",
   "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
   "derivation": "specialization",
   "differential": {

@@ -6,9 +6,9 @@
 // Production execution is native Python (mapping/procedures.py); the
 // reference Java engine runs this map in CI as the fidelity oracle.
 
-map "urn:emsinterop:StructureMap/NemsisEProceduresToProcedure" = "NemsisEProceduresToProcedure"
+map "https://fhirems.github.io/emsinterop/fhir/StructureMap/NemsisEProceduresToProcedure" = "NemsisEProceduresToProcedure"
 
-uses "urn:emsinterop:StructureDefinition/NemsisEProcedureGroup" alias EProcGroup as source
+uses "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisEProcedureGroup" alias EProcGroup as source
 uses "http://hl7.org/fhir/StructureDefinition/Procedure" alias Procedure as target
 
 group ProcedureGroupToProcedure(source grp : EProcGroup, target tgt : Procedure) {

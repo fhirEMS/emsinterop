@@ -5,9 +5,9 @@
 // oracle. Sex translates through the authored cm-nemsis-sex ConceptMap
 // (ADR-007: ePatient.25 is the source of truth).
 
-map "urn:emsinterop:StructureMap/NemsisEPatientToPatient" = "NemsisEPatientToPatient"
+map "https://fhirems.github.io/emsinterop/fhir/StructureMap/NemsisEPatientToPatient" = "NemsisEPatientToPatient"
 
-uses "urn:emsinterop:StructureDefinition/NemsisEPatient" alias EPatient as source
+uses "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisEPatient" alias EPatient as source
 uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as target
 
 group ePatientToPatient(source src : EPatient, target tgt : Patient) {
@@ -44,7 +44,7 @@ group ePatientToPatient(source src : EPatient, target tgt : Patient) {
 
   // ADR-007: ePatient.25 Sex is the source of truth, translated through the
   // authored ConceptMap (dual-coded fidelity is a Python-side addition).
-  src.ePatient_25 as sex -> tgt.gender = translate(sex, 'urn:emsinterop:conceptmap:cm-nemsis-sex', 'code') "gender";
+  src.ePatient_25 as sex -> tgt.gender = translate(sex, 'https://fhirems.github.io/emsinterop/fhir/ConceptMap/cm-nemsis-sex', 'code') "gender";
 
   src.ePatient_17 as dob -> tgt.birthDate = dob "birthDate";
 }

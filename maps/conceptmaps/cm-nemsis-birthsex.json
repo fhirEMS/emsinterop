@@ -1,7 +1,7 @@
 {
   "resourceType": "ConceptMap",
   "id": "cm-nemsis-birthsex",
-  "url": "urn:emsinterop:conceptmap:cm-nemsis-birthsex",
+  "url": "https://fhirems.github.io/emsinterop/fhir/ConceptMap/cm-nemsis-birthsex",
   "version": "0.1.0",
   "name": "NemsisSexToUSCoreBirthsex",
   "status": "draft",
@@ -11,9 +11,33 @@
       "source": "https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS",
       "target": "http://terminology.hl7.org/CodeSystem/v3-AdministrativeGender",
       "element": [
-        {"code": "9919001", "display": "Female", "target": [{"code": "F", "display": "Female", "equivalence": "equivalent"}]},
-        {"code": "9919003", "display": "Male", "target": [{"code": "M", "display": "Male", "equivalence": "equivalent"}]}
+        {
+          "code": "9919001",
+          "display": "Female",
+          "target": [
+            {
+              "code": "F",
+              "display": "Female",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "9919003",
+          "display": "Male",
+          "target": [
+            {
+              "code": "M",
+              "display": "Male",
+              "equivalence": "equivalent"
+            }
+          ]
+        }
       ]
     }
-  ]
+  ],
+  "identifier": {
+    "system": "urn:ietf:rfc:3986",
+    "value": "urn:emsinterop:conceptmap:cm-nemsis-birthsex"
+  }
 }

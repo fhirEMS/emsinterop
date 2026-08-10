@@ -6,9 +6,9 @@
 // Production execution is native Python (mapping/situation.py); the reference
 // Java engine runs this map in CI as the fidelity oracle.
 
-map "urn:emsinterop:StructureMap/NemsisESituationToCondition" = "NemsisESituationToCondition"
+map "https://fhirems.github.io/emsinterop/fhir/StructureMap/NemsisESituationToCondition" = "NemsisESituationToCondition"
 
-uses "urn:emsinterop:StructureDefinition/NemsisESituation" alias ESituation as source
+uses "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisESituation" alias ESituation as source
 uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as target
 
 group SituationToPrimaryImpression(source src : ESituation, target tgt : Condition) {

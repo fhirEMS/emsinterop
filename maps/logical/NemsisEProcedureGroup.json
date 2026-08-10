@@ -1,7 +1,7 @@
 {
   "resourceType": "StructureDefinition",
   "id": "NemsisEProcedureGroup",
-  "url": "urn:emsinterop:StructureDefinition/NemsisEProcedureGroup",
+  "url": "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisEProcedureGroup",
   "version": "0.1.0",
   "name": "NemsisEProcedureGroup",
   "title": "NEMSIS eProcedures.ProcedureGroup (logical model)",
@@ -10,7 +10,7 @@
   "fhirVersion": "4.0.1",
   "kind": "logical",
   "abstract": false,
-  "type": "urn:emsinterop:StructureDefinition/NemsisEProcedureGroup",
+  "type": "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisEProcedureGroup",
   "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
   "derivation": "specialization",
   "differential": {

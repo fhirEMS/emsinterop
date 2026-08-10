@@ -9,13 +9,15 @@ aggregated/validated by a typed helper (ADR-002).
 
 from __future__ import annotations
 
+from .. import conformance
 from ..issues import Disposition
 from ..model import NemsisElement, NemsisGroup
 from ..terminology import conceptmaps, registry, systems
 from . import common
 from .context import MappingContext
 
-PRIOR_CARE_EXT = "urn:emsinterop:extension:obtained-prior-to-unit-care"
+PRIOR_CARE_EXT = conformance.canonical(
+    "StructureDefinition", "ems-obtained-prior-to-unit-care")
 
 # element id -> (LOINC code, display, unit display, UCUM code, US Core profile)
 _QUANTITY_VITALS = {

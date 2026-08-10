@@ -3,6 +3,7 @@ artifacts rendered as an unpacked package fhirEngine's install-ig consumes."""
 
 import json
 
+from emsinterop import conformance
 from emsinterop.terminology import registry, systems
 from emsinterop.terminology.conceptmaps import maps_dir
 from emsinterop.terminology.igpackage import (
@@ -31,8 +32,12 @@ def test_build_package_layout_and_manifest(tmp_path):
 
 def test_codesystem_covers_registry_deduped(tmp_path):
     build_package(tmp_path)
-    cs = json.loads((tmp_path / "CodeSystem-nemsis.json").read_text())
-    assert cs["url"] == systems.NEMSIS
+    cs = json.loads((tmp_path / "CodeSystem-nemsis-registry.json").read_text())
+    # Published under OUR canonical, recording the mPSC one it stands in for.
+    # Claiming theirs would be two conflicting definitions of one identifier —
+    # see docs/07_Conformance_and_Gaps.md.
+    assert cs["url"] == conformance.canonical("CodeSystem", "nemsis-registry")
+    assert systems.NEMSIS in [i["value"] for i in cs["identifier"]]
     assert cs["content"] == "fragment"  # local clean subset, never "complete"
 
     codes = [c["code"] for c in cs["concept"]]

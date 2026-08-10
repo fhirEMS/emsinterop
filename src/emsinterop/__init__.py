@@ -12,7 +12,7 @@ try:
 except _metadata.PackageNotFoundError:  # running from a source tree, uninstalled
     __version__ = "0.0.0.dev0"
 
-MAPPING_RULESET_VERSION = "0.3.2"
+MAPPING_RULESET_VERSION = "0.3.3"
 """Version stamped into Provenance / meta.tag for every generated resource.
 
 Bump this whenever mapping SEMANTICS change, not merely when the package
@@ -21,9 +21,16 @@ version does — it is how a consumer tells which rules produced a resource.
 withheld US Core claims, off-scale glucose interpretations, and normalized
 PCR UUIDs.
 
-0.3.2 adds a resource to the output, which is why it is a semantic bump and not
-a package one: symptom onset (eSituation.01) with no impression and no chief
-complaint now emits a standalone dated Observation instead of being dropped,
-and eSituation.07/.08 are ledgered as explicit deferrals when no Condition
-exists to carry an anatomic location.
+0.3.2 added a resource to the output: symptom onset (eSituation.01) with no
+impression and no chief complaint now emits a standalone dated Observation
+instead of being dropped, and eSituation.07/.08 are ledgered as explicit
+deferrals when no Condition exists to carry an anatomic location.
+
+0.3.3 changes an emitted extension URL. The `obtained-prior-to-unit-care`
+extension moved from `urn:emsinterop:...` to this project's resolvable
+canonical base, so a consumer can dereference what we invented. Codings are
+untouched — NEMSIS still references the mPSC canonical — and the identifier
+naming systems (`urn:emsinterop:resource-id`, `...:mapping-ruleset`) are
+deliberately unchanged, because `resource-id` is embedded in every conditional
+update URL. See docs/07_Conformance_and_Gaps.md.
 """

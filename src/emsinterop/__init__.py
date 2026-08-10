@@ -12,12 +12,18 @@ try:
 except _metadata.PackageNotFoundError:  # running from a source tree, uninstalled
     __version__ = "0.0.0.dev0"
 
-MAPPING_RULESET_VERSION = "0.3.1"
+MAPPING_RULESET_VERSION = "0.3.2"
 """Version stamped into Provenance / meta.tag for every generated resource.
 
 Bump this whenever mapping SEMANTICS change, not merely when the package
 version does — it is how a consumer tells which rules produced a resource.
-0.3.1 covers the field-hardening changes: undated vitals carry date precision,
+0.3.1 covered the field-hardening changes: undated vitals carry date precision,
 withheld US Core claims, off-scale glucose interpretations, and normalized
 PCR UUIDs.
+
+0.3.2 adds a resource to the output, which is why it is a semantic bump and not
+a package one: symptom onset (eSituation.01) with no impression and no chief
+complaint now emits a standalone dated Observation instead of being dropped,
+and eSituation.07/.08 are ledgered as explicit deferrals when no Condition
+exists to carry an anatomic location.
 """

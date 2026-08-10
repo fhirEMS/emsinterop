@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+- **`MAPPING_RULESET_VERSION` bumped to 0.3.2.** It is stamped into every
+  resource's `meta.tag` and into Provenance, and the convention is to bump on
+  semantic change rather than package change. The onset fix below adds a
+  resource to the output, so a consumer must be able to tell which rules
+  produced what it is holding.
+
 - **The corpus sweep now pairs records with an agency roster.** The agency name
   lives only in the DEMDataSet, so without one every `Organization` withholds
   its US Core claim and that branch went unswept. Half the cases now run with a

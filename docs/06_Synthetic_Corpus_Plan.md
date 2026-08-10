@@ -86,17 +86,35 @@ and the README says so as loudly as `tests/fixtures/README.md` does here.
 
 ## Phases
 
-| Phase | Deliverable | Value |
-|---|---|---|
-| **1** | One scenario (chest pain) end-to-end, XSD-valid, seeded, CLI: `nemsynth gen --scenario chest-pain --seed 1 -o out/` | Proves the skeleton; immediately usable in the discovery tier |
-| **2** | The messiness engine (NV/PN rates, sentinels, boundaries, free-text) | Where the defects actually live |
-| **3** | The scenario library (12–15 presentations) + MCI multi-patient | Breadth of clinical shape |
-| **4** | Volume + a corpus-sweep harness: generate N, convert all, report every crash/unmapped-national-element/validator error, ranked | Turns the generator into a *fuzzing* loop against the mapper |
-| **5** | DEMDataSet generation (agency/crew/vehicle rosters) | Exercises the demographics rail, which today has one fixture |
+**All five are delivered** (nemsynth v0.1.x, `github.com/fhirEMS/nemsynth`).
+This table is kept as the record of *why* each phase existed; for what the
+generator does today, read its README and `python -m emsinterop.fuzz --help`.
 
-Phase 4 is the real prize: a nightly loop generating thousands of documents and
-reporting only what breaks. That is how the remaining unknown-unknowns surface
-without waiting for a real agency export.
+| Phase | Deliverable | Value | Status |
+|---|---|---|---|
+| **1** | One scenario (chest pain) end-to-end, XSD-valid, seeded, CLI: `nemsynth gen --scenario chest-pain --seed 1 -o out/` | Proves the skeleton; immediately usable in the discovery tier | done — schema-driven, not hand-written |
+| **2** | The messiness engine (NV/PN rates, sentinels, boundaries, free-text) | Where the defects actually live | done — 4 profiles; CI asserts the traits appear |
+| **3** | The scenario library (12–15 presentations) + MCI multi-patient | Breadth of clinical shape | done — 15 presentations, repeating groups, `--mci N` |
+| **4** | Volume + a corpus-sweep harness: generate N, convert all, report every crash/unmapped-national-element/validator error, ranked | Turns the generator into a *fuzzing* loop against the mapper | done — `python -m emsinterop.fuzz`, deduplicated + replayable |
+| **5** | DEMDataSet generation (agency/crew/vehicle rosters) | Exercises the demographics rail, which today has one fixture | done — `--dem`, paired into the sweep |
+
+Phase 4 was the real prize and it landed: the sweep runs per-PR in CI, and a
+20,000-case run (~28,000 PatientCareReports counting MCI) completes in ~21s
+reporting 0 findings. Findings deduplicate to a stable signature and each
+carries a byte-reproducible replay command, so the loop reports only what
+breaks rather than a wall of duplicates.
+
+**What it has actually caught**, which is the only measure that matters:
+
+- `eSituation.01` symptom onset dropped with no ledger entry when the primary
+  impression was NV/PN — a national Required element, in a branch combination
+  neither the hand-authored fixtures nor the published samples contained.
+- Three XSD-valid coding defects inside the generator itself, including an
+  inverted `YesNoValues` pair that had every generated call quietly declaring
+  itself a mass-casualty incident.
+- A regression where moving vitals into repeating groups silently disabled the
+  messiness engine's vitals knobs — caught because CI asserts the hostile
+  traits appear in output rather than trusting the engine is wired up.
 
 ## How it plugs in
 

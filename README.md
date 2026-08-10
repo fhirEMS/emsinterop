@@ -1,21 +1,31 @@
 # emsInterop
 
 **A poly-HL7 translation engine for NEMSIS-schema'd EMS data.** One NEMSIS v3.5
-ePCR goes in; **HL7 v2**, **C-CDA (HL7 v3)**, and **FHIR R4** come out — because
-the hospital, the state registry, and the HIE each want a different standard,
-and an EMS agency should not have to run three integrations to satisfy them.
+ePCR goes in; **whichever HL7 format the administrator configures** comes out —
+**HL7 v2**, **C-CDA (HL7 v3)**, **FHIR R4**, any combination, or one alone. The
+hospital, the state registry, and the HIE each want a different standard, and an
+EMS agency should not have to run three integrations to satisfy them — nor emit
+formats no one downstream has asked for.
 
-| Rail | Output | Who consumes it |
-|---|---|---|
-| **FHIR R4** | US-Core-aligned resource graph + IHE PCC mPSC document, submitted as a transaction Bundle | [fhirEngine](../fhirEngine) or any FHIR server; ITI-65 document sharing |
-| **HL7 v2** | ADT^A03 (completed call) and ADT^A04 (prearrival), MLLP-delivered | Hospital ADT feeds, encounter-notification networks |
-| **C-CDA (v3)** | CCD R2.1, via the [nemsis2CCDA](https://github.com/fhirEMS/nemsis2CCDA) sibling | Hospital document repositories, HIEs on CDA |
-| **Inbound** | Hospital discharge (ADT^A03 **or** FHIR Discharge Summary) → matched → NEMSIS `eOutcome` write-back | State registries — closes the outcome loop |
+Output is a **deployment setting, not a build**: `mode` takes a single rail or a
+list, so the same binary serves an agency whose hospital is on v2 and one whose
+HIE is on FHIR.
 
-All four ride **one canonical mapping** (ADR-001): NEMSIS is mapped once into a
-US-Core-aligned FHIR R4 resource graph, and every output is a projection over
-that graph. Add a standard by adding a projection, not another mapper — which
-is why the three rails cannot drift apart.
+```json
+{ "mode": ["fhir", "adt"] }      // or "ccda", or "fhir", or all three
+```
+
+| Rail | Configured as | Output | Who consumes it |
+|---|---|---|---|
+| **FHIR R4** | `fhir` | US-Core-aligned resource graph + IHE PCC mPSC document, submitted as a transaction Bundle | [fhirEngine](../fhirEngine) or any FHIR server; ITI-65 document sharing |
+| **HL7 v2** | `adt` | ADT^A03 (completed call) and ADT^A04 (prearrival), MLLP-delivered | Hospital ADT feeds, encounter-notification networks |
+| **C-CDA (v3)** | `ccda` | CCD R2.1, via the [nemsis2CCDA](https://github.com/fhirEMS/nemsis2CCDA) sibling | Hospital document repositories, HIEs on CDA |
+| **Inbound** | always available | Hospital discharge (ADT^A03 **or** FHIR Discharge Summary) → matched → NEMSIS `eOutcome` write-back | State registries — closes the outcome loop |
+
+Every rail rides **one canonical mapping** (ADR-001): NEMSIS is mapped once into
+a US-Core-aligned FHIR R4 resource graph, and each output is a projection over
+that graph. Add a standard by adding a projection, not another mapper — which is
+why enabling a second rail cannot change what the first one says.
 
 Supports **NEMSIS 3.5.0 and 3.5.1**, validating against the release each
 document declares. No Databricks, no Spark, no JVM in the runtime.
@@ -39,19 +49,20 @@ one canonical US-Core-aligned FHIR R4 resource graph. Every output standard is a
 projection over that single graph — which is what keeps them consistent.
 
 ```
-                                    ┌─▶ FHIR transaction Bundle ─▶ fhirEngine ─▶ Delta ─▶ DuckDB
-                                    │        └─▶ mPSC document ─▶ ITI-65 / [PCC-1] handoff
+                                          ENABLED RAILS ONLY (per `mode`)
+                                    ┌─[fhir]─▶ transaction Bundle ─▶ fhirEngine ─▶ Delta ─▶ DuckDB
+                                    │            └─▶ mPSC document ─▶ ITI-65 / [PCC-1] handoff
 NEMSIS 3.5 XML ─▶ parse ─▶ ConceptMaps ─▶ CANONICAL FHIR R4 GRAPH
-   (XSD-gated)                      ├─▶ HL7 v2 ADT^A03 / A04 ─▶ MLLP ─▶ hospital ADT feed
-                                    └─▶ C-CDA R2.1 CCD ─▶ document repository / HIE
+   (XSD-gated)                      ├─[adt]──▶ HL7 v2 ADT^A03 / A04 ─▶ MLLP ─▶ hospital ADT feed
+                                    └─[ccda]─▶ C-CDA R2.1 CCD ─▶ document repository / HIE
 
 hospital discharge (ADT^A03 | FHIR Discharge Summary) ─▶ match ─▶ NEMSIS eOutcome ─▶ state registry
 ```
 
-Which rails fire is one config switch (`mode: fhir | adt | ccda`, or a list), so
-a deployment sends only what its partners accept. Endpoints are optional per
-rail: configured, artifacts are delivered; unconfigured, they are produced and
-reported.
+A disabled rail costs nothing — it is never rendered. Within an enabled rail,
+endpoints are independently optional: configured, artifacts are delivered;
+unconfigured, they are produced and reported, which is how you dry-run a new
+partner before pointing at their endpoint.
 
 ## Getting started (dev)
 
@@ -79,11 +90,12 @@ deployment that only converts and transmits needs neither.
 | `reconcile <bronze> <delta-base>` | Join fhirEngine's dead-letter tables to the conversion issue log → gap register |
 | `deid <delta-base> <out>` | Safe-Harbor de-identified analytics projection |
 | `package-ig <dir>` | Build the `emsinterop.nemsis` FHIR package (CodeSystem + ValueSets + ConceptMaps) |
+| `preflight --config <json>` | Verify a deployment is actually configured for production PHI; exits non-zero until it is |
 
 Layout: `src/emsinterop/` (ingest → model → mapping → terminology → assemble →
 submit, plus `outcome/`, `transport/`, `analytics/`, `serve.py`), `maps/` (authored
 ConceptMaps, StructureMaps, logical models — the upstream-contributable spec),
-`schemas/nemsis/3.5.0/` (pinned NEMSIS XSDs), `tests/fixtures/` (XSD-valid golden
+`schemas/nemsis/{3.5.0,3.5.1}/` (pinned NEMSIS XSDs), `tests/fixtures/` (XSD-valid golden
 corpus), `contrib/` (the IHE contribution package).
 
 ### Tier-1 validation (live fhirEngine)

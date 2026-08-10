@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+- **The corpus sweep now pairs records with an agency roster.** The agency name
+  lives only in the DEMDataSet, so without one every `Organization` withholds
+  its US Core claim and that branch went unswept. Half the cases now run with a
+  generated roster and half without — an agency that reports no name is the
+  other real-world branch, and the one a consumer gets wrong by turning absence
+  into an empty string.
+
 - **Corpus sweep (`python -m emsinterop.fuzz`).** Generates NEMSIS at volume via
   nemsynth, converts it, and triages the results: findings deduplicate to a
   stable signature, each carries a byte-reproducible replay command, and the

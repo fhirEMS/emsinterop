@@ -150,6 +150,10 @@ pip install 'git+https://github.com/fhirEMS/nemsynth'
 python -m emsinterop.fuzz --count 3000
 ```
 
+Half the cases are paired with a generated **DEMDataSet** roster, because the
+agency name exists only there — without it every `Organization` withholds its
+US Core claim and that branch is never swept.
+
 Findings are **deduplicated** by signature (an invariant rule id, or the
 exception type plus the innermost frame in this package), so one defect in a
 shared path is one finding rather than thousands. Each carries a **byte-

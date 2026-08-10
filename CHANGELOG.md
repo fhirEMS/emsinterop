@@ -1,5 +1,35 @@
 # Changelog
 
+## v0.3.2 — 2026-08-10
+
+- **NEMSIS 3.5.1 supported.** Its XSDs are vendored and `validate()` selects the
+  schema set from the release each document declares. The delta from 3.5.0 was
+  established by fetching all 46 XSDs from NEMSIS's public git and diffing them
+  (line endings masked everything until normalized): exactly one line differs —
+  `ePatient.25` gains an explicit `minOccurs="1"`, which is XSD's default and so
+  a no-op. A test validates the whole corpus against every supported release
+  rather than assuming compatibility. Unknown future releases fall back to the
+  pinned schemas so a real difference surfaces as an error.
+- **Hour-24 timestamps normalized.** `xs:dateTime` permits `24:00:00` as
+  end-of-day and NEMSIS allows it, but FHIR caps hours at 23 — so an XSD-valid
+  export produced FHIR every validator rejects. Now shifted to `00:00:00` the
+  next day (the same instant), correct across month and year rollovers, applied
+  at all eleven dateTime copy sites. Previously a documented limitation.
+- **Unreachable endpoints no longer crash the CLI.** A configured but
+  unreachable fhirEngine raised a raw `ConnectError` traceback out of
+  `dispatch()`. Transport failures are now reported as a failed delivery,
+  ledgered for the gap register, and exit non-zero — distinct from a
+  `SubmissionError`, where the server evaluated the bundle and rejected it.
+- **Setup path for rail selection**: `deploy/messaging.example.json` (a starter
+  that runs out of the box — no endpoints, so artifacts are produced and
+  reported rather than delivered) plus a README section walking copy → edit
+  `mode` → `--config`. Tests assert the shipped templates parse and select
+  rails, so they cannot rot.
+- **README reframed** around what this actually is: a poly-HL7 engine emitting
+  HL7 v2, C-CDA, and/or FHIR R4 — whichever the administrator configures.
+- **contrib policy is now absolute**: nothing goes to IHE or any third party
+  without express permission for that specific submission, across every channel.
+
 ## v0.3.1 — 2026-08-09 — field hardening
 
 The first release driven by **real** NEMSIS data. Running five published v3.5.0

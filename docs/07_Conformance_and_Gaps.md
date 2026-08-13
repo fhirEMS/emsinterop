@@ -18,8 +18,10 @@ says.
 
 This document is the contract for that difference. It is enforced by
 `tests/test_conformance.py`; the machine-readable form is
-`src/emsinterop/conformance.py` and ships in every terminology package as
-`conformance-gaps.json`.
+`src/emsinterop/conformance.py`, and it ships in every terminology package
+inside `package.json` under `emsinterop:conformance` — in the manifest rather
+than as a sibling file, because fhirEngine's `readPackageResources()` parses
+every non-manifest file in a package as a FHIR resource, and this is not one.
 
 ---
 

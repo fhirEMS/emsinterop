@@ -1,6 +1,6 @@
 [project]
 name = "emsinterop"
-version = "0.3.3"
+version = "0.3.4"
 description = "NEMSIS v3.5 ePCR XML -> IHE-conformant FHIR R4 (mPSC / US Core) translation engine, loading into fhirEngine"
 readme = "README.md"
 requires-python = ">=3.11"

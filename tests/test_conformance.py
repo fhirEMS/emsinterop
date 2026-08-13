@@ -228,3 +228,43 @@ def test_canonical_base_is_an_owned_domain_not_a_hosting_vendor():
     assert not host.endswith(".github.io"), (
         "canonicals must not live on a hosting vendor's domain")
     assert conformance.CANONICAL_BASE.startswith("https://")
+
+
+def test_invented_structures_argue_against_the_fhir_native_option():
+    """Rule 3. When an IG says nothing, the tempting move is to invent a shape
+    that mirrors the source format — a cluster of Observations shaped like the
+    NEMSIS panel. That is almost always wrong: base FHIR usually already has
+    somewhere to put the fact, and a receiver understands
+    `Encounter.hospitalization.dischargeDisposition` without reading a line of
+    our documentation. An invented shape is understood by nobody.
+
+    So any gap that mints a StructureDefinition must record which native option
+    was considered and why it does not carry the fact."""
+    unargued = [
+        gap.id for gap in conformance.GAPS
+        if any("/StructureDefinition/" in a for a in gap.artifacts)
+        and not gap.native_alternative
+    ]
+    assert unargued == [], (
+        "these gaps invent a structure without arguing against the FHIR-native "
+        f"option; an extension nobody argued against is one nobody needed: {unargued}"
+    )
+
+
+def test_the_outcome_gap_describes_what_we_actually_do():
+    """The register once claimed eOutcome was represented as an 'interim
+    Observation/Encounter cluster'. It never was — the forward mapping uses
+    Encounter.hospitalization, and the inbound loop writes back to NEMSIS. A
+    register that misdescribes its own implementation is worse than none: it is
+    the artifact people trust when they stop reading the code."""
+    gap = conformance.GAPS_BY_ID["outcome-delegated-to-qore"]
+    assert "Observation" not in gap.decision, (
+        "the outcome rail builds no Observations; do not claim it does")
+    assert "hospitalization" in gap.decision.lower()
+
+    # And prove it against the code rather than the prose.
+    result = convert(REPO / "tests" / "fixtures" / "pcr_chest_pain.xml")[0]
+    encounters = [r for r in result.resources if r["resourceType"] == "Encounter"]
+    assert encounters, "fixture emitted no Encounter"
+    assert "hospitalization" in encounters[0], (
+        "discharge disposition is no longer on the FHIR-native element")

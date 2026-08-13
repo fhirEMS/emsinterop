@@ -98,6 +98,37 @@ Everything derives from `conformance.CANONICAL_BASE`.
 called out in `CHANGELOG.md` as identifier-affecting, and
 `MAPPING_RULESET_VERSION` is bumped because emitted extension URLs change.
 
+## Rule 3 — Reach for the FHIR-native element before inventing one
+
+When an IG says nothing, the tempting move is to invent a structure that
+mirrors the source format: a cluster of Observations shaped like the NEMSIS
+panel. That is almost always wrong. Base FHIR usually already has somewhere to
+put the fact, and a receiver understands
+`Encounter.hospitalization.dischargeDisposition` without reading a line of our
+documentation. **An invented shape is understood by nobody and conforms to
+nothing.**
+
+So every gap that mints a `StructureDefinition` records which native option was
+considered and why it does not carry the fact — `Gap.native_alternative`, and
+the tests require it. *An extension nobody argued against is an extension
+nobody needed.*
+
+Worked examples:
+
+| Gap | Native option | Verdict |
+|---|---|---|
+| `outcome-delegated-to-qore` | `Encounter.hospitalization.dischargeDisposition` / `.destination` | **Used.** eOutcome.01/.02 already speak NUBC, which is what that element is bound to. Nothing bespoke emitted; what is missing is a profile to *claim*, not a place to put data. |
+| `prior-care-vitals-flag` | `Observation.performer`, `Provenance` | **Insufficient.** `performer` names *who* took the reading, which a NEMSIS record often does not know; `Provenance` describes how a resource came to be, not a clinical circumstance of the measurement. Extension justified. |
+| `mapping-table-empty` | `StructureDefinition.kind = logical` | **Used.** A logical model is precisely the native mechanism for typing a non-FHIR source so FML can consume it. None appears in emitted data. |
+
+This rule also caught a defect in this document's own register: the outcome
+entry used to claim eOutcome was represented as "an interim Observation/Encounter
+cluster". It never was — the forward mapping has always used
+`Encounter.hospitalization`, and the inbound loop writes eOutcome back into
+NEMSIS rather than modelling it a second time in FHIR. A register that
+misdescribes its own implementation is worse than no register, because it is
+what people trust when they stop reading the code.
+
 ---
 
 ## The gap register
@@ -116,7 +147,7 @@ questions, and the tests refuse it otherwise:
 | `mapping-table-empty` | FHIR-path column empty on ~90–95% of rows | Author the complete field map; every element Mapped/Seeded/Deferred, never dropped | IHE populates the column; ours becomes a conformance test against theirs |
 | `composition-sections` | Three sections, none clinical beyond problems/allergies/meds; slicing is **open** | Emit LOINC-coded Vital Signs, Procedures, EMS Narrative, EMS Course sections — conformant, not a deviation | mPSC defines its own; where codes differ, theirs win |
 | `nemsis-codesystem-placeholders` | 18 `TODO: JFM` concepts incl. malformed `99270235`, `C7`, `todo1` | Reference their canonical; publish our registry-derived concepts under ours | IHE publishes a usable CodeSystem; we drop ours, no coding changes |
-| `outcome-delegated-to-qore` | eOutcome delegated to QRPH "QORE", which is named but not linked, bound or profiled | Interim Observation/Encounter cluster, marked interim | QORE is published with a binding; ours is **replaced, not merged** |
+| `outcome-delegated-to-qore` | eOutcome delegated to QRPH "QORE", which is named but not linked, bound or profiled | FHIR-native `Encounter.hospitalization.dischargeDisposition` (NUBC) + `.destination`; inbound loop writes eOutcome back to NEMSIS. Nothing bespoke | QORE is published with a binding; we **add the claim** — the elements are already native |
 | `prior-care-vitals-flag` | `eVitals.02` (obtained before this unit's care) has no FHIR element and the IG proposes none | Project extension — a prior crew's reading is a different clinical claim | IHE or US Core defines an equivalent; dual-carry one release, then drop ours |
 | `no-source-version-pin` | No NEMSIS version declared anywhere on the mapping page | Pin to 3.5.0, handle 3.5.1 as declared deltas | IHE pins a version; if not 3.5.0 that is a scope change, not a tweak |
 | `transport-binding-loose` | EMS-Overall names no ITI transaction numbers | ITI-65 as the **default** binding behind a pluggable interface | EMS-Overall names its transactions; the default changes, the interface does not |
@@ -147,6 +178,11 @@ project is to conform to the standard, not to compete with it.
 - any minted artifact has no entry in the gap register;
 - any gap entry lacks a citable source, an ISO verification date, or a
   retirement trigger;
+- any gap that mints a `StructureDefinition` fails to argue against the
+  FHIR-native alternative (Rule 3);
+- the outcome entry drifts back to claiming a bespoke model, or the Encounter
+  stops carrying `hospitalization` — the register is checked against the code,
+  not only against itself;
 - the `resource-id` naming system changes, or diverges between the mapper and
   the bundle builder;
 - an emitted local extension is not dereferenceable under our base;

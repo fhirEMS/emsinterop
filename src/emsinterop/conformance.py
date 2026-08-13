@@ -30,6 +30,20 @@ particular is embedded in every conditional-update URL, so moving it would stop
 matching resources already stored in a fhirEngine and silently duplicate the
 lot. Those stay put, deliberately.
 
+**3. Where the standard is silent, reach for the FHIR-native element before
+inventing one.**
+The temptation when an IG says nothing is to invent a structure that mirrors the
+source format — a cluster of Observations shaped like the NEMSIS panel. That is
+almost always wrong: base FHIR usually already has somewhere to put the fact,
+and a receiver understands `Encounter.hospitalization.dischargeDisposition`
+without reading a line of our documentation. An invented shape is understood by
+nobody and conforms to nothing.
+
+So every gap that mints an artifact must record which FHIR-native option was
+considered and why it was insufficient. `Gap.native_alternative` carries that,
+and the tests require it — an extension nobody argued against is an extension
+nobody needed.
+
 ## The gap register
 
 Every artifact we mint exists because the IG left a hole. `GAPS` records which
@@ -123,6 +137,11 @@ class Gap:
     proposal: str = ""
     #: Does the decision change bytes a consumer receives?
     affects_output: bool = True
+    #: Rule 3: which FHIR-native representation was considered first, and why
+    #: it does not carry the fact. Required whenever this gap mints a
+    #: StructureDefinition — inventing a shape when base FHIR already has one
+    #: produces something no receiver understands.
+    native_alternative: str = ""
 
 
 #: Verified against the mPSC v2.0.0-draft CI build (footer 2025-10-30) and the
@@ -154,6 +173,13 @@ GAPS: tuple[Gap, ...] = (
         retirement="IHE populates the FHIR-path column. Ours then becomes a "
                    "conformance test against theirs rather than the source.",
         proposal="proposal-01",
+        native_alternative="A FHIR logical model IS the native mechanism for "
+                           "typing a non-FHIR source so FML can consume it — "
+                           "that is what StructureDefinition.kind = "
+                           "'logical' exists for. These describe NEMSIS "
+                           "panels, which by definition have no FHIR "
+                           "representation to reuse, and none of them appears "
+                           "in emitted data.",
     ),
     Gap(
         id="composition-sections",
@@ -197,11 +223,21 @@ GAPS: tuple[Gap, ...] = (
                 "named but not linked, bound or profiled anywhere in the IG.",
         source="https://build.fhir.org/ig/IHE/PCC.PCS/NEMSIS-Mapping.html",
         verified="2026-08-07",
-        decision="Represent outcome as an interim Observation/Encounter cluster "
-                 "so the loop is expressible at all, and mark it interim rather "
-                 "than presenting it as an IHE-sanctioned model.",
-        retirement="QORE is published with a binding. Our interim model is then "
-                   "replaced, not merged — this one is explicitly disposable.",
+        decision="Use the FHIR-native representation rather than inventing a "
+                 "shape: discharge disposition rides on "
+                 "Encounter.hospitalization.dischargeDisposition (NUBC-coded, "
+                 "the vocabulary eOutcome.01/.02 already speak) with "
+                 "hospitalization.destination for the receiving facility. The "
+                 "inbound loop (ADT^A03 / FHIR discharge summary) writes "
+                 "eOutcome back into NEMSIS for the state registry rather than "
+                 "modelling it a second time in FHIR. Nothing bespoke is "
+                 "emitted; what is missing is an IHE-blessed PROFILE to claim, "
+                 "not a place to put the data.",
+        retirement="QORE is published with a binding. We then claim it; the "
+                   "underlying elements are already the FHIR-native ones, so "
+                   "this is a claim to add rather than a model to replace.",
+        native_alternative="Encounter.hospitalization.dischargeDisposition and "
+                           ".destination — used, not merely considered.",
         proposal="proposal-05",
     ),
     Gap(
@@ -220,6 +256,14 @@ GAPS: tuple[Gap, ...] = (
         retirement="IHE or US Core defines an equivalent. Dual-carry for one "
                    "minor release, then drop ours — the pattern ADR-006 already "
                    "uses for US Core vs pcc-uv race/ethnicity.",
+        native_alternative="Observation.performer names WHO took the reading, "
+                           "which a NEMSIS record often does not know, and "
+                           "Provenance describes how a resource came to be "
+                           "rather than a clinical circumstance of the "
+                           "measurement. eVitals.02 is neither: it is a flag "
+                           "that the reading predates this unit's care. No base "
+                           "R4 or US Core element carries it, so an extension "
+                           "is the honest answer.",
     ),
     Gap(
         id="no-source-version-pin",
@@ -278,6 +322,10 @@ def summary() -> dict:
                 "retirement": gap.retirement,
                 "proposal": gap.proposal,
                 "affectsOutput": gap.affects_output,
+                # Rule 3's argument travels with the package: a consumer asking
+                # "why is there an extension here?" gets the answer without
+                # reading our source.
+                "nativeAlternative": gap.native_alternative,
             }
             for gap in GAPS
         ],

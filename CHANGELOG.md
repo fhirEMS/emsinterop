@@ -1,6 +1,28 @@
 # Changelog
 
-## Unreleased
+## v0.3.4 — 2026-08-13
+
+### Conformance — Rule 3: prefer the FHIR-native element over inventing one
+
+- **Corrected a register entry that misdescribed this project.** The
+  `outcome-delegated-to-qore` gap claimed eOutcome was represented as "an
+  interim Observation/Encounter cluster". It never was: the forward mapping has
+  always used `Encounter.hospitalization.dischargeDisposition` (NUBC-coded,
+  which is the vocabulary `eOutcome.01/.02` already speak) plus
+  `.destination`, and the inbound loop writes eOutcome back into NEMSIS rather
+  than modelling it a second time in FHIR. The outcome rail builds no
+  Observations at all. A register that misdescribes its own implementation is
+  worse than none — it is what people trust when they stop reading the code.
+- **Rule 3 added and enforced.** When an IG is silent, the tempting move is to
+  invent a structure mirroring the source format; base FHIR usually already has
+  somewhere to put the fact, and an invented shape is understood by nobody.
+  Every gap that mints a `StructureDefinition` must now record which
+  FHIR-native option was considered and why it is insufficient
+  (`Gap.native_alternative`), and it ships in the package manifest. The rule
+  immediately forced a justification for the logical models, which had none.
+- **The register is now checked against the code**, not only against itself: a
+  test fails if the outcome entry drifts back to claiming a bespoke model, or
+  if the `Encounter` stops carrying `hospitalization`.
 
 - **Canonical base is now `https://emsinterop.com/fhir`** — an owned domain
   rather than a hosting vendor's subdomain, because a canonical is a permanent

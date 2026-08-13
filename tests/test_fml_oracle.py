@@ -33,6 +33,8 @@ from emsinterop.oracle import (
     procedure_oracle_projection,
 )
 
+from emsinterop import conformance
+
 from .conftest import FIXTURES
 
 REPO = Path(__file__).resolve().parents[1]
@@ -85,7 +87,7 @@ def test_patient_map_matches_native_mapper(path, tmp_path):
     pcr = dataset.reports[0]
 
     reference = _reference_transform(
-        "urn:emsinterop:StructureMap/NemsisEPatientToPatient",
+        conformance.canonical("StructureMap", "NemsisEPatientToPatient"),
         epatient_instance(pcr),
         tmp_path,
     )
@@ -111,7 +113,7 @@ def test_medication_map_matches_native_mapper(path, tmp_path):
 
     for index, (instance, native) in enumerate(zip(instances, natives)):
         reference = _reference_transform(
-            "urn:emsinterop:StructureMap/NemsisEMedicationsToMedicationAdministration",
+            conformance.canonical("StructureMap", "NemsisEMedicationsToMedicationAdministration"),
             instance,
             tmp_path / str(index),
         )
@@ -142,7 +144,7 @@ def test_bp_map_matches_native_mapper(path, tmp_path):
 
     for index, (instance, native) in enumerate(zip(comparable, natives)):
         reference = _reference_transform(
-            "urn:emsinterop:StructureMap/NemsisEVitalsToBPObservation",
+            conformance.canonical("StructureMap", "NemsisEVitalsToBPObservation"),
             instance,
             tmp_path / str(index),
         )
@@ -164,7 +166,7 @@ def test_procedure_map_matches_native_mapper(path, tmp_path):
 
     for index, (instance, native) in enumerate(zip(instances, natives)):
         reference = _reference_transform(
-            "urn:emsinterop:StructureMap/NemsisEProceduresToProcedure",
+            conformance.canonical("StructureMap", "NemsisEProceduresToProcedure"),
             instance,
             tmp_path / str(index),
         )
@@ -190,7 +192,7 @@ def test_situation_map_matches_native_mapper(path, tmp_path):
     )
 
     reference = _reference_transform(
-        "urn:emsinterop:StructureMap/NemsisESituationToCondition",
+        conformance.canonical("StructureMap", "NemsisESituationToCondition"),
         instance,
         tmp_path,
     )

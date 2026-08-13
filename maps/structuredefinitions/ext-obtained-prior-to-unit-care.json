@@ -1,7 +1,7 @@
 {
   "resourceType": "StructureDefinition",
   "id": "obtained-prior-to-unit-care",
-  "url": "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/ems-obtained-prior-to-unit-care",
+  "url": "https://emsinterop.com/fhir/StructureDefinition/ems-obtained-prior-to-unit-care",
   "version": "0.1.0",
   "name": "ObtainedPriorToUnitCare",
   "title": "Obtained/Administered/Performed Prior to This Unit's EMS Care",
@@ -39,7 +39,7 @@
       {
         "id": "Extension.url",
         "path": "Extension.url",
-        "fixedUri": "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/ems-obtained-prior-to-unit-care"
+        "fixedUri": "https://emsinterop.com/fhir/StructureDefinition/ems-obtained-prior-to-unit-care"
       },
       {
         "id": "Extension.value[x]",

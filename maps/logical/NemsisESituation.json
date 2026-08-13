@@ -1,7 +1,7 @@
 {
   "resourceType": "StructureDefinition",
   "id": "NemsisESituation",
-  "url": "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisESituation",
+  "url": "https://emsinterop.com/fhir/StructureDefinition/NemsisESituation",
   "version": "0.1.0",
   "name": "NemsisESituation",
   "title": "NEMSIS eSituation panel (logical model, impression slice)",
@@ -10,7 +10,7 @@
   "fhirVersion": "4.0.1",
   "kind": "logical",
   "abstract": false,
-  "type": "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisESituation",
+  "type": "https://emsinterop.com/fhir/StructureDefinition/NemsisESituation",
   "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
   "derivation": "specialization",
   "differential": {

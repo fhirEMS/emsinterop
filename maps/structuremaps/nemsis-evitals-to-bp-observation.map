@@ -7,9 +7,9 @@
 // Production execution is native Python (mapping/vitals.py); the reference
 // Java engine runs this map in CI as the fidelity oracle.
 
-map "https://fhirems.github.io/emsinterop/fhir/StructureMap/NemsisEVitalsToBPObservation" = "NemsisEVitalsToBPObservation"
+map "https://emsinterop.com/fhir/StructureMap/NemsisEVitalsToBPObservation" = "NemsisEVitalsToBPObservation"
 
-uses "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisEVitalsGroup" alias EVitalsGroup as source
+uses "https://emsinterop.com/fhir/StructureDefinition/NemsisEVitalsGroup" alias EVitalsGroup as source
 uses "http://hl7.org/fhir/StructureDefinition/Observation" alias Observation as target
 
 group VitalGroupToBloodPressure(source grp : EVitalsGroup, target tgt : Observation) {
@@ -30,7 +30,7 @@ group VitalGroupToBloodPressure(source grp : EVitalsGroup, target tgt : Observat
       c.system = 'http://loinc.org', c.code = '8480-6' "sbpNvCode";
     nv -> comp.dataAbsentReason = create('CodeableConcept') as cc then {
       nv -> cc.coding as c, c.system = 'http://terminology.hl7.org/CodeSystem/data-absent-reason',
-        c.code = translate(nv, 'https://fhirems.github.io/emsinterop/fhir/ConceptMap/cm-nemsis-nv', 'code') "sbpDarStd";
+        c.code = translate(nv, 'https://emsinterop.com/fhir/ConceptMap/cm-nemsis-nv', 'code') "sbpDarStd";
       nv -> cc.coding as c2, c2.system = 'https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS',
         c2.code = nv "sbpDarNemsis";
     } "sbpDar";
@@ -48,7 +48,7 @@ group VitalGroupToBloodPressure(source grp : EVitalsGroup, target tgt : Observat
       c.system = 'http://loinc.org', c.code = '8462-4' "dbpNvCode";
     nv -> comp.dataAbsentReason = create('CodeableConcept') as cc then {
       nv -> cc.coding as c, c.system = 'http://terminology.hl7.org/CodeSystem/data-absent-reason',
-        c.code = translate(nv, 'https://fhirems.github.io/emsinterop/fhir/ConceptMap/cm-nemsis-nv', 'code') "dbpDarStd";
+        c.code = translate(nv, 'https://emsinterop.com/fhir/ConceptMap/cm-nemsis-nv', 'code') "dbpDarStd";
       nv -> cc.coding as c2, c2.system = 'https://profiles.ihe.net/PCC/mPSC/CodeSystem/NEMSIS',
         c2.code = nv "dbpDarNemsis";
     } "dbpDar";

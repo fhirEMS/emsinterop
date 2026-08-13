@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- **Canonical base is now `https://emsinterop.com/fhir`** — an owned domain
+  rather than a hosting vendor's subdomain, because a canonical is a permanent
+  identifier baked into every emitted extension URL. Never released under the
+  interim `fhirems.github.io` base, so nothing downstream is affected.
+- **`scripts/build-canonical-site.py` + a Pages workflow** now serve all 224
+  canonicals: HTML at the canonical for a human, `<canonical>.json` for a tool,
+  and the authored FML alongside each StructureMap. Generated from the same
+  builder as the released package, so the site and the package cannot drift. A
+  test and a workflow step both fail if any minted canonical lacks a page.
+
 - **Conformance/gap policy (`src/emsinterop/conformance.py`,
   `docs/07_Conformance_and_Gaps.md`).** Where the IHE EMS profiles are silent
   this project decides; those decisions are now *declared* rather than blended

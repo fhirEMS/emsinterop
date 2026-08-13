@@ -189,3 +189,42 @@ def test_summary_is_serialisable_and_complete():
     payload = json.loads(json.dumps(conformance.summary(), allow_nan=False))
     assert payload["canonicalBase"] == conformance.CANONICAL_BASE
     assert {g["id"] for g in payload["gaps"]} == {g.id for g in conformance.GAPS}
+
+
+def test_the_site_generator_covers_every_minted_canonical(tmp_path):
+    """A canonical URL is a promise that something is there.
+
+    We mint ~224 of them; if the site generator misses one, that URL 404s for
+    every implementer and every reviewer who clicks it. This closes the loop so
+    a newly-authored artifact cannot ship with an unresolvable canonical."""
+    import subprocess
+    import sys
+    from urllib.parse import urlsplit
+
+    site = tmp_path / "site"
+    subprocess.run(
+        [sys.executable, str(REPO / "scripts" / "build-canonical-site.py"), str(site)],
+        check=True, capture_output=True, cwd=REPO)
+
+    missing = []
+    for _, data in published_resources():
+        if not conformance.is_ours(data["url"]):
+            continue
+        rel = urlsplit(data["url"]).path.strip("/")
+        if not (site / rel / "index.html").exists():
+            missing.append(data["url"])
+    assert missing == [], f"canonicals the site does not serve: {missing}"
+
+    # The custom domain only works if Pages is told which host to answer for.
+    assert (site / "CNAME").read_text().strip() == \
+        urlsplit(conformance.CANONICAL_BASE).netloc
+
+
+def test_canonical_base_is_an_owned_domain_not_a_hosting_vendor():
+    """The base is a permanent identifier baked into emitted extension URLs.
+    Pinning it to a hosting vendor's subdomain would tie this project's
+    standards identity to where the files happen to live this year."""
+    host = conformance.CANONICAL_BASE.split("//", 1)[1].split("/", 1)[0]
+    assert not host.endswith(".github.io"), (
+        "canonicals must not live on a hosting vendor's domain")
+    assert conformance.CANONICAL_BASE.startswith("https://")

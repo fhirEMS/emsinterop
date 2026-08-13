@@ -1,7 +1,7 @@
 {
   "resourceType": "ConceptMap",
   "id": "cm-nemsis-sex",
-  "url": "https://fhirems.github.io/emsinterop/fhir/ConceptMap/cm-nemsis-sex",
+  "url": "https://emsinterop.com/fhir/ConceptMap/cm-nemsis-sex",
   "version": "0.3.1",
   "name": "NemsisSexToAdministrativeGender",
   "status": "draft",

@@ -1,7 +1,7 @@
 {
   "resourceType": "StructureDefinition",
   "id": "NemsisEPatient",
-  "url": "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisEPatient",
+  "url": "https://emsinterop.com/fhir/StructureDefinition/NemsisEPatient",
   "version": "0.1.0",
   "name": "NemsisEPatient",
   "title": "NEMSIS ePatient panel (logical model)",
@@ -10,7 +10,7 @@
   "fhirVersion": "4.0.1",
   "kind": "logical",
   "abstract": false,
-  "type": "https://fhirems.github.io/emsinterop/fhir/StructureDefinition/NemsisEPatient",
+  "type": "https://emsinterop.com/fhir/StructureDefinition/NemsisEPatient",
   "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Base",
   "derivation": "specialization",
   "differential": {

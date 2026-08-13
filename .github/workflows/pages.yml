@@ -1,0 +1,96 @@
+name: Canonical site
+
+# Serves this project's canonical URLs at https://emsinterop.com/fhir/...
+#
+# A canonical URL is a promise that something is there. The site is generated
+# from the same builder that produces the released terminology package, so what
+# resolves at a canonical is exactly what the package ships — publishing it by
+# hand would guarantee the two drift apart.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "maps/**"
+      - "src/emsinterop/conformance.py"
+      - "src/emsinterop/terminology/**"
+      - "scripts/build-canonical-site.py"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Never let two deploys race; a half-published set of canonicals is worse than
+# a stale one.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: build the canonical site
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: pip install -e .
+
+      - name: Generate
+        run: python scripts/build-canonical-site.py site | tee site-summary.json
+
+      # A canonical that 404s is a broken promise, so this is checked here and
+      # not only in the unit tests: every URL the project mints must have a
+      # page in the artifact about to be published.
+      - name: Every minted canonical resolves
+        run: |
+          python - <<'PY'
+          import json, sys
+          from pathlib import Path
+          sys.path.insert(0, "src")
+          from emsinterop import conformance
+          from urllib.parse import urlsplit
+
+          base = urlsplit(conformance.CANONICAL_BASE).path.strip("/")
+          missing = []
+          for path in list(Path("maps").rglob("*.json")):
+              data = json.loads(path.read_text())
+              url = data.get("url", "") if isinstance(data, dict) else ""
+              if not conformance.is_ours(url):
+                  continue
+              rel = urlsplit(url).path.strip("/")
+              if not (Path("site") / rel / "index.html").exists():
+                  missing.append(url)
+          if missing:
+              print("canonicals with no page:", *missing, sep="\n  ")
+              raise SystemExit(1)
+          print("all authored canonicals resolve")
+          PY
+
+      - name: CNAME is the canonical host
+        run: |
+          host=$(python -c "import sys;sys.path.insert(0,'src');\
+          from urllib.parse import urlsplit;from emsinterop import conformance;\
+          print(urlsplit(conformance.CANONICAL_BASE).netloc)")
+          [ "$(cat site/CNAME)" = "$host" ] \
+            || { echo "CNAME != canonical host $host" >&2; exit 1; }
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    name: deploy to Pages
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

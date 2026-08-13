@@ -1,7 +1,7 @@
 {
   "resourceType": "ConceptMap",
   "id": "cm-nemsis-nubc-discharge",
-  "url": "https://fhirems.github.io/emsinterop/fhir/ConceptMap/cm-nemsis-nubc-discharge",
+  "url": "https://emsinterop.com/fhir/ConceptMap/cm-nemsis-nubc-discharge",
   "version": "0.1.0",
   "name": "NemsisTransportDispositionToNUBCDischargeStatus",
   "status": "draft",

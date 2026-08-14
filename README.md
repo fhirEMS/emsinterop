@@ -31,18 +31,25 @@ can hold, so what survives each rail differs too — measured across the corpus:
 |---|---|---|
 | **FHIR R4** | **All 83 national elements** — every one Mapped, Seeded or Deferred, none unaccounted for | **Enforced.** `invariants.check_nothing_dropped` fails the build on a third path |
 | **HL7 v2** | ~25 elements across `MSH`/`EVN`/`PID`/`PV1`/`DG1` | Inherent to ADT: an admit/discharge notification has nowhere to put serial vitals or an arrest registry |
-| **C-CDA** | 8 of 17 resource types in the graph | **Declared, with named gaps** — see `nemsis2ccda/coverage.py` |
+| **C-CDA** | 12 of 17 resource types in the graph | **Declared, with named gaps** — see `nemsis2ccda/coverage.py` |
 
 **FHIR is the complete rail.** If you need everything the ePCR said, that is the
 one to configure. The other two are projections for consumers who speak those
 formats, and they lose content by construction.
 
-The C-CDA rail's known gaps are listed explicitly rather than left to
-discovery — most significantly **prior/home medications** (`MedicationStatement`),
-which a CCD Medications section could carry and today does not, so a receiving
-clinician sees what EMS gave but not what the patient was already taking. Payer,
-crew and destination facility are absent for the same reason. A test fails the
-build if a resource type reaches that rail with no decision recorded.
+The C-CDA rail's remaining gaps are listed explicitly rather than left to
+discovery. Prior/home medications, payer, crew and destination facility were all
+absent and are now rendered; what is left is `PractitionerRole` (CDA's
+`assignedAuthor` carries one code where NEMSIS distinguishes role from
+certification level — the person is not lost, only the pairing) and
+`Communication` (a message *about* the encounter rather than a fact within it).
+A test fails the build if a resource type reaches that rail with no decision
+recorded.
+
+Note what is deliberately not fabricated: US Core's Coverage profile requires a
+Member Id (`us-core-15`), and NEMSIS `ePayment.01` is a payment *category*
+rather than a policy. The `us-core-coverage` claim is withheld instead of
+inventing a member number.
 | **Inbound** | always available | Hospital discharge (ADT^A03 **or** FHIR Discharge Summary) → matched → NEMSIS `eOutcome` write-back | State registries — closes the outcome loop |
 
 Every rail rides **one canonical mapping** (ADR-001): NEMSIS is mapped once into

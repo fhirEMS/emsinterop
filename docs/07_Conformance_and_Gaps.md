@@ -133,7 +133,7 @@ what people trust when they stop reading the code.
 
 ## The gap register
 
-Seven entries, each verified against a **dated** build — these are CI builds and
+Seven entries, each verified against a **dated** build (last full re-probe **2026-08-13**; the mPSC build had not moved — same 2025-10-30 footer) — these are CI builds and
 they move, so an undated finding is a rumour. Every entry must answer three
 questions, and the tests refuse it otherwise:
 
@@ -144,8 +144,8 @@ questions, and the tests refuse it otherwise:
 
 | id | What IHE leaves open | What we do | Retires when |
 |---|---|---|---|
-| `mapping-table-empty` | FHIR-path column empty on ~90–95% of rows | Author the complete field map; every element Mapped/Seeded/Deferred, never dropped | IHE populates the column; ours becomes a conformance test against theirs |
-| `composition-sections` | Three sections, none clinical beyond problems/allergies/meds; slicing is **open** | Emit LOINC-coded Vital Signs, Procedures, EMS Narrative, EMS Course sections — conformant, not a deviation | mPSC defines its own; where codes differ, theirs win |
+| `mapping-table-empty` | FHIR-path column empty on **440 of 449** element rows (98%); the 9 populated are all `dAgency.*` | Author the complete field map; every element Mapped/Seeded/Deferred, never dropped | IHE populates the column; ours becomes a conformance test against theirs |
+| `composition-sections` | **Four** slices — Problems, Allergies, Medications, **Payers** — none clinical beyond those; slicing is **open** | Emit LOINC-coded Vital Signs, Procedures, EMS Narrative, EMS Course sections — conformant, not a deviation | mPSC defines its own; where codes differ, theirs win |
 | `nemsis-codesystem-placeholders` | 18 `TODO: JFM` concepts incl. malformed `99270235`, `C7`, `todo1` | Reference their canonical; publish our registry-derived concepts under ours | IHE publishes a usable CodeSystem; we drop ours, no coding changes |
 | `outcome-delegated-to-qore` | eOutcome delegated to QRPH "QORE", which is named but not linked, bound or profiled | FHIR-native `Encounter.hospitalization.dischargeDisposition` (NUBC) + `.destination`; inbound loop writes eOutcome back to NEMSIS. Nothing bespoke | QORE is published with a binding; we **add the claim** — the elements are already native |
 | `prior-care-vitals-flag` | `eVitals.02` (obtained before this unit's care) has no FHIR element and the IG proposes none | Project extension — a prior crew's reading is a different clinical claim | IHE or US Core defines an equivalent; dual-carry one release, then drop ours |

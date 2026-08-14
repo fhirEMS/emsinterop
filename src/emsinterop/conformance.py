@@ -147,14 +147,23 @@ class Gap:
 #: Verified against the mPSC v2.0.0-draft CI build (footer 2025-10-30) and the
 #: EMS-Overall build, on the dates below. Re-probe before relying on any of it:
 #: these are CI builds and they move.
+#:
+#: Last full re-probe 2026-08-13: the mPSC build had NOT moved (same
+#: 2025-10-30 footer, same 2.0.0-draft), and every finding still holds. Two
+#: entries were nonetheless corrected, because the register had drifted from
+#: what the build actually says rather than the build changing under it — the
+#: mapping table is 98% empty rather than "~90-95%", and the Composition
+#: defines four section slices rather than three. Re-probing is worth doing
+#: even when nothing upstream moved.
 GAPS: tuple[Gap, ...] = (
     Gap(
         id="mapping-table-empty",
-        finding="NEMSIS-Mapping.html leaves the FHIR-path column empty on ~90-95% "
-                "of rows; only scattered entries such as Organization.identifier "
-                "are populated.",
+        finding="NEMSIS-Mapping.html leaves the FHIR-path column empty on 440 "
+                "of 449 element rows (98%). The nine populated rows are all "
+                "dAgency.* -> Organization.identifier/name/address; every "
+                "clinical panel is empty.",
         source="https://build.fhir.org/ig/IHE/PCC.PCS/NEMSIS-Mapping.html",
-        verified="2026-08-07",
+        verified="2026-08-13",
         decision="Author the complete field-level mapping for all NEMSIS 3.5 "
                  "national elements (ADR-005), dispositioning every element as "
                  "Mapped/Seeded/Deferred rather than dropping any.",
@@ -183,28 +192,34 @@ GAPS: tuple[Gap, ...] = (
     ),
     Gap(
         id="composition-sections",
-        finding="The Medical Summary Composition profile defines three mandatory "
-                "sections (Problems, Allergies, Medications) with open slicing, "
-                "and no section for vitals, procedures, EMS course or narrative.",
+        finding="The Medical Summary Composition profile defines FOUR section "
+                "slices — Problems, Allergies, Medications and Payers — with "
+                "open slicing, and none for vitals, procedures, EMS course or "
+                "narrative. (An earlier reading of this register said three and "
+                "omitted Payers; the assembler always knew about it, the "
+                "register did not.)",
         source="https://build.fhir.org/ig/IHE/PCC.PCS/"
                "StructureDefinition-IHE.PCC.FHIR.MS.Composition.html",
-        verified="2026-08-07",
-        decision="Emit additional LOINC-coded sections (Vital Signs 8716-3, "
-                 "Procedures 47519-4, EMS Narrative 28568-4, EMS Course 46240-8). "
-                 "The profile's slicing is OPEN, so these are conformant, not a "
-                 "deviation — most clinical panels would otherwise have no home "
-                 "in the document at all.",
+        verified="2026-08-13",
+        decision="Emit the IG's four sections, plus additional LOINC-coded "
+                 "ones the IG does not define (Vital Signs 8716-3, Procedures "
+                 "47519-4, EMS Narrative 28568-4, EMS Course 46240-8). The "
+                 "profile's slicing is OPEN, so the additions are conformant, "
+                 "not a deviation — most clinical panels would otherwise have "
+                 "no home in the document at all.",
         retirement="mPSC defines its own clinical sections. Ours align to the "
                    "codes it picks; where they differ, theirs win.",
         proposal="proposal-04",
     ),
     Gap(
         id="nemsis-codesystem-placeholders",
-        finding="CodeSystem-NEMSIS contains 18 placeholder concepts with "
-                "'TODO: JFM' displays, including malformed codes 99270235, C7 "
-                "and todo1.",
+        finding="CodeSystem-NEMSIS still contains placeholder concepts whose "
+                "displays read 'TODO: JFM do not know', 'TODO: JFM did not know "
+                "either' and 'TODO: JFM completely clueless', including the "
+                "malformed codes 99270235, C7 and todo1 (all three re-confirmed "
+                "present).",
         source="https://build.fhir.org/ig/IHE/PCC.PCS/CodeSystem-NEMSIS.html",
-        verified="2026-08-07",
+        verified="2026-08-13",
         decision="Keep REFERENCING the mPSC canonical in coding.system so our "
                  "data is conformant the day the IG is fixed, but publish our "
                  "registry-derived CodeSystem (2,321 concepts, content=fragment) "
@@ -219,10 +234,12 @@ GAPS: tuple[Gap, ...] = (
     ),
     Gap(
         id="outcome-delegated-to-qore",
-        finding="eOutcome is delegated to the QRPH 'QORE' profile, which is "
-                "named but not linked, bound or profiled anywhere in the IG.",
+        finding="eOutcome.01/.02/.03 rows delegate to the QRPH 'QORE' profile. "
+                "'QORE' appears as bare text with no link, binding or profile "
+                "reference anywhere in the IG, and those rows carry no FHIR "
+                "path.",
         source="https://build.fhir.org/ig/IHE/PCC.PCS/NEMSIS-Mapping.html",
-        verified="2026-08-07",
+        verified="2026-08-13",
         decision="Use the FHIR-native representation rather than inventing a "
                  "shape: discharge disposition rides on "
                  "Encounter.hospitalization.dischargeDisposition (NUBC-coded, "
@@ -242,11 +259,12 @@ GAPS: tuple[Gap, ...] = (
     ),
     Gap(
         id="prior-care-vitals-flag",
-        finding="NEMSIS eVitals.02 records whether a reading was obtained before "
-                "this unit's care began. FHIR has no element for it and the IG "
-                "proposes none, so the distinction is lost on every vital sign.",
+        finding="The eVitals.02 row (\"Obtained Prior to this Unit's EMS "
+                "Care\", R [1..1]) has both mapping columns empty. FHIR has no "
+                "element for the distinction and the IG proposes none, so it is "
+                "lost on every vital sign unless carried some other way.",
         source="https://build.fhir.org/ig/IHE/PCC.PCS/NEMSIS-Mapping.html",
-        verified="2026-08-07",
+        verified="2026-08-13",
         decision="Carry it in a project extension. A reading taken by a prior "
                  "crew is a materially different clinical claim from one this "
                  "crew took, and silently flattening the two is the kind of "
@@ -267,10 +285,11 @@ GAPS: tuple[Gap, ...] = (
     ),
     Gap(
         id="no-source-version-pin",
-        finding="No NEMSIS version is declared anywhere on the mapping page, so "
-                "the source scope is ambiguous between 3.4, 3.5.0 and 3.5.1.",
+        finding="No NEMSIS version is declared anywhere on the mapping page — "
+                "zero occurrences of any 'NEMSIS 3.x' string — so the source "
+                "scope is ambiguous between 3.4, 3.5.0 and 3.5.1.",
         source="https://build.fhir.org/ig/IHE/PCC.PCS/NEMSIS-Mapping.html",
-        verified="2026-08-07",
+        verified="2026-08-13",
         decision="Pin explicitly to NEMSIS 3.5.0 and handle 3.5.1 as declared "
                  "deltas (ADR-007), rather than guessing what the table means.",
         retirement="IHE pins a version. If it differs from 3.5.0, that is a "
@@ -280,10 +299,11 @@ GAPS: tuple[Gap, ...] = (
     ),
     Gap(
         id="transport-binding-loose",
-        finding="EMS-Overall names no ITI transaction numbers; the transport "
+        finding="EMS-Overall names no ITI transaction numbers at all — zero "
+                "occurrences of any 'ITI-nn' string on the index; the transport "
                 "binding is described narratively.",
         source="https://build.fhir.org/ig/IHE/EMS-Overall/",
-        verified="2026-08-07",
+        verified="2026-08-13",
         decision="Treat transport as a pluggable interface with ITI-65 (MHD "
                  "Provide Document Bundle) as the default binding (ADR-008), so "
                  "a different binding is configuration rather than a rewrite.",

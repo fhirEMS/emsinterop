@@ -31,18 +31,19 @@ can hold, so what survives each rail differs too — measured across the corpus:
 |---|---|---|
 | **FHIR R4** | **All 83 national elements** — every one Mapped, Seeded or Deferred, none unaccounted for | **Enforced.** `invariants.check_nothing_dropped` fails the build on a third path |
 | **HL7 v2** | ~25 elements across `MSH`/`EVN`/`PID`/`PV1`/`DG1` | Inherent to ADT: an admit/discharge notification has nowhere to put serial vitals or an arrest registry |
-| **C-CDA** | 12 of 17 resource types in the graph | **Declared, with named gaps** — see `nemsis2ccda/coverage.py` |
+| **C-CDA** | 13 of 17 resource types in the graph | **Declared, with named gaps** — see `nemsis2ccda/coverage.py` |
 
 **FHIR is the complete rail.** If you need everything the ePCR said, that is the
 one to configure. The other two are projections for consumers who speak those
 formats, and they lose content by construction.
 
 The C-CDA rail's remaining gaps are listed explicitly rather than left to
-discovery. Prior/home medications, payer, crew and destination facility were all
-absent and are now rendered; what is left is `PractitionerRole` (CDA's
-`assignedAuthor` carries one code where NEMSIS distinguishes role from
-certification level — the person is not lost, only the pairing) and
-`Communication` (a message *about* the encounter rather than a fact within it).
+discovery. Prior/home medications, payer, crew, crew role/level and destination facility
+were all absent and are now rendered. One gap remains: `Communication`
+(`eDisposition.24`, the destination team pre-arrival alert), verified as
+carried by no other rendered resource. It stays declared rather than forced
+somewhere — a CCD has no notifications section, and putting an alert in
+Procedures would assert that a procedure was performed.
 A test fails the build if a resource type reaches that rail with no decision
 recorded.
 

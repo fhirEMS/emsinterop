@@ -10,8 +10,8 @@
   segments, which is inherent to what an admit/discharge notification is; C-CDA
   carries 8 of 17 resource types with its gaps named. **FHIR is the complete
   rail** and the README now says so.
-- **The C-CDA rail now carries prior/home medications, payer, crew and the
-  destination facility** — 12 of 17 resource types, up from 8. The first of
+- **The C-CDA rail now carries prior/home medications, payer, crew, crew
+  role/level and the destination facility** — 13 of 17 resource types, up from 8. The first of
   those was the one with clinical consequences.
 - **The C-CDA rail's no-drop claim is measured rather than asserted** (see the
   nemsis2CCDA sibling). Its renderer claimed nothing with a value was ever

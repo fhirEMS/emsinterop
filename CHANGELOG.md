@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+- **README: the rails are no longer implied to be equivalent.** "Poly-HL7"
+  means *the format your consumer speaks*, not three interchangeable copies of
+  the same content. Measured carrying capacity is now stated per rail: FHIR
+  carries all 83 national elements with the never-silently-dropped rule
+  enforced by a build-failing invariant; HL7 v2 carries ~25 across five ADT
+  segments, which is inherent to what an admit/discharge notification is; C-CDA
+  carries 8 of 17 resource types with its gaps named. **FHIR is the complete
+  rail** and the README now says so.
+- **The C-CDA rail's no-drop claim is measured rather than asserted** (see the
+  nemsis2CCDA sibling). Its renderer claimed nothing with a value was ever
+  dropped; prior/home medications, payer, crew and destination facility were
+  all absent with no record. Every resource type is now declared rendered,
+  structurally excluded, or a known gap, and an undeclared type fails the build.
+
 ## v0.3.4 — 2026-08-13
 
 ### Conformance — Rule 3: prefer the FHIR-native element over inventing one

@@ -20,6 +20,29 @@ HIE is on FHIR.
 | **FHIR R4** | `fhir` | US-Core-aligned resource graph + IHE PCC mPSC document, submitted as a transaction Bundle | [fhirEngine](../fhirEngine) or any FHIR server; ITI-65 document sharing |
 | **HL7 v2** | `adt` | ADT^A03 (completed call) and ADT^A04 (prearrival), MLLP-delivered | Hospital ADT feeds, encounter-notification networks |
 | **C-CDA (v3)** | `ccda` | CCD R2.1, via the [nemsis2CCDA](https://github.com/fhirEMS/nemsis2CCDA) sibling | Hospital document repositories, HIEs on CDA |
+
+### The rails are not equivalent, and are not meant to be
+
+"Poly-HL7" means *the format your consumer speaks*, *not* three interchangeable
+copies of the same content. The three containers differ enormously in what they
+can hold, so what survives each rail differs too — measured across the corpus:
+
+| Rail | Carries | Never-silently-dropped |
+|---|---|---|
+| **FHIR R4** | **All 83 national elements** — every one Mapped, Seeded or Deferred, none unaccounted for | **Enforced.** `invariants.check_nothing_dropped` fails the build on a third path |
+| **HL7 v2** | ~25 elements across `MSH`/`EVN`/`PID`/`PV1`/`DG1` | Inherent to ADT: an admit/discharge notification has nowhere to put serial vitals or an arrest registry |
+| **C-CDA** | 8 of 17 resource types in the graph | **Declared, with named gaps** — see `nemsis2ccda/coverage.py` |
+
+**FHIR is the complete rail.** If you need everything the ePCR said, that is the
+one to configure. The other two are projections for consumers who speak those
+formats, and they lose content by construction.
+
+The C-CDA rail's known gaps are listed explicitly rather than left to
+discovery — most significantly **prior/home medications** (`MedicationStatement`),
+which a CCD Medications section could carry and today does not, so a receiving
+clinician sees what EMS gave but not what the patient was already taking. Payer,
+crew and destination facility are absent for the same reason. A test fails the
+build if a resource type reaches that rail with no decision recorded.
 | **Inbound** | always available | Hospital discharge (ADT^A03 **or** FHIR Discharge Summary) → matched → NEMSIS `eOutcome` write-back | State registries — closes the outcome loop |
 
 Every rail rides **one canonical mapping** (ADR-001): NEMSIS is mapped once into

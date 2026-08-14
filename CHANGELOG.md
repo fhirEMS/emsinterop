@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.3.5 — 2026-08-14
 
 - **README: the rails are no longer implied to be equivalent.** "Poly-HL7"
   means *the format your consumer speaks*, not three interchangeable copies of

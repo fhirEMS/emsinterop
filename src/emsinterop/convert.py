@@ -37,6 +37,7 @@ def convert(
     document_variant: str = "CR",
     agency_names: dict[str, str] | None = None,
     personnel_names: dict[str, dict[str, str]] | None = None,
+    agency_contact: dict[str, str] | None = None,
 ) -> list[ConversionResult]:
     """Convert an EMSDataSet document; one result per PatientCareReport.
 
@@ -55,7 +56,8 @@ def convert(
     results: list[ConversionResult] = []
     for pcr in dataset.reports:
         ctx = map_pcr(dataset, pcr, agency_names=agency_names,
-                      personnel_names=personnel_names)
+                      personnel_names=personnel_names,
+                      agency_contact=agency_contact)
         composition = build_composition(ctx, variant=document_variant)
         transaction = transaction_bundle(ctx.resources, bundle_identifier=ctx.pcr_number)
         document = document_bundle(ctx, composition)

@@ -69,4 +69,13 @@ def map_agency(ctx: MappingContext) -> dict | None:
         }
 
     ctx.organization_id = org["id"]
+    # Agency telecom/address from the DEM roster (dContact). Same rule as the
+    # name: supply it or leave it absent.
+    contact = ctx.agency_contact
+    if contact.get("phone"):
+        org["telecom"] = [{"system": "phone", "value": contact["phone"], "use": "work"}]
+    address = {k: v for k, v in contact.items()
+               if k in ("line", "city", "state", "postalCode") and v}
+    if address:
+        org["address"] = [{"use": "work", **address}]
     return ctx.add(org)

@@ -1,5 +1,20 @@
 # Changelog
 
+## v0.3.6 — 2026-08-14
+
+- **Crew members have names.** A PCR identifies its crew by state licensure
+  number and carries no names at all — NEMSIS keeps them in the DEM's
+  `dPersonnel`, joined by `eCrew.01` <-> `dPersonnel.23`, which the standard
+  defines as the same number. Nothing read that side, so every `Practitioner`
+  was anonymous: correctly identified, correctly joined, and unable to say who
+  ran the call.
+- `demographics.personnel_names()` and `demographics.agency_contact()` thread
+  through `convert()` exactly as `agency_names` already did, carrying name,
+  telecom and address. Same rule as the agency name: supply it or leave it
+  absent, never fabricate.
+- The DEM fixture gained a personnel roster and agency contact, so the corpus
+  exercises the join rather than only the anonymous path.
+
 ## v0.3.5 — 2026-08-14
 
 - **README: the rails are no longer implied to be equivalent.** "Poly-HL7"

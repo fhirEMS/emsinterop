@@ -120,14 +120,50 @@ def personnel_names(source: str | Path | bytes) -> dict[str, dict[str, str]]:
         licence = fields.get("dPersonnel.23")
         if not licence:
             continue  # a roster entry with no licence id joins to nothing
-        name = {}
+        entry = {}
         if fields.get("dPersonnel.01"):
-            name["family"] = fields["dPersonnel.01"]
+            entry["family"] = fields["dPersonnel.01"]
         if fields.get("dPersonnel.02"):
-            name["given"] = fields["dPersonnel.02"]
-        if name:
-            out[licence] = name
+            entry["given"] = fields["dPersonnel.02"]
+        # Contact detail rides along: C-CDA's US Realm Header makes telecom and
+        # address SHALL on the document author, and this is where NEMSIS keeps
+        # them. Absent fields stay absent — never invented downstream.
+        if fields.get("dPersonnel.09"):
+            entry["phone"] = fields["dPersonnel.09"]
+        address = {
+            "line": fields.get("dPersonnel.04"),
+            "city": fields.get("dPersonnel.05"),      # GNIS code, not a name
+            "state": fields.get("dPersonnel.06"),     # ANSI code
+            "postalCode": fields.get("dPersonnel.07"),
+        }
+        address = {k: v for k, v in address.items() if v}
+        if address:
+            entry["address"] = address
+        if entry:
+            out[licence] = entry
     return out
+
+
+def agency_contact(source: str | Path | bytes) -> dict[str, str]:
+    """dContact telecom/address for the agency — the CDA custodian's details.
+
+    One contact per roster; the first with a phone or address wins."""
+    for group in _parse(source).iter():
+        if _local(group.tag) != "dContact":
+            continue
+        fields = {_local(e.tag): _text(e) for e in group.iter()}
+        out = {
+            "phone": fields.get("dContact.10"),
+            "email": fields.get("dContact.11"),
+            "line": fields.get("dContact.05"),
+            "city": fields.get("dContact.06"),
+            "state": fields.get("dContact.07"),
+            "postalCode": fields.get("dContact.08"),
+        }
+        out = {k: v for k, v in out.items() if v}
+        if out:
+            return out
+    return {}
 
 
 def facility_names(source: str | Path | bytes) -> dict[str, str]:

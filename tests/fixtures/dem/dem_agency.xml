@@ -33,6 +33,18 @@ department ID NV=7701001 (Not Applicable — not a fire-based agency).
       <dAgency.25 xsi:nil="true" NV="7701003"/>
       <dAgency.26 xsi:nil="true" NV="7701001"/>
     </dAgency>
+    <dContact>
+      <dContact.ContactInfoGroup UUID="7f2c9a10-4b5e-4d3c-9a1f-2b3c4d5e6f00">
+        <dContact.02>Dispatch</dContact.02>
+        <dContact.03>Agency</dContact.03>
+        <dContact.05>1 Synthetic Way</dContact.05>
+        <dContact.06>1454997</dContact.06>
+        <dContact.07>49</dContact.07>
+        <dContact.08>84101</dContact.08>
+        <dContact.10>801-555-0100</dContact.10>
+        <dContact.11>dispatch@example.org</dContact.11>
+      </dContact.ContactInfoGroup>
+    </dContact>
     <dConfiguration>
       <dConfiguration.ConfigurationGroup UUID="3d1a2f40-9c1e-4b7a-8f2d-6e5a4c3b2a02">
         <dConfiguration.01>49</dConfiguration.01>
@@ -49,6 +61,44 @@ department ID NV=7701001 (Not Applicable — not a fire-based agency).
         <dConfiguration.16>WV EMS 1</dConfiguration.16>
       </dConfiguration.ConfigurationGroup>
     </dConfiguration>
+    <dPersonnel>
+      <dPersonnel.PersonnelGroup UUID="7f2c9a10-4b5e-4d3c-9a1f-2b3c4d5e6f01">
+        <dPersonnel.NameGroup>
+          <dPersonnel.01>Albert</dPersonnel.01>
+          <dPersonnel.02>Chad</dPersonnel.02>
+        </dPersonnel.NameGroup>
+        <dPersonnel.AddressGroup>
+          <dPersonnel.04>1 Synthetic Way</dPersonnel.04>
+          <dPersonnel.05>1454997</dPersonnel.05>
+          <dPersonnel.06>49</dPersonnel.06>
+          <dPersonnel.07>84101</dPersonnel.07>
+        </dPersonnel.AddressGroup>
+        <dPersonnel.09>801-555-0101</dPersonnel.09>
+        <dPersonnel.LicensureGroup UUID="7f2c9a10-4b5e-4d3c-9a1f-2b3c4d5e6f13">
+          <dPersonnel.22>49</dPersonnel.22>
+          <dPersonnel.23>P123</dPersonnel.23>
+          <dPersonnel.24>9925007</dPersonnel.24>
+        </dPersonnel.LicensureGroup>
+      </dPersonnel.PersonnelGroup>
+      <dPersonnel.PersonnelGroup UUID="7f2c9a10-4b5e-4d3c-9a1f-2b3c4d5e6f02">
+        <dPersonnel.NameGroup>
+          <dPersonnel.01>Ritirato</dPersonnel.01>
+          <dPersonnel.02>Bobette</dPersonnel.02>
+        </dPersonnel.NameGroup>
+        <dPersonnel.AddressGroup>
+          <dPersonnel.04>1 Synthetic Way</dPersonnel.04>
+          <dPersonnel.05>1454997</dPersonnel.05>
+          <dPersonnel.06>49</dPersonnel.06>
+          <dPersonnel.07>84101</dPersonnel.07>
+        </dPersonnel.AddressGroup>
+        <dPersonnel.09>801-555-0112</dPersonnel.09>
+        <dPersonnel.LicensureGroup UUID="7f2c9a10-4b5e-4d3c-9a1f-2b3c4d5e6f16">
+          <dPersonnel.22>49</dPersonnel.22>
+          <dPersonnel.23>E456</dPersonnel.23>
+          <dPersonnel.24>9925005</dPersonnel.24>
+        </dPersonnel.LicensureGroup>
+      </dPersonnel.PersonnelGroup>
+    </dPersonnel>
     <dFacility>
       <dFacilityGroup UUID="3d1a2f40-9c1e-4b7a-8f2d-6e5a4c3b2a05">
         <dFacility.01>1701001</dFacility.01>

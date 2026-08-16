@@ -30,13 +30,18 @@ def ensure_practitioner(ctx: MappingContext, crew_member_id: str) -> str:
         # The PCR identifies crew by state licensure number and carries no
         # names; the DEM roster has them. Same shape as the agency name, and
         # the same rule: supply it or leave it absent, never fabricate.
-        name = ctx.personnel_names.get(crew_member_id)
-        if name:
+        entry = ctx.personnel_names.get(crew_member_id) or {}
+        if entry.get("family") or entry.get("given"):
             practitioner["name"] = [{
                 "use": "official",
-                **({"family": name["family"]} if name.get("family") else {}),
-                **({"given": [name["given"]]} if name.get("given") else {}),
+                **({"family": entry["family"]} if entry.get("family") else {}),
+                **({"given": [entry["given"]]} if entry.get("given") else {}),
             }]
+        if entry.get("phone"):
+            practitioner["telecom"] = [
+                {"system": "phone", "value": entry["phone"], "use": "work"}]
+        if entry.get("address"):
+            practitioner["address"] = [{"use": "work", **entry["address"]}]
         ctx.add(practitioner)
     return pid
 

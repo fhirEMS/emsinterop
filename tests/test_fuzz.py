@@ -143,3 +143,44 @@ def test_real_sweep_of_generated_documents_is_clean():
                       mci=3, seed_start=1)
     findings = fuzz.sweep(cases, jobs=1)
     assert findings == {}, f"sweep found: {sorted(findings)}"
+
+
+def test_the_sweep_exercises_both_the_resolved_and_absent_paths():
+    """Half the cases carry a roster and half do not, and that has to be
+    visible in the output rather than assumed.
+
+    Without a roster a PCR yields an anonymous Organization and no city at all,
+    because NEMSIS names none of them: it carries an agency number, a crew
+    licensure id and a GNIS code. Sweeping only that path would leave the
+    resolved branch — named Organization, named Practitioner, resolved city —
+    completely untested, which is what it was until this landed.
+    """
+    pytest.importorskip("nemsynth", reason="generator is an optional dev dep")
+    from emsinterop.convert import convert
+    from nemsynth.generate import generate_one
+
+    roster = fuzz._roster()
+    assert roster["city_gazetteer"], "no gazetteer to resolve with"
+
+    def snapshot(**kwargs):
+        result = convert(generate_one(1, "chest-pain", profile="clean"), **kwargs)[0]
+        cities, names = set(), set()
+        for resource in result.resources:
+            for address in resource.get("address") or []:
+                if isinstance(address, dict) and address.get("city"):
+                    cities.add(address["city"])
+            if resource["resourceType"] == "Organization" and resource.get("name"):
+                names.add(resource["name"])
+        return cities, names
+
+    resolved_cities, resolved_names = snapshot(**roster)
+    absent_cities, absent_names = snapshot()
+
+    assert resolved_cities, "the gazetteer path produced no city at all"
+    assert all(not c.isdigit() for c in resolved_cities), (
+        f"a GNIS code reached Address.city: {resolved_cities}")
+    assert resolved_names, "the roster path produced no Organization name"
+
+    assert not absent_cities, (
+        f"city populated without a gazetteer — from what? {absent_cities}")
+    assert not absent_names, "Organization named without a roster"

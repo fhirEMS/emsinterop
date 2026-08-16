@@ -107,14 +107,12 @@ def _one_case(case: dict) -> list[tuple[str, str, str]]:
 
     out = []
     try:
-        # Pair the records with the agency roster. The agency NAME lives only
-        # in the DEMDataSet, so without it every Organization withholds its US
-        # Core claim and that whole branch goes unswept. Half the cases run
-        # without it on purpose: an agency that reports no name is the other
-        # real-world branch, and it is the one a consumer gets wrong by turning
-        # absence into an empty string.
-        names = _agency_names() if case["seed"] % 2 == 0 else None
-        for result in convert(document, agency_names=names):
+        # Pair the records with the agency roster: names, crew, contact and the
+        # GNIS gazetteer. Without it the sweep only ever exercises the
+        # absent-data path — no named Organization, anonymous Practitioners,
+        # and an Address.city that is never populated.
+        roster = _roster() if case["seed"] % 2 == 0 else {}
+        for result in convert(document, **roster):
             for violation in invariants.check(result):
                 out.append((violation.signature(), "invariant",
                             f"{violation.rule}: {violation.detail}"[:200]))
@@ -124,23 +122,38 @@ def _one_case(case: dict) -> list[tuple[str, str, str]]:
     return out
 
 
-def _agency_names() -> dict[str, str]:
-    """The roster lookup, generated once per worker process.
+def _roster() -> dict:
+    """Everything a deployment supplies alongside the records, once per worker.
+
+    A PCR names its agency by number, its crew by licensure id and its cities
+    by GNIS code, and carries none of the corresponding names. Sweeping without
+    them exercises only the absent-data path: no named Organization, anonymous
+    Practitioners, and an `Address.city` that is never populated. Half the
+    cases run with this and half without, because both are real deployments and
+    neither is the "normal" one.
 
     Cached because it is identical for every case — the whole corpus belongs to
-    one agency — and regenerating it per document would dominate the sweep's
-    runtime for no added coverage.
+    one agency — and regenerating it per document would dominate the runtime
+    for no added coverage.
     """
-    global _AGENCY_NAMES_CACHE
-    if _AGENCY_NAMES_CACHE is None:
+    global _ROSTER_CACHE
+    if _ROSTER_CACHE is None:
         from nemsynth.dem import generate_dem
+        from nemsynth.gnis import gazetteer
 
-        from .ingest.demographics import agency_names
-        _AGENCY_NAMES_CACHE = agency_names(generate_dem(seed=1))
-    return _AGENCY_NAMES_CACHE
+        from .ingest.demographics import (agency_contact, agency_names,
+                                          personnel_names)
+        dem = generate_dem(seed=1)
+        _ROSTER_CACHE = {
+            "agency_names": agency_names(dem),
+            "personnel_names": personnel_names(dem),
+            "agency_contact": agency_contact(dem),
+            "city_gazetteer": gazetteer(),
+        }
+    return _ROSTER_CACHE
 
 
-_AGENCY_NAMES_CACHE: dict[str, str] | None = None
+_ROSTER_CACHE: dict | None = None
 
 
 def plan(count: int, scenarios: list[str], profiles: list[str],

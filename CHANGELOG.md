@@ -2,6 +2,16 @@
 
 ## Unreleased
 
+- **The corpus sweep now exercises the resolved path too.** It passed only
+  `agency_names`, so every case ran the absent-data branch: anonymous
+  Practitioners, no agency contact, and an `Address.city` that was never
+  populated — meaning the gazetteer path added above shipped untested. Half the
+  cases now carry the full roster (names, crew, contact, GNIS gazetteer) and
+  half carry none, because both are real deployments. A test asserts the split
+  is visible in the output rather than assumed: cities resolve to names on one
+  side and are absent on the other, and a GNIS code reaching `Address.city`
+  fails the build.
+
 ### Fixed — codes were being emitted into name fields
 
 Every address this project produced carried NEMSIS **codes** in FHIR fields

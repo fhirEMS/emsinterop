@@ -22,13 +22,22 @@ def ensure_practitioner(ctx: MappingContext, crew_member_id: str) -> str:
     """Create the shared Practitioner for a crew id if not already in the graph."""
     pid = practitioner_id_for(ctx, crew_member_id)
     if not any(r["id"] == pid and r["resourceType"] == "Practitioner" for r in ctx.resources):
-        ctx.add(
-            {
-                "resourceType": "Practitioner",
-                "id": pid,
-                "identifier": [common.identifier(systems.PERSONNEL_ID, crew_member_id)],
-            }
-        )
+        practitioner = {
+            "resourceType": "Practitioner",
+            "id": pid,
+            "identifier": [common.identifier(systems.PERSONNEL_ID, crew_member_id)],
+        }
+        # The PCR identifies crew by state licensure number and carries no
+        # names; the DEM roster has them. Same shape as the agency name, and
+        # the same rule: supply it or leave it absent, never fabricate.
+        name = ctx.personnel_names.get(crew_member_id)
+        if name:
+            practitioner["name"] = [{
+                "use": "official",
+                **({"family": name["family"]} if name.get("family") else {}),
+                **({"given": [name["given"]]} if name.get("given") else {}),
+            }]
+        ctx.add(practitioner)
     return pid
 
 

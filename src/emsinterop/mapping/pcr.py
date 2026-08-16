@@ -27,6 +27,7 @@ def map_pcr(
     dataset: EMSDataSet,
     pcr: PatientCareReport,
     agency_names: dict[str, str] | None = None,
+    personnel_names: dict[str, dict[str, str]] | None = None,
 ) -> MappingContext:
     """Map one PatientCareReport to its canonical FHIR resource graph."""
     ctx = MappingContext(
@@ -34,6 +35,7 @@ def map_pcr(
         header=dataset.header,
         nemsis_version=dataset.nemsis_version,
         agency_names=agency_names or {},
+        personnel_names=personnel_names or {},
     )
     map_agency(ctx)
     map_patient(ctx)

@@ -100,6 +100,36 @@ def agency_names(source: str | Path | bytes) -> dict[str, str]:
     return _leaf_map(_parse(source), "dAgency", ("dAgency.01", "dAgency.02"), "dAgency.03")
 
 
+def personnel_names(source: str | Path | bytes) -> dict[str, dict[str, str]]:
+    """dPersonnel.23 (state licensure id) -> {"family": ..., "given": ...}.
+
+    NEMSIS names this join itself: `eCrew.01` is defined as "The state
+    certification/licensure ID number assigned to the crew member", and
+    `dPersonnel.23` is "EMS Personnel's State's Licensure ID Number". A PCR
+    therefore identifies its crew by licensure number and carries no names at
+    all — exactly as it carries an agency number and no agency name.
+
+    Without this the Practitioner resources are anonymous: correct, joined,
+    and unable to tell a receiving clinician who ran the call.
+    """
+    out: dict[str, dict[str, str]] = {}
+    for group in _parse(source).iter():
+        if _local(group.tag) != "dPersonnel.PersonnelGroup":
+            continue
+        fields = {_local(e.tag): _text(e) for e in group.iter()}
+        licence = fields.get("dPersonnel.23")
+        if not licence:
+            continue  # a roster entry with no licence id joins to nothing
+        name = {}
+        if fields.get("dPersonnel.01"):
+            name["family"] = fields["dPersonnel.01"]
+        if fields.get("dPersonnel.02"):
+            name["given"] = fields["dPersonnel.02"]
+        if name:
+            out[licence] = name
+    return out
+
+
 def facility_names(source: str | Path | bytes) -> dict[str, str]:
     """dFacility.03 (facility code) -> dFacility.02 (facility name).
 

@@ -23,6 +23,10 @@ class MappingContext:
     # Deployment-supplied agency metadata the EMSDataSet header cannot carry
     # (dAgency.03 lives in the DEMDataSet): agency number or state id -> name.
     agency_names: dict[str, str] = field(default_factory=dict)
+    #: dPersonnel.23 (state licensure id) -> {"family", "given"}, from the DEM
+    #: roster. A PCR names its crew by licensure number only, so without this
+    #: every Practitioner is anonymous.
+    personnel_names: dict[str, dict[str, str]] = field(default_factory=dict)
 
     # ids of the spine resources, set as mappers run
     patient_id: str | None = None

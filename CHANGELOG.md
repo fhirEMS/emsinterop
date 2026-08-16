@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## v0.4.0 — 2026-08-16
 
 - **The corpus sweep now exercises the resolved path too.** It passed only
   `agency_names`, so every case ran the absent-data branch: anonymous

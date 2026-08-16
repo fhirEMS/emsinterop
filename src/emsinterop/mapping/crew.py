@@ -41,7 +41,22 @@ def ensure_practitioner(ctx: MappingContext, crew_member_id: str) -> str:
             practitioner["telecom"] = [
                 {"system": "phone", "value": entry["phone"], "use": "work"}]
         if entry.get("address"):
-            practitioner["address"] = [{"use": "work", **entry["address"]}]
+            # Same translation as every other address site: NEMSIS codes the
+            # place, FHIR names it, and the GNIS id rides in an extension
+            # rather than masquerading as a city name.
+            source = entry["address"]
+            address = {"use": "work"}
+            if source.get("line"):
+                address["line"] = [source["line"]]
+            for key in ("city", "state", "postalCode"):
+                translated = common.address_field(key, source.get(key),
+                                                  ctx.city_gazetteer)
+                if translated:
+                    address[translated[0]] = translated[1]
+            gnis = common.city_gnis_extension(source.get("city"))
+            if gnis:
+                address["extension"] = [gnis]
+            practitioner["address"] = [address]
         ctx.add(practitioner)
     return pid
 

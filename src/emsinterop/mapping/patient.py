@@ -199,7 +199,19 @@ def map_patient(ctx: MappingContext) -> dict:
     ]:
         el = ctx.pcr.first(element_id)
         if el is not None and el.has_value:
-            address[key] = [el.value] if key == "line" else el.value
+            if key == "line":
+                address["line"] = [el.value]
+                continue
+            # NEMSIS codes places; FHIR names them. The code never goes into a
+            # name field — see common.address_field and the city-is-a-gnis-code
+            # gap. The GNIS id is preserved as an extension so nothing is lost.
+            if key == "city":
+                extension = common.city_gnis_extension(el.value)
+                if extension:
+                    address.setdefault("extension", []).append(extension)
+            translated = common.address_field(key, el.value, ctx.city_gazetteer)
+            if translated:
+                address[translated[0]] = translated[1]
     if address:
         address["use"] = "home"
         patient["address"] = [address]

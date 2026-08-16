@@ -61,7 +61,19 @@ def _scene_location(ctx: MappingContext) -> dict | None:
     ]:
         el = scene.first(element_id)
         if el is not None and el.has_value:
-            address[key] = [el.value] if key == "line" else el.value
+            if key == "line":
+                address["line"] = [el.value]
+                continue
+            # NEMSIS codes places; FHIR names them. The code never goes into a
+            # name field — see common.address_field and the city-is-a-gnis-code
+            # gap. The GNIS id is preserved as an extension so nothing is lost.
+            if key == "city":
+                extension = common.city_gnis_extension(el.value)
+                if extension:
+                    address.setdefault("extension", []).append(extension)
+            translated = common.address_field(key, el.value, ctx.city_gazetteer)
+            if translated:
+                address[translated[0]] = translated[1]
     if address:
         details["address"] = address
     gps = scene.first("eScene.11")
@@ -138,7 +150,19 @@ def _destination_location(ctx: MappingContext) -> dict | None:
     ]:
         el = disp.first(element_id)
         if el is not None and el.has_value:
-            address[key] = [el.value] if key == "line" else el.value
+            if key == "line":
+                address["line"] = [el.value]
+                continue
+            # NEMSIS codes places; FHIR names them. The code never goes into a
+            # name field — see common.address_field and the city-is-a-gnis-code
+            # gap. The GNIS id is preserved as an extension so nothing is lost.
+            if key == "city":
+                extension = common.city_gnis_extension(el.value)
+                if extension:
+                    address.setdefault("extension", []).append(extension)
+            translated = common.address_field(key, el.value, ctx.city_gazetteer)
+            if translated:
+                address[translated[0]] = translated[1]
     if (name is None or not name.has_value) and (code is None or not code.has_value):
         return None
     location: dict = {

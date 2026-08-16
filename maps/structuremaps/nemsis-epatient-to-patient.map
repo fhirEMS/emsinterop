@@ -25,9 +25,19 @@ group ePatientToPatient(source src : EPatient, target tgt : Patient) {
 
   src -> tgt.address as addr, addr.use = 'home' then {
     src.ePatient_05 as line -> addr.line = line "line";
-    src.ePatient_06 as city -> addr.city = city "city";
+    // ePatient.06 is a GNIS feature id, not a city NAME, and Address.city is
+    // "Name of city, town etc." — so the id rides in an extension rather than
+    // masquerading as a name. Address.city is populated only when a gazetteer
+    // resolves it, which this map has no access to.
+    src.ePatient_06 as gnis -> addr.extension as ext then {
+      gnis -> ext.url = 'https://emsinterop.com/fhir/StructureDefinition/ems-city-gnis-code' "extUrl";
+      gnis -> ext.value = create('string') as v, v.value = gnis "extValue";
+    } "cityGnis";
     src.ePatient_07 as county -> addr.district = county "district";
-    src.ePatient_08 as state -> addr.state = state "state";
+    // ANSI/FIPS (49) -> USPS (UT): US Core binds Address.state to the USPS
+    // two-letter codes, and the two sets are disjoint.
+    src.ePatient_08 as state -> addr.state = translate(state,
+      'https://emsinterop.com/fhir/ConceptMap/cm-ansi-state-usps', 'code') "state";
     src.ePatient_09 as zip -> addr.postalCode = zip "postalCode";
     src.ePatient_10 as country -> addr.country = country "country";
   } "homeAddress";

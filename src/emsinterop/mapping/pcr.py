@@ -29,6 +29,7 @@ def map_pcr(
     agency_names: dict[str, str] | None = None,
     personnel_names: dict[str, dict[str, str]] | None = None,
     agency_contact: dict[str, str] | None = None,
+    city_gazetteer: dict[str, str] | None = None,
 ) -> MappingContext:
     """Map one PatientCareReport to its canonical FHIR resource graph."""
     ctx = MappingContext(
@@ -38,6 +39,7 @@ def map_pcr(
         agency_names=agency_names or {},
         personnel_names=personnel_names or {},
         agency_contact=agency_contact or {},
+        city_gazetteer=city_gazetteer or {},
     )
     map_agency(ctx)
     map_patient(ctx)

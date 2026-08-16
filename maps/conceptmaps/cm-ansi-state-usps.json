@@ -1,0 +1,525 @@
+{
+  "resourceType": "ConceptMap",
+  "id": "cm-ansi-state-usps",
+  "url": "https://emsinterop.com/fhir/ConceptMap/cm-ansi-state-usps",
+  "version": "0.1.0",
+  "name": "AnsiStateToUspsAbbreviation",
+  "title": "ANSI/FIPS state code -> USPS two-letter abbreviation",
+  "status": "active",
+  "experimental": false,
+  "description": "NEMSIS stores a state as the two-digit ANSI/FIPS code (49); US Core binds Address.state to USPS two-letter abbreviations (UT). The two code sets are disjoint and in bijection, so this map is total and reversible \u2014 which is what lets a NEMSIS round trip stay exact. Writing the FIPS code into Address.state validates (the field is a string and the binding extensible) while being the wrong vocabulary, and a receiving system displays it verbatim.",
+  "sourceUri": "https://nemsis.org/ValueSet/ANSIStateCode",
+  "targetUri": "http://hl7.org/fhir/us/core/ValueSet/us-core-usps-state",
+  "group": [
+    {
+      "source": "https://nemsis.org/CodeSystem/ANSIStateCode",
+      "target": "https://www.usps.com/",
+      "element": [
+        {
+          "code": "01",
+          "target": [
+            {
+              "code": "AL",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "02",
+          "target": [
+            {
+              "code": "AK",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "04",
+          "target": [
+            {
+              "code": "AZ",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "05",
+          "target": [
+            {
+              "code": "AR",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "06",
+          "target": [
+            {
+              "code": "CA",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "08",
+          "target": [
+            {
+              "code": "CO",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "09",
+          "target": [
+            {
+              "code": "CT",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "10",
+          "target": [
+            {
+              "code": "DE",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "11",
+          "target": [
+            {
+              "code": "DC",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "12",
+          "target": [
+            {
+              "code": "FL",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "13",
+          "target": [
+            {
+              "code": "GA",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "15",
+          "target": [
+            {
+              "code": "HI",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "16",
+          "target": [
+            {
+              "code": "ID",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "17",
+          "target": [
+            {
+              "code": "IL",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "18",
+          "target": [
+            {
+              "code": "IN",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "19",
+          "target": [
+            {
+              "code": "IA",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "20",
+          "target": [
+            {
+              "code": "KS",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "21",
+          "target": [
+            {
+              "code": "KY",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "22",
+          "target": [
+            {
+              "code": "LA",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "23",
+          "target": [
+            {
+              "code": "ME",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "24",
+          "target": [
+            {
+              "code": "MD",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "25",
+          "target": [
+            {
+              "code": "MA",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "26",
+          "target": [
+            {
+              "code": "MI",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "27",
+          "target": [
+            {
+              "code": "MN",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "28",
+          "target": [
+            {
+              "code": "MS",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "29",
+          "target": [
+            {
+              "code": "MO",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "30",
+          "target": [
+            {
+              "code": "MT",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "31",
+          "target": [
+            {
+              "code": "NE",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "32",
+          "target": [
+            {
+              "code": "NV",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "33",
+          "target": [
+            {
+              "code": "NH",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "34",
+          "target": [
+            {
+              "code": "NJ",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "35",
+          "target": [
+            {
+              "code": "NM",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "36",
+          "target": [
+            {
+              "code": "NY",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "37",
+          "target": [
+            {
+              "code": "NC",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "38",
+          "target": [
+            {
+              "code": "ND",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "39",
+          "target": [
+            {
+              "code": "OH",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "40",
+          "target": [
+            {
+              "code": "OK",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "41",
+          "target": [
+            {
+              "code": "OR",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "42",
+          "target": [
+            {
+              "code": "PA",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "44",
+          "target": [
+            {
+              "code": "RI",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "45",
+          "target": [
+            {
+              "code": "SC",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "46",
+          "target": [
+            {
+              "code": "SD",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "47",
+          "target": [
+            {
+              "code": "TN",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "48",
+          "target": [
+            {
+              "code": "TX",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "49",
+          "target": [
+            {
+              "code": "UT",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "50",
+          "target": [
+            {
+              "code": "VT",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "51",
+          "target": [
+            {
+              "code": "VA",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "53",
+          "target": [
+            {
+              "code": "WA",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "54",
+          "target": [
+            {
+              "code": "WV",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "55",
+          "target": [
+            {
+              "code": "WI",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "56",
+          "target": [
+            {
+              "code": "WY",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "60",
+          "target": [
+            {
+              "code": "AS",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "66",
+          "target": [
+            {
+              "code": "GU",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "69",
+          "target": [
+            {
+              "code": "MP",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "72",
+          "target": [
+            {
+              "code": "PR",
+              "equivalence": "equivalent"
+            }
+          ]
+        },
+        {
+          "code": "78",
+          "target": [
+            {
+              "code": "VI",
+              "equivalence": "equivalent"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

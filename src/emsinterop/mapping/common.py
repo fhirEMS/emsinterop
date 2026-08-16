@@ -301,3 +301,45 @@ def course_observation(
     }
     apply_smart_value(obs, element)
     return ctx.add(obs)
+
+
+def address_field(key: str, value: str | None,
+                  gazetteer: dict[str, str] | None = None):
+    """Translate a NEMSIS geographic value into what FHIR's Address means.
+
+    NEMSIS codes places; FHIR names them. `Address.state` is "abbreviations
+    ok" and `Address.city` is "Name of city, town etc." — writing the ANSI or
+    GNIS code there is displayed verbatim to a clinician as "1454997, 49".
+
+    Returns (key, value) to emit, or None to omit. City yields None without a
+    gazetteer: the code is preserved separately rather than misrepresented.
+    """
+    from ..terminology import geo
+
+    if value in (None, ""):
+        return None
+    if key == "state":
+        resolved = geo.state_abbreviation(value)
+        return ("state", resolved) if resolved else None
+    if key == "city":
+        resolved = geo.city_name(value, gazetteer)
+        return ("city", resolved) if resolved else None
+    return (key, value)
+
+
+def city_gnis_extension(gnis: str | None) -> dict | None:
+    """Carry the GNIS feature id that `Address.city` cannot hold.
+
+    Dropping it would breach the never-silently-drop rule, and writing it into
+    `city` misrepresents a code as a name. `Address` has no coded city slot —
+    `district` is the county — so the id rides in an extension and the reverse
+    mapping reads it back, keeping the NEMSIS round trip exact.
+    """
+    from .. import conformance
+
+    if not gnis:
+        return None
+    return {
+        "url": conformance.canonical("StructureDefinition", "ems-city-gnis-code"),
+        "valueString": str(gnis),
+    }

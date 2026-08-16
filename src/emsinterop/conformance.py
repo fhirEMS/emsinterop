@@ -284,6 +284,32 @@ GAPS: tuple[Gap, ...] = (
                            "is the honest answer.",
     ),
     Gap(
+        id="city-is-a-gnis-code",
+        finding="NEMSIS stores a city as a GNIS feature id (CityGnisCode, a "
+                "bare xs:positiveInteger) wherever an address appears — "
+                "ePatient.06, eScene.17, eDisposition.04, dContact.06. FHIR's "
+                "Address.city is \"Name of city, town etc.\" and C-CDA's "
+                "<city> likewise wants a name. Neither standard has a coded "
+                "city slot.",
+        source="http://hl7.org/fhir/R4/datatypes-definitions.html#Address.city",
+        verified="2026-08-14",
+        decision="Never write the code into Address.city — a receiving system "
+                 "displays it verbatim, so a clinician reads \"1454997\" as "
+                 "the town. The name is populated only when a caller supplies "
+                 "a gazetteer, and the GNIS id rides in an extension so the "
+                 "NEMSIS round trip stays exact rather than the value being "
+                 "dropped.",
+        artifacts=(canonical("StructureDefinition", "ems-city-gnis-code"),),
+        retirement="FHIR or US Core defines a coded-city representation, or "
+                   "this project ships a GNIS gazetteer and populates the name "
+                   "directly. Either way the extension is dropped.",
+        native_alternative="Address.city is a name and would misrepresent the "
+                           "code; Address.district is the county, not the "
+                           "city; Address.line is street detail. R4 Address "
+                           "has no coded-place element at all, which is why "
+                           "this is an extension rather than a misuse of one.",
+    ),
+    Gap(
         id="no-source-version-pin",
         finding="No NEMSIS version is declared anywhere on the mapping page — "
                 "zero occurrences of any 'NEMSIS 3.x' string — so the source "

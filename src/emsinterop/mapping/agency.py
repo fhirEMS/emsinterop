@@ -74,8 +74,14 @@ def map_agency(ctx: MappingContext) -> dict | None:
     contact = ctx.agency_contact
     if contact.get("phone"):
         org["telecom"] = [{"system": "phone", "value": contact["phone"], "use": "work"}]
-    address = {k: v for k, v in contact.items()
-               if k in ("line", "city", "state", "postalCode") and v}
+    address = {}
+    for key in ("line", "city", "state", "postalCode"):
+        translated = common.address_field(key, contact.get(key), ctx.city_gazetteer)
+        if translated:
+            address[translated[0]] = translated[1]
+    gnis = common.city_gnis_extension(contact.get("city"))
+    if gnis:
+        address.setdefault("extension", []).append(gnis)
     if address:
         org["address"] = [{"use": "work", **address}]
     return ctx.add(org)

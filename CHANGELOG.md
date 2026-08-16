@@ -1,5 +1,43 @@
 # Changelog
 
+## Unreleased
+
+### Fixed — codes were being emitted into name fields
+
+Every address this project produced carried NEMSIS **codes** in FHIR fields
+that ask for **names**:
+
+| Field | FHIR says | We emitted |
+|---|---|---|
+| `Address.city` | "Name of city, town etc." | `1454997` (GNIS feature id) |
+| `Address.state` | "Sub-unit of country (abbreviations ok)" | `49` (ANSI/FIPS code) |
+
+Four addresses per document — Patient, Organization, Practitioner, Location —
+in the rail this project calls complete. Both fields are `string`, and US Core
+binds `.address.state` to `us-core-usps-state` at **extensible** strength, so a
+wrong-vocabulary value validated everywhere and stayed invisible. A receiving
+system displays it verbatim: a clinician reads the patient's address as
+"1454997, 49".
+
+- **State resolves** ANSI/FIPS -> USPS via a new ConceptMap
+  (`cm-ansi-state-usps`, 56 rows). The sets are disjoint and in bijection, so
+  `reverse.py` maps back losslessly and the NEMSIS round trip stays exact.
+- **City is populated only from a caller-supplied gazetteer.** GNIS has
+  millions of entries and this project ships none, so without one the name is
+  absent — never the code.
+- **The GNIS id is preserved** in a new extension (`ems-city-gnis-code`), so
+  nothing is dropped and the round trip is unaffected. Registered as gap
+  `city-is-a-gnis-code` with its Rule 3 argument: `Address.city` is a name,
+  `district` is the county, and R4 `Address` has no coded-place element.
+- The authored StructureMap was updated to match, and now expresses the state
+  translation declaratively via `translate()` against the ConceptMap.
+- `MAPPING_RULESET_VERSION` -> 0.3.4: this changes emitted resources.
+
+Gates: local suite, Tier-2 (26), Tier-1 (14), FML oracle (30) — all green.
+Tier-2 caught a missing extension `StructureDefinition` and the FML oracle
+caught the StructureMap still writing codes into name fields; both were fixed
+before release.
+
 ## v0.3.6 — 2026-08-14
 
 - **Crew members have names.** A PCR identifies its crew by state licensure

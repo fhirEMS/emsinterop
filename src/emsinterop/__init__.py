@@ -12,7 +12,7 @@ try:
 except _metadata.PackageNotFoundError:  # running from a source tree, uninstalled
     __version__ = "0.0.0.dev0"
 
-MAPPING_RULESET_VERSION = "0.3.3"
+MAPPING_RULESET_VERSION = "0.3.4"
 """Version stamped into Provenance / meta.tag for every generated resource.
 
 Bump this whenever mapping SEMANTICS change, not merely when the package
@@ -33,4 +33,13 @@ untouched — NEMSIS still references the mPSC canonical — and the identifier
 naming systems (`urn:emsinterop:resource-id`, `...:mapping-ruleset`) are
 deliberately unchanged, because `resource-id` is embedded in every conditional
 update URL. See docs/07_Conformance_and_Gaps.md.
+
+0.3.4 changes every address this project emits. `Address.state` carried the
+NEMSIS ANSI/FIPS code (`49`) where FHIR asks for an abbreviation and US Core
+binds to USPS two-letter codes (`UT`); `Address.city` carried a GNIS feature id
+(`1454997`) where FHIR asks for "Name of city, town etc.". Both are `string`
+and the binding is `extensible`, so both validated while being the wrong
+vocabulary — and a receiving system displays them verbatim. State now resolves;
+city is populated only from a supplied gazetteer, with the GNIS id preserved in
+an extension so the NEMSIS round trip stays exact.
 """

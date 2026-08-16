@@ -17,7 +17,7 @@ proof the rest of the panels follow. Values are returned as
 
 from __future__ import annotations
 
-from ..terminology import conceptmaps, systems
+from ..terminology import geo, conceptmaps, systems
 
 ADMINISTRATIVE_GENDER = "http://hl7.org/fhir/administrative-gender"
 
@@ -76,6 +76,17 @@ def patient_to_nemsis(patient: dict) -> dict[str, str | list[str]]:
         value = address.get(key)
         if key == "line":
             value = value[0] if value else None
+        if key == "state":
+            # FHIR carries the USPS abbreviation; NEMSIS wants the ANSI code.
+            # The map is a bijection, so the round trip is exact.
+            value = geo.state_code(value)
+        if key == "city":
+            # The GNIS id lives in an extension, because Address.city is a
+            # name and NEMSIS stores a code. Read it back from there.
+            value = next(
+                (e.get("valueString") for e in address.get("extension") or []
+                 if str(e.get("url", "")).endswith("/ems-city-gnis-code")),
+                None)
         if value:
             values[element_id] = value
 

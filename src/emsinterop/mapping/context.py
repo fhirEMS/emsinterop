@@ -29,6 +29,9 @@ class MappingContext:
     personnel_names: dict[str, dict[str, str]] = field(default_factory=dict)
     #: dContact telecom/address for the agency, from the DEM roster.
     agency_contact: dict[str, str] = field(default_factory=dict)
+    #: GNIS feature id -> city name. NEMSIS codes cities and FHIR names them;
+    #: without a gazetteer the name is simply absent, never the code.
+    city_gazetteer: dict[str, str] = field(default_factory=dict)
 
     # ids of the spine resources, set as mappers run
     patient_id: str | None = None

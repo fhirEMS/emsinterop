@@ -1,0 +1,60 @@
+{
+  "resourceType": "StructureDefinition",
+  "id": "city-gnis-code",
+  "url": "https://emsinterop.com/fhir/StructureDefinition/ems-city-gnis-code",
+  "version": "0.1.0",
+  "name": "CityGnisCode",
+  "title": "City GNIS Feature Id",
+  "status": "draft",
+  "description": "The USGS GNIS feature id NEMSIS stores for a city (CityGnisCode: ePatient.06, eScene.17, eDisposition.04, dContact.06, dPersonnel.05). FHIR's Address.city is \"Name of city, town etc.\" and R4 Address has no coded-place element, so writing the id there would misrepresent a code as a name \u2014 a receiving system displays it verbatim, and a clinician reads \"1454997\" as the town. The name is populated only when a gazetteer resolves it; this extension carries the id so the NEMSIS round trip stays exact rather than the value being dropped. Retired if FHIR defines a coded-city representation.",
+  "fhirVersion": "4.0.1",
+  "kind": "complex-type",
+  "abstract": false,
+  "context": [
+    {
+      "type": "element",
+      "expression": "Address"
+    }
+  ],
+  "type": "Extension",
+  "baseDefinition": "http://hl7.org/fhir/StructureDefinition/Extension",
+  "derivation": "constraint",
+  "differential": {
+    "element": [
+      {
+        "id": "Extension",
+        "path": "Extension",
+        "short": "City GNIS feature id",
+        "min": 0,
+        "max": "1"
+      },
+      {
+        "id": "Extension.extension",
+        "path": "Extension.extension",
+        "max": "0"
+      },
+      {
+        "id": "Extension.url",
+        "path": "Extension.url",
+        "fixedUri": "https://emsinterop.com/fhir/StructureDefinition/ems-city-gnis-code"
+      },
+      {
+        "id": "Extension.value[x]",
+        "path": "Extension.value[x]",
+        "min": 1,
+        "max": "1",
+        "type": [
+          {
+            "code": "string"
+          }
+        ]
+      }
+    ]
+  },
+  "identifier": [
+    {
+      "system": "urn:ietf:rfc:3986",
+      "value": "urn:emsinterop:extension:city-gnis-code"
+    }
+  ]
+}
